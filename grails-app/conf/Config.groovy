@@ -1,16 +1,3 @@
-// locations to search for config files that get merged into the main config;
-// config files can be ConfigSlurper scripts, Java properties files, or classes
-// in the classpath in ConfigSlurper format
-
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
-
-// if (System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-// }
-
 grails.project.groupId = "au.org.ala" // change this to alter the default package name and Maven publishing destination
 
 default_config = "/data/${appName}/config/${appName}-config.properties"
@@ -30,7 +17,7 @@ println "default_config = ${default_config}"
 /******************************************************************************\
  *  SKINNING
 \******************************************************************************/
-skin.layout = 'generic'
+skin.layout = 'elurikkus'
 skin.orgNameLong = "Generic Data Portal"
 skin.orgNameShort = "Occurrences"
 // whether crumb trail should include a home link that is external to this webabpp - ala.baseUrl is used if true
