@@ -1,7 +1,8 @@
 <%@ page import="au.org.ala.biocache.hubs.FacetsName; org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
+<g:render template="/layouts/global" plugin="biocache-hubs"/>
 <form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST">
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}"/>
-    <input type="hidden" name="nameType" value="matched_name_children"/>
+    <input type="hidden" name="nameType" value="${grailsApplication.config.advancedTaxaField?:'matched_name_children'}"/>
     <b><g:message code="advancedsearch.title01" default="Find records that have"/></b>
     <table border="0" width="100" cellspacing="2" class="compact">
         <thead/>
@@ -112,7 +113,7 @@
             <td>
                 <select class="biogeographic_region" name="ibra" id="ibra">
                     <option value=""><g:message code="advancedsearch.table06col03.option.label" default="-- select an IBRA region --"/></option>
-                    <g:each var="region" in="${request.getAttribute("cl1048")}">
+                    <g:each var="region" in="${request.getAttribute("cl1048").sort()}">
                         <option value="${region.key}">${region.value}</option>
                     </g:each>
                 </select>
@@ -125,7 +126,7 @@
             <td>
                 <select class="biogeographic_region" name="imcra" id="imcra">
                     <option value=""><g:message code="advancedsearch.table06col04.option.label" default="-- select an IMCRA region --"/></option>
-                    <g:each var="region" in="${request.getAttribute("cl21")}">
+                    <g:each var="region" in="${request.getAttribute("cl21").sort()}">
                         <option value="${region.key}">${region.value}</option>
                     </g:each>
                 </select>
@@ -138,7 +139,7 @@
             <td>
                 <select class="lga" name="lga" id="lga">
                     <option value=""><g:message code="advancedsearch.table06col05.option.label" default="-- select local government area--"/></option>
-                    <g:each var="region" in="${request.getAttribute("cl959")}">
+                    <g:each var="region" in="${request.getAttribute("cl959").sort()}">
                         <option value="${region.key}">${region.value}</option>
                     </g:each>
                 </select>
@@ -193,9 +194,9 @@
             <tr>
                 <td class="labels"><g:message code="advancedsearch.dataset.col.label" default="dataset name"/></td>
                 <td>
-                    <select class="dataset" name="dataset" id="dataset">
-                        <option value=""><g:message code="advancedsearch.dataset.select.default" default="-- select a dataset --"/></option>
-                        <g:each var="region" in="${request.getAttribute("data_resource_uid")}">
+                    <select class="dataset bscombobox" name="dataset" id="dataset">
+                        <option value=""></option>
+                        <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
                             <option value="${region.key}">${region.value}</option>
                         </g:each>
                     </select>
@@ -246,3 +247,9 @@
     &nbsp;&nbsp;
     <input type="reset" value="Clear all" id="clearAll" class="btn" onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;"/>
 </form>
+<r:script>
+    $(document).ready(function() {
+        $('.bscombobox').combobox({bsVersion: '2'});
+    });
+
+</r:script>
