@@ -18,4 +18,8 @@ modules = {
 
     }
 
+    occurrenceMap {
+        dependsOn 'jquery'
+        resource url: [dir:'js', file:'occurrenceMap.js']
+    }
 }
