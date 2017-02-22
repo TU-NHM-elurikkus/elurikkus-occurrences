@@ -61,8 +61,6 @@ function OccurrenceMap(query, props) {
         'Satellite' : new L.Google('HYBRID')
     };
 
-    this.center = [58.67, 25.56];
-
     this.layerControl = null;
     this.currentLayers = [];
 
@@ -170,6 +168,7 @@ OccurrenceMap.prototype.initialize = function() {
         return false;
     });
 
+    // Don't bind in-place because it is used as an id for click events
     function pointLookupClickRegister(e) {
         return self.pointLookupClickRegister(e);
     }
