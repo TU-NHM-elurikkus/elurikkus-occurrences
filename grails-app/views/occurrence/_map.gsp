@@ -220,6 +220,10 @@ a.colour-by-legend-toggle {
                             <g:message code="map.maplayercontrols.tr01td01.option03" default="Grid (variable precision)"/>
                         </option>
 
+                        <option value="taimeatlasGrid" ${(defaultColourBy == 'taimeatlasGrid')? 'selected=\"selected\"' : ''}>
+                            <g:message code="map.maplayercontrols.mode.taimeatlas" default="Taimeatlas grid" />
+                        </option>
+
                         <option disabled role="separator">————————————</option>
 
                         <g:each var="facetResult" in="${facets}">

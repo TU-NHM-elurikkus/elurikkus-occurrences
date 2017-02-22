@@ -266,104 +266,31 @@ OccurrenceMap.prototype.initialize = function() {
 OccurrenceMap.prototype.addQueryLayer = function(redraw) {
     var self = this;
 
+    self.clearLayers();
+
+    var colourByFacet = $('#colourBySelect').val();
+
+    if(colourByFacet && colourByFacet === 'taimeatlasGrid') {
+        // TODO: Taimeatlas mode
+        self.mode = new MapMode(self);
+    } else {
+        self.mode = new ColorMode(self, colourByFacet);
+    }
+
+    self.mode.initialize();
+
+    return true;
+}
+
+OccurrenceMap.prototype.clearLayers = function() {
+    var self = this;
+
     $.each(self.currentLayers, function(index, value){
         self.map.removeLayer(self.currentLayers[index]);
         self.layerControl.removeLayer(self.currentLayers[index]);
     });
 
     self.currentLayers = [];
-
-    var colourByFacet = $('#colourBySelect').val();
-    var pointSize = $('#sizeslider-val').html();
-    var opacity = $('#opacityslider-val').html();
-    var outlineDots = $('#outlineDots').is(':checked');
-
-    var envProperty = "color:" + self.props.pointColour + ";nam:circle;size:" + pointSize + ";opacity:" + opacity;
-
-    if(colourByFacet){
-        if(colourByFacet == "gridVariable"){
-            colourByFacet = "coordinate_uncertainty"
-            envProperty = "colormode:coordinate_uncertainty;name:circle;size:" + pointSize + ";opacity:1;cellfill:0xffccff;variablegrids:on"
-        } else {
-            envProperty = "colormode:" + colourByFacet + ";name:circle;size:" + pointSize + ";opacity:1;"
-        }
-    }
-
-    var gridSizeMap = {
-        1: 256, 2:128, 3: 64, 4:32, 5:16, 6:8
-    }
-
-    var layer = L.tileLayer.wms(self.props.mappingUrl + "/mapping/wms/reflect" + self.query + self.additionalFqs, {
-        layers: 'ALA:occurrences',
-        format: 'image/png',
-        transparent: true,
-        bgcolor:"0x000000",
-        outline:outlineDots,
-        ENV: envProperty,
-        opacity: opacity,
-        GRIDDETAIL: gridSizeMap[pointSize],
-        STYLE: "opacity:" + opacity // for grid data
-    });
-
-    if(redraw){
-        if(!colourByFacet){
-            $('.legendTable').html('');
-            addDefaultLegendItem(self.props.pointColour);
-        } else if (colourByFacet == 'grid') {
-            $('.legendTable').html('');
-            self.addGridLegendItem();
-        } else {
-            //update the legend
-            $('.legendTable').html('<tr><td>Loading legend....</td></tr>');
-
-            $.ajax({
-                url: self.props.contextPath + '/occurrence/legend' + self.query + '&cm=' + colourByFacet + '&type=application/json',
-                success: function(data) {
-                    $('.legendTable').html('');
-
-                    $.each(data, function(index, legendDef){
-                        var legItemName = legendDef.name ? legendDef.name : 'Not specified';
-                        addLegendItem(legItemName, legendDef.red,legendDef.green,legendDef.blue, legendDef );
-                    });
-
-                    $('.layerFacet').click(function(e){
-                        var controlIdx = 0;
-                        self.additionalFqs = '';
-                        self.removeFqs = ''
-
-                        $('#colourByControl').find('.layerFacet').each(function(idx, layerInput){
-                            var $input = $(layerInput), fq;
-                            var include =  $input.is(':checked');
-
-                            if(!include){
-                                self.additionalFqs = self.additionalFqs + '&HQ=' + controlIdx;
-                                fq = $input.attr('fq');
-                                // logic for facets with missing value is different from those with value
-                                if(fq && fq.startsWith('-')){
-                                    // to ignore unknown or missing values, minus sign must be removed
-                                    fq = fq.replace('-','');
-                                } else{
-                                    // for all other values minus sign has to be added
-                                    fq = '-' + fq;
-                                }
-
-                                // add fq to ensure the query in sync with dots displayed on map
-                                self.removeFqs += '&fq=' + fq;
-                            }
-                            controlIdx = controlIdx + 1;
-                            self.addQueryLayer(false);
-                        });
-                    });
-                }
-            });
-        }
-    }
-
-    self.layerControl.addOverlay(layer, 'Occurrences');
-    self.map.addLayer(layer);
-    self.currentLayers.push(layer);
-
-    return true;
 }
 
 /**
@@ -390,6 +317,9 @@ var ZOOM_TO_RADIUS = [
 ]
 
 OccurrenceMap.prototype.pointLookup = function(e) {
+    return this.mode.click(e);
+
+    /*
     this.popup = L.popup().setLatLng(e.latlng);
 
     var radius = 0;
@@ -444,6 +374,7 @@ OccurrenceMap.prototype.pointLookup = function(e) {
             this.map.spin(false);
         }.bind(this),
     });
+    */
 }
 /**
  * Populate the map popup with record details
@@ -791,4 +722,186 @@ function isSpatialRadiusSearch() {
     var radius = $.url().param('radius');
 
     return Boolean(lat && lng && radius);
+}
+
+/* Map modes */
+function MapMode(map) {
+    this.map = map;
+}
+
+MapMode.prototype.initialize = function() {
+}
+
+MapMode.prototype.click = function(e) {
+}
+
+/* Color mode: included in ALA, uses biocache-service to plot points colored by some facet
+ * or render a grid
+ */
+function ColorMode(map, facet) {
+    MapMode.call(this, map);
+
+    this.facet = facet;
+}
+
+ColorMode.prototype = Object.create(MapMode);
+
+ColorMode.prototype.initialize = function() {
+    var self = this;
+
+    let layer;
+
+    function reinitLayer() {
+        var pointSize = $('#sizeslider-val').html();
+        var opacity = $('#opacityslider-val').html();
+        var outlineDots = $('#outlineDots').is(':checked');
+
+        var envProperty = "color:" + self.map.props.pointColour + ";nam:circle;size:" + pointSize + ";opacity:" + opacity;
+
+        if(self.facet){
+            if(self.facet == "gridVariable"){
+                self.facet = "coordinate_uncertainty"
+                envProperty = "colormode:coordinate_uncertainty;name:circle;size:" + pointSize + ";opacity:1;cellfill:0xffccff;variablegrids:on"
+            } else {
+                envProperty = "colormode:" + self.facet + ";name:circle;size:" + pointSize + ";opacity:1;"
+            }
+        }
+
+        var gridSizeMap = {
+            1: 256, 2:128, 3: 64, 4:32, 5:16, 6:8
+        }
+
+        layer = L.tileLayer.wms(self.map.props.mappingUrl + "/mapping/wms/reflect" + self.map.query + self.map.additionalFqs, {
+            layers: 'ALA:occurrences',
+            format: 'image/png',
+            transparent: true,
+            bgcolor:"0x000000",
+            outline:outlineDots,
+            ENV: envProperty,
+            opacity: opacity,
+            GRIDDETAIL: gridSizeMap[pointSize],
+            STYLE: "opacity:" + opacity // for grid data
+        });
+    }
+
+    function initLegend() {
+        if(!self.facet){
+            $('.legendTable').html('');
+            addDefaultLegendItem(self.map.props.pointColour);
+        } else if (self.facet == 'grid') {
+            $('.legendTable').html('');
+            self.map.addGridLegendItem();
+        } else {
+            //update the legend
+            $('.legendTable').html('<tr><td>Loading legend....</td></tr>');
+
+            $.ajax({
+                url: self.map.props.contextPath + '/occurrence/legend' + self.map.query + '&cm=' + self.facet + '&type=application/json',
+                success: function(data) {
+                    $('.legendTable').html('');
+
+                    $.each(data, function(index, legendDef){
+                        var legItemName = legendDef.name ? legendDef.name : 'Not specified';
+                        addLegendItem(legItemName, legendDef.red,legendDef.green,legendDef.blue, legendDef );
+                    });
+
+                    $('.layerFacet').click(function(e){
+                        var controlIdx = 0;
+                        self.map.additionalFqs = '';
+                        self.map.removeFqs = ''
+
+                        $('#colourByControl').find('.layerFacet').each(function(idx, layerInput){
+                            var $input = $(layerInput), fq;
+                            var include =  $input.is(':checked');
+
+                            if(!include){
+                                self.map.additionalFqs = self.map.additionalFqs + '&HQ=' + controlIdx;
+                                fq = $input.attr('fq');
+                                // logic for facets with missing value is different from those with value
+                                if(fq && fq.startsWith('-')){
+                                    // to ignore unknown or missing values, minus sign must be removed
+                                    fq = fq.replace('-','');
+                                } else{
+                                    // for all other values minus sign has to be added
+                                    fq = '-' + fq;
+                                }
+
+                                // add fq to ensure the query in sync with dots displayed on map
+                                self.map.removeFqs += '&fq=' + fq;
+                            }
+                            controlIdx = controlIdx + 1;
+
+                            self.map.clearLayers();
+                            reinitLayer();
+                        });
+                    });
+                }
+            });
+        }
+    }
+
+    reinitLayer();
+    initLegend();
+
+    self.map.layerControl.addOverlay(layer, 'Occurrences');
+    self.map.map.addLayer(layer);
+    self.map.currentLayers.push(layer);
+}
+
+ColorMode.prototype.click = function(e) {
+    var map = this.map;
+
+    map.popup = L.popup().setLatLng(e.latlng);
+
+    var radius = 0;
+    var size = $('sizeslider-val').html();
+    var zoomLevel = map.map.getZoom();
+
+    radius = ZOOM_TO_RADIUS[zoomLevel];
+
+    if (size >= 5 && size < 8){
+        radius = radius * 2;
+    }
+
+    if (size >= 8){
+        radius = radius * 3;
+    }
+
+    map.popupRadius = radius;
+
+    // remove existing lat/lon/radius/wkt params
+    var mapQuery = map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
+
+    map.map.spin(true);
+
+    $.ajax({
+        url: map.props.mappingUrl + "/occurrences/info" + mapQuery + map.removeFqs,
+        jsonp: "callback",
+        dataType: "jsonp",
+        timeout: 30000,
+
+        data: {
+            zoom: map.map.getZoom(),
+            lat: e.latlng.wrap().lat,
+            lon: e.latlng.wrap().lng,
+            radius: radius,
+            format: "json"
+        },
+
+        success: function(response) {
+            map.map.spin(false);
+
+            if (response.occurrences && response.occurrences.length > 0) {
+                map.recordList = response.occurrences; // store the list of record uuids
+                map.popupLatlng = e.latlng.wrap(); // store the coordinates of the mouse click for the popup
+
+                // Load the first record details into popup
+                map.insertRecordInfo(0);
+            }
+        },
+
+        error: function() {
+            map.map.spin(false);
+        }
+    });
 }
