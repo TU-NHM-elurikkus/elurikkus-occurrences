@@ -146,7 +146,7 @@ OccurrenceMap.prototype.initialize = function() {
     self.layerControl = L.control.layers(self.baseLayers, self.overlays, {collapsed:true, position:'topleft'});
     self.layerControl.addTo(self.map);
 
-    self.addQueryLayer(true);
+    self.addQueryLayer();
 
     self.map.addControl(new RecordLayerControl());
     self.map.addControl(new ColourByControl());
@@ -201,7 +201,7 @@ OccurrenceMap.prototype.initialize = function() {
         tooltip: 'hide'
     }).on('slideStop', function(ev){
         $('#sizeslider-val').html(ev.value);
-        self.addQueryLayer(true);
+        self.addQueryLayer();
     });
 
     $( "#opacityslider" ).slider({
@@ -213,15 +213,16 @@ OccurrenceMap.prototype.initialize = function() {
     }).on('slideStop', function(ev){
         var value = parseFloat(ev.value).toFixed(1); // prevent values like 0.30000000004 appearing
         $('#opacityslider-val').html(value);
-        if (self.currentLayers.length == 1) {
-            self.currentLayers[0].setOpacity(value);
+
+        if(self.mode) {
+            self.mode.setOpacity(value);
         } else {
-            self.addQueryLayer(true);
+            self.addQueryLayer();
         }
     });
 
     $('#outlineDots').click(function(e) {
-        self.addQueryLayer(true);
+        self.addQueryLayer();
     });
 
     self.fitMapToBounds(); // zoom map if points are contained within Australia
@@ -263,7 +264,7 @@ OccurrenceMap.prototype.initialize = function() {
 /**
  * A tile layer to map colouring the dots by the selected colour.
  */
-OccurrenceMap.prototype.addQueryLayer = function(redraw) {
+OccurrenceMap.prototype.addQueryLayer = function() {
     var self = this;
 
     self.clearLayers();
@@ -291,6 +292,7 @@ OccurrenceMap.prototype.clearLayers = function() {
     });
 
     self.currentLayers = [];
+    self.mode = null;
 }
 
 /**
@@ -461,7 +463,7 @@ OccurrenceMap.prototype.changeFacetColours = function() {
     // clear this variable every time a new colour by is chosen.
     this.removeFqs = ''
 
-    this.addQueryLayer(true);
+    this.addQueryLayer();
 
     return true;
 }
@@ -735,6 +737,9 @@ MapMode.prototype.initialize = function() {
 MapMode.prototype.click = function(e) {
 }
 
+MapMode.prototype.setOpacity = function(opacity) {
+}
+
 /* Color mode: included in ALA, uses biocache-service to plot points colored by some facet
  * or render a grid
  */
@@ -744,7 +749,7 @@ function ColorMode(map, facet) {
     this.facet = facet;
 }
 
-ColorMode.prototype = Object.create(MapMode);
+ColorMode.prototype = Object.create(MapMode.prototype);
 
 ColorMode.prototype.initialize = function() {
     var self = this;
@@ -782,6 +787,12 @@ ColorMode.prototype.initialize = function() {
             GRIDDETAIL: gridSizeMap[pointSize],
             STYLE: "opacity:" + opacity // for grid data
         });
+
+        self.layer = layer;
+
+        self.map.layerControl.addOverlay(layer, 'Occurrences');
+        self.map.map.addLayer(layer);
+        self.map.currentLayers.push(layer);
     }
 
     function initLegend() {
@@ -842,10 +853,6 @@ ColorMode.prototype.initialize = function() {
 
     reinitLayer();
     initLegend();
-
-    self.map.layerControl.addOverlay(layer, 'Occurrences');
-    self.map.map.addLayer(layer);
-    self.map.currentLayers.push(layer);
 }
 
 ColorMode.prototype.click = function(e) {
@@ -906,12 +913,16 @@ ColorMode.prototype.click = function(e) {
     });
 }
 
+ColorMode.prototype.setOpacity = function(opacity) {
+    this.layer.setOpacity(opacity);
+}
+
 /* Taimeatlas mode: renders TA grid and allows querying occurrences by square */
 function TaimeatlasMode(map) {
     MapMode.call(this, map);
 }
 
-TaimeatlasMode.prototype = Object.create(MapMode);
+TaimeatlasMode.prototype = Object.create(MapMode.prototype);
 
 TaimeatlasMode.prototype.queryCounts = function(callback) {
     var url = this.map.props.contextPath + '/proxy/occurrence/facets' + this.map.query + '&facets=cl1008&flimit=1000';
@@ -946,21 +957,36 @@ TaimeatlasMode.prototype.initialize = function() {
 
     self.queryCounts(function(counts) {
         self.loadGeometry(counts, function(geometry) {
+            var opacity = $('#opacityslider-val').html();
+
             // TODO: count-based styling?
             var layer = L.geoJson(geometry, {
-                style: function(feature) {
-                    return {
-                        color: 'rgb(0, 0, 0)',
-                        fillColor: 'rgb(255, 255, 0)',
-                        fillOpacity: 0.8,
-                        weight: 1
-                    };
-                }
+                style: self.createStyle(opacity)
             })
+
+            self.layer = layer;
 
             self.map.layerControl.addOverlay(layer, 'Taimatlas grid');
             self.map.map.addLayer(layer);
             self.map.currentLayers.push(layer);
         });
     });
+}
+
+TaimeatlasMode.prototype.createStyle = function(opacity) {
+    return function(feature) {
+        return {
+            color: 'rgb(0, 0, 0)',
+            fillColor: 'rgb(255, 255, 0)',
+            fillOpacity: opacity,
+            weight: 1
+        };
+    };
+}
+
+TaimeatlasMode.prototype.setOpacity = function(opacity) {
+    // Layer is initialised async, so need to guard
+    if(this.layer) {
+        this.layer.setStyle(this.createStyle(opacity));
+    }
 }
