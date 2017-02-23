@@ -272,7 +272,7 @@ OccurrenceMap.prototype.addQueryLayer = function(redraw) {
 
     if(colourByFacet && colourByFacet === 'taimeatlasGrid') {
         // TODO: Taimeatlas mode
-        self.mode = new MapMode(self);
+        self.mode = new TaimeatlasMode(self);
     } else {
         self.mode = new ColorMode(self, colourByFacet);
     }
@@ -749,7 +749,7 @@ ColorMode.prototype = Object.create(MapMode);
 ColorMode.prototype.initialize = function() {
     var self = this;
 
-    let layer;
+    var layer;
 
     function reinitLayer() {
         var pointSize = $('#sizeslider-val').html();
@@ -903,5 +903,64 @@ ColorMode.prototype.click = function(e) {
         error: function() {
             map.map.spin(false);
         }
+    });
+}
+
+/* Taimeatlas mode: renders TA grid and allows querying occurrences by square */
+function TaimeatlasMode(map) {
+    MapMode.call(this, map);
+}
+
+TaimeatlasMode.prototype = Object.create(MapMode);
+
+TaimeatlasMode.prototype.queryCounts = function(callback) {
+    var url = this.map.props.contextPath + '/proxy/occurrence/facets' + this.map.query + '&facets=cl1008&flimit=1000';
+
+    $.getJSON(url, function(response) {
+        callback(response[0].fieldResult);
+    });
+}
+
+TaimeatlasMode.prototype.loadGeometry = function(counts, callback) {
+    var idToCount = {};
+
+    counts.forEach(function(square) {
+        idToCount[square.label] = square.count;
+    });
+
+    $.getJSON(this.map.props.contextPath + '/data/taimeatlase_ruudud.json', function(squares) {
+        squares.features.forEach(function(square) {
+            square.properties.count = idToCount[square.properties.ruudu_kood];
+        });
+
+        squares.features = squares.features.filter(function(square) {
+            return square.properties.count > 0;
+        });
+
+        callback(squares);
+    });
+}
+
+TaimeatlasMode.prototype.initialize = function() {
+    var self = this;
+
+    self.queryCounts(function(counts) {
+        self.loadGeometry(counts, function(geometry) {
+            // TODO: count-based styling?
+            var layer = L.geoJson(geometry, {
+                style: function(feature) {
+                    return {
+                        color: 'rgb(0, 0, 0)',
+                        fillColor: 'rgb(255, 255, 0)',
+                        fillOpacity: 0.8,
+                        weight: 1
+                    };
+                }
+            })
+
+            self.map.layerControl.addOverlay(layer, 'Taimatlas grid');
+            self.map.map.addLayer(layer);
+            self.map.currentLayers.push(layer);
+        });
     });
 }
