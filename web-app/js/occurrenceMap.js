@@ -958,10 +958,11 @@ TaimeatlasMode.prototype.initialize = function() {
     self.queryCounts(function(counts) {
         self.loadGeometry(counts, function(geometry) {
             var opacity = $('#opacityslider-val').html();
+            var outline = $('#outlineDots').is(':checked');
 
             // TODO: count-based styling?
             var layer = L.geoJson(geometry, {
-                style: self.createStyle(opacity)
+                style: self.createStyle(opacity, outline)
             })
 
             self.layer = layer;
@@ -973,13 +974,13 @@ TaimeatlasMode.prototype.initialize = function() {
     });
 }
 
-TaimeatlasMode.prototype.createStyle = function(opacity) {
+TaimeatlasMode.prototype.createStyle = function(opacity, outline) {
     return function(feature) {
         return {
             color: 'rgb(0, 0, 0)',
             fillColor: 'rgb(255, 255, 0)',
             fillOpacity: opacity,
-            weight: 1
+            weight: outline ? 1 : 0
         };
     };
 }
@@ -987,6 +988,9 @@ TaimeatlasMode.prototype.createStyle = function(opacity) {
 TaimeatlasMode.prototype.setOpacity = function(opacity) {
     // Layer is initialised async, so need to guard
     if(this.layer) {
-        this.layer.setStyle(this.createStyle(opacity));
+        // XXX: Controls should hold their values in OccurrenceMap
+        var outline = $('#outlineDots').is(':checked');
+
+        this.layer.setStyle(this.createStyle(opacity, outline));
     }
 }
