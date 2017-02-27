@@ -716,6 +716,7 @@ ColorMode.prototype.initialize = function() {
 }
 
 ColorMode.prototype.click = function(e) {
+    // TODO: Should just be a function
     var popup = new ColorMapPopup(this.map, e);
 
     popup.initialise();
@@ -788,17 +789,8 @@ TaimeatlasMode.prototype.initialize = function() {
 }
 
 TaimeatlasMode.prototype.showPopup = function(e, feature) {
-    var map = this.map;
-
-    map.popup = L.popup().setLatLng(e.latlng);
-
-    // remove existing lat/lon/radius/wkt params
-    var mapQuery = map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
-
-    var pageSize = 10;
-
-    // TODO: How to load next batch of occurrences
-    var url = map.props.contextPath + '/proxy/occurrences/search' + mapQuery + '&fq=cl1008:"' + feature.properties.ruudu_kood + '"&facet=off&pageSize=' + pageSize;
+    var popup = new TaimeatlasMapPopup(this.map, e, feature);
+    popup.initialise();
 }
 
 TaimeatlasMode.prototype.click = function(e) {
@@ -1023,5 +1015,76 @@ ColorMapPopup.prototype.getViewAllLink = function() {
     var occLookup = "&radius=" + radius + "&lat=" + lat + "&lon=" + lon;
     var sanitizedQuery = this.map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
 
-    return  this.map.props.contextPath + '/occurrences/search' + sanitizedQuery + occLookup;
+    return this.map.props.contextPath + '/occurrences/search' + sanitizedQuery + occLookup;
+}
+
+function TaimeatlasMapPopup(map, event, feature) {
+    MapPopup.call(this, map);
+
+    this.event = event;
+    this.feature = feature;
+
+    this.total = feature.properties.count;
+
+    this.loadMoreCallbacks = [];
+}
+
+TaimeatlasMapPopup.prototype = Object.create(MapPopup.prototype);
+
+TaimeatlasMapPopup.prototype.initialise = function() {
+    var self = this;
+    var map = self.map;
+
+    var popup = L.popup().setLatLng(self.event.latlng);
+
+    self.loadPage(0, function(uuids) {
+        self.uuids = uuids;
+        self.currentPage = 0;
+
+        self.createElement();
+        self.switchOccurrence(0);
+    });
+}
+
+TaimeatlasMapPopup.prototype.loadPage = function(page, callback) {
+    var pageSize = 10;
+    var mapQuery = this.map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
+
+    $.getJSON(this.map.props.contextPath + '/proxy/occurrences/search' + mapQuery, {
+        fq: 'cl1008:"' + this.feature.properties.ruudu_kood + '"',
+        facet: 'off',
+        pageSize: pageSize,
+        start: page * pageSize
+    }, function(results) {
+        callback(results.occurrences.map(function(occ) {
+            return occ.uuid;
+        }));
+    });
+}
+
+TaimeatlasMapPopup.prototype.getViewAllLink = function() {
+    var fq = 'cl1008:"' + this.feature.properties.ruudu_kood + '"';
+
+    return this.map.props.contextPath + '/occurrences/search' + this.map.query + '&fq=' + fq;
+}
+
+TaimeatlasMapPopup.prototype.loadMore = function(callback) {
+    var self = this;
+
+    var alreadyLoading = self.loadMoreCallbacks.length > 0;
+
+    self.loadMoreCallbacks.push(callback);
+
+    if(!alreadyLoading) {
+        self.loadPage(self.currentPage + 1, function(uuids) {
+            self.uuids = self.uuids.concat(uuids);
+            self.currentPage++;
+
+            self.loadMoreCallbacks.forEach(function(callback) {
+                callback();
+            });
+
+            self.loadMoreCallbacks = [];
+        });
+    }
 }
