@@ -765,6 +765,16 @@ TaimeatlasMode.prototype.initialize = function() {
     var self = this;
 
     self.queryCounts(function(counts) {
+        self.minCount = Infinity;
+        self.maxCount = -Infinity;
+
+        counts.forEach(function(square) {
+            if(square.label !== '') {
+                self.minCount = Math.min(self.minCount, square.count);
+                self.maxCount = Math.max(self.maxCount, square.count);
+            }
+        });
+
         self.loadGeometry(counts, function(geometry) {
             var opacity = $('#opacityslider-val').html();
             var outline = $('#outlineDots').is(':checked');
@@ -797,10 +807,19 @@ TaimeatlasMode.prototype.click = function(e) {
 }
 
 TaimeatlasMode.prototype.createStyle = function(opacity, outline) {
+    var MIN_INTENSITY = 120;
+    var MAX_INTENSITY = 255;
+    var minCount = this.minCount;
+    var maxCount = this.maxCount;
+
     return function(feature) {
+        var frequency = (feature.properties.count - minCount) / (maxCount - minCount);
+        var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
+
+        // XXX: Frequency coloring doesn't really work, because of huge count differences
         return {
             color: 'rgb(0, 0, 0)',
-            fillColor: 'rgb(255, 255, 0)',
+            fillColor: 'rgb(' + intensity + ',' + intensity + ',0)',
             fillOpacity: opacity,
             weight: outline ? 1 : 0
         };
