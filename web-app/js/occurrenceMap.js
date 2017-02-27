@@ -133,7 +133,6 @@ OccurrenceMap.prototype.initialize = function() {
     self.map.on('draw:created', function(e) {
         //setup onclick event for self object
         var layer = e.layer;
-        generatePopup(layer, layer._latlng);
         addClickEventForVector(layer);
         self.drawnItems.addLayer(layer);
     });
@@ -251,12 +250,9 @@ OccurrenceMap.prototype.initialize = function() {
         //setup onclick event for self object
         var layers = e.layers;
         layers.eachLayer(function (layer) {
-            generatePopup(layer, layer._latlng);
             addClickEventForVector(layer);
         });
     });
-
-    self.recordList = new Array(); // store list of records for popup
 
     self.map.on('click', pointLookupClickRegister);
 }
@@ -320,142 +316,6 @@ var ZOOM_TO_RADIUS = [
 
 OccurrenceMap.prototype.pointLookup = function(e) {
     return this.mode.click(e);
-
-    /*
-    this.popup = L.popup().setLatLng(e.latlng);
-
-    var radius = 0;
-    var size = $('sizeslider-val').html();
-    var zoomLevel = this.map.getZoom();
-
-    radius = ZOOM_TO_RADIUS[zoomLevel];
-
-    if (size >= 5 && size < 8){
-        radius = radius * 2;
-    }
-
-    if (size >= 8){
-        radius = radius * 3;
-    }
-
-    this.popupRadius = radius;
-
-    // remove existing lat/lon/radius/wkt params
-    var mapQuery = this.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
-
-    this.map.spin(true);
-
-    $.ajax({
-        url: this.props.mappingUrl + "/occurrences/info" + mapQuery + this.removeFqs,
-        jsonp: "callback",
-        dataType: "jsonp",
-        timeout: 30000,
-
-        data: {
-            zoom: this.map.getZoom(),
-            lat: e.latlng.wrap().lat,
-            lon: e.latlng.wrap().lng,
-            radius: radius,
-            format: "json"
-        },
-
-        success: function(response) {
-            this.map.spin(false);
-
-            if (response.occurrences && response.occurrences.length > 0) {
-
-                this.recordList = response.occurrences; // store the list of record uuids
-                this.popupLatlng = e.latlng.wrap(); // store the coordinates of the mouse click for the popup
-
-                // Load the first record details into popup
-                this.insertRecordInfo(0);
-            }
-        }.bind(this),
-
-        error: function() {
-            this.map.spin(false);
-        }.bind(this),
-    });
-    */
-}
-/**
- * Populate the map popup with record details
- *
- * @param recordIndex
- */
-OccurrenceMap.prototype.insertRecordInfo = function(recordIndex) {
-    var recordUuid = this.recordList[recordIndex];
-    var $popupClone = $('.popupRecordTemplate').clone();
-
-    this.map.spin(true);
-
-    if (this.recordList.length > 1) {
-        // populate popup header
-        $popupClone.find('.multiRecordHeader').show();
-        $popupClone.find('.currentRecord').html(recordIndex + 1);
-        $popupClone.find('.totalrecords').html(this.recordList.length.toString().replace(/100/, '100+'));
-
-        var occLookup = "&radius=" + this.popupRadius + "&lat=" + this.popupLatlng.lat + "&lon=" + this.popupLatlng.lng;
-        var sanitizedQuery = this.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
-        var viewAllURL = this.props.contextPath + '/occurrences/search' + sanitizedQuery + occLookup;
-
-        $popupClone.find('a.viewAllRecords').attr('href', viewAllURL);
-
-        // populate popup footer
-        $popupClone.find('.multiRecordFooter').show();
-
-        // TODO: exorcise
-        if (recordIndex < this.recordList.length - 1) {
-            $popupClone.find('.nextRecord a').on('click', function() {
-                this.insertRecordInfo(recordIndex + 1);
-                return false;
-            }.bind(this));
-
-            $popupClone.find('.nextRecord a').removeClass('disabled');
-
-            window.foo = $popupClone;
-            window.bar = $popupClone.find('.nextRecord a');
-        }
-
-        if (recordIndex > 0) {
-            $popupClone.find('.previousRecord a').on('click', function() {
-                this.insertRecordInfo(recordIndex + 1);
-                return false;
-            }.bind(this));
-
-            $popupClone.find('.previousRecord a').removeClass('disabled');
-        }
-    }
-
-    $popupClone.find('.recordLink a').attr('href', this.props.contextPath + "/occurrences/" + recordUuid);
-
-    // Get the current record details
-    $.ajax({
-        url: this.props.mappingUrl + "/occurrences/" + recordUuid + ".json",
-        jsonp: "callback",
-        dataType: "jsonp",
-
-        success: function(record) {
-            this.map.spin(false);
-
-            if (record.raw) {
-                var displayHtml = this.formatPopupHtml(record);
-                $popupClone.find('.recordSummary').html( displayHtml ); // insert into clone
-            } else {
-                // missing record - disable "view record" button and display message
-                $popupClone.find('.recordLink a').attr('disabled', true).attr('href','javascript: void(0)');
-                // insert into clone
-                $popupClone.find('.recordSummary').html( "<br>" + this.props.translations['search.recordNotFoundForId'] + ": <span style='white-space:nowrap;'>" + recordUuid + '</span><br><br>' );
-            }
-
-            this.popup.setContent($popupClone[0]);
-            this.popup.openOn(this.map);
-        }.bind(this),
-
-        error: function() {
-            this.map.spin(false);
-        }.bind(this)
-    });
 }
 
 OccurrenceMap.prototype.changeFacetColours = function() {
@@ -856,61 +716,9 @@ ColorMode.prototype.initialize = function() {
 }
 
 ColorMode.prototype.click = function(e) {
-    var map = this.map;
+    var popup = new ColorMapPopup(this.map, e);
 
-    map.popup = L.popup().setLatLng(e.latlng);
-
-    var radius = 0;
-    var size = $('sizeslider-val').html();
-    var zoomLevel = map.map.getZoom();
-
-    radius = ZOOM_TO_RADIUS[zoomLevel];
-
-    if (size >= 5 && size < 8){
-        radius = radius * 2;
-    }
-
-    if (size >= 8){
-        radius = radius * 3;
-    }
-
-    map.popupRadius = radius;
-
-    // remove existing lat/lon/radius/wkt params
-    var mapQuery = map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
-
-    map.map.spin(true);
-
-    $.ajax({
-        url: map.props.mappingUrl + "/occurrences/info" + mapQuery + map.removeFqs,
-        jsonp: "callback",
-        dataType: "jsonp",
-        timeout: 30000,
-
-        data: {
-            zoom: map.map.getZoom(),
-            lat: e.latlng.wrap().lat,
-            lon: e.latlng.wrap().lng,
-            radius: radius,
-            format: "json"
-        },
-
-        success: function(response) {
-            map.map.spin(false);
-
-            if (response.occurrences && response.occurrences.length > 0) {
-                map.recordList = response.occurrences; // store the list of record uuids
-                map.popupLatlng = e.latlng.wrap(); // store the coordinates of the mouse click for the popup
-
-                // Load the first record details into popup
-                map.insertRecordInfo(0);
-            }
-        },
-
-        error: function() {
-            map.map.spin(false);
-        }
-    });
+    popup.initialise();
 }
 
 ColorMode.prototype.setOpacity = function(opacity) {
@@ -962,7 +770,12 @@ TaimeatlasMode.prototype.initialize = function() {
 
             // TODO: count-based styling?
             var layer = L.geoJson(geometry, {
-                style: self.createStyle(opacity, outline)
+                style: self.createStyle(opacity, outline),
+                onEachFeature: function(feature, layer) {
+                    layer.on('click', function(e) {
+                        self.showPopup(e, feature);
+                    });
+                }
             })
 
             self.layer = layer;
@@ -972,6 +785,23 @@ TaimeatlasMode.prototype.initialize = function() {
             self.map.currentLayers.push(layer);
         });
     });
+}
+
+TaimeatlasMode.prototype.showPopup = function(e, feature) {
+    var map = this.map;
+
+    map.popup = L.popup().setLatLng(e.latlng);
+
+    // remove existing lat/lon/radius/wkt params
+    var mapQuery = map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
+
+    var pageSize = 10;
+
+    // TODO: How to load next batch of occurrences
+    var url = map.props.contextPath + '/proxy/occurrences/search' + mapQuery + '&fq=cl1008:"' + feature.properties.ruudu_kood + '"&facet=off&pageSize=' + pageSize;
+}
+
+TaimeatlasMode.prototype.click = function(e) {
 }
 
 TaimeatlasMode.prototype.createStyle = function(opacity, outline) {
@@ -993,4 +823,205 @@ TaimeatlasMode.prototype.setOpacity = function(opacity) {
 
         this.layer.setStyle(this.createStyle(opacity, outline));
     }
+}
+
+function MapPopup(map) {
+    this.map = map;
+    this.currentIdx = 0;
+    this.total = 0;
+    this.uuids = [];
+}
+
+// Do the initial load, create popup
+MapPopup.prototype.initialise = function() {
+}
+
+MapPopup.prototype.next = function() {
+    if(this.currentIdx < this.total - 1) {
+        this.switchOccurrence(this.currentIdx + 1);
+    }
+}
+
+MapPopup.prototype.previous = function() {
+    if(this.currentIdx > 0) {
+        this.switchOccurrence(this.currentIdx - 1);
+    }
+}
+
+MapPopup.prototype.changeIndex = function(idx) {
+    this.currentIdx = idx;
+
+    this.$popupClone.find('.nextRecord a').toggleClass('disabled', idx >= this.total - 1);
+    this.$popupClone.find('.previousRecord a').toggleClass('disabled', idx <= 0);
+
+    this.$popupClone.find('.currentRecord').html(idx + 1);
+}
+
+// Create popup and insert it into DOM
+MapPopup.prototype.createElement = function() {
+    var $popupClone = $('.popupRecordTemplate').clone();
+
+    // header
+    $popupClone.find('.multiRecordHeader').show();
+    $popupClone.find('.currentRecord').html(this.currentIdx + 1);
+    $popupClone.find('.totalrecords').html(this.total.toString());
+
+    $popupClone.find('a.viewAllRecords').attr('href', this.getViewAllLink());
+
+    // footer
+    $popupClone.find('.multiRecordFooter').show();
+
+    $popupClone.find('.nextRecord a').on('click', function() {
+        this.next();
+        return false;
+    }.bind(this));
+
+    $popupClone.find('.previousRecord a').on('click', function() {
+        this.previous();
+        return false;
+    }.bind(this));
+
+    this.$popupClone = $popupClone;
+
+    this.map.popup = L.popup().setLatLng(this.event.latlng);
+
+    this.map.popup.setContent(this.$popupClone[0]);
+    this.map.popup.openOn(this.map.map);
+}
+
+MapPopup.prototype.getViewAllLink = function() {
+    return 'http://example.com';
+}
+
+// Takes full occurrence info and shows in the popup
+MapPopup.prototype.showOccurrence = function(record) {
+    var html = this.map.formatPopupHtml(record);
+
+    this.$popupClone.find('.recordSummary').html(html);
+
+    if (record.raw) {
+        var html = this.map.formatPopupHtml(record);
+        this.$popupClone.find('.recordSummary').html(html);
+
+        this.$popupClone.find('.recordLink a').attr('href', this.map.props.contextPath + "/occurrences/" + record.raw.uuid);
+        this.$popupClone.find('.recordLink a').attr('disabled', false);
+    } else {
+        // missing record - disable "view record" button and display message
+        this.$popupClone.find('.recordLink a').attr('disabled', true).attr('href','javascript: void(0)');
+        // insert into clone
+        this.$popupClone.find('.recordSummary').html('<br>' + this.map.props.translations['search.recordNotFoundForId'] + ": <span style='white-space:nowrap;'>" + recordUuid + '</span><br><br>' );
+    }
+}
+
+// Switches to occurrence # idx
+MapPopup.prototype.switchOccurrence = function(idx) {
+    var self = this;
+
+    self.map.map.spin(true);
+
+    if(idx < self.uuids.length) {
+        var currentIdx = self.currentIdx;
+
+        self.loadOccurrence(self.uuids[idx], function(data) {
+            if(self.currentIdx == currentIdx) {
+                self.showOccurrence(data);
+                self.changeIndex(idx);
+                self.map.map.spin(false);
+            }
+        });
+    } else if(idx < self.total) {
+        self.loadMore(function() {
+            self.switchOccurrence(idx);
+            self.map.map.spin(false);
+        }.bind(self));
+    } else {
+        self.map.map.spin(false);
+    }
+}
+
+// Loads occurrence data
+MapPopup.prototype.loadOccurrence = function(uuid, callback) {
+    $.getJSON(this.map.props.contextPath + '/proxy/occurrences/' + uuid + '.json', callback);
+}
+
+MapPopup.prototype.loadMore = function(callback) {
+}
+
+function ColorMapPopup(map, event) {
+    MapPopup.call(this, map);
+
+    this.event = event;
+}
+
+ColorMapPopup.prototype = Object.create(MapPopup.prototype);
+
+ColorMapPopup.prototype.initialise = function() {
+    var self = this;
+    var map = self.map;
+
+    var mapQuery = map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
+    var radius = this.getPopupRadius();
+
+    map.map.spin(true);
+
+    $.ajax({
+        url: map.props.mappingUrl + "/occurrences/info" + mapQuery + map.removeFqs,
+        jsonp: "callback",
+        dataType: "jsonp",
+        timeout: 30000,
+
+        data: {
+            zoom: map.map.getZoom(),
+            lat: self.event.latlng.wrap().lat,
+            lon: self.event.latlng.wrap().lng,
+            radius: radius,
+            format: "json"
+        },
+
+        success: function(response) {
+            map.map.spin(false);
+
+            if (response.occurrences && response.occurrences.length > 0) {
+                self.uuids = response.occurrences;
+                self.total = self.uuids.length;
+
+                self.createElement();
+
+                self.switchOccurrence(0);
+            }
+        },
+
+        error: function() {
+            map.map.spin(false);
+        }
+    });
+}
+
+ColorMapPopup.prototype.getPopupRadius = function() {
+    var radius = 0;
+    var size = $('sizeslider-val').html();
+    var zoomLevel = this.map.map.getZoom();
+
+    radius = ZOOM_TO_RADIUS[zoomLevel];
+
+    if (size >= 5 && size < 8){
+        radius = radius * 2;
+    }
+
+    if (size >= 8){
+        radius = radius * 3;
+    }
+
+    return radius;
+}
+
+ColorMapPopup.prototype.getViewAllLink = function() {
+    var lat = this.event.latlng.lat;
+    var lon = this.event.latlng.lng;
+    var radius = this.getPopupRadius();
+
+    var occLookup = "&radius=" + radius + "&lat=" + lat + "&lon=" + lon;
+    var sanitizedQuery = this.map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
+
+    return  this.map.props.contextPath + '/occurrences/search' + sanitizedQuery + occLookup;
 }
