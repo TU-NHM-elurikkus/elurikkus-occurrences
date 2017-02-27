@@ -265,10 +265,13 @@ OccurrenceMap.prototype.addQueryLayer = function() {
 
     self.clearLayers();
 
+    if(self.mode) {
+        self.mode.destroy();
+    }
+
     var colourByFacet = $('#colourBySelect').val();
 
     if(colourByFacet && colourByFacet === 'taimeatlasGrid') {
-        // TODO: Taimeatlas mode
         self.mode = new TaimeatlasMode(self);
     } else {
         self.mode = new ColorMode(self, colourByFacet);
@@ -288,7 +291,6 @@ OccurrenceMap.prototype.clearLayers = function() {
     });
 
     self.currentLayers = [];
-    self.mode = null;
 }
 
 /**
@@ -600,6 +602,9 @@ MapMode.prototype.click = function(e) {
 MapMode.prototype.setOpacity = function(opacity) {
 }
 
+MapMode.prototype.destroy = function() {
+}
+
 /* Color mode: included in ALA, uses biocache-service to plot points colored by some facet
  * or render a grid
  */
@@ -733,11 +738,111 @@ function TaimeatlasMode(map) {
 
 TaimeatlasMode.prototype = Object.create(MapMode.prototype);
 
+var GRID_COLOR_MODES = (function() {
+    var MIN_INTENSITY = 100;
+    var MAX_INTENSITY = 255;
+
+    function rgbToCSS(r, g, b) {
+        return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
+
+    function getFrequency(count, min, max) {
+        return (count - min) / (max - min);
+    }
+
+    function getBounds(counts) {
+        var min = Infinity;
+        var max = -Infinity;
+
+        counts.forEach(function(square) {
+            min = Math.min(min, square.count);
+            max = Math.max(max, square.count);
+        });
+
+        return {
+            min: min,
+            max: max
+        };
+    }
+
+    function linear(counts) {
+        var bounds = getBounds(counts);
+
+        return function(count) {
+            var frequency = getFrequency(count, bounds.min, bounds.max);
+            var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
+
+            return rgbToCSS(intensity, intensity, 0);
+        }
+    }
+
+    function logscale(counts) {
+        var bounds = getBounds(counts);
+
+        return function(count) {
+            var frequency = Math.log(count - bounds.min + 1) / Math.log(bounds.max - bounds.min + 1);
+            var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
+
+            return rgbToCSS(intensity, intensity, 0);
+        }
+    }
+
+    function quantile(counts, quantileNum) {
+        // Calculate quantiles
+        if(quantileNum === undefined) {
+            quantileNum = Math.min(counts.length, 10);
+        }
+
+        var sortedCounts = counts.map(function(region) {
+            return region.count;
+        }).sort(function(a, b) {
+            return a - b;
+        });
+
+        var breakpoints = [];
+
+        var quantileSize = Math.floor(sortedCounts.length / quantileNum);
+
+        for(let i = 0; i < quantileNum - 1; i++) {
+            breakpoints[i] = sortedCounts[(i + 1) * quantileSize];
+        }
+
+        breakpoints[quantileNum - 1] = sortedCounts[sortedCounts.length - 1];
+
+        // Assign a color to each quantile
+        var colors = [];
+
+        for(let i = 0; i < quantileNum; i++) {
+            var intensity = Math.round(MIN_INTENSITY + (1 - i / (quantileNum - 1)) * (MAX_INTENSITY - MIN_INTENSITY));
+
+            colors[i] = rgbToCSS(intensity, intensity, 0);
+        }
+
+        return function(count) {
+            var quantile = 0;
+
+            while(quantile < quantileNum && breakpoints[quantile] < count) {
+                quantile++;
+            }
+
+            return colors[quantile];
+        }
+    }
+
+    return {
+        linear: linear,
+        logscale: logscale,
+        quantile: quantile
+    };
+})();
+
 TaimeatlasMode.prototype.queryCounts = function(callback) {
     var url = this.map.props.contextPath + '/proxy/occurrence/facets' + this.map.query + '&facets=cl1008&flimit=1000';
 
     $.getJSON(url, function(response) {
-        callback(response[0].fieldResult);
+        callback(response[0].fieldResult.filter(function(square) {
+            return square.label != '';
+        }));
     });
 }
 
@@ -765,15 +870,7 @@ TaimeatlasMode.prototype.initialize = function() {
     var self = this;
 
     self.queryCounts(function(counts) {
-        self.minCount = Infinity;
-        self.maxCount = -Infinity;
-
-        counts.forEach(function(square) {
-            if(square.label !== '') {
-                self.minCount = Math.min(self.minCount, square.count);
-                self.maxCount = Math.max(self.maxCount, square.count);
-            }
-        });
+        self.colorMode = GRID_COLOR_MODES['quantile'](counts);
 
         self.loadGeometry(counts, function(geometry) {
             var opacity = $('#opacityslider-val').html();
@@ -794,6 +891,8 @@ TaimeatlasMode.prototype.initialize = function() {
             self.map.layerControl.addOverlay(layer, 'Taimatlas grid');
             self.map.map.addLayer(layer);
             self.map.currentLayers.push(layer);
+
+            $('#ta-grid-color-mode').removeClass('hidden');
         });
     });
 }
@@ -807,19 +906,12 @@ TaimeatlasMode.prototype.click = function(e) {
 }
 
 TaimeatlasMode.prototype.createStyle = function(opacity, outline) {
-    var MIN_INTENSITY = 120;
-    var MAX_INTENSITY = 255;
-    var minCount = this.minCount;
-    var maxCount = this.maxCount;
+    var colorMode = this.colorMode;
 
     return function(feature) {
-        var frequency = (feature.properties.count - minCount) / (maxCount - minCount);
-        var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
-
-        // XXX: Frequency coloring doesn't really work, because of huge count differences
         return {
             color: 'rgb(0, 0, 0)',
-            fillColor: 'rgb(' + intensity + ',' + intensity + ',0)',
+            fillColor: colorMode(feature.properties.count),
             fillOpacity: opacity,
             weight: outline ? 1 : 0
         };
@@ -834,6 +926,10 @@ TaimeatlasMode.prototype.setOpacity = function(opacity) {
 
         this.layer.setStyle(this.createStyle(opacity, outline));
     }
+}
+
+TaimeatlasMode.prototype.destroy = function() {
+    $('#ta-grid-color-mode').addClass('hidden');
 }
 
 function MapPopup(map) {

@@ -246,6 +246,20 @@ a.colour-by-legend-toggle {
                             </g:if>
                         </g:each>
                     </select>
+
+                    <select id="ta-grid-color-mode" class="hidden">
+                        <option value="linear">
+                            Linear
+                        </option>
+
+                        <option value="logscale">
+                            Log-scale
+                        </option>
+
+                        <option value="quantile">
+                            Quantile
+                        </option>
+                    </select>
                 </div>
             </td>
 
