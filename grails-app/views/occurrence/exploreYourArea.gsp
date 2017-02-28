@@ -246,5 +246,16 @@
     </div><!-- .row-fluid -->
 
     <g:render template="/occurrence/download" plugin="biocache-hubs"/>
+
+    <script>
+        var query = '${params.query}';
+
+        if(query) {
+            $(document).ready(function() {
+                $("#address").val(query);
+                window.setTimeout(geocodeAddress, 0);
+            });
+        }
+    </script>
 </body>
 </html>
