@@ -68,6 +68,13 @@ function OccurrenceMap(query, props) {
     this.removeFqs = '';
 
     this.clickCount = 0;
+
+    this.uiOptions = {
+        pointSize: $('#sizeslider-val').html(),
+        opacity: $('#opacityslider-var').html(),
+        outline: $('#outlineDots').is(':checked'),
+        colorModeCode: $('#ta-grid-color-mode').val()
+    };
 }
 
 OccurrenceMap.prototype.initialize = function() {
@@ -199,7 +206,9 @@ OccurrenceMap.prototype.initialize = function() {
         value: Number($('#sizeslider-val').text()),
         tooltip: 'hide'
     }).on('slideStop', function(ev){
+        self.uiOptions.pointSize = ev.value;
         $('#sizeslider-val').html(ev.value);
+
         self.addQueryLayer();
     });
 
@@ -211,6 +220,8 @@ OccurrenceMap.prototype.initialize = function() {
         tooltip: 'hide'
     }).on('slideStop', function(ev){
         var value = parseFloat(ev.value).toFixed(1); // prevent values like 0.30000000004 appearing
+
+        self.uiOptions.opacity = value;
         $('#opacityslider-val').html(value);
 
         if(self.mode) {
@@ -221,7 +232,17 @@ OccurrenceMap.prototype.initialize = function() {
     });
 
     $('#outlineDots').click(function(e) {
+        self.uiOptions.outline = $('#outlineDots').is(':checked');
+
         self.addQueryLayer();
+    });
+
+    $('#ta-grid-color-mode').change(function(e) {
+        self.uiOptions.colorModeCode = e.target.value;
+
+        if(self.mode) {
+            self.mode.updateStyle();
+        }
     });
 
     self.fitMapToBounds(); // zoom map if points are contained within Australia
@@ -602,6 +623,13 @@ MapMode.prototype.click = function(e) {
 MapMode.prototype.setOpacity = function(opacity) {
 }
 
+// XXX: Used only for TA mode, because the normal one can't change styles (beside opacity)
+// without needing to be recreated
+//
+// TODO: Think how to unify those properly
+MapMode.prototype.updateStyle = function() {
+}
+
 MapMode.prototype.destroy = function() {
 }
 
@@ -622,9 +650,9 @@ ColorMode.prototype.initialize = function() {
     var layer;
 
     function reinitLayer() {
-        var pointSize = $('#sizeslider-val').html();
-        var opacity = $('#opacityslider-val').html();
-        var outlineDots = $('#outlineDots').is(':checked');
+        var pointSize = self.map.uiOptions.pointSize;
+        var opacity = self.map.uiOptions.opacity;
+        var outlineDots = self.map.uiOptions.outline;
 
         var envProperty = "color:" + self.map.props.pointColour + ";nam:circle;size:" + pointSize + ";opacity:" + opacity;
 
@@ -870,15 +898,16 @@ TaimeatlasMode.prototype.initialize = function() {
     var self = this;
 
     self.queryCounts(function(counts) {
-        self.colorMode = GRID_COLOR_MODES['quantile'](counts);
+        self.counts = counts;
 
         self.loadGeometry(counts, function(geometry) {
-            var opacity = $('#opacityslider-val').html();
-            var outline = $('#outlineDots').is(':checked');
+            var opacity = self.map.uiOptions.opacity;
+            var outline = self.map.uiOptions.outline;
+            var colorModeCode = self.map.uiOptions.colorModeCode;
 
             // TODO: count-based styling?
             var layer = L.geoJson(geometry, {
-                style: self.createStyle(opacity, outline),
+                style: self.createStyle(opacity, outline, colorModeCode),
                 onEachFeature: function(feature, layer) {
                     layer.on('click', function(e) {
                         self.showPopup(e, feature);
@@ -905,8 +934,8 @@ TaimeatlasMode.prototype.showPopup = function(e, feature) {
 TaimeatlasMode.prototype.click = function(e) {
 }
 
-TaimeatlasMode.prototype.createStyle = function(opacity, outline) {
-    var colorMode = this.colorMode;
+TaimeatlasMode.prototype.createStyle = function(opacity, outline, colorModeCode) {
+    var colorMode = GRID_COLOR_MODES[colorModeCode](this.counts);
 
     return function(feature) {
         return {
@@ -919,12 +948,17 @@ TaimeatlasMode.prototype.createStyle = function(opacity, outline) {
 }
 
 TaimeatlasMode.prototype.setOpacity = function(opacity) {
+    this.updateStyle();
+}
+
+TaimeatlasMode.prototype.updateStyle = function() {
     // Layer is initialised async, so need to guard
     if(this.layer) {
-        // XXX: Controls should hold their values in OccurrenceMap
-        var outline = $('#outlineDots').is(':checked');
+        var opacity = this.map.uiOptions.opacity;
+        var outline = this.map.uiOptions.outline;
+        var colorModeCode = this.map.uiOptions.colorModeCode;
 
-        this.layer.setStyle(this.createStyle(opacity, outline));
+        this.layer.setStyle(this.createStyle(opacity, outline, colorModeCode));
     }
 }
 
@@ -1106,7 +1140,7 @@ ColorMapPopup.prototype.initialise = function() {
 
 ColorMapPopup.prototype.getPopupRadius = function() {
     var radius = 0;
-    var size = $('sizeslider-val').html();
+    var size = this.map.uiOptions.pointSize;
     var zoomLevel = this.map.map.getZoom();
 
     radius = ZOOM_TO_RADIUS[zoomLevel];
