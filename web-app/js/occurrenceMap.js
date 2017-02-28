@@ -767,7 +767,7 @@ function TaimeatlasMode(map) {
 TaimeatlasMode.prototype = Object.create(MapMode.prototype);
 
 var GRID_COLOR_MODES = (function() {
-    var MIN_INTENSITY = 100;
+    var MIN_INTENSITY = 0;
     var MAX_INTENSITY = 255;
 
     function rgbToCSS(r, g, b) {
@@ -800,7 +800,7 @@ var GRID_COLOR_MODES = (function() {
             var frequency = getFrequency(count, bounds.min, bounds.max);
             var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
 
-            return rgbToCSS(intensity, intensity, 0);
+            return rgbToCSS(255, intensity, 0);
         }
     }
 
@@ -811,7 +811,7 @@ var GRID_COLOR_MODES = (function() {
             var frequency = Math.log(count - bounds.min + 1) / Math.log(bounds.max - bounds.min + 1);
             var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
 
-            return rgbToCSS(intensity, intensity, 0);
+            return rgbToCSS(255, intensity, 0);
         }
     }
 
@@ -843,7 +843,7 @@ var GRID_COLOR_MODES = (function() {
         for(let i = 0; i < quantileNum; i++) {
             var intensity = Math.round(MIN_INTENSITY + (1 - i / (quantileNum - 1)) * (MAX_INTENSITY - MIN_INTENSITY));
 
-            colors[i] = rgbToCSS(intensity, intensity, 0);
+            colors[i] = rgbToCSS(255, intensity, 0);
         }
 
         return function(count) {
