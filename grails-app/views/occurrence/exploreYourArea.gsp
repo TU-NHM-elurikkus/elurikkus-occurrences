@@ -61,32 +61,6 @@
 
 <body class="nav-locations explore-your-area">
     <div id="header" class="heading-bar">
-        <g:if test="${grailsApplication.config.skin.layout == 'ala'}">
-            <div id="breadcrumb">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="${grailsApplication.config.organisation.baseUrl}">
-                            <g:message code="eya.breadcrumb.navigator01" default="Home"/>
-                        </a>
-
-                        <span class=" icon icon-arrow-right"></span>
-                    </li>
-
-                    <li>
-                        <a href="${grailsApplication.config.organisation.baseUrl}/species-by-location/">
-                            <g:message code="eya.breadcrumb.navigator02" default="Locations"/>
-                        </a>
-
-                        <span class=" icon icon-arrow-right"></span>
-                    </li>
-
-                    <li class="active">
-                        <g:message code="eya.breadcrumb.navigator03" default="Your Area"/>
-                    </li>
-                </ol>
-            </div>
-        </g:if>
-
         <h1>
             <g:message code="eya.header.title" default="Explore Your Area"/>
         </h1>
