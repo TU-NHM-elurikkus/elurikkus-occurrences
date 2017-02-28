@@ -248,7 +248,7 @@
     <g:render template="/occurrence/download" plugin="biocache-hubs"/>
 
     <script>
-        var query = '${params.query}';
+        var query = '${params.q}';
 
         if(query) {
             $(document).ready(function() {
