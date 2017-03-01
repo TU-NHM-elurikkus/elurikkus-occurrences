@@ -24,9 +24,10 @@ modules = {
     }
 
     exploreArea {
-        dependsOn 'jquery, purl'
-        resource url: [dir: 'js', file: 'exploreArea.js']
-        resource url: [dir: 'js', file: 'magellan.js', plugin: 'biocache-hubs']
+        dependsOn 'jquery'
+        resource url: [dir: 'js', file: 'exploreArea.js'], disposition: 'head'
+        resource url: [dir: 'js', file: 'magellan.js', plugin: 'biocache-hubs'], disposition: 'head'
         resource url: [dir: 'css', file: 'exploreYourArea.css', plugin: 'biocache-hubs'], attrs: [media: 'all']
+        resource url: [dir: 'js', file: 'purl.js', plugin: 'biocache-hubs'], disposition: 'head'
     }
 }

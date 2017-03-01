@@ -29,34 +29,16 @@
     <meta name="section" content="yourArea"/>
     <title><g:message code="eya.title01" default="Explore Your Area"/> | <g:message code="eya.title02" default="Atlas of Living Australia"/></title>
 
+    <g:render template="/layouts/global" plugin="biocache-hubs"/>
+
     <g:if test="${grailsApplication.config.google.apikey}">
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
     </g:if>
     <g:else>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     </g:else>
 
-    <g:render template="/layouts/global" plugin="biocache-hubs"/>
-
     <r:require modules="exploreArea, qtip"/>
-
-    <script type="text/javascript">
-        // Global variables for yourAreaMap.js
-        var EYA_CONF = {
-            contextPath: "${request.contextPath}",
-            biocacheServiceUrl: "${biocacheServiceUrl.encodeAsHTML()?:''}",
-            imagesUrlPrefix: "${request.contextPath}/static/js/eya-images",
-            zoom: ${zoom},
-            radius: ${radius},
-            speciesPageUrl: "${speciesPageUrl}",
-            queryContext: "${queryContext}",
-            locale: "${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}",
-            hasGoogleKey: ${grailsApplication.config.google.apikey as Boolean}
-        }
-
-        //make the taxa and rank global variable so that they can be used in the download
-        var taxa = ["*"], rank = "*";
-    </script>
 </head>
 
 <body class="nav-locations explore-your-area">
@@ -221,15 +203,24 @@
 
     <g:render template="/occurrence/download" plugin="biocache-hubs"/>
 
-    <script>
-        var query = $.url().param('q');
-
-        if(query) {
-            $(document).ready(function() {
-                $("#address").val(query);
-                window.setTimeout(geocodeAddress, 100);
-            });
+    <script type="text/javascript">
+        // Global variables for yourAreaMap.js
+        var EYA_CONF = {
+            contextPath: "${request.contextPath}",
+            biocacheServiceUrl: "${biocacheServiceUrl.encodeAsHTML()?:''}",
+            imagesUrlPrefix: "${request.contextPath}/static/js/eya-images",
+            zoom: ${zoom},
+            radius: ${radius},
+            speciesPageUrl: "${speciesPageUrl}",
+            queryContext: "${queryContext}",
+            locale: "${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}",
+            hasGoogleKey: ${grailsApplication.config.google.apikey as Boolean}
         }
+
+        loadExploreArea(EYA_CONF);
+
+        //make the taxa and rank global variable so that they can be used in the download
+        var taxa = ["*"], rank = "*";
     </script>
 </body>
 </html>
