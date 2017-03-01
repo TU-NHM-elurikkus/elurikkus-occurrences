@@ -38,7 +38,7 @@
 
     <g:render template="/layouts/global" plugin="biocache-hubs"/>
 
-    <r:require modules="exploreYourArea, qtip"/>
+    <r:require modules="exploreArea, qtip"/>
 
     <script type="text/javascript">
         // Global variables for yourAreaMap.js
@@ -222,12 +222,12 @@
     <g:render template="/occurrence/download" plugin="biocache-hubs"/>
 
     <script>
-        var query = '${params.q}';
+        var query = $.url().param('q');
 
         if(query) {
             $(document).ready(function() {
                 $("#address").val(query);
-                window.setTimeout(geocodeAddress, 0);
+                window.setTimeout(geocodeAddress, 100);
             });
         }
     </script>

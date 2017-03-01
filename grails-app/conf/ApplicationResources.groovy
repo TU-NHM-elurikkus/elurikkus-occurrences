@@ -22,4 +22,11 @@ modules = {
         dependsOn 'jquery'
         resource url: [dir:'js', file:'occurrenceMap.js']
     }
+
+    exploreArea {
+        dependsOn 'jquery, purl'
+        resource url: [dir: 'js', file: 'exploreArea.js']
+        resource url: [dir: 'js', file: 'magellan.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'css', file: 'exploreYourArea.css', plugin: 'biocache-hubs'], attrs: [media: 'all']
+    }
 }
