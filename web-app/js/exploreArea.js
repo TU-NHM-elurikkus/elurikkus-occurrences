@@ -41,7 +41,7 @@ function loadExploreArea(EYA_CONF) {
 
     // Load Google maps via AJAX API
     if(EYA_CONF !== undefined && !EYA_CONF.hasGoogleKey){
-     google.load("maps", "3.3", {other_params:"sensor=false"});
+        google.load("maps", "3.3", {other_params:"sensor=false"});
     }
 
     /**
@@ -52,7 +52,58 @@ function loadExploreArea(EYA_CONF) {
         geocoder = new google.maps.Geocoder();
 
         // Catch page events...
-        
+        registerEventHandlers();        
+
+        // Handle back button and saved URLs
+        // hash coding: #lat|lng|zoom
+        var hash = window.location.hash.replace( /^#/, '');
+        var hash2;
+        var defaultParam = $.url().param('default'); // requires JS import: purl.js
+
+        if (hash.indexOf("%7C") != -1) {
+            // already escaped
+            hash2 = hash;
+        } else {
+            // escape used to prevent injection attacks
+            hash2 = encodeURIComponent(hash);
+        }
+
+        var query = $.url().param('q');
+
+        if (defaultParam) {
+            initialize();
+        } else if (hash2) {
+            //console.log("url hash", hash2);
+            var hashParts = hash2.split("%7C"); // note escaped version of |
+            if (hashParts.length == 3) {
+                bookmarkedSearch(hashParts[0], hashParts[1], hashParts[2], null);
+            } else if (hashParts.length == 4) {
+                bookmarkedSearch(hashParts[0], hashParts[1], hashParts[2], hashParts[3]);
+            } else {
+                attemptGeolocation();
+            }
+        } else if(query) {
+            $("#address").val(query);
+            geocodeAddress();
+        } else {
+            //console.log("url not set, geolocating...");
+            attemptGeolocation();
+        }
+
+        addTooltips();
+
+    }); // end onLoad event
+
+    //var proj900913 = new OpenLayers.Projection("EPSG:900913");
+    //var proj4326 = new OpenLayers.Projection("EPSG:4326");
+
+    // pointer fn
+    function initialize() {
+        loadMap();
+        loadGroups();
+    }
+
+    function registerEventHandlers() {
         // Register events for the species_group column
         $('#taxa-level-0 tbody tr').live("mouseover mouseout", function() {
             // mouse hover on groups
@@ -103,50 +154,27 @@ function loadExploreArea(EYA_CONF) {
             }
         });
 
-        // Handle back button and saved URLs
-        // hash coding: #lat|lng|zoom
-        var hash = window.location.hash.replace( /^#/, '');
-        var hash2;
-        var defaultParam = $.url().param('default'); // requires JS import: purl.js
-        //console.log("defaultParam", defaultParam);
-
-        if (hash.indexOf("%7C") != -1) {
-            // already escaped
-            hash2 = hash;
-        } else {
-            // escape used to prevent injection attacks
-            hash2 = encodeURIComponent(hash);
-        }
-
-        if (defaultParam) {
-            initialize();
-        } else if (hash2) {
-            //console.log("url hash", hash2);
-            var hashParts = hash2.split("%7C"); // note escaped version of |
-            if (hashParts.length == 3) {
-                bookmarkedSearch(hashParts[0], hashParts[1], hashParts[2], null);
-            } else if (hashParts.length == 4) {
-                bookmarkedSearch(hashParts[0], hashParts[1], hashParts[2], hashParts[3]);
-            } else {
-                attemptGeolocation();
-            }
-        } else {
-            //console.log("url not set, geolocating...");
-            attemptGeolocation();
-        }
-
-
         // catch the link for "View all records"
         $('#viewAllRecords').live("click", function(e) {
             e.preventDefault();
-            //var params = "q=taxon_name:*|"+$('#latitude').val()+"|"+$('#longitude').val()+"|"+$('#radius').val();
             var params = "q=*:*&lat="+$('#latitude').val()+"&lon="+$('#longitude').val()+"&radius="+$('#radius').val();
             if (speciesGroup != "ALL_SPECIES") {
                 params += "&fq=species_group:" + speciesGroup;
             }
+
             document.location.href = EYA_CONF.contextPath +'/occurrences/search?' + params;
         });
 
+        // Catch enter key press on form
+        $("#searchForm").bind("keypress", function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                geocodeAddress();
+            }
+        });
+    }
+
+    function addTooltips() {
         // Tooltip for matched location
         $('#addressHelp').qtip({
             content: {
@@ -195,33 +223,8 @@ function loadExploreArea(EYA_CONF) {
                 }
             }
         });
-
-        // Catch enter key press on form
-        $("#searchForm").bind("keypress", function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                geocodeAddress();
-            }
-        });
-
-        var query = $.url().param('q');
-
-        if(query) {
-            $(document).ready(function() {
-                $("#address").val(query);
-                window.setTimeout(geocodeAddress, 100);
-            });
-        }
-    }); // end onLoad event
-
-    //var proj900913 = new OpenLayers.Projection("EPSG:900913");
-    //var proj4326 = new OpenLayers.Projection("EPSG:4326");
-
-    // pointer fn
-    function initialize() {
-        loadMap();
-        loadGroups();
     }
+
     /**
      * Google map API v3
      */
