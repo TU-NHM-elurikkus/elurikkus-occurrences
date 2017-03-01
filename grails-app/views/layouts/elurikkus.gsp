@@ -68,34 +68,7 @@
 <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
 <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}"/>
 
-<header class="header" role="banner">
-    <%-- XXX TEMPORARY HREF --%>
-    <a href="http://localhost:8888/">
-        <g:img dir="images" file="logo.svg" alt="eElurikkus logo" class="logo" />
-    </a>
-
-    <nav class="menu" role="navigation">
-        <span class="submenu">
-            <h2 class="submenu__title">
-                <a href="#">
-                    Home
-                </a>
-            </h2>
-        </span>
-
-        <span class="submenu">
-            <h2 class="submenu__title">
-                About
-            </h2>
-        </span>
-
-        <span class="submenu">
-            <h2 class="submenu__title">
-                Contact
-            </h2>
-        </span>
-    </nav>
-</header>
+<g:render plugin="elurikkus-commons" template="/menu"/>
 
 <div class="${fluidLayout?'container-fluid':'container'}" id="main-content">
     <g:layoutBody />

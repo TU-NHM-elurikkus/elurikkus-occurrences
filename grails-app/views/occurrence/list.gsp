@@ -381,7 +381,6 @@
                                           facets:sr.facetResults,
                                           defaultColourBy:grailsApplication.config.map.defaultFacetMapColourBy
                                   ]"
-                                  plugin="biocache-hubs"
                         />
                         <div id='envLegend'></div>
                     </div><!-- end #mapwrapper -->

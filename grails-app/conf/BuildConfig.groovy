@@ -37,7 +37,7 @@ grails.project.dependency.resolution = {
     repositories {
         mavenLocal()
         mavenRepo ("http://nexus.ala.org.au/content/groups/public/") {
-            updatePolicy 'always'
+            updatePolicy 'daily'
         }
     }
 
@@ -54,5 +54,6 @@ grails.project.dependency.resolution = {
         runtime ":cached-resources:1.0"
         runtime ":biocache-hubs:1.4-SNAPSHOT"
         compile ":jquery:1.11.1"
+        runtime ":elurikkus-commons:0.1"
     }
 }
