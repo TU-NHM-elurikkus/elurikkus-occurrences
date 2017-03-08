@@ -129,8 +129,8 @@
                 } else {
                     // EYA page is JS driven
                     downloadUrlPrefix += "?q=*:*&lat="+$('#latitude').val()+"&lon="+$('#longitude').val()+"&radius="+$('#radius').val();
-                    if (speciesGroup && speciesGroup != "ALL_SPECIES") {
-                        downloadUrlPrefix += "&fq=species_group:" + speciesGroup;
+                    if (eyaState.speciesGroup && eyaState.speciesGroup != "ALL_SPECIES") {
+                        downloadUrlPrefix += "&fq=species_group:" + eyaState.speciesGroup;
                     }
                 }
 
