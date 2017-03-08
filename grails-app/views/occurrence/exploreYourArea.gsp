@@ -201,7 +201,7 @@
         </div><!-- .span5 -->
     </div><!-- .row-fluid -->
 
-    <g:render template="/occurrence/download" plugin="biocache-hubs"/>
+    <g:render template="/occurrence/download"/>
 
     <script type="text/javascript">
         // Global variables for yourAreaMap.js
@@ -217,7 +217,7 @@
             hasGoogleKey: ${grailsApplication.config.google.apikey as Boolean}
         }
 
-        loadExploreArea(EYA_CONF);
+        var eyaState = loadExploreArea(EYA_CONF);
 
         //make the taxa and rank global variable so that they can be used in the download
         var taxa = ["*"], rank = "*";

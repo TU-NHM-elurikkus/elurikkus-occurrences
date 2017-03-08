@@ -26,8 +26,12 @@
 //}
 
 function loadExploreArea(EYA_CONF) {
+    var state = {
+        speciesGroup: 'ALL_SPECIES'
+    };
+
     var geocoder, map, marker, circle, markerInfowindow, lastInfoWindow, taxon, taxonGuid;
-    var points = [], infoWindows = [], speciesGroup = "ALL_SPECIES";
+    var points = [], infoWindows = [];
     var zoomForRadius = {
         1000: 14,
         5000: 12,
@@ -158,8 +162,8 @@ function loadExploreArea(EYA_CONF) {
         $('#viewAllRecords').live("click", function(e) {
             e.preventDefault();
             var params = "q=*:*&lat="+$('#latitude').val()+"&lon="+$('#longitude').val()+"&radius="+$('#radius').val();
-            if (speciesGroup != "ALL_SPECIES") {
-                params += "&fq=species_group:" + speciesGroup;
+            if (state.speciesGroup != "ALL_SPECIES") {
+                params += "&fq=species_group:" + state.speciesGroup;
             }
 
             document.location.href = EYA_CONF.contextPath +'/occurrences/search?' + params;
@@ -347,7 +351,7 @@ function loadExploreArea(EYA_CONF) {
         $('#latitude').val(latLng.lat());
         $('#longitude').val(latLng.lng());
         // Update URL hash for back button, etc
-        location.hash = latLng.lat() + "|" + latLng.lng() + "|" + EYA_CONF.zoom + "|" + speciesGroup;
+        location.hash = latLng.lat() + "|" + latLng.lng() + "|" + EYA_CONF.zoom + "|" + state.speciesGroup;
         $('#dialog-confirm #rad').html(EYA_CONF.radius);
     }
 
@@ -380,7 +384,7 @@ function loadExploreArea(EYA_CONF) {
         if (taxon) {
             params.q = "taxon_name:\"" + taxon + "\"";
         } else {
-            params.group = speciesGroup;
+            params.group = state.speciesGroup;
         }
         //console.log('About to call $.get', map);
         // JQuery AJAX call
@@ -439,8 +443,8 @@ function loadExploreArea(EYA_CONF) {
             var fqParam = "";
             if (taxonGuid) {
                 fqParam = "&fq=species_guid:" + taxonGuid;
-            } else if (speciesGroup != "ALL_SPECIES") {
-                fqParam = "&fq=species_group:" + speciesGroup;
+            } else if (state.speciesGroup != "ALL_SPECIES") {
+                fqParam = "&fq=species_group:" + state.speciesGroup;
             }
             
             var content = '<div class="infoWindow">Number of records: '+n.properties.count+'<br/>'+
@@ -576,7 +580,7 @@ function loadExploreArea(EYA_CONF) {
      */
     function groupClicked(el) {
         // Change the global var speciesGroup
-        speciesGroup = $(el).find('a.taxonBrowse').attr('id');
+        state.speciesGroup = $(el).find('a.taxonBrowse').attr('id');
         taxon = null; // clear any species click 
         taxonGuid = null;
         //taxa = []; // array of taxa
@@ -585,7 +589,7 @@ function loadExploreArea(EYA_CONF) {
         $(el).addClass("activeRow");
         $('#taxa-level-1 tbody tr').addClass("activeRow");
         // update records page link text
-        if (speciesGroup == "ALL_SPECIES") {
+        if (state.speciesGroup == "ALL_SPECIES") {
             $("#recordsGroupText").text("all");
         } else {
             $("#recordsGroupText").text("selected");
@@ -596,7 +600,7 @@ function loadExploreArea(EYA_CONF) {
 
         if (map) loadRecordsLayer();
         // AJAX...
-        var uri = EYA_CONF.biocacheServiceUrl + "/explore/group/"+speciesGroup+".json?callback=?";
+        var uri = EYA_CONF.biocacheServiceUrl + "/explore/group/"+ state.speciesGroup + ".json?callback=?";
         var params = {
             lat: $('#latitude').val(),
             lon: $('#longitude').val(),
@@ -729,7 +733,7 @@ function loadExploreArea(EYA_CONF) {
                 }
                 $("div#rightList").data("sort", sortOrder); // save it to the DOM
                 // AJAX...
-                var uri = EYA_CONF.biocacheServiceUrl + "/explore/group/"+speciesGroup+".json?callback=?";
+                var uri = EYA_CONF.biocacheServiceUrl + "/explore/group/" + state.speciesGroup + ".json?callback=?";
                 //var params = "&lat="+$('#latitude').val()+"&lon="+$('#longitude').val()+"&radius="+$('#radius').val()+"&group="+speciesGroup;
                 var params = {
                     lat: $('#latitude').val(),
@@ -806,7 +810,7 @@ function loadExploreArea(EYA_CONF) {
         function addGroupRow(group, count, indent) {
             var label = group;
             if (group == "ALL_SPECIES") label = "All Species";
-            var rc = (group == speciesGroup) ? " class='activeRow'" : ""; // highlight active group
+            var rc = (group == state.speciesGroup) ? " class='activeRow'" : ""; // highlight active group
             var h = "<tr"+rc+" title='click to view group on map'><td class='indent"+indent+"'><a href='#' id='"+group+"' class='taxonBrowse' title='click to view group on map'>"+label+"</a></td><td>"+count+"</td></tr>";
             $("#taxa-level-0 tbody").append(h);
         }
@@ -816,9 +820,11 @@ function loadExploreArea(EYA_CONF) {
         EYA_CONF.radius = radiusForZoom[zoom1];  // set global var
         EYA_CONF.zoom = parseInt(zoom1);
         $('select#radius').val(EYA_CONF.radius); // update drop-down widget
-        if (group) speciesGroup = group;
+        if (group) state.speciesGroup = group;
         updateMarkerPosition(new google.maps.LatLng(lat, lng));
         // load map and groups
         initialize();
     }
+
+    return state;
 }
