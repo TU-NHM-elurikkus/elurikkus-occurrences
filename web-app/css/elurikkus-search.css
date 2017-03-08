@@ -1,0 +1,53 @@
+/**
+ * SEARCH STUFF, MAINLY STYLE OVERWRITES.
+ * PROABLY GOING TO REMOVE ORIGINAL SEARCH CSS ONCE WE CAN SUSTAIN WAHT WE WANT
+ * TO SEE
+ */
+
+#facetWell {
+    font-size: 12px;
+}
+
+.subnavlist {
+    height: 4.5rem; /* 3 * body line height. Should result in about  3 line heights. */
+    overflow-y: scroll;
+}
+
+/**
+ * Override tab style.
+ * Will be removed when we get rid of original ALA search CSS.
+ */
+.nav-tabs li a {
+    background-color: initial;
+    border: initial;
+    margin-right: initial;
+}
+
+.search-filter-menu {
+    font-size: 12px; /* XXX */
+}
+
+.search-filter-menu--title {
+    padding: 4px 8px;
+}
+
+.search-filter-menu--buttons {
+    padding: 4px 8px;
+}
+
+.search-filter-menu--facets {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.search-filter-menu--facets--facet {
+    padding: 4px 8px;
+}
+
+.search-filter-checkbox__label {
+    margin: 0;
+}
+
+.search-filter-checkbox__label__input {
+    height: 1.2rem;
+}

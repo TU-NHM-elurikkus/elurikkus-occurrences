@@ -105,13 +105,13 @@
 
         // XXX
         // extend tooltip with callback
-        var tmp = $.fn.tooltip.Constructor.prototype.show;
-        $.fn.tooltip.Constructor.prototype.show = function () {
-            tmp.call(this);
-            if (this.options.callback) {
-                this.options.callback();
-            }
-        };
+        // var tmp = $.fn.tooltip.Constructor.prototype.show;
+        // $.fn.tooltip.Constructor.prototype.show = function () {
+        //     tmp.call(this);
+        //     if (this.options.callback) {
+        //         this.options.callback();
+        //     }
+        // };
 
         var defaultBaseLayer = L.tileLayer("${grailsApplication.config.map.minimal.url}", {
             attribution: "${raw(grailsApplication.config.map.minimal.attr)}",
@@ -238,32 +238,32 @@
             L.Browser.any3d = false; // FF bug prevents selects working properly
 
             // Add a help tooltip to map when first loaded
-            MAP_VAR.map.whenReady(function() {
-                var opts = {
-                    placement:'right',
-                    callback: destroyHelpTooltip // hide help tooltip when mouse over the tools
-                }
-                $('.leaflet-draw-toolbar a').tooltip(opts);
-                $('.leaflet-draw-toolbar').first().attr('title',jQuery.i18n.prop('advancedsearch.js.choosetool')).tooltip({placement:'right'}).tooltip('show');
-            });
+            // MAP_VAR.map.whenReady(function() {
+            //     var opts = {
+            //         placement:'right',
+            //         callback: destroyHelpTooltip // hide help tooltip when mouse over the tools
+            //     }
+            //     $('.leaflet-draw-toolbar a').tooltip(opts);
+            //     $('.leaflet-draw-toolbar').first().attr('title',jQuery.i18n.prop('advancedsearch.js.choosetool')).tooltip({placement:'right'}).tooltip('show');
+            // });
 
-            // Hide help tooltip on first click event
-            var once = true;
-            MAP_VAR.map.on('click', function(e) {
-                if (once) {
-                    $('.leaflet-draw-toolbar').tooltip('destroy');
-                    once = false;
-                }
-            });
+            // // Hide help tooltip on first click event
+            // var once = true;
+            // MAP_VAR.map.on('click', function(e) {
+            //     if (once) {
+            //         $('.leaflet-draw-toolbar').tooltip('destroy');
+            //         once = false;
+            //     }
+            // });
         }
 
-        var once = true;
-        function destroyHelpTooltip() {
-            if ($('.leaflet-draw-toolbar').length && once) {
-                $('.leaflet-draw-toolbar').tooltip('destroy');
-                once = false;
-            }
-        }
+        // var once = true;
+        // function destroyHelpTooltip() {
+        //     if ($('.leaflet-draw-toolbar').length && once) {
+        //         $('.leaflet-draw-toolbar').tooltip('destroy');
+        //         once = false;
+        //     }
+        // }
 
     </r:script>
 </head>
