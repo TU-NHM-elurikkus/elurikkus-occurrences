@@ -5,38 +5,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <alatag:addApplicationMetaTags />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     %{--<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">--}%
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700' rel='stylesheet' type='text/css'>
 
     <title><g:layoutTitle /></title>
-    <r:require modules="bootstrap, hubCore" />
-    <style type="text/css">
-    body {
-        background-color: #ffffff !important;
-    }
-    #breadcrumb {
-        margin-top: 10px;
-    }
-    #main-content #searchInfoRow #customiseFacetsButton > .dropdown-menu {
-        background-color: #ffffff;
-    }
-    #footer {
-        margin: 20px;
-        padding-top: 10px;
-        border-top: 1px solid #CCC;
-        font-size: 12px;
-    }
-    #content .nav-tabs > li.active > a {
-        background-color: #ffffff;
-    }
-    .nav {
-        margin-top: 20px;
-    }
-    body > #main-content {
-        margin-top: 0px;
-    }
 
-    </style>
+    <r:require modules="elurikkusStyle, elurikkusCoreHub, bootstrap4" />
     <r:script disposition='head'>
         // initialise plugins
         jQuery(function(){
@@ -89,13 +64,15 @@
     <r:layoutResources/>
     <g:layoutHead />
 </head>
+
 <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
 <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}"/>
+
 <g:render plugin="elurikkus-commons" template="/menu"/>
 
 <div class="${fluidLayout?'container-fluid':'container'}" id="main-content">
     <g:layoutBody />
-</div><!--/.container-->
+</div>
 
 <div id="footer">
     <div class="container-fluid">
@@ -105,10 +82,9 @@
         Provider content may be covered by other <a href="#terms-of-use" title="Terms of Use">Terms of Use</a>.
         </div>
     </div>
-</div><!--/#footer -->
+</div>
 <br/>
 
-<!-- JS resources-->
 <r:layoutResources/>
 </body>
 </html>

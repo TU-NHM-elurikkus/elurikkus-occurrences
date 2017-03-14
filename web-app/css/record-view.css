@@ -1,0 +1,12 @@
+td.noStripe {
+    background-color: #ffffff;
+}
+
+/**
+ * Because the dwcLabel class is not in template, nor added in JQuery hacks.
+ */
+.occurrenceTable td.dwcLabel {
+    width: 33%;
+    vertical-align: top;
+    font-weight: bold;
+}

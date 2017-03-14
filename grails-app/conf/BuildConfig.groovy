@@ -53,6 +53,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.2.8"
         runtime ":cached-resources:1.0"
         runtime ":biocache-hubs:1.4-SNAPSHOT"
-        runtime ":elurikkus-commons:0.1"
+        compile ":jquery:1.11.1"
+        runtime ":elurikkus-commons:0.2-SNAPSHOT"
     }
 }
