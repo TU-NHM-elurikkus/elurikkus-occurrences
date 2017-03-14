@@ -1,12 +1,13 @@
 <g:if test="${isUnderCas && !isReadOnly && record.processed.attribution.provenance != 'Draft'}">
     %{-- XXX --}%
     <div class="sidebar" style="float:left;">
+        %{-- Remove it for now. Put it back or delete when we have decided whether or not we need it at all.
         <button class="btn" id="assertionButton" href="#loginOrFlag" role="button" data-toggle="modal" title="report a problem or suggest a correction for this record">
-            %{-- XXX --}%
             <span id="loginOrFlagSpan" title="Flag an issue" class="">
-                <span class="icon-flag" />&nbsp;<g:message code="show.button.assertionbutton.span" default="Flag an issue"/>
+                <span class="icon-flag"></span>&nbsp;<g:message code="show.button.assertionbutton.span" default="Flag an issue"/>
             </span>
         </button>
+        --}%
 
         <div id="loginOrFlag" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginOrFlagLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -81,43 +82,100 @@
     </div>
 </g:if>
 <div class="clearfix"></div>
-<ul id="navBox" class="nav nav-tabs nav-stacked">
-    <li><a href="#occurrenceDataset"><g:message code="recordcore.occurencedataset.title" default="Dataset"/></a></li>
-    <li><a href="#occurrenceEvent"><g:message code="recordcore.occurenceevent.title" default="Event"/></a></li>
-    <li><a href="#occurrenceTaxonomy"><g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/></a></li>
-    <li><a href="#occurrenceGeospatial"><g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/></a></li>
+
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link" href="#occurrenceDataset">
+            <g:message code="recordcore.occurencedataset.title" default="Dataset"/>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#occurrenceEvent">
+            <g:message code="recordcore.occurenceevent.title" default="Event"/>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#occurrenceTaxonomy">
+            <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#occurrenceGeospatial">
+            <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
+        </a>
+    </li>
+
     <g:if test="${record.raw.miscProperties}">
-        <li><a href="#additionalProperties"><g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#additionalProperties">
+                <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
+            </a>
+        </li>
     </g:if>
+
     <g:if test="${record.images}">
-        <li><a href="#images"><g:message code="show.sidebar03.title" default="Images"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#images">
+                <g:message code="show.sidebar03.title" default="Images"/>
+            </a>
+        </li>
     </g:if>
+
     <g:if test="${record.sounds}">
-        <li><a href="#soundsHeader"><g:message code="show.soundsheader.title" default="Sounds"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#soundsHeader">
+                <g:message code="show.soundsheader.title" default="Sounds"/>
+            </a>
+        </li>
     </g:if>
-    <li><a href="#userAnnotationsDiv" id="userAnnotationsNav" style="display:none;"><g:message code="show.userannotationsdiv.title" default="User flagged issues"/></a></li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#userAnnotationsDiv" id="userAnnotationsNav" style="display:none;">
+            <g:message code="show.userannotationsdiv.title" default="User flagged issues"/>
+        </a>
+    </li>
+
     <g:if test="${record.systemAssertions && record.processed.attribution.provenance != 'Draft'}">
-        <li><a href="#dataQuality"><g:message code="show.dataquality.title" default="Data quality tests"/>
-        (${record.systemAssertions.failed?.size()?:0} <i class="fa fa-times-circle tooltips" style="color:red;" title="<g:message code="assertions.failed" default="failed"/>"></i>,
-        ${record.systemAssertions.warning?.size()?:0} <i class="fa fa-exclamation-circle tooltips" style="color:orange;" title="<g:message code="assertions.warnings" default="warning"/>"></i>,
-        ${record.systemAssertions.passed?.size()?:0} <i class="fa fa-check-circle tooltips" style="color:green;" title="<g:message code="assertions.passed" default="passed"/>"></i>,
-        ${record.systemAssertions.missing?.size()?:0} <i class="fa fa-question-circle tooltips" style="color:gray;" title="<g:message code="assertions.missing" default="missing"/>"></i>,
-        ${record.systemAssertions.unchecked?.size()?:0} <i class="fa fa-ban tooltips" style="color:gray;" title="<g:message code="assertions.unchecked" default="unchecked"/>"></i>)
-        </a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#dataQuality">
+                <g:message code="show.dataquality.title" default="Data quality tests"/>
+                (${record.systemAssertions.failed?.size()?:0} <i class="fa fa-times-circle tooltips" style="color:red;" title="<g:message code="assertions.failed" default="failed"/>"></i>,
+                ${record.systemAssertions.warning?.size()?:0} <i class="fa fa-exclamation-circle tooltips" style="color:orange;" title="<g:message code="assertions.warnings" default="warning"/>"></i>,
+                ${record.systemAssertions.passed?.size()?:0} <i class="fa fa-check-circle tooltips" style="color:green;" title="<g:message code="assertions.passed" default="passed"/>"></i>,
+                ${record.systemAssertions.missing?.size()?:0} <i class="fa fa-question-circle tooltips" style="color:gray;" title="<g:message code="assertions.missing" default="missing"/>"></i>,
+                ${record.systemAssertions.unchecked?.size()?:0} <i class="fa fa-ban tooltips" style="color:gray;" title="<g:message code="assertions.unchecked" default="unchecked"/>"></i>)
+            </a>
+        </li>
     </g:if>
+
     <g:if test="${record.processed.occurrence.outlierForLayers}">
-        <li><a href="#outlierInformation"><g:message code="show.outlierinformation.title" default="Outlier information"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#outlierInformation"><g:message code="show.outlierinformation.title" default="Outlier information"/></a>
+        </li>
     </g:if>
+
     <g:if test="${record.processed.occurrence.duplicationStatus}">
-        <li><a href="#inferredOccurrenceDetails"><g:message code="show.inferredoccurrencedetails.title" default="Inferred associated occurrence details"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#inferredOccurrenceDetails"><g:message code="show.inferredoccurrencedetails.title" default="Inferred associated occurrence details"/></a>
+        </li>
     </g:if>
+
     <g:if test="${contextualSampleInfo}">
-        <li><a href="#contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional political boundaries information"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional political boundaries information"/></a>
+        </li>
     </g:if>
+
     <g:if test="${environmentalSampleInfo}">
-        <li><a href="#environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></a></li>
+        <li class="nav-item">
+            <a class="nav-link" href="#environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></a>
+        </li>
     </g:if>
 </ul>
+
 <g:if test="${false && record.processed.attribution.provenance != 'Draft'}">
     <div class="sidebar">
         <div id="warnings">

@@ -9,7 +9,11 @@
 }
 
 .subnavlist {
-    height: 4.5rem; /* 3 * body line height. Should result in about  3 line heights. */
+    /**
+     * 3 * body line height. Should result in about  3 line heights.
+     * At least this is what it should be.
+     */
+    height: 3.7rem;
     overflow-y: scroll;
 }
 
@@ -50,4 +54,117 @@
 
 .search-filter-checkbox__label__input {
     height: 1.2rem;
+}
+
+/**
+ * SEARCH FILTER FACET CHECKBOX HEIGHT IN MODAL BECAUSE SOMEONE THOUGHT IT'S A
+ * GOOD IDEA TO CONSTRUCT HTML WITH INLINE STYLE IN JQUERY.
+ */
+.fqs {
+    height: initial;
+}
+
+#facetWell.well {
+    border: 1px solid #DDD;
+    border-radius: .25rem;
+    padding: 4px;
+}
+
+.showHideFacetGroup {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* XXX */ */ */ */
+.FieldName {
+    font-weight: bold;
+}
+
+/* RESULTS TABLE */
+.tab-content {
+    border-bottom: 1px solid #DDD;
+    border-right: 1px solid #DDD;
+    border-left: 1px solid #DDD;
+    padding: 15px;
+}
+
+/* RESULTS TABLE */
+#results .rowA {
+    color: #555;
+    margin-top: 4px;
+    font-weight: bold;
+}
+
+/* RESULTS TABLE */
+#results .rowB {
+    font-size: 12px;
+    color: #222;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #DDD;
+    margin-bottom: 0;
+}
+
+/* Gallery styling */
+.imgCon {
+    display: inline-block;
+    /* margin-right: 8px; */
+    text-align: center;
+    line-height: 1.3em;
+    background-color: #DDD;
+    color: #DDD;
+    font-size: 12px;
+    /*text-shadow: 2px 2px 6px rgba(255, 255, 255, 1);*/
+    /* padding: 5px; */
+    /* margin-bottom: 8px; */
+    margin: 2px 4px 2px 0;
+    position: relative;
+}
+.imgCon img {
+    height: 170px;
+    min-width: 150px;
+}
+.imgCon .meta {
+    opacity: 0.8;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    text-align: left;
+    padding: 4px 5px 2px 5px;
+}
+.imgCon .brief {
+    color: black;
+    background-color: white;
+}
+.imgCon .detail {
+    color: white;
+    background-color: black;
+    opacity: 0.7;
+}
+
+#imageDialog.modal {
+    width: 90%; /* desired relative width */
+    min-height:80%;
+    left: 5%; /* (100%-width)/2 */
+    margin: auto auto auto auto; /* place center */
+}
+
+#imageDialog .modal-body {
+    overflow-y: hidden;
+    position: static;
+    top: 50px;
+    bottom: 50px;
+    right: 0px;
+    left: 0px;
+    max-height: 90%;
+}
+
+/* XXX */
+#imageDialog .modal-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }

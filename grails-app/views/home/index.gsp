@@ -264,34 +264,39 @@
         //         once = false;
         //     }
         // }
-
     </r:script>
 </head>
 
 <body>
     <div id="headingBar" class="heading-bar">
-        <h1 style="width:100%;" id="searchHeader"><g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}</h1>
+        <h1 style="width:100%;" id="searchHeader">
+            <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}
+        </h1>
     </div>
+
     <g:if test="${flash.message}">
         <div class="message alert alert-info">
             <button type="button" class="close" onclick="$(this).parent().hide()">×</button>
             <b><g:message code="home.index.body.alert" default="Alert:" /></b> ${raw(flash.message)}
         </div>
     </g:if>
+
     <div class="row-fluid" id="content">
-        <div class="span12">
+        <div class="col-12">
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="searchTabs">
-                    <li class="nav-item"><a id="t1" href="#simple-search" data-toggle="tab"><g:message code="home.index.navigator01" default="Simple search" /></a></li>
-                    <li class="nav-item"><a id="t2" href="#advanced-search" data-toggle="tab"><g:message code="home.index.navigator02" default="Advanced search" /></a></li>
-                    <li class="nav-item"><a id="t3" href="#taxa-upload" data-toggle="tab"><g:message code="home.index.navigator03" default="Batch taxon search" /></a></li>
-                    <li class="nav-item"><a id="t4" href="#catalog-upload" data-toggle="tab"><g:message code="home.index.navigator04" default="Catalogue number search" /></a></li>
-                    <li class="nav-item"><a id="t5" href="#spatial-search" data-toggle="tab"><g:message code="home.index.navigator05" default="Spatial search" /></a></li>
+                    <li class="nav-item"><a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active"><g:message code="home.index.navigator01" default="Simple search" /></a></li>
+                    <li class="nav-item"><a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator02" default="Advanced search" /></a></li>
+                    <li class="nav-item"><a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator03" default="Batch taxon search" /></a></li>
+                    <li class="nav-item"><a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator04" default="Catalogue number search" /></a></li>
+                    <li class="nav-item"><a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator05" default="Spatial search" /></a></li>
                 </ul>
             </div>
+
             <div class="tab-content searchPage">
                 <div id="simple-search" class="tab-pane active">
                     <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
+                        %{-- XXX --}%
                         <br/>
                         <div class="controls">
                             <div class="input-append">
@@ -299,7 +304,9 @@
                                 <button id="locationSearch" type="submit" class="btn"><g:message code="home.index.simsplesearch.button" default="Search" /></button>
                             </div>
                         </div>
+
                         <div>
+                            %{-- XXX --}%
                             <br/>
                             <span style="font-size: 12px; color: #444;">
                                 <b><g:message code="home.index.simsplesearch.span" default="Note: the simple search attempts to match a known species/taxon - by its scientific name or common name. If there are no name matches, a full text search will be performed on your query" />
@@ -307,42 +314,59 @@
                         </div>
                     </form>
                 </div><!-- end simpleSearch div -->
+
                 <div id="advanced-search" class="tab-pane">
                     <g:render template="advanced" />
                 </div><!-- end #advancedSearch div -->
+
                 <div id="taxa-upload" class="tab-pane">
                     <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
                         <p><g:message code="home.index.taxaupload.des01" default="Enter a list of taxon names/scientific names, one name per line (common names not currently supported)." /></p>
                         <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
-                        <p><textarea name="queries" id="raw_names" class="span6" rows="15" cols="60"></textarea></p>
+                        <p><textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea></p>
                         <p>
                             <%--<input type="submit" name="action" value="Download" />--%>
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="raw_name" />
-                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" default="Search" /> class="btn" /></p>
+                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" default="Search" /> class="btn" />
+                        </p>
                     </form>
                 </div><!-- end #uploadDiv div -->
+
                 <div id="catalog-upload" class="tab-pane">
                     <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
-                        <p><g:message code="home.index.catalogupload.des01" default="Enter a list of catalogue numbers (one number per line)." /></p>
+                        <p>
+                            <g:message code="home.index.catalogupload.des01" default="Enter a list of catalogue numbers (one number per line)." />
+                        </p>
+
                         <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
-                        <p><textarea name="queries" id="catalogue_numbers" class="span6" rows="15" cols="60"></textarea></p>
+
+                        <p>
+                            <textarea name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
+                        </p>
+
                         <p>
                             <%--<input type="submit" name="action" value="Download" />--%>
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
-                            <input type="submit" name="action" value=<g:message code="home.index.catalogupload.button01" default="Search" /> class="btn" /></p>
+                            %{-- XXX --}%
+                            <input type="submit" name="action" value=<g:message code="home.index.catalogupload.button01" default="Search" /> class="btn" />
+                        </p>
                     </form>
                 </div><!-- end #catalogUploadDiv div -->
+
                 <div id="spatial-search" class="tab-pane">
                     <div class="row-fluid">
-                        <div class="span3">
+                        <div class="col-3">
                             <div>
                                 <g:message code="search.map.helpText" default="Select one of the draw tools (polygon, rectangle, circle), draw a shape and click the search link that pops up." />
                             </div>
+
+                            %{-- XXX --}%
                             <br>
+
                             <div class="accordion accordion-caret" id="accordion2">
                                 <div class="accordion-group">
                                     <div class="accordion-heading">
@@ -350,6 +374,7 @@
                                             <g:message code="search.map.importToggle" default="Import WKT" />
                                         </a>
                                     </div>
+
                                     <div id="collapseOne" class="accordion-body collapse">
                                         <div class="accordion-inner">
                                             <p><g:message code="search.map.importText" /></p>
@@ -361,15 +386,15 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="span9">
+
+                        <div class="col-9">
                             <div id="leafletMap" style="height:600px;"></div>
                         </div>
                     </div>
-                </div><!-- end #spatialSearch  -->
-            </div><!-- end .tab-content -->
-        </div><!-- end .span12 -->
-    </div><!-- end .row-fluid -->
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

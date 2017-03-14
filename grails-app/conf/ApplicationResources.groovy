@@ -19,8 +19,6 @@ modules = {
         resource url: [dir: 'js', file: 'search.js']
         // Maybe keep it, maybe ditch it.
         resource url: [dir: 'css', file: 'print-search.css', plugin: 'biocache-hubs'], attrs: [ media: 'print' ]
-        // Temporary, should remove it eventually.
-        resource url: [dir: 'css', file: 'search.css', plugin: 'biocache-hubs'], attrs: [ media: 'all' ]
         /**
          * New CSS with overrides. Should replace overrides with legimate CSS
          * and the file should replace search.css completely.

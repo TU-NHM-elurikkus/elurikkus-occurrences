@@ -143,11 +143,11 @@
             </div>
 
             <div class="row">
-                <div id="SidebarBoxZ" class="col-4">
+                <div id="SidebarBoxZ" class="col-3">
                     <g:render template="recordSidebar" />
                 </div><!-- end div#SidebarBox -->
 
-                <div id="content2Z" class="col-8">
+                <div id="content2Z" class="col-9">
                     <div class="text-right">
                         <button href="#processedVsRawView" class="btn" id="showRawProcessed" role="button" data-toggle="modal"
                                 title="Table showing both original and processed record values">
@@ -745,7 +745,6 @@
             </li>
         </ul>
 
-        %{-- THE HEL IS THIS? --}%
         <div id="verifyRecordModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="loginOrFlagLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

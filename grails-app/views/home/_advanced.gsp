@@ -25,7 +25,6 @@
         </legend>
 
         <g:each in="${1..4}" var="i">
-            <%-- THE HEL IS THIS? --%>
             <g:set var="lsidParam" value="lsid_${i}" />
             <div class="form-group row">
                 <label for="taxa_${i}" class="col-2">
@@ -361,7 +360,6 @@
     </div>
 </form>
 
-<%-- THE HEL IS THIS? --%>
 <r:script>
     $(document).ready(function() {
         $('.bscombobox').combobox({bsVersion: '2'});

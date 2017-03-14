@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (C) 2011 Atlas of Living Australia
  *  All Rights Reserved.
  *
@@ -176,7 +176,7 @@ $(document).ready(function() {
     });
 
     // user selectable facets...
-    $("#updateFacetOptions").live("click", function(e) {
+    $("#updateFacetOptions").click(function(e) {
         e.preventDefault();
 
         // For later use.
@@ -653,6 +653,7 @@ $(document).ready(function() {
     });
 
     // set size of modal dialog during a resize
+    // XXX This shouldn't be necessary.
     $(window).on('resize', setDialogSize)
     function setDialogSize() {
         var height = $(window).height()
@@ -706,13 +707,13 @@ function reloadWithParam(paramName, paramValue) {
     if (paramName != null && paramValue != null) {
         paramList.push(paramName + "=" +paramValue);
     }
-    
+
     if (lat && lon && rad) {
         paramList.push("lat=" + lat);
         paramList.push("lon=" + lon);
         paramList.push("radius=" + rad);
     }
-    
+
     if (taxa) {
         paramList.push("taxa=" + taxa);
     }
@@ -745,13 +746,13 @@ function removeFacet(el) {
     }
 
     //console.log("1. fqList", fqList);
-    
+
     if (lat && lon && rad) {
         paramList.push("lat=" + lat);
         paramList.push("lon=" + lon);
         paramList.push("radius=" + rad);
     }
-    
+
     if (taxa) {
         paramList.push("taxa=" + taxa);
     }
@@ -953,10 +954,10 @@ function loadImagesInTab() {
 }
 
 function loadImages(start) {
-
         start = (start) ? start : 0;
         var imagesJsonUri = BC_CONF.biocacheServiceUrl + "/occurrences/search.json" + BC_CONF.searchString +
             "&fq=multimedia:Image&facet=false&pageSize=20&start=" + start + "&sort=identification_qualifier_s&dir=asc&callback=?";
+
         $.getJSON(imagesJsonUri, function (data) {
             //console.log("data",data);
             if (data.occurrences) {
@@ -964,13 +965,17 @@ function loadImages(start) {
                 if (start == 0) {
                     $("#imagesGrid").html("");
                 }
+
                 var count = 0;
+
                 $.each(data.occurrences, function (i, el) {
                     //console.log("el", el.image);
                     count++;
                     // clone template div & populate with metadata
                     var $ImgConTmpl = $('.imgConTmpl').clone();
-                    $ImgConTmpl.removeClass('imgConTmpl').removeClass('hide');
+
+                    $ImgConTmpl.removeClass('imgConTmpl').removeClass('invisible');
+
                     var link = $ImgConTmpl.find('a.cbLink');
                     //link.attr('id','thumb_' + category + i);
                     link.addClass('thumbImage tooltips');
@@ -979,7 +984,7 @@ function loadImages(start) {
                     link.attr('data-occurrenceuid', el.uuid);
                     link.attr('data-image-id', el.image);
                     link.attr('data-scientific-name', el.raw_scientificName);
-                    
+
                     $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
                     // brief metadata
                     var briefHtml = el.raw_scientificName;
@@ -998,11 +1003,11 @@ function loadImages(start) {
                         detailHtml += br + el.dataResourceName;
                     }
                     $ImgConTmpl.find('.detail').html(detailHtml);
-    
+
                     // write to DOM
                     $("#imagesGrid").append($ImgConTmpl.html());
                 });
-    
+
                 if (count + start < data.totalRecords) {
                     //console.log("load more", count, start, count + start, data.totalRecords);
                     $('#imagesGrid').data('count', count + start);
@@ -1011,7 +1016,7 @@ function loadImages(start) {
                 } else {
                     $("#loadMoreImages").hide();
                 }
-    
+
             }
         }).always(function () {
             $("#loadMoreImages img").hide();
@@ -1127,7 +1132,7 @@ function loadSpeciesInTab(start, sortField, group) {
 /**
  * iBox Jquery plugin for Google Images hover effect.
  * Origina by roxon http://stackoverflow.com/users/383904/roxon
- * Posted to stack overflow: 
+ * Posted to stack overflow:
  *   http://stackoverflow.com/questions/7411393/pop-images-like-google-images/7412302#7412302
  */
 (function($) {
@@ -1186,7 +1191,7 @@ function loadSpeciesInTab(start, sortField, group) {
                     e.preventDefault();
                     window.location.href = link;
                 });
-                
+
                 ibox.css({
                     top: elY + 'px',
                     left: elX + 'px',
@@ -1197,7 +1202,7 @@ function loadSpeciesInTab(start, sortField, group) {
                     //$(this).animate({top: '-='+(resize/2), left:'-='+wh},200).children('img').animate({height:'+='+resize},200);
                     $(this).children('img').animate({height:'+='+resize},200);
                 });
-                
+
             });
 
             ibox.mouseleave(function() {
@@ -1309,8 +1314,8 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     //console.log("label", label, facetName, el);
                     var fqParam = (el.fq) ? encodeURIComponent(el.fq) : facetName + ":" + ((encodeFq) ? encodeURIComponent(fqEsc) : fqEsc) ;
                     //var link = BC_CONF.searchString.replace("'", "&apos;") + "&fq=" + fqParam;
-                    
-                    //NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues 
+
+                    //NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues
                     //Problematic URL http://biocache.ala.org.au/occurrences/search?q=lsid:urn:lsid:biodiversity.org.au:afd.taxon:b76f8dcf-fabd-4e48-939c-fd3cafc1887a&fq=geospatial_kosher:true&fq=state:%22Australian%20Capital%20Territory%22
                     var link = BC_CONF.searchString + "&fq=" + fqParam;
                     //console.log(link)

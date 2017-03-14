@@ -399,7 +399,7 @@ a.colour-by-legend-toggle {
     }
 </r:script>
 
-<div class="hide">
+<div style="display: none;">
     <div class="popupRecordTemplate">
         <div class="multiRecordHeader hide">
             <g:message code="search.map.viewing" default="Viewing"/>
@@ -418,19 +418,21 @@ a.colour-by-legend-toggle {
 
         </div>
 
-        <div class="hide multiRecordFooter">
-            <span class="previousRecord ">
-                <a href="#" class="btn btn-mini disabled">
-                    <g:message code="search.map.popup.prev" default="&lt; Prev"/>
-                </a>
-            </span>
+        <p>
+            <div class="hide multiRecordFooter">
+                <span class="previousRecord ">
+                    <a href="#" class="btn btn-mini disabled">
+                        <g:message code="search.map.popup.prev" default="&lt; Prev"/>
+                    </a>
+                </span>
 
-            <span class="nextRecord ">
-                <a href="#" class="btn btn-mini disabled">
-                    <g:message code="search.map.popup.next" default="Next &gt;"/>
-                </a>
-            </span>
-        </div>
+                <span class="nextRecord ">
+                    <a href="#" class="btn btn-mini disabled">
+                        <g:message code="search.map.popup.next" default="Next &gt;"/>
+                    </a>
+                </span>
+            </div>
+        </p>
 
         <div class="recordLink">
             <a href="#" class="btn btn-mini">
