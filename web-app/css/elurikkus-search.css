@@ -13,8 +13,16 @@
      * 3 * body line height. Should result in about  3 line heights.
      * At least this is what it should be.
      */
-    height: 3.7rem;
+    max-height: 3.7rem;
     overflow-y: scroll;
+}
+
+.subnavlist .facets {
+    /**
+     * Override Elurikkus styleguide. Not sure we should implement a style
+     * in such way.
+     */
+    margin: 0;
 }
 
 /**
@@ -64,10 +72,10 @@
     height: initial;
 }
 
-#facetWell.well {
+#facetWell {
     border: 1px solid #DDD;
     border-radius: .25rem;
-    padding: 4px;
+    padding: 16px;
 }
 
 .showHideFacetGroup {

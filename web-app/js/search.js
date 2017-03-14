@@ -405,7 +405,7 @@ $(document).ready(function() {
         loadMoreFacets(facetName, displayName, null);
     });
 
-    $('#multipleFacets').on('hidden', function () {
+    $('#multipleFacets').on('hidden.bs.modal', function () {
         // clear the tbody content
         $("tbody.scrollContent tr").not("#spinnerRow").remove();
     });
