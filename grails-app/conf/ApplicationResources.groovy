@@ -77,4 +77,9 @@ modules = {
             dependsOn 'bootstrap4'
         }
     }
+
+    lightbox {
+        resource url: [dir: 'js', file: 'ekko-lightbox.min.js'], disposition: 'head'
+        resource url: [dir: 'css', file: 'ekko-lightbox.min.css'], disposition: 'head'
+    }
 }
