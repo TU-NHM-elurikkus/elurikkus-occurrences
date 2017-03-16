@@ -1,6 +1,6 @@
 modules = {
     elurikkusStyle {
-        resource url: [dir: 'css', file: 'elurikkus-cms.css', plugin: 'elurikkus-commons']
+        resource url: [dir: 'css', file: 'elurikkus-common.css', plugin: 'elurikkus-commons']
         resource url: [dir: 'css', file: 'elurikkus.css', plugin: 'elurikkus-commons']
     }
 
