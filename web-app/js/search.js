@@ -611,45 +611,11 @@ $(document).ready(function() {
         $(this).find('.brief, .detail').toggleClass('invisible');
     });
 
-
-    var imageId, attribution, recordUrl, scientificName;
     // Lightbox
     $(document).delegate('.thumbImage', 'click', function(event) {
-        var recordLink = '<a href="RECORD_URL">View details of this record</a>'
         event.preventDefault();
-        imageId = $(this).attr('data-image-id');
-        scientificName = $(this).attr('data-scientific-name');
-        attribution = $(this).find('.meta.detail').html();
-        recordUrl = $(this).attr('href');
-        recordLink = recordLink.replace('RECORD_URL', recordUrl);
-        var flagIssueLink = '<a href="RECORD_URL">record.</a>';
-        flagIssueLink = flagIssueLink.replace('RECORD_URL', recordUrl);
-        attribution += '<br>' + recordLink +
-                       '<br><br>If this image is incorrectly<br>identified please flag an<br>issue on the ' + flagIssueLink +'<br>';
-        setDialogSize();
-        $('#imageDialog').modal('show');
-    });
 
-    // show image only after modal dialog is shown. otherwise, image position will be off the viewing area.
-    $('#imageDialog').on('shown.bs.modal',function () {
-        imgvwr.viewImage($("#viewerContainerId"), imageId, scientificName, undefined, {
-            imageServiceBaseUrl: BC_CONF.imageServiceBaseUrl,
-            addSubImageToggle: false,
-            addCalibration: false,
-            addDrawer: false,
-            addCloseButton: true,
-            addAttribution: true,
-            addLikeDislikeButton: BC_CONF.addLikeDislikeButton,
-            addPreferenceButton: BC_CONF.addPreferenceButton,
-            attribution: attribution,
-            disableLikeDislikeButton: BC_CONF.disableLikeDislikeButton,
-            likeUrl: BC_CONF.likeUrl + '?id=' + imageId,
-            dislikeUrl: BC_CONF.dislikeUrl + '?id=' + imageId,
-            userRatingUrl: BC_CONF.userRatingUrl + '?id=' + imageId,
-            userRatingHelpText: BC_CONF.userRatingHelpText.replace('RECORD_URL', recordUrl),
-            savePreferredSpeciesListUrl: BC_CONF.savePreferredSpeciesListUrl + '?id=' + imageId + '&scientificName=' + scientificName,
-            getPreferredSpeciesListUrl: BC_CONF.getPreferredSpeciesListUrl
-        });
+        $(this).ekkoLightbox();
     });
 
     // set size of modal dialog during a resize
@@ -979,11 +945,14 @@ function loadImages(start) {
                     var link = $ImgConTmpl.find('a.cbLink');
                     //link.attr('id','thumb_' + category + i);
                     link.addClass('thumbImage tooltips');
-                    link.attr('href', BC_CONF.contextPath + "/occurrences/" + el.uuid);
+                    //link.attr('href', BC_CONF.contextPath + "/occurrences/" + el.uuid);
                     link.attr('title', 'click to enlarge');
                     link.attr('data-occurrenceuid', el.uuid);
                     link.attr('data-image-id', el.image);
                     link.attr('data-scientific-name', el.raw_scientificName);
+                    link.attr('data-gallery', 'main-gallery');
+                    link.attr('data-remote', BC_CONF.hostName+ el.image.replace('/data', '/'));
+                    link.attr('data-title', '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">Open</a>');
 
                     $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
                     // brief metadata
@@ -1003,6 +972,8 @@ function loadImages(start) {
                         detailHtml += br + el.dataResourceName;
                     }
                     $ImgConTmpl.find('.detail').html(detailHtml);
+
+                    link.attr('data-footer', detailHtml);
 
                     // write to DOM
                     $("#imagesGrid").append($ImgConTmpl.html());

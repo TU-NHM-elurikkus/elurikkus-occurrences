@@ -633,14 +633,14 @@ a.colour-by-legend-toggle {
         // restrict search to current map bounds/view
         $('#wktFromMapBounds').click(function(e) {
             e.preventDefault();
-            var b = MAP_VAR.map.getBounds();
+            var b = occMap.map.getBounds();
             var wkt = "POLYGON ((" + b.getWest() + " " + b.getNorth() + ", " +
                     b.getEast()  + " " + b.getNorth() + ", " +
                     b.getEast()  + " " + b.getSouth() + ", " +
                     b.getWest()  + " " + b.getSouth() + ", " +
                     b.getWest() + " " + b.getNorth() + "))";
             //console.log('wkt', wkt);
-            var url = "${g.createLink(uri:'/occurrences/search')}" + MAP_VAR.query + "&wkt=" + encodeURIComponent(wkt);
+            var url = "${g.createLink(uri:'/occurrences/search')}" + occMap.query + "&wkt=" + encodeURIComponent(wkt);
             //console.log('new url', url);
             window.location.href = url;
         });
@@ -653,7 +653,7 @@ a.colour-by-legend-toggle {
 
     function downloadMapNow(){
 
-        var bounds = MAP_VAR.map.getBounds();
+        var bounds = occMap.map.getBounds();
         var ne =  bounds.getNorthEast();
         var sw =  bounds.getSouthWest();
         var extents = sw.lng + ',' + sw.lat + ',' + ne.lng + ','+ ne.lat;
