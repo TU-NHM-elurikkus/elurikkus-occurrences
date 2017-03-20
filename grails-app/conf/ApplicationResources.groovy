@@ -1,9 +1,4 @@
 modules = {
-    elurikkusStyle {
-        resource url: [dir: 'css', file: 'elurikkus-common.css', plugin: 'elurikkus-commons']
-        resource url: [dir: 'css', file: 'elurikkus.css', plugin: 'elurikkus-commons']
-    }
-
     elurikkusCoreHub {
         dependsOn 'jquery_i18n'
         defaultBundle 'main-core'
@@ -63,7 +58,7 @@ modules = {
 
     // TODO: Try and sort out the mess with all the bootstrap versions.
     bootstrap4 {
-        dependsOn: 'tether'
+        dependsOn: tether
         resource url: [dir: 'js', file: 'bootstrap.min.js', plugin: 'elurikkus-commons' , disposition: 'head']
         resource url: [dir: 'css', file: 'bootstrap.min.css', plugin: 'elurikkus-commons' , attrs: [media: 'screen, projection, print']]
         resource url: [dir: 'css', file: 'bootstrap-grid.min.css', plugin: 'elurikkus-commons', attrs: [media: 'screen, projection, print']]

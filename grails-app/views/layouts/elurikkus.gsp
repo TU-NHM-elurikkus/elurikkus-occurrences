@@ -11,7 +11,7 @@
 
     <title><g:layoutTitle /></title>
 
-    <r:require modules="elurikkusStyle, elurikkusCoreHub, bootstrap4" />
+    <r:require modules="elurikkusCoreHub, menu" />
     <r:script disposition='head'>
         // initialise plugins
         jQuery(function(){
