@@ -48,4 +48,9 @@ modules = {
         resource url: [dir: 'css', file: 'exploreYourArea.css'], attrs: [media: 'all']
         resource url: [dir: 'js', file: 'purl.js', plugin: 'biocache-hubs'], disposition: 'head'
     }
+
+    lightbox {
+        resource url: [dir: 'js', file: 'ekko-lightbox.min.js'], disposition: 'head'
+        resource url: [dir: 'css', file: 'ekko-lightbox.min.css'], disposition: 'head'
+    }
 }

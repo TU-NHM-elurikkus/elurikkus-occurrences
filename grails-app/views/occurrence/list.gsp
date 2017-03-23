@@ -30,6 +30,7 @@
         <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}"/>
         var BC_CONF = {
             contextPath: "${request.contextPath}",
+            hostName: "${grailsApplication.config.serverName}",
             serverName: "${grailsApplication.config.serverName}${request.contextPath}",
             searchString: "${searchString}", //  JSTL var can contain double quotes // .encodeAsJavaScript()
             facetQueries: "${fqParams.encodeAsURL()}",
@@ -66,7 +67,7 @@
         };
     </script>
 
-    <r:require modules="elurikkusSearch, leaflet, leafletPlugins, slider, qtip, nanoscroller, amplify, moment, mapCommon, charts, image-viewer"/>
+    <r:require modules="elurikkusSearch, leaflet, leafletPlugins, slider, qtip, nanoscroller, amplify, moment, mapCommon, charts, image-viewer, lightbox"/>
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete"/>
     </g:if>
