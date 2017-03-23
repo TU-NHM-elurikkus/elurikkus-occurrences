@@ -3,7 +3,6 @@ modules = {
         dependsOn 'jquery_i18n'
         defaultBundle 'main-core'
         resource url: [dir: 'css', file: 'autocomplete.css', plugin: 'biocache-hubs']
-        // resource url: [dir: 'css', file: 'base.css', plugin: 'biocache-hubs'], attrs: [ media: 'all' ]
         resource url: [dir: 'js', file: 'jquery.autocomplete.js', plugin: 'biocache-hubs'], disposition: 'head'
         resource url: [dir: 'js', file: 'biocache-hubs.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'html5.js', plugin: 'biocache-hubs'], wrapper: { s -> "<!--[if lt IE 9]>$s<![endif]-->" }, disposition: 'head'
@@ -46,31 +45,7 @@ modules = {
         dependsOn 'jquery'
         resource url: [dir: 'js', file: 'exploreArea.js'], disposition: 'head'
         resource url: [dir: 'js', file: 'magellan.js', plugin: 'biocache-hubs'], disposition: 'head'
-        resource url: [dir: 'css', file: 'exploreYourArea.css', plugin: 'biocache-hubs'], attrs: [media: 'all']
+        resource url: [dir: 'css', file: 'exploreYourArea.css'], attrs: [media: 'all']
         resource url: [dir: 'js', file: 'purl.js', plugin: 'biocache-hubs'], disposition: 'head'
-    }
-
-    // Tooltips required by Bootstrap 4.
-    tether {
-        resource url: [dir: 'js', file: 'tether.min.js', plugin: 'elurikkus-commons']
-        resource url: [dir: 'css', file: 'tether.min.css', plugin: 'elurikkus-commons']
-    }
-
-    // TODO: Try and sort out the mess with all the bootstrap versions.
-    bootstrap4 {
-        dependsOn: tether
-        resource url: [dir: 'js', file: 'bootstrap.min.js', plugin: 'elurikkus-commons' , disposition: 'head']
-        resource url: [dir: 'css', file: 'bootstrap.min.css', plugin: 'elurikkus-commons' , attrs: [media: 'screen, projection, print']]
-        resource url: [dir: 'css', file: 'bootstrap-grid.min.css', plugin: 'elurikkus-commons', attrs: [media: 'screen, projection, print']]
-    }
-
-    bootstrap {
-        dependsOn 'bootstrap2'
-    }
-
-    overrides {
-        bootstrap2 {
-            dependsOn 'bootstrap4'
-        }
     }
 }

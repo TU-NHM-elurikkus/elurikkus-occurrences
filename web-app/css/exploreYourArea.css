@@ -42,10 +42,6 @@ table#cellCountsLegend {
     margin-top: 10px;
 }
 
-#taxaBox {
-    /*border-bottom:2px solid #d9d9d9;*/
-}
-
 #taxaBox div#rightList {
     float: left;
     width: 66%;
@@ -62,6 +58,10 @@ table#cellCountsLegend {
 #taxaBox #leftList {
     width: 33%;
     float: left;
+    margin-bottom: 16px;
+}
+#taxaBox #rightList {
+    margin-bottom: 16px;
 }
 #taxaBox td, #taxaBox th {
     padding:1px 5px;
@@ -174,16 +174,17 @@ a.taxonBrowse2, a.taxonBrowse2:hover, a.taxonBrowse2:focus {
 #taxaBox p {
     margin-bottom: 5px;
 }
-#searchForm .input-append {
-    /*width: 40%;*/
-}
+/*
 #searchForm #address {
     width: 85%;
 }
+*/
+/*
 #locationInfo {
     padding: 0;
     margin: 0;
 }
+*/
 #searchHints {
     color:#555;
     font-size:.9em;
@@ -194,6 +195,7 @@ input#location {
 button#download {
     /*	padding:1px;*/
 }
+/*
 #locationInfo {
     padding-top:.8em;
     border-top:1px solid #d9d9d9;
@@ -207,15 +209,20 @@ button#download {
 #locationInfo span.pad {
     margin-right: 15px;
 }
+*/
+/*
 .help-inline {
     padding-top: 5px;
 }
+*/
+/*
 #locationInfo #resultsInfo {
     margin: 10px 0;
 }
 #locationInfo .btn-small {
     font-size: 12px;
 }
+*/
 #markerAddress {
     font-weight:bold;
 }

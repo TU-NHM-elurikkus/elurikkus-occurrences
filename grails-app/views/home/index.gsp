@@ -268,12 +268,6 @@
 </head>
 
 <body>
-    <div id="headingBar" class="heading-bar">
-        <h1 style="width:100%;" id="searchHeader">
-            <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}
-        </h1>
-    </div>
-
     <g:if test="${flash.message}">
         <div class="message alert alert-info">
             <button type="button" class="close" onclick="$(this).parent().hide()">×</button>
@@ -281,8 +275,12 @@
         </div>
     </g:if>
 
-    <div class="row-fluid" id="content">
-        <div class="col-12">
+    <div class="row" id="content">
+        <div class="col-md-12 col-xl-10">
+            <h3>
+                <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}
+            </h3>
+
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="searchTabs">
                     <li class="nav-item"><a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active"><g:message code="home.index.navigator01" default="Simple search" /></a></li>
@@ -295,25 +293,29 @@
 
             <div class="tab-content searchPage">
                 <div id="simple-search" class="tab-pane active">
-                    <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
-                        %{-- XXX --}%
-                        <br/>
-                        <div class="controls">
-                            <div class="input-append">
-                                <input type="text" name="taxa" id="taxa" class="input-xxlarge">
-                                <button id="locationSearch" type="submit" class="btn"><g:message code="home.index.simsplesearch.button" default="Search" /></button>
-                            </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-6">
+                            <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
+                                %{-- XXX --}%
+                                <br/>
+                                <div class="input-wrapper">
+                                    <input type="text" name="taxa" id="taxa" class="input-wrapper__input">
+                                    <button id="locationSearch" type="submit" class="btn btn-dark input-wrapper__addon">
+                                        <g:message code="home.index.simsplesearch.button" default="Search" />
+                                    </button>
+                                </div>
+                            </form>
                         </div>
+                    </div>
 
-                        <div>
-                            %{-- XXX --}%
-                            <br/>
-                            <span style="font-size: 12px; color: #444;">
-                                <b><g:message code="home.index.simsplesearch.span" default="Note: the simple search attempts to match a known species/taxon - by its scientific name or common name. If there are no name matches, a full text search will be performed on your query" />
-                            </span>
+                    <div class="row">
+                        <div class="col">
+                            <small>
+                                <g:message code="home.index.simsplesearch.span" default="Note: the simple search attempts to match a known species/taxon - by its scientific name or common name. If there are no name matches, a full text search will be performed on your query" />
+                            </small>
                         </div>
-                    </form>
-                </div><!-- end simpleSearch div -->
+                    </div>
+                </div>
 
                 <div id="advanced-search" class="tab-pane">
                     <g:render template="advanced" />
@@ -358,14 +360,11 @@
                 </div><!-- end #catalogUploadDiv div -->
 
                 <div id="spatial-search" class="tab-pane">
-                    <div class="row-fluid">
+                    <div class="row">
                         <div class="col-3">
-                            <div>
+                            <p>
                                 <g:message code="search.map.helpText" default="Select one of the draw tools (polygon, rectangle, circle), draw a shape and click the search link that pops up." />
-                            </div>
-
-                            %{-- XXX --}%
-                            <br>
+                            </p>
 
                             <div class="accordion accordion-caret" id="accordion2">
                                 <div class="accordion-group">
