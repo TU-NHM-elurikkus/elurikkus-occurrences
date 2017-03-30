@@ -176,3 +176,7 @@
     right: 0;
     left: 0;
 }
+
+.slider-handle.hide {
+    display: none;
+}

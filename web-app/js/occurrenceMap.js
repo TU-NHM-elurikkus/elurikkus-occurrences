@@ -921,7 +921,7 @@ TaimeatlasMode.prototype.initialize = function() {
             self.map.map.addLayer(layer);
             self.map.currentLayers.push(layer);
 
-            $('#ta-grid-color-mode').removeClass('hidden');
+            $('#ta-grid-color-mode').removeClass('hidden-node');
         });
     });
 }
@@ -963,7 +963,7 @@ TaimeatlasMode.prototype.updateStyle = function() {
 }
 
 TaimeatlasMode.prototype.destroy = function() {
-    $('#ta-grid-color-mode').addClass('hidden');
+    $('#ta-grid-color-mode').addClass('hidden-node');
 }
 
 function MapPopup(map) {

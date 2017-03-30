@@ -149,6 +149,7 @@ a.colour-by-legend-toggle {
 }
 #recordLayerControl {
     padding: 0 5px;
+    padding-bottom: 10px;
 }
 
 </style>
@@ -247,7 +248,7 @@ a.colour-by-legend-toggle {
                         </g:each>
                     </select>
 
-                    <select id="ta-grid-color-mode" class="hidden">
+                    <select id="ta-grid-color-mode" class="hidden-node">
                         <option value="linear">
                             <g:message code="map.controls.ta_grid_color_mode.linear" />
                         </option>
