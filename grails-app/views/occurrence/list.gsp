@@ -243,13 +243,14 @@
                     </g:if>
 
                     <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                        <div id="downloads" class="erk-button erk-button--light pull-right">
-                            <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
-                               class="tooltips newDownload"
-                               title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"><i
-                                    class="fa fa-download"></i>
-                            &nbsp;&nbsp;<g:message code="list.downloads.navigator" default="Download"/></a>
-                        </div>
+                        <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
+                           class="tooltips newDownload"
+                           title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records">
+                           <button id="downloads" class="erk-button erk-button--light">
+                               <i class="fa fa-download"></i>
+                                &nbsp;&nbsp;<g:message code="list.downloads.navigator" default="Download"/>
+                           </button>
+                        </a>
                     </g:if>
 
                     <div id="resultsReturned">
@@ -430,13 +431,13 @@
                         <div id="searchControls" class="row">
                             <div class="col-3">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                                    <div id="downloads" class="erk-button erk-button--light">
-                                        <a href="#download" role="button" data-toggle="modal" class="tooltips"
-                                           title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records OR species checklist"><i
-                                                class="fa fa-download"></i>&nbsp;&nbsp;<g:message
-                                                code="list.downloads.navigator" default="Downloads"/>
-                                        </a>
-                                    </div>
+                                    <a href="#download" role="button" data-toggle="modal" class="tooltips"
+                                       title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records OR species checklist">
+                                        <button id="downloads" class="erk-button erk-button--light">
+                                           <i class="fa fa-download"></i>&nbsp;&nbsp;
+                                           <g:message code="list.downloads.navigator" default="Downloads"/>
+                                        </button>
+                                    </a>
                                 </g:if>
 
                                 <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">

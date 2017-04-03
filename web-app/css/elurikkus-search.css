@@ -180,3 +180,19 @@
 .slider-handle.hide {
     display: none;
 }
+
+/* More XXX */
+/* Dropdown items use bootstrap's 16px default font, while buttons that make them appear - 12px */
+#submitFacets .dropdown-item {
+    font-size: 12px;
+}
+
+/* Override giant bootstrap select */
+#downloadForm .form-control {
+    font-size: 12px;
+    height: 30px !important;
+}
+
+#downloadForm input[type="radio"] {
+    height: initial;
+}
