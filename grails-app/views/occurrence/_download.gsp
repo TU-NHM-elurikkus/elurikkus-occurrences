@@ -69,7 +69,7 @@
                         </div>
 
                         <div style="clear: both; text-align: center;">
-                            <br/><input type="submit" value="<g:message code="download.downloadform.button.submit" default="Start Download"/>" id="downloadStart" class="btn tooltips"/>
+                            <br/><input type="submit" value="<g:message code="download.downloadform.button.submit" default="Start Download"/>" id="downloadStart" class="erk-button erk-button--light tooltips"/>
                         </div>
 
                         <div style="margin-top:10px;">
@@ -174,7 +174,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="download.button.close" default="Close"/></button>
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true"><g:message code="download.button.close" default="Close"/></button>
             </div>
         </div>
     </div>

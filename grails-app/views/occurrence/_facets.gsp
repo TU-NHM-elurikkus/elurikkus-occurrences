@@ -142,8 +142,8 @@
 
             <div id="submitFacets" class="modal-footer" style="text-align: left;">
                 <div class="btn-group">
-                    <button type='submit' class='submit btn btn-small' id="include"><g:message code="facets.includeSelected.button" default="INCLUDE selected items"/></button>
-                    <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                    <button type="submit" class="submit erk-button erk-button--light" id="include"><g:message code="facets.includeSelected.button" default="INCLUDE selected items"/></button>
+                    <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
 
@@ -156,8 +156,8 @@
                 </div>
                 &nbsp;
                 <div class="btn-group">
-                    <button type='submit' class='submit btn btn-small' id="exclude" ><g:message code="facets.excludeSelected.button" default="EXCLUDE selected items"/></button>
-                    <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                    <button type="submit" class="submit erk-button erk-button--light" id="exclude" ><g:message code="facets.excludeSelected.button" default="EXCLUDE selected items"/></button>
+                    <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
 
@@ -170,8 +170,8 @@
                 </div>
                 &nbsp;
                 %{-- XXX Hide doesn't work with Bootstrap 4.--}%
-                <a href="#" id="downloadFacet" class="btn btn-small" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"><i class="icon icon-download-alt" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"></i> <span class="hide"><g:message code="facets.downloadfacets.button" default="Download"/></span></a>
-                <button class="btn btn-small" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="facets.submitfacets.button" default="Close"/></button>
+                <a href="#" id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"><i class="icon icon-download-alt" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"></i> <span class="hide"><g:message code="facets.downloadfacets.button" default="Download"/></span></a>
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="facets.submitfacets.button" default="Close"/></button>
             </div>
         </div>
     </div>

@@ -159,7 +159,7 @@ a.colour-by-legend-toggle {
         <g:set var='spatialPortalLink' value="${sr.urlParameters}"/>
         <g:set var='spatialPortalUrlParams' value="${grailsApplication.config.spatial.params}"/>
 
-        <div id="spatialPortalBtn" class="btn btn-small" style="margin-bottom: 2px;">
+        <div id="spatialPortalBtn" class="erk-button erk-button--light" style="margin-bottom: 2px;">
             <a id="spatialPortalLink"
                 class="tooltips"
                 href="${grailsApplication.config.spatial.baseUrl}${spatialPortalLink}${spatialPortalUrlParams}"
@@ -171,14 +171,14 @@ a.colour-by-legend-toggle {
         </div>
     </g:if>
 
-    <div id="downloadMaps" class="btn btn-small" style="margin-bottom: 2px;">
+    <button id="downloadMaps" class="erk-button erk-button--light" style="margin-bottom: 2px;">
         <a href="#downloadMap" role="button" data-toggle="modal" class="tooltips" title="Download image file (single colour mode)">
             <i class="fa fa-download"></i>&nbsp&nbsp;
             <g:message code="map.downloadmaps.btn.label" default="Download map"/></a>
-    </div>
+    </button>
 
     <g:if test="${params.wkt}">
-        <div id="downloadWKT" class="btn btn-small" style="margin-bottom: 2px;">
+        <div id="downloadWKT" class="erk-button erk-button--light" style="margin-bottom: 2px;">
             <a href="#downloadWKT" role="button" class="tooltips" title="Download WKT file" onclick="downloadPolygon(); return false;">
                 <i class="icon icon-stop"></i>&nbsp&nbsp;
                 <g:message code="map.downloadwkt.btn.label" default="Download WKT"/>
@@ -187,7 +187,7 @@ a.colour-by-legend-toggle {
     </g:if>
 
     <%--
-    <div id="spatialSearchFromMap" class="btn btn-small">
+    <div id="spatialSearchFromMap" class="erk-button erk-button--light">
         <a href="#" id="wktFromMapBounds" class="tooltips" title="Restrict search to current view">
             <i class="hide icon-share-alt"></i>
             Restrict search
@@ -410,8 +410,10 @@ a.colour-by-legend-toggle {
             <g:message code="search.map.occurrences" default="occurrence records"/>
             &nbsp;&nbsp;
             <i class="icon-share-alt"></i>
-            <a href="#" class="btn+btn-mini viewAllRecords">
-                <g:message code="search.map.viewAllRecords" default="view all records"/>
+            <a href="#" class="viewAllRecords">
+                <button class="erk-button erk-button--light">
+                    <g:message code="search.map.viewAllRecords" default="view all records"/>
+                </button>
             </a>
         </div>
 
@@ -422,21 +424,21 @@ a.colour-by-legend-toggle {
         <p>
             <div class="hide multiRecordFooter">
                 <span class="previousRecord ">
-                    <a href="#" class="btn btn-mini disabled">
+                    <button class="erk-button erk-button--light btn-mini disabled">
                         <g:message code="search.map.popup.prev" default="&lt; Prev"/>
-                    </a>
+                    </button>
                 </span>
 
                 <span class="nextRecord ">
-                    <a href="#" class="btn btn-mini disabled">
+                    <button class="erk-button erk-button--light btn-mini disabled">
                         <g:message code="search.map.popup.next" default="Next &gt;"/>
-                    </a>
+                    </button>
                 </span>
             </div>
         </p>
 
         <div class="recordLink">
-            <a href="#" class="btn btn-mini">
+            <a href="#" class="erk-button erk-button--light">
                 <g:message code="search.map.popup.viewRecord" default="View record"/>
             </a>
         </div>
@@ -612,11 +614,11 @@ a.colour-by-legend-toggle {
         </div>
 
         <div class="modal-footer">
-            <button id="submitDownloadMap" class="btn" style="float:left;">
+            <button id="submitDownloadMap" class="erk-button erk-button--light" style="float:left;">
                 <g:message code="map.downloadmap.button01.label" default="Download map"/>
             </button>
 
-            <button class="btn" data-dismiss="modal" aria-hidden="true">
+            <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
                 <g:message code="map.downloadmap.button02.label" default="Close"/>
             </button>
         </div>

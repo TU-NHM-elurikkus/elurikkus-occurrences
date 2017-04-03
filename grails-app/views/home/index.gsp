@@ -305,7 +305,7 @@
                                 <br/>
                                 <div class="input-wrapper">
                                     <input type="text" name="taxa" id="taxa" class="input-wrapper__input">
-                                    <button id="locationSearch" type="submit" class="btn btn-dark input-wrapper__addon">
+                                    <button id="locationSearch" type="submit" class="erk-button erk-button--light input-wrapper__addon">
                                         <g:message code="home.index.simsplesearch.button" default="Search" />
                                     </button>
                                 </div>
@@ -336,7 +336,7 @@
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="raw_name" />
-                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" default="Search" /> class="btn" />
+                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" default="Search" /> class="erk-button erk-button--light" />
                         </p>
                     </form>
                 </div><!-- end #uploadDiv div -->
@@ -359,7 +359,7 @@
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
                             %{-- XXX --}%
-                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="home.index.catalogupload.button01" default="Search"/>  class="btn" />
+                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="home.index.catalogupload.button01" default="Search"/>  class="erk-button erk-button--light" />
                         </p>
                     </form>
                 </div><!-- end #catalogUploadDiv div -->
@@ -385,7 +385,7 @@
                                             <p><g:message code="search.map.wktHelpText" default="Optionally, paste a WKT string: " /></p>
                                             <textarea type="text" id="wktInput"></textarea>
                                             <br>
-                                            <button class="btn btn-small" id="addWkt"><g:message code="search.map.wktButtonText" default="Add to map" /></button>
+                                            <button class="erk-button erk-button--light" id="addWkt"><g:message code="search.map.wktButtonText" default="Add to map" /></button>
                                         </div>
                                     </div>
                                 </div>

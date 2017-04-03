@@ -90,7 +90,7 @@
                 <div id="advancedSearchLink"><a href="${g.createLink(uri: '/search')}#tab_advanceSearch"><g:message code="list.advancedsearchlink.navigator" default="Advanced search"/></a></div>
                 <div class="input-append">
                     <input type="text" id="taxaQuery" name="${searchQuery}" class="input-xlarge" value="${params.list(searchQuery).join(' OR ')}">
-                    <button type="submit" id="solrSubmit" class="btn"><g:message code="list.advancedsearchlink.button.label" default="Quick search"/></button>
+                    <button type="submit" id="solrSubmit" class="erk-button erk-button--light"><g:message code="list.advancedsearchlink.button.label" default="Quick search"/></button>
                 </div>
             </form>
         </div>
@@ -153,7 +153,7 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            class="btn dropdown-toggle tooltips"
+                            class="erk-button erk-button--light dropdown-toggle tooltips"
                             title="Customise the contents of this column"
                         >
                             <span class="fa fa-cog"></span>
@@ -182,7 +182,7 @@
 
                                 &nbsp;&nbsp;
 
-                                <button  id="updateFacetOptions" class="btn btn-primary btn-small">
+                                <button  id="updateFacetOptions" class="erk-button erk-button--light">
                                     <g:message code="list.facetcheckboxes.button.updatefacetoptions" default="Update"/>
                                 </button>
 
@@ -190,7 +190,7 @@
 
                                 <g:set var="resetTitle" value="Restore default settings"/>
 
-                                <button id="resetFacetOptions" class="btn btn-small" title="${resetTitle}">
+                                <button id="resetFacetOptions" class="erk-button erk-button--light" title="${resetTitle}">
                                     <g:message code="list.facetcheckboxes.button.resetfacetoptions" default="Reset to defaults"/>
                                 </button>
                             </div>
@@ -243,7 +243,7 @@
                     </g:if>
 
                     <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                        <div id="downloads" class="btn btn-primary pull-right">
+                        <div id="downloads" class="erk-button erk-button--light pull-right">
                             <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
                                class="tooltips newDownload"
                                title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"><i
@@ -266,25 +266,25 @@
                                 <g:each var="fq" in="${sr.activeFacetMap}">
                                     <g:if test="${fq.key}">
                                         <g:set var="hasFq" value="${true}"/>
-                                        <alatag:currentFilterItem item="${fq}" cssClass="btn btn-mini" addCloseBtn="${true}"/>
+                                        <alatag:currentFilterItem item="${fq}" cssClass="erk-button erk-button--light" addCloseBtn="${true}"/>
                                     </g:if>
                                 </g:each>
 
                                 <g:if test="${params.wkt}"><%-- WKT spatial filter   --%>
                                     <g:set var="spatialType" value="${params.wkt =~ /^\w+/}"/>
-                                    <a href="${alatag.getQueryStringForWktRemove()}" class="btn btn-mini tooltips" title="Click to remove this filter">Spatial filter: ${spatialType[0]}
+                                    <a href="${alatag.getQueryStringForWktRemove()}" class="erk-button erk-button--light btn-mini tooltips" title="Click to remove this filter">Spatial filter: ${spatialType[0]}
                                         <span class="closeX">×</span>
                                     </a>
                                 </g:if>
 
                                 <g:elseif test="${params.radius && params.lat && params.lon}">
-                                    <a href="${alatag.getQueryStringForRadiusRemove()}" class="btn btn-mini tooltips" title="Click to remove this filter">Spatial filter: CIRCLE
+                                    <a href="${alatag.getQueryStringForRadiusRemove()}" class="erk-button erk-button--light tooltips" title="Click to remove this filter">Spatial filter: CIRCLE
                                         <span class="closeX">×</span>
                                     </a>
                                 </g:elseif>
 
                                 <g:if test="${sr.activeFacetMap?.size() > 1}">
-                                    <button class="btn btn-primary btn-mini activeFilter" data-facet="all"
+                                    <button class="erk-button erk-button--light ctiveFilter" data-facet="all"
                                             title="Click to clear all filters"><span
                                             class="closeX">&gt;&nbsp;</span><g:message code="list.resultsretuened.button01" default="Clear all"/></button>
                                 </g:if>
@@ -293,9 +293,9 @@
 
                         <%-- jQuery template used for taxon drop-downs --%>
                         <div class="btn-group invisible" id="template">
-                            <a class="btn btn-small" href="" id="taxa_" title="view species page" target="BIE"><g:message code="list.resultsretuened.navigator01" default="placeholder"/></a>
+                            <a class="erk-button erk-button--light" href="" id="taxa_" title="view species page" target="BIE"><g:message code="list.resultsretuened.navigator01" default="placeholder"/></a>
 
-                            <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="click for more info on this query">
+                            <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="click for more info on this query">
                                 <span class="caret"></span>
                             </button>
 
@@ -307,7 +307,7 @@
                                     <form name="raw_taxon_search" class="rawTaxonSearch" action="${request.contextPath}/occurrences/search/taxa" method="POST">
                                         <div class="refineTaxaSearch">
                                             <g:message code="list.resultsretuened.form.des01" default="The result set contains records provided under the following names"/>:
-                                            <input type="submit" class="btn btn-small rawTaxonSumbit"
+                                            <input type="submit" class="erk-button erk-button--light rawTaxonSumbit"
                                                    value="<g:message code="list.resultsretuened.form.button01" default="Refine search"/>" title="Restrict results to the selected names">
                                             <div class="rawTaxaList"><g:message code="list.resultsretuened.form.div01" default="placeholder taxa list"/></div>
                                         </div>
@@ -341,7 +341,7 @@
 
                                 <div class="modal-body">
                                     <div class="">
-                                        <a href="#alertNewRecords" id="alertNewRecords" class="btn tooltips" data-method="createBiocacheNewRecordsAlert"
+                                        <a href="#alertNewRecords" id="alertNewRecords" class="erk-button erk-button--light tooltips" data-method="createBiocacheNewRecordsAlert"
                                            title="Notify me when new records come online for this search"><g:message code="list.alert.navigator01" default="Get email alerts for new records"/> </a>
                                     </div>
 
@@ -349,7 +349,7 @@
 
                                     <div class="">
                                         <a href="#alertNewAnnotations" id="alertNewAnnotations" data-method="createBiocacheNewAnnotationsAlert"
-                                           class="btn tooltips" title="Notify me when new annotations (corrections, comments, etc) come online for this search"><g:message code="list.alert.navigator02" default="Get email alerts for new annotations"/></a>
+                                           class="erk-button erk-button--light tooltips" title="Notify me when new annotations (corrections, comments, etc) come online for this search"><g:message code="list.alert.navigator02" default="Get email alerts for new annotations"/></a>
                                     </div>
 
                                     %{-- XXX --}%
@@ -364,7 +364,7 @@
 
                                 <div class="modal-footer">
                                     <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="list.alert.button01" default="Close"/></button>
-                                    %{--<button class="btn btn-primary">Save changes</button>--}%
+                                    %{--<button class="erk-button erk-button--light">Save changes</button>--}%
                                 </div>
                             </div>
                         </div>
@@ -430,7 +430,7 @@
                         <div id="searchControls" class="row">
                             <div class="col-3">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                                    <div id="downloads" class="btn">
+                                    <div id="downloads" class="erk-button erk-button--light">
                                         <a href="#download" role="button" data-toggle="modal" class="tooltips"
                                            title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records OR species checklist"><i
                                                 class="fa fa-download"></i>&nbsp;&nbsp;<g:message
@@ -440,7 +440,7 @@
                                 </g:if>
 
                                 <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
-                                    <div id="alerts" class="btn btn-small">
+                                    <div id="alerts" class="erk-button erk-button--light">
                                         <a href="#alert" role="button" data-toggle="modal" class="tooltips" title="Get email alerts for this search"><i class="fa fa-bell"></i>&nbsp;&nbsp;<g:message code="list.alerts.navigator" default="Alerts"/></a>
                                     </div>
                                 </g:if>
@@ -559,7 +559,7 @@
 
                             %{-- XXX --}%
                             <div id="loadMoreSpecies" style="display:none;">
-                                <button class="btn"><g:message code="list.speciesgallerycontrols.loadmorespecies.button" default="Show more images"/></button>
+                                <button class="erk-button erk-button--light"><g:message code="list.speciesgallerycontrols.loadmorespecies.button" default="Show more images"/></button>
                                 <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon"/>
                             </div>
                         </div><!-- end #speciesWrapper -->
@@ -579,7 +579,7 @@
 
                             <div id="loadMoreImages" style="display:none;">
                                 <p>
-                                    <button class="btn">
+                                    <button class="erk-button erk-button--light">
                                         <g:message code="list.speciesgallerycontrols.loadmoreimages.button" default="Show more images"/>
                                         <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon"/>
                                      </button>

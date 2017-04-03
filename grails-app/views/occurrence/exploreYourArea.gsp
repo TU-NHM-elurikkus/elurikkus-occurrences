@@ -60,7 +60,7 @@
                         <input type="hidden" name="longitude" id="longitude" value="${longitude}"/>
                         <input type="hidden" name="location" id="location" value="${location}"/>
 
-                        <button id="locationSearch" type="submit" class="btn btn-dark input-wrapper__addon">
+                        <button id="locationSearch" type="submit" class="erk-button erk-button--light input-wrapper__addon">
                             <g:message code="eya.searchform.btn01" default="Search"/>
                         </button>
                     </div>
@@ -101,7 +101,7 @@
 
                     <g:message code="eya.searchformradius.label02" default="km radius"/>
 
-                    <a href="#" id="viewAllRecords" class="btn">
+                    <a href="#" id="viewAllRecords" class="erk-button erk-button--light">
                         <i class="icon-list"></i>&nbsp;&nbsp;
                         <g:message code="eya.searchform.a.viewallrecords.01" default="View"/>
                         <span id="recordsGroupText">
@@ -110,7 +110,7 @@
                         <g:message code="eya.searchform.a.viewallrecords.03" default="records"/>
                     </a>
 
-                    <a href="#download" role="button" data-toggle="modal" class="btn tooltips" title="Download all records OR species checklist">
+                    <a href="#download" role="button" data-toggle="modal" class="erk-button erk-button--light tooltips" title="Download all records OR species checklist">
                         <i class="icon-download"></i>
                         <g:message code="eya.searchform.a.downloads" default="Downloads"/>
                     </a>
