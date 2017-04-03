@@ -187,7 +187,11 @@
     font-size: 12px;
 }
 
-/* Override giant bootstrap select */
+#searchNavBar > .step, .currentStep {
+    padding-right: 0.5em;
+}
+
+/* TODO: DRY Used in both search and EYA */
 #downloadForm .form-control {
     font-size: 12px;
     height: 30px !important;

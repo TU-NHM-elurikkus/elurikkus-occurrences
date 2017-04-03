@@ -311,3 +311,13 @@ html>body tbody.scrollContent td + td {
 html>body tbody.scrollContent td + td + td {
     width: 30px;
 }
+
+/* TODO: DRY Used in both search and EYA */
+#downloadForm .form-control {
+    font-size: 12px;
+    height: 30px !important;
+}
+
+#downloadForm input[type="radio"] {
+    height: initial;
+}
