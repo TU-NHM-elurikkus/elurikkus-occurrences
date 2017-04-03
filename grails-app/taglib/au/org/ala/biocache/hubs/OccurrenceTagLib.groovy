@@ -196,14 +196,14 @@ class OccurrenceTagLib {
             facetResult.fieldResult.putAt(0, lastEl)
         }
 
-        mb.ul(class:'facets nano-content') {
+        mb.ul(class:'facets nano-content erk-ulist') {
             facetResult.fieldResult.each { fieldResult ->
 
                 if(fieldResult.count > 0) {
                     // Catch specific facets fields
                     if (fieldResult.fq) {
                         // biocache-service has provided a fq field in the fieldResults list
-                        li {
+                        li(class: 'erk-ulist__item') {
                             a(href: "?${queryParam}&fq=${fieldResult.fq?.encodeAsURL()}",
                                     class: "tooltips",
                                     title: linkTitle
@@ -223,7 +223,7 @@ class OccurrenceTagLib {
                         // decade date range a special case
                         def decade = processDecadeLabel(facetResult.fieldName, facetResult.fieldResult?.get(1)?.label, fieldResult.label)
 
-                        li {
+                        li(class: 'erk-ulist__item') {
                             a(href: "?${queryParam}&fq=${decade.fq}",
                                     class: "tooltips",
                                     title: linkTitle
@@ -246,7 +246,7 @@ class OccurrenceTagLib {
                         } else {
                             href = href + "%22${fieldResult.label?.encodeAsURL()}%22"
                         }
-                        li {
+                        li(class: 'erk-ulist__item') {
                             a(href: href,
                                     class: "tooltips",
                                     title: linkTitle
