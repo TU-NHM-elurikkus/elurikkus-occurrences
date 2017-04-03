@@ -1,6 +1,6 @@
 <g:if test="${grailsApplication.config.sandbox.uploadSource && dataResourceUid && dataResourceUid.startsWith('drt')}">
     <div class="btn-group pull-right">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <g:message code="list.sandbox.label" /> <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" style="width: initial;">

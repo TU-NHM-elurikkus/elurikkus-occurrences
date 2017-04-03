@@ -353,10 +353,10 @@
     </div>
 
     <div class="form-group row">
-        <input type="submit" value=<g:message code="advancedsearch.button.submit" default="Search" /> class="btn btn-primary" />
+        <input type="submit" value=<g:message code="advancedsearch.button.submit" default="Search" /> class="erk-button erk-button--light" />
         %{-- XXX --}%
         &nbsp;&nbsp;
-        <input type="reset" value="Clear all" id="clearAll" class="btn btn-small" onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;" />
+        <input type="reset" value="Clear all" id="clearAll" class="erk-button erk-button--light" onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;" />
     </div>
 </form>
 

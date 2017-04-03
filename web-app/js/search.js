@@ -268,7 +268,7 @@ $(document).ready(function() {
             // use HTML template, see http://stackoverflow.com/a/1091493/249327
             var speciesPageUri = BC_CONF.bieWebappUrl + "/species/" + lsid;
             var speciesPageLink = "<a href='" + speciesPageUri + "' title='Species page' target='BIE'>view species page</a>";
-            $clone.find('a.btn').text(nameString).attr("href", speciesPageUri);
+            $clone.find('a.erk-button').text(nameString).attr("href", speciesPageUri);
             $clone.find('.nameString').text(nameString);
             $clone.find('.speciesPageLink').html(speciesPageLink);
 
@@ -348,7 +348,7 @@ $(document).ready(function() {
     });
 
     // load more images button
-    $("#loadMoreImages .btn").live("click", function(e) {
+    $("#loadMoreImages .erk-button").live("click", function(e) {
         e.preventDefault();
         $(this).addClass('disabled');
         $(this).find('img').show(); // turn on spinner
@@ -468,7 +468,7 @@ $(document).ready(function() {
     //if($.fn.qtip.plugins.iOS) { return false; }
 
     // TODO: ID/Classes.
-    $("a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, div#customiseFacets > a, a.removeLink, .btn, .rawTaxonSumbit").qtip({
+    $("a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, div#customiseFacets > a, a.removeLink, .erk-button, .rawTaxonSumbit").qtip({
         style: {
             classes: 'ui-tooltip-rounded ui-tooltip-shadow'
         },
@@ -983,7 +983,7 @@ function loadImages(start) {
                     //console.log("load more", count, start, count + start, data.totalRecords);
                     $('#imagesGrid').data('count', count + start);
                     $("#loadMoreImages").show();
-                    $("#loadMoreImages .btn").removeClass('disabled');
+                    $("#loadMoreImages .erk-button").removeClass('disabled');
                 } else {
                     $("#loadMoreImages").hide();
                 }

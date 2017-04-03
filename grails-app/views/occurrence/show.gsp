@@ -104,7 +104,7 @@
                         </g:if>
                     </div>
                     <div id="backBtn" class=" pull-rightZ">
-                        <a href="#" title="Return to search results" class="btn"><g:message code="show.backbtn.navigator" default="Back to search results"/></a>
+                        <a href="#" title="Return to search results" class="erk-button erk-button--light"><g:message code="show.backbtn.navigator" default="Back to search results"/></a>
                     </div>
                 </div>
                 <div class="centre">
@@ -149,7 +149,7 @@
 
                 <div id="content2Z" class="col-9">
                     <div class="text-right">
-                        <button href="#processedVsRawView" class="btn" id="showRawProcessed" role="button" data-toggle="modal"
+                        <button href="#processedVsRawView" class="erk-button erk-button--light" id="showRawProcessed" role="button" data-toggle="modal"
                                 title="Table showing both original and processed record values">
                             <span id="processedVsRawViewSpan" href="#processedVsRawView" title=""><i class="Xicon-th"></i>
                                 <g:message code="show.sidebar02.showrawprocessed.span" default="View original vs processed values"/></span>
@@ -263,7 +263,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal">
+                                <button class="erk-button erk-button--light" data-dismiss="modal">
                                     <g:message code="show.dataqualitymodal.button" default="Close"/>
                                 </button>
                             </div>
@@ -653,7 +653,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button class="btn btn-small" data-dismiss="modal" aria-hidden="true" style="float:right;">
+                            <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;">
                                 <g:message code="show.processedvsrawview.button.close" default="Close"/>
                             </button>
                         </div>
@@ -681,7 +681,7 @@
                 <p><span class="primaryContact"><b>*</b></span> <g:message code="show.contactcuratorview.primarycontact" default="Primary Contact"></g:message> </p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-small" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="show.processedvsrawview.button.close" default="Close"/></button>
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="show.processedvsrawview.button.close" default="Close"/></button>
             </div>
             </div>
         </g:if>
@@ -704,7 +704,7 @@
                 <br/>
 
                 <p class="deleteAnnotation" style="display:block;">
-                    <a class="deleteAnnotationButton btn" href="#">
+                    <a class="deleteAnnotationButton erk-button erk-button--light" href="#">
                         <g:message code="show.userannotationtemplate.p02.navigator" default="Delete this annotation"/>
                     </a>
 
@@ -739,7 +739,7 @@
 
                 <g:if test="${isCollectionAdmin}">
                     <p class="verifyAnnotation" style="display:none;">
-                        <a class="verifyAnnotationButton btn"  href="#verifyRecordModal" data-toggle="modal"><g:message code="show.userannotationtemplate.p03.navigator" default="Verify this annotation"/></a>
+                        <a class="verifyAnnotationButton erk-button erk-button--light"  href="#verifyRecordModal" data-toggle="modal"><g:message code="show.userannotationtemplate.p03.navigator" default="Verify this annotation"/></a>
                     </p>
                 </g:if>
             </li>
@@ -795,8 +795,8 @@
 
                             <br>
 
-                            <button id="confirmVerify" class="btn confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
-                            <button class="btn cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
+                            <button id="confirmVerify" class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
+                            <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
                             <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon"/>
                         </div>
                     </div>
@@ -805,7 +805,7 @@
                         <div id="verifyDone" style="display:none;">
                             <g:message code="show.verifydone.message" default="Record successfully verified"/>
                             <br/>
-                            <button class="btn closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
+                            <button class="erk-button erk-button--light closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
                         </div>
                     </div>
 k               </div>

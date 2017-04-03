@@ -2,7 +2,7 @@
     %{-- XXX --}%
     <div class="sidebar" style="float:left;">
         %{-- Remove it for now. Put it back or delete when we have decided whether or not we need it at all.
-        <button class="btn" id="assertionButton" href="#loginOrFlag" role="button" data-toggle="modal" title="report a problem or suggest a correction for this record">
+        <button class="erk-button erk-button--light" id="assertionButton" href="#loginOrFlag" role="button" data-toggle="modal" title="report a problem or suggest a correction for this record">
             <span id="loginOrFlagSpan" title="Flag an issue" class="">
                 <span class="icon-flag"></span>&nbsp;<g:message code="show.button.assertionbutton.span" default="Flag an issue"/>
             </span>
@@ -51,9 +51,9 @@
                                     </p>
 
                                     <p style="margin-top:20px;">
-                                        <input id="issueFormSubmit" type="submit" value="<g:message code="show.issueform.button.submit" default="Submit"/>" class="btn" />
-                                        <input type="reset" value="<g:message code="show.issueform.button.cancel" default="Cancel"/>" class="btn" onClick="$('#loginOrFlag').modal('hide');"/>
-                                        <input type="button" id="close" value="<g:message code="show.issueform.button.close" default="Close"/>" class="btn" style="display:none;"/>
+                                        <input id="issueFormSubmit" type="submit" value="<g:message code="show.issueform.button.submit" default="Submit"/>" class="erk-button erk-button--light" />
+                                        <input type="reset" value="<g:message code="show.issueform.button.cancel" default="Cancel"/>" class="erk-button erk-button--light" onClick="$('#loginOrFlag').modal('hide');"/>
+                                        <input type="button" id="close" value="<g:message code="show.issueform.button.close" default="Close"/>" class="erk-button erk-button--light" style="display:none;"/>
                                         <span id="submitSuccess"></span>
                                     </p>
 
@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="hide modal-footer">
-                        <button class="btn btn-small" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="show.loginorflag.divbutton" default="Close"/></button>
+                        <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="show.loginorflag.divbutton" default="Close"/></button>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
 </g:if>
 <g:if test="${contacts && contacts.size()}">
     <div class="sidebar" style="float:left;">
-        <button href="#contactCuratorView" class="btn" id="showCurator" role="button" data-toggle="modal"
+        <button href="#contactCuratorView" class="erk-button erk-button--light" id="showCurator" role="button" data-toggle="modal"
                 title="Contact curator for more details on a record">
             <span id="contactCuratorSpan" href="#contactCuratorView" title=""><i class="icon-envelope"></i> <g:message code="show.showcontactcurator.span" default="Contact curator"/></span>
         </button>
@@ -269,7 +269,7 @@
 </g:if>
 %{--<g:if test="${isCollectionAdmin && (record.systemAssertions.failed || record.userAssertions) && ! recordIsVerified}">
     <div class="sidebar">
-        <button class="btn" id="verifyButton" href="#verifyRecord" data-toggle="modal">
+        <button class="erk-button erk-button--light" id="verifyButton" href="#verifyRecord" data-toggle="modal">
             <span id="verifyRecordSpan" title=""><g:message code="show.button.verifybtn.span" default="Verify record"/></span>
         </button>
 
@@ -304,8 +304,8 @@
                             </select>
                         </p>
                         <p><textarea id="verifyComment" rows="3" style="width: 90%"></textarea></p><br>
-                        <button class="btn confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
-                        <button class="btn cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
+                        <button class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
+                        <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
                         <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="hide" alt="spinner icon"/>
                     </div>
                 </div>
@@ -313,7 +313,7 @@
                     <div id="verifyDone" style="display:none;">
                         <g:message code="show.verifydone.message" default="Record successfully verified"/>
                         <br/>
-                        <button class="btn closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
+                        <button class="erk-button erk-button--light closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
                     </div>
                 </div>
             </div>
@@ -327,7 +327,7 @@
             <a href="http://volunteer.ala.org.au/"><g:message code="show.sidebar01.volunteer.navigator" default="Biodiversity Volunteer Portal"/></a>.
         </p>
 
-        <button class="btn" id="viewDraftButton" >
+        <button class="erk-button erk-button--light" id="viewDraftButton" >
             <span id="viewDraftSpan" title="View Draft"><g:message code="show.button.viewdraftbutton.span" default="See draft in Biodiversity Volunteer Portal"/></span>
         </button>
     </div>
