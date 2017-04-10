@@ -8,5 +8,16 @@ td.noStripe {
 .occurrenceTable td.dwcLabel {
     width: 33%;
     vertical-align: top;
-    font-weight: bold;
+}
+
+.recordHeader__right {
+    float: right;
+}
+
+.recordHeader__left, .recordHeader__center {
+    float: left;
+}
+
+.record-navigation {
+    text-align: right;
 }

@@ -84,38 +84,6 @@
 <div class="clearfix"></div>
 
 <ul class="nav flex-column">
-    <li class="nav-item">
-        <a class="nav-link" href="#occurrenceDataset">
-            <g:message code="recordcore.occurencedataset.title" default="Dataset"/>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#occurrenceEvent">
-            <g:message code="recordcore.occurenceevent.title" default="Event"/>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#occurrenceTaxonomy">
-            <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#occurrenceGeospatial">
-            <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
-        </a>
-    </li>
-
-    <g:if test="${record.raw.miscProperties}">
-        <li class="nav-item">
-            <a class="nav-link" href="#additionalProperties">
-                <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
-            </a>
-        </li>
-    </g:if>
-
     <g:if test="${record.images}">
         <li class="nav-item">
             <a class="nav-link" href="#images">
