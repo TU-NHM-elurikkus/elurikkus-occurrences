@@ -87,11 +87,12 @@
         </div>
         <div id="searchBoxZ" class="col-9 text-right">
             <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
-                <div id="advancedSearchLink"><a href="${g.createLink(uri: '/search')}#tab_advanceSearch"><g:message code="list.advancedsearchlink.navigator" default="Advanced search"/></a></div>
                 <div class="input-append">
                     <input type="text" id="taxaQuery" name="${searchQuery}" class="input-xlarge" value="${params.list(searchQuery).join(' OR ')}">
                     <button type="submit" id="solrSubmit" class="erk-button erk-button--light"><g:message code="list.advancedsearchlink.button.label" default="Quick search"/></button>
                 </div>
+
+                <div id="advancedSearchLink"><a href="${g.createLink(uri: '/search')}#tab_advanceSearch"><g:message code="list.advancedsearchlink.navigator" default="Advanced search"/></a></div>
             </form>
         </div>
         <input type="hidden" id="userId" value="${userId}">
