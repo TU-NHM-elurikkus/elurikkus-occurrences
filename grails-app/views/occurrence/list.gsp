@@ -67,7 +67,7 @@
         };
     </script>
 
-    <r:require modules="elurikkusSearch, leaflet, leafletPlugins, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, charts, image-viewer, lightbox"/>
+    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, charts, image-viewer, lightbox"/>
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete"/>
     </g:if>
