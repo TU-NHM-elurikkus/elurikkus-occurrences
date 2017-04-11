@@ -38,10 +38,13 @@ function generatePopup(layer, latlng) {
     //console.log('latlng', latlng);
     L.popup()
         .setLatLng([latlng.lat, latlng.lng])
-        .setContent("species count: <b id='speciesCountDiv'>calculating...</b><br>" +
+        .setContent(
+            "species count: <b id='speciesCountDiv'>calculating...</b><br>" +
             "occurrence count: <b id='occurrenceCountDiv'>calculating...</b><br>" +
-            "<a id='showOnlyTheseRecords' href='" + BC_CONF.contextPath + "/occurrences/search" +
-            params + "'>" + jQuery.i18n.prop("search.map.popup.linkText") + "</a>")
+            "<a id='showOnlyTheseRecords' href='" + BC_CONF.contextPath + "/occurrences/search" + params + "#tab_mapView" + "'>" +
+                jQuery.i18n.prop("search.map.popup.linkText") +
+            "</a>"
+        )
         .openOn(MAP_VAR.map);
 
     //layer.openPopup();
