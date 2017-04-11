@@ -1,6 +1,6 @@
 <%@ page import="au.org.ala.biocache.hubs.FacetsName; org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
 <g:render template="/layouts/global" plugin="biocache-hubs" />
-<form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST">
+<form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST" class="container-fluid">
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}" />
     <input type="hidden" name="nameType" value="${grailsApplication.config.advancedTaxaField?:'matched_name_children'}" />
 
