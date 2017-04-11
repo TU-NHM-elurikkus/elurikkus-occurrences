@@ -41,6 +41,11 @@ modules = {
         resource url: [dir: 'js', file: 'occurrenceMap.js']
     }
 
+    mapCommonOverride {
+        dependsOn 'jquery', 'purl'
+        resource url:[dir:'js', file:'map.common.js']
+    }
+
     exploreArea {
         dependsOn 'jquery, fontawesome'
         resource url: [dir: 'js', file: 'exploreArea.js'], disposition: 'head'
