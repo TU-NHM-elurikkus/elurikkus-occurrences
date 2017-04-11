@@ -225,7 +225,7 @@ a.colour-by-legend-toggle {
                         <option disabled role="separator">————————————</option>
 
                         <g:each var="facetResult" in="${facets}">
-                            <g:set var="Defaultselected">
+                            <g:set var="defaultselected">
                                 <g:if test="${defaultColourBy && facetResult.fieldName == defaultColourBy}">
                                     selected="selected"
                                 </g:if>
@@ -237,8 +237,8 @@ a.colour-by-legend-toggle {
                                 ${facetResult.fieldName = 'coordinate_uncertainty'}
                             </g:if>
 
-                            <g:if test="${facetResult.fieldResult.size() > 1}">
-                                <option value="${facetResult.fieldName}" ${Defaultselected}>
+                            <g:if test="${facetResult.fieldResult.size() > 1 || defaultselected}">
+                                <option value="${facetResult.fieldName}" ${defaultselected}>
                                     <alatag:formatDynamicFacetName fieldName="${facetResult.fieldName}"/>
                                 </option>
                             </g:if>

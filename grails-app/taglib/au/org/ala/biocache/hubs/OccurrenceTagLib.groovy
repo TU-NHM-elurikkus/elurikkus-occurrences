@@ -139,7 +139,6 @@ class OccurrenceTagLib {
         def mb = new MarkupBuilder(out)
         mb.button (
                 class: "${attrs.cssClass} tooltips activeFilter",
-                    title: alatag.message(code:"title.filter.remove", default:"Click to remove this filter"),
                     "data-facet": item.key
                     //"data-facet":"${item.key}:${item.value.value.encodeAsURL()}",
                     //onClick:"removeFacet(this); return false;"
