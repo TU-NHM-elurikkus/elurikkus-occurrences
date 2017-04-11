@@ -42,7 +42,7 @@ modules = {
     }
 
     exploreArea {
-        dependsOn 'jquery'
+        dependsOn 'jquery, fontawesome'
         resource url: [dir: 'js', file: 'exploreArea.js'], disposition: 'head'
         resource url: [dir: 'js', file: 'magellan.js', plugin: 'biocache-hubs'], disposition: 'head'
         resource url: [dir: 'css', file: 'exploreYourArea.css'], attrs: [media: 'all']

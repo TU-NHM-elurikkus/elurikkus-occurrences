@@ -70,7 +70,7 @@
 
 <g:render plugin="elurikkus-commons" template="/menu"/>
 
-<div class="${fluidLayout?'container-fluid':'container'}" id="main-content">
+<div id="main-content">
     <g:layoutBody />
 </div>
 

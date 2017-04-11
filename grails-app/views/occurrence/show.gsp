@@ -84,38 +84,49 @@
     <g:if test="${record}">
         <g:if test="${record.raw}">
             <div class="recordHeader clearfix" id="headingBar">
-                <div class="side left">
+                <div class="recordHeader__left">
                     <g:if test="${collectionLogo}">
                         <div class="sidebar">
                             <img src="${collectionLogo}" alt="institution logo" id="institutionLogo"/>
                         </div>
                     </g:if>
                 </div>
-                <div class="side right">
+
+                <div class="recordHeader__right">
                     <div id="jsonLinkZ">
                         <g:if test="${isCollectionAdmin}">
                             <g:set var="admin" value=" - admin"/>
                         </g:if>
+
                         <g:if test="${false && alatag.loggedInUserDisplayname()}">
                             <g:message code="show.jsonlink.login" default="Logged in as:"/> ${alatag.loggedInUserDisplayname()}
                         </g:if>
+
                         <g:if test="${clubView}">
                             <div id="clubView"><g:message code="show.clubview.message" default="Showing &quot;Club View&quot;"/></div>
                         </g:if>
                     </div>
-                    <div id="backBtn" class=" pull-rightZ">
-                        <a href="#" title="Return to search results" class="erk-button erk-button--light"><g:message code="show.backbtn.navigator" default="Back to search results"/></a>
+
+                    <div id="backBtn" class="float-right">
+                        <a href="#" title="Return to search results">
+                            <button class="erk-button erk-button--light">
+                                <g:message code="show.backbtn.navigator" default="Back to search results"/>
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <div class="centre">
+
+                <div class="recordHeader__center">
                     <h1>
                         <g:message code="show.headingbar01.title" default="Occurrence record"/>
                         <span id="recordId">${recordId}</span>
                     </h1>
+
                     <g:if test="${record.raw.classification}">
                         <div id="recordHeadingLine2">
                             <g:message code="basicOfRecord.${record.processed.occurrence?.basisOfRecord}" default="${record.processed.occurrence?.basisOfRecord}"/>
                             <g:message code="show.heading.of" default="of"/>
+
                             <g:if test="${record.processed.classification.scientificName}">
                                 <alatag:formatSciName rankId="${record.processed.classification.taxonRankID}" name="${record.processed.classification.scientificName}"/>
                                 ${record.processed.classification.scientificNameAuthorship}
@@ -128,6 +139,7 @@
                                 <i>${record.raw.classification.genus} ${record.raw.classification.specificEpithet}</i>
                                 ${record.raw.classification.scientificNameAuthorship}
                             </g:else>
+
                             <g:if test="${record.processed.classification.vernacularName}">
                                 | ${record.processed.classification.vernacularName}
                             </g:if>
@@ -142,6 +154,59 @@
                 </div>
             </div>
 
+            <div class="record-navigation">
+                <a class="record-navigation__link" href="#occurrenceDataset">
+                    <button class="erk-button erk-button--light">
+                        <span class="fa fa-database"></span>
+                        <g:message code="recordcore.occurencedataset.title" default="Dataset"/>
+                    </button>
+                </a>
+
+                <a class="record-navigation__link" href="#occurrenceEvent">
+                    <button class="erk-button erk-button--light">
+                        <span class="fa fa-clock-o"></span>
+                        <g:message code="recordcore.occurenceevent.title" default="Dataset"/>
+                    </button>
+                </a>
+
+                <a class="record-navigation__link" href="#occurrenceTaxonomy">
+                    <button class="erk-button erk-button--light">
+                        <span class="fa fa-sitemap"></span>
+                        <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
+                    </button>
+                </a>
+
+                <a class="record-navigation__link" href="#occurrenceGeospatial">
+                    <button class="erk-button erk-button--light">
+                        <span class="fa fa-map-marker"></span>
+                        <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
+                    </button>
+                </a>
+
+                <g:if test="${record.raw.miscProperties}">
+                    <a class="record-navigation__link" href="#additionalProperties">
+                        <button class="erk-button erk-button--light">
+                            <span class="fa fa-cog"></span>
+                            <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
+                        </button>
+                    </a>
+                </g:if>
+
+                <button
+                    id="showRawProcessed"
+                    data-toggle="modal"
+                    href="#processedVsRawView"
+                    class="erk-button erk-button--light"
+                    role="button"
+                    title="Table showing both original and processed record values"
+                >
+                    <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
+                        <span class="fa fa-balance-scale"></span>
+                        <g:message code="show.sidebar02.showrawprocessed.span" default="View original vs processed values"/>
+                    </span>
+                </button>
+            </div>
+
             <div class="row">
                 <div id="SidebarBoxZ" class="col-3">
                     <g:render template="recordSidebar" />
@@ -149,11 +214,6 @@
 
                 <div id="content2Z" class="col-9">
                     <div class="text-right">
-                        <button href="#processedVsRawView" class="erk-button erk-button--light" id="showRawProcessed" role="button" data-toggle="modal"
-                                title="Table showing both original and processed record values">
-                            <span id="processedVsRawViewSpan" href="#processedVsRawView" title=""><i class="Xicon-th"></i>
-                                <g:message code="show.sidebar02.showrawprocessed.span" default="View original vs processed values"/></span>
-                        </button>
                     </div>
 
                     <g:render template="recordCore" />
@@ -243,102 +303,6 @@
                         <ul id="userAnnotationsList" style="list-style: none; margin:0;"></ul>
                     </div>
 
-                    <div id="dataQuality" class="additionalData">
-                        <a name="dataQualityReport"></a>
-                        <h2><g:message code="show.dataquality.title" default="Data quality tests"/></h2>
-
-                        <div id="dataQualityModal" class="modal hide fade" tabindex="-1" role="dialog">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h3>
-                                    <g:message code="show.dataqualitymodal.title" default="Data Quality Details"/>
-                                </h3>
-                            </div>
-
-                            <div class="modal-body">
-                                <p>
-                                    <g:message code="show.dataqualitymodal.body" default="loading"/>
-                                    ...
-                                </p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button class="erk-button erk-button--light" data-dismiss="modal">
-                                    <g:message code="show.dataqualitymodal.button" default="Close"/>
-                                </button>
-                            </div>
-                        </div>
-
-                        <table class="table table-sm table-striped table-bordered table-condensed">
-                            <thead>
-                                <tr class="sectionName">
-                                    <td class="dataQualityTestName"><g:message code="show.tabledataqualityresultscol01.title" default="Test name"/></td>
-                                    <td class="dataQualityTestResult"><g:message code="show.tabledataqualityresultscol02.title" default="Result"/></td>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <g:set var="testSet" value="${record.systemAssertions.failed}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr>
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-times-circle" style="color:red;"></i> <g:message code="show.tabledataqualityresults.tr01td02" default="Failed"/></td>
-                                    <%--<td>More info</td>--%>
-                                </tr>
-                                </g:each>
-
-                                <g:set var="testSet" value="${record.systemAssertions.warning}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr>
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-exclamation-circle" style="color:orange;"></i> <g:message code="show.tabledataqualityresults.tr02td02" default="Warning"/></td>
-                                    <%--<td>More info</td>--%>
-                                </tr>
-                                </g:each>
-
-                                <g:set var="testSet" value="${record.systemAssertions.passed}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr>
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-check-circle" style="color:green;"></i> <g:message code="show.tabledataqualityresults.tr03td02" default="Passed"/></td>
-                                    <%--<td>More info</td>--%>
-                                </tr>
-                                </g:each>
-
-                                <g:if test="${record.systemAssertions.missing}">
-                                    <tr>
-                                        <td colspan="2">
-                                        <a href="javascript:void(0)" id="showMissingPropResult"><g:message code="show.tabledataqualityresults.tr04td02" default="Show/Hide"/>  ${record.systemAssertions.missing.length()} missing properties</a>
-                                        </td>
-                                    </tr>
-                                </g:if>
-
-                                <g:set var="testSet" value="${record.systemAssertions.missing}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr class="missingPropResult" style="display:none;">
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-question-circle"></i> <g:message code="show.tabledataqualityresults.tr05td02" default="Missing"/></td>
-                                </tr>
-                                </g:each>
-
-                                <g:if test="${record.systemAssertions.unchecked}">
-                                    <tr>
-                                        <td colspan="2">
-                                        <a href="javascript:void(0)" id="showUncheckedTests"><g:message code="show.tabledataqualityresults.tr06td02" default="Show/Hide"/>  ${record.systemAssertions.unchecked.length()} tests that have not been run</a>
-                                        </td>
-                                    </tr>
-                                </g:if>
-
-                                <g:set var="testSet" value="${record.systemAssertions.unchecked}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr class="uncheckTestResult" style="display:none;">
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-ban"></i> <g:message code="show.tabledataqualityresults.tr07td02" default="Unchecked (lack of data)"/></td>
-                                </tr>
-                                </g:each>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
 
@@ -436,7 +400,7 @@
                             </ul>
                         </p>
                         <g:if test="${duplicateRecordDetails && duplicateRecordDetails.duplicates?.size() > 0}">
-                            <table class="duplicationTable table table-sm table-striped table-bordered table-condensed" style="border-bottom:none;">
+                            <table class="duplicationTable table table-sm table-striped table-bordered" style="border-bottom:none;">
                                 <tr class="sectionName"><td colspan="4"><g:message code="show.table01.title" default="Representative Record"/></td></tr>
                                 <g:if test="${duplicateRecordDetails.uuid}">
                                     <alatag:occurrenceTableRow
@@ -578,48 +542,6 @@
                     </g:if>
                 </div>
 
-                <div id="outlierInformation" class="additionalData">
-                    <g:if test="${contextualSampleInfo}">
-                        <h3 id="contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional geographic & environmental information"/></h3>
-                        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed">
-                            <tbody>
-                            <g:each in="${contextualSampleInfo}" var="sample" status="vs">
-                                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
-                                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                                </g:if>
-                                <g:set var="fn"><a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title='more information about this layer'>${sample.layerDisplayName}</a></g:set>
-                                <alatag:occurrenceTableRow
-                                        annotate="false"
-                                        section="contextual"
-                                        fieldCode="${sample.layerName}"
-                                        fieldName="${fn}">
-                                ${sample.value}</alatag:occurrenceTableRow>
-                            </g:each>
-                            </tbody>
-                        </table>
-                    </g:if>
-
-                    <g:if test="${environmentalSampleInfo}">
-                        <h3 id="environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></h3>
-                        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed" >
-                            <tbody>
-                            <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
-                                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
-                                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                                </g:if>
-                                <g:set var="fn"><a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title='More information about this layer'>${sample.layerDisplayName}</a></g:set>
-                                <alatag:occurrenceTableRow
-                                        annotate="false"
-                                        section="contextual"
-                                        fieldCode="${sample.layerName}"
-                                        fieldName="${fn}">
-                                    ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
-                                </alatag:occurrenceTableRow>
-                            </g:each>
-                            </tbody>
-                        </table>
-                    </g:if>
-                </div>
             </div>
 
             <div id="processedVsRawView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="processedVsRawViewLabel" aria-hidden="true">
@@ -635,7 +557,7 @@
 
                         <div class="modal-body">
                             <div class="table-responsive">
-                                <table class="table table-sm table-bordered table-striped table-condensed">
+                                <table class="table table-sm table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th><g:message code="show.processedvsrawview.table.th01" default="Group"/></th>

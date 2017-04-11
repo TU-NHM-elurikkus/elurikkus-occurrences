@@ -87,11 +87,12 @@
         </div>
         <div id="searchBoxZ" class="col-9 text-right">
             <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
-                <div id="advancedSearchLink"><a href="${g.createLink(uri: '/search')}#tab_advanceSearch"><g:message code="list.advancedsearchlink.navigator" default="Advanced search"/></a></div>
                 <div class="input-append">
                     <input type="text" id="taxaQuery" name="${searchQuery}" class="input-xlarge" value="${params.list(searchQuery).join(' OR ')}">
                     <button type="submit" id="solrSubmit" class="erk-button erk-button--light"><g:message code="list.advancedsearchlink.button.label" default="Quick search"/></button>
                 </div>
+
+                <div id="advancedSearchLink"><a href="${g.createLink(uri: '/search')}#tab_advanceSearch"><g:message code="list.advancedsearchlink.navigator" default="Advanced search"/></a></div>
             </form>
         </div>
         <input type="hidden" id="userId" value="${userId}">
@@ -273,19 +274,26 @@
 
                                 <g:if test="${params.wkt}"><%-- WKT spatial filter   --%>
                                     <g:set var="spatialType" value="${params.wkt =~ /^\w+/}"/>
-                                    <a href="${alatag.getQueryStringForWktRemove()}" class="erk-button erk-button--light btn-mini tooltips" title="Click to remove this filter">Spatial filter: ${spatialType[0]}
-                                        <span class="closeX">×</span>
+
+                                    <a href="${alatag.getQueryStringForWktRemove()}">
+                                        <button class="erk-button erk-button--light btn-mini tooltips" title="Click to remove this filter">
+                                            Spatial filter: ${spatialType[0]}
+                                            <span class="closeX">×</span>
+                                        </button>
                                     </a>
                                 </g:if>
-
                                 <g:elseif test="${params.radius && params.lat && params.lon}">
-                                    <a href="${alatag.getQueryStringForRadiusRemove()}" class="erk-button erk-button--light tooltips" title="Click to remove this filter">Spatial filter: CIRCLE
-                                        <span class="closeX">×</span>
+
+                                    <a href="${alatag.getQueryStringForRadiusRemove()}">
+                                        <button class="erk-button erk-button--light tooltips" title="Click to remove this filter">
+                                            Spatial filter: CIRCLE
+                                            <span class="closeX">×</span>
+                                        </button>
                                     </a>
                                 </g:elseif>
 
                                 <g:if test="${sr.activeFacetMap?.size() > 1}">
-                                    <button class="erk-button erk-button--light ctiveFilter" data-facet="all"
+                                    <button class="erk-button erk-button--light activeFilter" data-facet="all"
                                             title="Click to clear all filters"><span
                                             class="closeX">&gt;&nbsp;</span><g:message code="list.resultsretuened.button01" default="Clear all"/></button>
                                 </g:if>
@@ -431,13 +439,10 @@
                         <div id="searchControls" class="row">
                             <div class="col-3">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                                    <a href="#download" role="button" data-toggle="modal" class="tooltips"
-                                       title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records OR species checklist">
-                                        <button id="downloads" class="erk-button erk-button--light">
-                                           <i class="fa fa-download"></i>&nbsp;&nbsp;
-                                           <g:message code="list.downloads.navigator" default="Downloads"/>
-                                        </button>
-                                    </a>
+                                    <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                       <i class="fa fa-download"></i>&nbsp;&nbsp;
+                                       <g:message code="list.downloads.navigator" default="Downloads"/>
+                                    </button>
                                 </g:if>
 
                                 <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">

@@ -27,15 +27,15 @@
                 </div>
 
                 <div class="subnavlist">
-                    <ul id="refinedFacets">
+                    <ul id="refinedFacets" class="erk-ulist">
                         <g:each var="item" in="${sr.activeFacetMap}">
-                            <li>
-                                <alatag:currentFilterItem item="${item}" addCheckBox="${true}"/>
+                            <li class="erk-ulist__item">
+                                <alatag:currentFilterItem item="${item}" addCheckBox="${true}" cssClass="erk-button erk-button--light"/>
                             </li>
                         </g:each>
 
                         <g:if test="${sr.activeFacetMap?.size() > 1}">
-                            <li>
+                            <li class="erk-ulist__item">
                                 <a href="#" class="activeFilter" data-facet="all" title="Click to clear all filters">
                                     <span class="closeX" style="margin-left:7px;">&gt;&nbsp;</span>
                                     <g:message code="facets.currentfilter.link" default="Clear all"/>
@@ -110,7 +110,7 @@
             <div class="modal-body">
                 <div id="dynamic" class="tableContainer">
                     <form name="facetRefineForm" id="facetRefineForm" method="GET" action="/occurrences/search/facets">
-                        <table class="table table-sm table-bordered table-condensed table-striped scrollTable" id="fullFacets">
+                        <table class="table table-sm table-bordered table-striped scrollTable" id="fullFacets">
                             <thead class="fixedHeader">
                                 <tr class="tableHead">
                                     <th>&nbsp;</th>
