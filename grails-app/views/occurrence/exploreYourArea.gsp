@@ -103,7 +103,7 @@
 
                     <a href="#" id="viewAllRecords">
                         <button class="erk-button erk-button--light">
-                            <i class="icon-list"></i>&nbsp;&nbsp;
+                            <i class="fa fa-list"></i>&nbsp;&nbsp;
                             <g:message code="eya.searchform.a.viewallrecords.01" default="View"/>
                             <span id="recordsGroupText">
                                 <g:message code="eya.searchform.a.viewallrecords.02" default="all"/>
@@ -112,12 +112,10 @@
                         </button>
                     </a>
 
-                    <a href="#download" role="button" data-toggle="modal" class="tooltips" title="Download all records OR species checklist">
-                        <button class="erk-button erk-button--light">
-                            <i class="icon-download"></i>
-                            <g:message code="eya.searchform.a.downloads" default="Downloads"/>
-                        </button>
-                    </a>
+                    <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                        <i class="icon-download"></i>
+                        <g:message code="eya.searchform.a.downloads" default="Downloads"/>
+                    </button>
                 </p>
             </div>
 

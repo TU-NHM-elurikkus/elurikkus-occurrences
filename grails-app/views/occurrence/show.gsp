@@ -400,7 +400,7 @@
                             </ul>
                         </p>
                         <g:if test="${duplicateRecordDetails && duplicateRecordDetails.duplicates?.size() > 0}">
-                            <table class="duplicationTable table table-sm table-striped table-bordered table-condensed" style="border-bottom:none;">
+                            <table class="duplicationTable table table-sm table-striped table-bordered" style="border-bottom:none;">
                                 <tr class="sectionName"><td colspan="4"><g:message code="show.table01.title" default="Representative Record"/></td></tr>
                                 <g:if test="${duplicateRecordDetails.uuid}">
                                     <alatag:occurrenceTableRow
@@ -557,7 +557,7 @@
 
                         <div class="modal-body">
                             <div class="table-responsive">
-                                <table class="table table-sm table-bordered table-striped table-condensed">
+                                <table class="table table-sm table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th><g:message code="show.processedvsrawview.table.th01" default="Group"/></th>

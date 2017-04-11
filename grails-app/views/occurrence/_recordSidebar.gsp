@@ -428,7 +428,7 @@
     <a name="dataQualityReport"></a>
     <h2><g:message code="show.dataquality.title" default="Data quality tests"/></h2>
 
-    <div id="dataQualityModal" class="modal hide fade" tabindex="-1" role="dialog">
+    <div id="dataQualityModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
             <h3>
@@ -450,7 +450,7 @@
         </div>
     </div>
 
-    <table class="table table-sm table-striped table-bordered table-condensed">
+    <table class="table table-sm table-striped table-bordered">
         <thead>
             <tr class="sectionName">
                 <td class="dataQualityTestName"><g:message code="show.tabledataqualityresultscol01.title" default="Test name"/></td>

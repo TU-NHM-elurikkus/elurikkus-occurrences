@@ -110,7 +110,7 @@
             <div class="modal-body">
                 <div id="dynamic" class="tableContainer">
                     <form name="facetRefineForm" id="facetRefineForm" method="GET" action="/occurrences/search/facets">
-                        <table class="table table-sm table-bordered table-condensed table-striped scrollTable" id="fullFacets">
+                        <table class="table table-sm table-bordered table-striped scrollTable" id="fullFacets">
                             <thead class="fixedHeader">
                                 <tr class="tableHead">
                                     <th>&nbsp;</th>

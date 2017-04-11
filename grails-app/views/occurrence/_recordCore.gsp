@@ -9,7 +9,7 @@
 
     <h2><g:message code="recordcore.occurencedataset.title" default="Dataset"/></h2>
 
-    <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="datasetTable">
+    <table class="occurrenceTable table table-sm table-bordered table-striped " id="datasetTable">
         <!-- Data Provider -->
         <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="dataProvider" fieldName="Data provider">
             <g:if test="${record.processed.attribution.dataProviderUid && collectionsWebappContext}">
@@ -354,7 +354,7 @@
         <g:message code="recordcore.occurenceevent.title" default="Event"/>
     </h2>
 
-    <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="eventTable">
+    <table class="occurrenceTable table table-sm table-bordered table-striped " id="eventTable">
         <!-- Field Number -->
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="fieldNumber" fieldName="Field number">
             ${fieldsMap.put("fieldNumber", true)}
@@ -428,7 +428,7 @@
         <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
     </h2>
 
-    <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="taxonomyTable">
+    <table class="occurrenceTable table table-sm table-bordered table-striped " id="taxonomyTable">
         <!-- Higher classification -->
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="higherClassification" fieldName="Higher classification">
             ${fieldsMap.put("higherClassification", true)}
@@ -798,7 +798,7 @@
             <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
         </h2>
 
-        <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="geospatialTable">
+        <table class="occurrenceTable table table-sm table-bordered table-striped " id="geospatialTable">
             <!-- Higher Geography -->
             <alatag:occurrenceTableRow annotate="true" section="geospatial" fieldCode="higherGeography" fieldName="Higher geography">
                 ${fieldsMap.put("higherGeography", true)}
@@ -1070,7 +1070,7 @@
             <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
         </h2>
 
-        <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="miscellaneousPropertiesTable">
+        <table class="occurrenceTable table table-sm table-bordered table-striped " id="miscellaneousPropertiesTable">
             <!-- Higher Geography -->
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
                 <g:set var="entryHtml"><span class='dwc'>${entry.key}</span></g:set>
@@ -1084,7 +1084,7 @@
 <div id="outlierInformation" class="additionalData">
     <g:if test="${contextualSampleInfo}">
         <h2 id="contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional geographic & environmental information"/></h2>
-        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed">
+        <table class="layerIntersections table table-sm table-striped table-bordered ">
             <tbody>
             <g:each in="${contextualSampleInfo}" var="sample" status="vs">
                 <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
@@ -1104,7 +1104,7 @@
 
     <g:if test="${environmentalSampleInfo}">
         <h2 id="environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></h2>
-        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed" >
+        <table class="layerIntersections table table-sm table-striped table-bordered " >
             <tbody>
             <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
                 <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">

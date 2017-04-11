@@ -439,13 +439,10 @@
                         <div id="searchControls" class="row">
                             <div class="col-3">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                                    <a href="#download" role="button" data-toggle="modal" class="tooltips"
-                                       title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records OR species checklist">
-                                        <button id="downloads" class="erk-button erk-button--light">
-                                           <i class="fa fa-download"></i>&nbsp;&nbsp;
-                                           <g:message code="list.downloads.navigator" default="Downloads"/>
-                                        </button>
-                                    </a>
+                                    <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                       <i class="fa fa-download"></i>&nbsp;&nbsp;
+                                       <g:message code="list.downloads.navigator" default="Downloads"/>
+                                    </button>
                                 </g:if>
 
                                 <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
