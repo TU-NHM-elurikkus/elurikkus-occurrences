@@ -36,7 +36,7 @@
 
                         <g:if test="${sr.activeFacetMap?.size() > 1}">
                             <li class="erk-ulist__item">
-                                <a href="#" class="activeFilter" data-facet="all" title="Click to clear all filters">
+                                <a href="#" class="activeFilter" data-facet="all">
                                     <span class="closeX" style="margin-left:7px;">&gt;&nbsp;</span>
                                     <g:message code="facets.currentfilter.link" default="Clear all"/>
                                 </a>

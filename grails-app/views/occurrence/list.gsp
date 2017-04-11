@@ -67,7 +67,7 @@
         };
     </script>
 
-    <r:require modules="elurikkusSearch, leaflet, leafletPlugins, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, charts, image-viewer, lightbox"/>
+    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, charts, image-viewer, lightbox"/>
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete"/>
     </g:if>
@@ -276,7 +276,7 @@
                                     <g:set var="spatialType" value="${params.wkt =~ /^\w+/}"/>
 
                                     <a href="${alatag.getQueryStringForWktRemove()}">
-                                        <button class="erk-button erk-button--light btn-mini tooltips" title="Click to remove this filter">
+                                        <button class="erk-button erk-button--light">
                                             Spatial filter: ${spatialType[0]}
                                             <span class="closeX">×</span>
                                         </button>
