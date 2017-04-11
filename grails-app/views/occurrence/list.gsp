@@ -274,14 +274,21 @@
 
                                 <g:if test="${params.wkt}"><%-- WKT spatial filter   --%>
                                     <g:set var="spatialType" value="${params.wkt =~ /^\w+/}"/>
-                                    <a href="${alatag.getQueryStringForWktRemove()}" class="erk-button erk-button--light btn-mini tooltips" title="Click to remove this filter">Spatial filter: ${spatialType[0]}
-                                        <span class="closeX">×</span>
+
+                                    <a href="${alatag.getQueryStringForWktRemove()}">
+                                        <button class="erk-button erk-button--light btn-mini tooltips" title="Click to remove this filter">
+                                            Spatial filter: ${spatialType[0]}
+                                            <span class="closeX">×</span>
+                                        </button>
                                     </a>
                                 </g:if>
-
                                 <g:elseif test="${params.radius && params.lat && params.lon}">
-                                    <a href="${alatag.getQueryStringForRadiusRemove()}" class="erk-button erk-button--light tooltips" title="Click to remove this filter">Spatial filter: CIRCLE
-                                        <span class="closeX">×</span>
+
+                                    <a href="${alatag.getQueryStringForRadiusRemove()}">
+                                        <button class="erk-button erk-button--light tooltips" title="Click to remove this filter">
+                                            Spatial filter: CIRCLE
+                                            <span class="closeX">×</span>
+                                        </button>
                                     </a>
                                 </g:elseif>
 

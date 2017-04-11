@@ -137,7 +137,7 @@ class OccurrenceTagLib {
         def fqLabel = preFix + filterLabel
 
         def mb = new MarkupBuilder(out)
-        mb.button (   href:"#",
+        mb.button (
                 class: "${attrs.cssClass} tooltips activeFilter",
                     title: alatag.message(code:"title.filter.remove", default:"Click to remove this filter"),
                     "data-facet": item.key
