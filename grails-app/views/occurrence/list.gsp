@@ -285,7 +285,7 @@
                                 </g:elseif>
 
                                 <g:if test="${sr.activeFacetMap?.size() > 1}">
-                                    <button class="erk-button erk-button--light ctiveFilter" data-facet="all"
+                                    <button class="erk-button erk-button--light activeFilter" data-facet="all"
                                             title="Click to clear all filters"><span
                                             class="closeX">&gt;&nbsp;</span><g:message code="list.resultsretuened.button01" default="Clear all"/></button>
                                 </g:if>
