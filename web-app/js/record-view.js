@@ -2,13 +2,34 @@
  * JQuery on document ready callback
  */
 $(document).ready(function() {
+    var assertionSections = [
+        {
+            toggle: '#showErrorAndWarningTests',
+            rows: ['.failedTestResult', '.warningTestResult']
+        },
 
-    $('#showUncheckedTests').on('click', function(e){
-        $('.uncheckTestResult').toggle();
-    });
+        {
+            toggle: '#showPassedTests',
+            rows: ['.passedTestResult']
+        },
 
-    $('#showMissingPropResult').on('click', function(e){
-        $('.missingPropResult').toggle();
+        {
+            toggle: '#showMissingPropResult',
+            rows: ['.missingPropResult']
+        },
+
+        {
+            toggle: '#showUncheckedTests',
+            rows: ['.uncheckTestResult']
+        }
+    ]
+
+    assertionSections.forEach(function(section) {
+        $(section.toggle).on('click', function() {
+            section.rows.forEach(function(row) {
+                $(row).toggle();
+            });
+        });
     });
 
     jQuery.i18n.properties({

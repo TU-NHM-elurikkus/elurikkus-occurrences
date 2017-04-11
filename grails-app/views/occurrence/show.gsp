@@ -155,28 +155,28 @@
             </div>
 
             <div class="record-navigation">
-                <a class="btn-link" href="#occurrenceDataset">
+                <a class="record-navigation__link" href="#occurrenceDataset">
                     <button class="erk-button erk-button--light">
                         <span class="fa fa-database"></span>
                         <g:message code="recordcore.occurencedataset.title" default="Dataset"/>
                     </button>
                 </a>
 
-                <a class="btn-link" href="#occurrenceEvent">
+                <a class="record-navigation__link" href="#occurrenceEvent">
                     <button class="erk-button erk-button--light">
                         <span class="fa fa-clock-o"></span>
                         <g:message code="recordcore.occurenceevent.title" default="Dataset"/>
                     </button>
                 </a>
 
-                <a class="btn-link" href="#occurrenceTaxonomy">
+                <a class="record-navigation__link" href="#occurrenceTaxonomy">
                     <button class="erk-button erk-button--light">
                         <span class="fa fa-sitemap"></span>
                         <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
                     </button>
                 </a>
 
-                <a class="btn-link" href="#occurrenceGeospatial">
+                <a class="record-navigation__link" href="#occurrenceGeospatial">
                     <button class="erk-button erk-button--light">
                         <span class="fa fa-map-marker"></span>
                         <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
@@ -184,7 +184,7 @@
                 </a>
 
                 <g:if test="${record.raw.miscProperties}">
-                    <a class="btn-link" href="#additionalProperties">
+                    <a class="record-navigation__link" href="#additionalProperties">
                         <button class="erk-button erk-button--light">
                             <span class="fa fa-cog"></span>
                             <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
@@ -303,102 +303,6 @@
                         <ul id="userAnnotationsList" style="list-style: none; margin:0;"></ul>
                     </div>
 
-                    <div id="dataQuality" class="additionalData">
-                        <a name="dataQualityReport"></a>
-                        <h2><g:message code="show.dataquality.title" default="Data quality tests"/></h2>
-
-                        <div id="dataQualityModal" class="modal hide fade" tabindex="-1" role="dialog">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h3>
-                                    <g:message code="show.dataqualitymodal.title" default="Data Quality Details"/>
-                                </h3>
-                            </div>
-
-                            <div class="modal-body">
-                                <p>
-                                    <g:message code="show.dataqualitymodal.body" default="loading"/>
-                                    ...
-                                </p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button class="erk-button erk-button--light" data-dismiss="modal">
-                                    <g:message code="show.dataqualitymodal.button" default="Close"/>
-                                </button>
-                            </div>
-                        </div>
-
-                        <table class="table table-sm table-striped table-bordered table-condensed">
-                            <thead>
-                                <tr class="sectionName">
-                                    <td class="dataQualityTestName"><g:message code="show.tabledataqualityresultscol01.title" default="Test name"/></td>
-                                    <td class="dataQualityTestResult"><g:message code="show.tabledataqualityresultscol02.title" default="Result"/></td>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <g:set var="testSet" value="${record.systemAssertions.failed}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr>
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-times-circle" style="color:red;"></i> <g:message code="show.tabledataqualityresults.tr01td02" default="Failed"/></td>
-                                    <%--<td>More info</td>--%>
-                                </tr>
-                                </g:each>
-
-                                <g:set var="testSet" value="${record.systemAssertions.warning}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr>
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-exclamation-circle" style="color:orange;"></i> <g:message code="show.tabledataqualityresults.tr02td02" default="Warning"/></td>
-                                    <%--<td>More info</td>--%>
-                                </tr>
-                                </g:each>
-
-                                <g:set var="testSet" value="${record.systemAssertions.passed}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr>
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-check-circle" style="color:green;"></i> <g:message code="show.tabledataqualityresults.tr03td02" default="Passed"/></td>
-                                    <%--<td>More info</td>--%>
-                                </tr>
-                                </g:each>
-
-                                <g:if test="${record.systemAssertions.missing}">
-                                    <tr>
-                                        <td colspan="2">
-                                        <a href="javascript:void(0)" id="showMissingPropResult"><g:message code="show.tabledataqualityresults.tr04td02" default="Show/Hide"/>  ${record.systemAssertions.missing.length()} missing properties</a>
-                                        </td>
-                                    </tr>
-                                </g:if>
-
-                                <g:set var="testSet" value="${record.systemAssertions.missing}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr class="missingPropResult" style="display:none;">
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-question-circle"></i> <g:message code="show.tabledataqualityresults.tr05td02" default="Missing"/></td>
-                                </tr>
-                                </g:each>
-
-                                <g:if test="${record.systemAssertions.unchecked}">
-                                    <tr>
-                                        <td colspan="2">
-                                        <a href="javascript:void(0)" id="showUncheckedTests"><g:message code="show.tabledataqualityresults.tr06td02" default="Show/Hide"/>  ${record.systemAssertions.unchecked.length()} tests that have not been run</a>
-                                        </td>
-                                    </tr>
-                                </g:if>
-
-                                <g:set var="testSet" value="${record.systemAssertions.unchecked}"/>
-                                <g:each in="${testSet}" var="test">
-                                <tr class="uncheckTestResult" style="display:none;">
-                                    <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                                    <td><i class="fa fa-ban"></i> <g:message code="show.tabledataqualityresults.tr07td02" default="Unchecked (lack of data)"/></td>
-                                </tr>
-                                </g:each>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
 
@@ -638,48 +542,6 @@
                     </g:if>
                 </div>
 
-                <div id="outlierInformation" class="additionalData">
-                    <g:if test="${contextualSampleInfo}">
-                        <h3 id="contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional geographic & environmental information"/></h3>
-                        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed">
-                            <tbody>
-                            <g:each in="${contextualSampleInfo}" var="sample" status="vs">
-                                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
-                                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                                </g:if>
-                                <g:set var="fn"><a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title='more information about this layer'>${sample.layerDisplayName}</a></g:set>
-                                <alatag:occurrenceTableRow
-                                        annotate="false"
-                                        section="contextual"
-                                        fieldCode="${sample.layerName}"
-                                        fieldName="${fn}">
-                                ${sample.value}</alatag:occurrenceTableRow>
-                            </g:each>
-                            </tbody>
-                        </table>
-                    </g:if>
-
-                    <g:if test="${environmentalSampleInfo}">
-                        <h3 id="environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></h3>
-                        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed" >
-                            <tbody>
-                            <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
-                                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
-                                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                                </g:if>
-                                <g:set var="fn"><a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title='More information about this layer'>${sample.layerDisplayName}</a></g:set>
-                                <alatag:occurrenceTableRow
-                                        annotate="false"
-                                        section="contextual"
-                                        fieldCode="${sample.layerName}"
-                                        fieldName="${fn}">
-                                    ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
-                                </alatag:occurrenceTableRow>
-                            </g:each>
-                            </tbody>
-                        </table>
-                    </g:if>
-                </div>
             </div>
 
             <div id="processedVsRawView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="processedVsRawViewLabel" aria-hidden="true">

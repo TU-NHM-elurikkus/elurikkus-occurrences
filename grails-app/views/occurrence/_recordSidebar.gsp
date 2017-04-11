@@ -83,32 +83,24 @@
 </g:if>
 <div class="clearfix"></div>
 
-<ul class="nav flex-column">
-    <g:if test="${record.images}">
-        <li class="nav-item">
-            <a class="nav-link" href="#images">
-                <g:message code="show.sidebar03.title" default="Images"/>
-            </a>
-        </li>
-    </g:if>
-
+<div class="sidebar-general-info">
     <g:if test="${record.sounds}">
-        <li class="nav-item">
-            <a class="nav-link" href="#soundsHeader">
+        <div class="sidebar-general-info__item">
+            <a href="#soundsHeader">
                 <g:message code="show.soundsheader.title" default="Sounds"/>
             </a>
-        </li>
+        </div>
     </g:if>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#userAnnotationsDiv" id="userAnnotationsNav" style="display:none;">
+    <div class="sidebar-general-info__item">
+        <a href="#userAnnotationsDiv" id="userAnnotationsNav" style="display:none;">
             <g:message code="show.userannotationsdiv.title" default="User flagged issues"/>
         </a>
-    </li>
+    </div>
 
     <g:if test="${record.systemAssertions && record.processed.attribution.provenance != 'Draft'}">
-        <li class="nav-item">
-            <a class="nav-link" href="#dataQuality">
+        <div class="sidebar-general-info__item">
+            <a href="#dataQuality">
                 <g:message code="show.dataquality.title" default="Data quality tests"/>
                 (${record.systemAssertions.failed?.size()?:0} <i class="fa fa-times-circle tooltips" style="color:red;" title="<g:message code="assertions.failed" default="failed"/>"></i>,
                 ${record.systemAssertions.warning?.size()?:0} <i class="fa fa-exclamation-circle tooltips" style="color:orange;" title="<g:message code="assertions.warnings" default="warning"/>"></i>,
@@ -116,33 +108,21 @@
                 ${record.systemAssertions.missing?.size()?:0} <i class="fa fa-question-circle tooltips" style="color:gray;" title="<g:message code="assertions.missing" default="missing"/>"></i>,
                 ${record.systemAssertions.unchecked?.size()?:0} <i class="fa fa-ban tooltips" style="color:gray;" title="<g:message code="assertions.unchecked" default="unchecked"/>"></i>)
             </a>
-        </li>
+        </div>
     </g:if>
 
     <g:if test="${record.processed.occurrence.outlierForLayers}">
-        <li class="nav-item">
-            <a class="nav-link" href="#outlierInformation"><g:message code="show.outlierinformation.title" default="Outlier information"/></a>
-        </li>
+        <div class="sidebar-general-info__item">
+            <a href="#outlierInformation"><g:message code="show.outlierinformation.title" default="Outlier information"/></a>
+        </div>
     </g:if>
 
     <g:if test="${record.processed.occurrence.duplicationStatus}">
-        <li class="nav-item">
-            <a class="nav-link" href="#inferredOccurrenceDetails"><g:message code="show.inferredoccurrencedetails.title" default="Inferred associated occurrence details"/></a>
-        </li>
+        <div class="sidebar-general-info__item">
+            <a href="#inferredOccurrenceDetails"><g:message code="show.inferredoccurrencedetails.title" default="Inferred associated occurrence details"/></a>
+        </div>
     </g:if>
-
-    <g:if test="${contextualSampleInfo}">
-        <li class="nav-item">
-            <a class="nav-link" href="#contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional political boundaries information"/></a>
-        </li>
-    </g:if>
-
-    <g:if test="${environmentalSampleInfo}">
-        <li class="nav-item">
-            <a class="nav-link" href="#environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></a>
-        </li>
-    </g:if>
-</ul>
+</div>
 
 <g:if test="${false && record.processed.attribution.provenance != 'Draft'}">
     <div class="sidebar">
@@ -356,13 +336,19 @@
                 </g:if>
             });
         </script>
-        <h3><g:message code="show.occurrencemap.title" default="Location of record"/></h3>
+
+        <h2>
+            <g:message code="show.occurrencemap.title" default="Location of record"/>
+        </h2>
+
         <div id="occurrenceMap" class="google-maps"></div>
     </div>
 </g:if>
+
 <g:if test="${record.images}">
     <div class="sidebar">
-        <h3 id="images"><g:message code="show.sidebar03.title" default="Images"/></h3>
+        <h2 id="images"><g:message code="show.sidebar03.title" default="Images"/></h2>
+
         <div id="occurrenceImages" style="margin-top:5px;">
             <g:each in="${record.images}" var="image">
                 <div style="margin-bottom:10px;">
@@ -437,3 +423,146 @@
         </p>
     </div>
 </g:if>
+
+<div id="dataQuality" class="additionalData">
+    <a name="dataQualityReport"></a>
+    <h2><g:message code="show.dataquality.title" default="Data quality tests"/></h2>
+
+    <div id="dataQualityModal" class="modal hide fade" tabindex="-1" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>
+                <g:message code="show.dataqualitymodal.title" default="Data Quality Details"/>
+            </h3>
+        </div>
+
+        <div class="modal-body">
+            <p>
+                <g:message code="show.dataqualitymodal.body" default="loading"/>
+                ...
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <button class="erk-button erk-button--light" data-dismiss="modal">
+                <g:message code="show.dataqualitymodal.button" default="Close"/>
+            </button>
+        </div>
+    </div>
+
+    <table class="table table-sm table-striped table-bordered table-condensed">
+        <thead>
+            <tr class="sectionName">
+                <td class="dataQualityTestName"><g:message code="show.tabledataqualityresultscol01.title" default="Test name"/></td>
+                <td class="dataQualityTestResult"><g:message code="show.tabledataqualityresultscol02.title" default="Result"/></td>
+            </tr>
+        </thead>
+
+        <tbody>
+            <%-- failed and warning tests --%>
+            <g:set var="failedTestSet" value="${record.systemAssertions.failed}"/>
+            <g:set var="warningTestSet" value="${record.systemAssertions.warning}"/>
+
+            <g:if test="${failedTestSet || warningTestSet}">
+                <tr>
+                    <td colspan="2">
+                        <a href="javascript:void(0)" id="showErrorAndWarningTests">
+                            <g:message code="show.tabledataqualityresults.tr04td02" default="Show/Hide"/>
+                            ${failedTestSet ? failedTestSet.length() : 0} failed tests and
+                            ${warningTestSet ? warningTestSet.length() : 0} warnings
+                        </a>
+                    </td>
+                </tr>
+
+                <g:each in="${failedTestSet}" var="test">
+                    <tr class="failedTestResult">
+                        <td>
+                            <g:message code="${test.name}" default="${test.name}"/>
+                            <alatag:dataQualityHelp code="${test.code}"/>
+                        </td>
+
+                        <td>
+                            <span class="fa fa-times-circle" style="color:red;"></span>
+                            <g:message code="show.tabledataqualityresults.tr01td02" default="Failed"/>
+                        </td>
+                    </tr>
+                </g:each>
+
+                <g:each in="${warningTestSet}" var="test">
+                    <tr class="warningTestResult">
+                        <td>
+                            <g:message code="${test.name}" default="${test.name}"/>
+                            <alatag:dataQualityHelp code="${test.code}"/>
+                        </td>
+
+                        <td>
+                            <span class="fa fa-exclamation-circle" style="color:orange;"></span>
+                            <g:message code="show.tabledataqualityresults.tr02td02" default="Warning"/>
+                        </td>
+                    </tr>
+                </g:each>
+            </g:if>
+
+            <%-- passed tests --%>
+            <g:set var="passedTestSet" value="${record.systemAssertions.passed}"/>
+
+            <g:if test="${passedTestSet}">
+                <tr>
+                    <td colspan="2">
+                        <a href="javascript:void(0)" id="showPassedTests">
+                            <g:message code="show.tabledataqualityresults.tr04td02" default="Show/Hide"/>
+                            ${record.systemAssertions.passed.length()} passed tests
+                        </a>
+                    </td>
+                </tr>
+
+                <g:each in="${passedTestSet}" var="test">
+                    <tr class="passedTestResult" style="display:none">
+                        <td>
+                            <g:message code="${test.name}" default="${test.name}"/>
+                            <alatag:dataQualityHelp code="${test.code}"/>
+                        </td>
+
+                        <td>
+                            <span class="fa fa-check-circle" style="color:green;"></span>
+                            <g:message code="show.tabledataqualityresults.tr03td02" default="Passed"/>
+                        </td>
+                    </tr>
+                </g:each>
+            </g:if>
+
+            <%-- missing tests --%>
+            <g:if test="${record.systemAssertions.missing}">
+                <tr>
+                    <td colspan="2">
+                    <a href="javascript:void(0)" id="showMissingPropResult"><g:message code="show.tabledataqualityresults.tr04td02" default="Show/Hide"/>  ${record.systemAssertions.missing.length()} missing properties</a>
+                    </td>
+                </tr>
+            </g:if>
+
+            <g:set var="testSet" value="${record.systemAssertions.missing}"/>
+            <g:each in="${testSet}" var="test">
+            <tr class="missingPropResult" style="display:none;">
+                <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
+                <td><i class="fa fa-question-circle"></i> <g:message code="show.tabledataqualityresults.tr05td02" default="Missing"/></td>
+            </tr>
+            </g:each>
+
+            <g:if test="${record.systemAssertions.unchecked}">
+                <tr>
+                    <td colspan="2">
+                    <a href="javascript:void(0)" id="showUncheckedTests"><g:message code="show.tabledataqualityresults.tr06td02" default="Show/Hide"/>  ${record.systemAssertions.unchecked.length()} tests that have not been run</a>
+                    </td>
+                </tr>
+            </g:if>
+
+            <g:set var="testSet" value="${record.systemAssertions.unchecked}"/>
+            <g:each in="${testSet}" var="test">
+            <tr class="uncheckTestResult" style="display:none;">
+                <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
+                <td><i class="fa fa-ban"></i> <g:message code="show.tabledataqualityresults.tr07td02" default="Unchecked (lack of data)"/></td>
+            </tr>
+            </g:each>
+        </tbody>
+    </table>
+</div>

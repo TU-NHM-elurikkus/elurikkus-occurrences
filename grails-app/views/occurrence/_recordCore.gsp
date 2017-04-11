@@ -7,7 +7,7 @@
 <div id="occurrenceDataset">
     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: record?.raw?.attribution?.dataResourceUid]" />
 
-    <h1><g:message code="recordcore.occurencedataset.title" default="Dataset"/></h1>
+    <h2><g:message code="recordcore.occurencedataset.title" default="Dataset"/></h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="datasetTable">
         <!-- Data Provider -->
@@ -424,9 +424,9 @@
 </div>
 
 <div id="occurrenceTaxonomy">
-    <h1>
+    <h2>
         <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
-    </h1>
+    </h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped table-condensed" id="taxonomyTable">
         <!-- Higher classification -->
@@ -1080,3 +1080,46 @@
         </table>
     </div>
 </g:if>
+
+<div id="outlierInformation" class="additionalData">
+    <g:if test="${contextualSampleInfo}">
+        <h2 id="contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional geographic & environmental information"/></h2>
+        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed">
+            <tbody>
+            <g:each in="${contextualSampleInfo}" var="sample" status="vs">
+                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
+                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
+                </g:if>
+                <g:set var="fn"><a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title='more information about this layer'>${sample.layerDisplayName}</a></g:set>
+                <alatag:occurrenceTableRow
+                        annotate="false"
+                        section="contextual"
+                        fieldCode="${sample.layerName}"
+                        fieldName="${fn}">
+                ${sample.value}</alatag:occurrenceTableRow>
+            </g:each>
+            </tbody>
+        </table>
+    </g:if>
+
+    <g:if test="${environmentalSampleInfo}">
+        <h2 id="environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></h2>
+        <table class="layerIntersections table table-sm table-striped table-bordered table-condensed" >
+            <tbody>
+            <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
+                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
+                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
+                </g:if>
+                <g:set var="fn"><a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title='More information about this layer'>${sample.layerDisplayName}</a></g:set>
+                <alatag:occurrenceTableRow
+                        annotate="false"
+                        section="contextual"
+                        fieldCode="${sample.layerName}"
+                        fieldName="${fn}">
+                    ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
+                </alatag:occurrenceTableRow>
+            </g:each>
+            </tbody>
+        </table>
+    </g:if>
+</div>
