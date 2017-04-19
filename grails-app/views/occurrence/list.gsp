@@ -527,7 +527,7 @@
 
                                 taxonomyChart.load({
                                     biocacheServicesUrl: BC_CONF.biocacheServiceUrl,
-                                    displayRecordUrl: BC_CONF.serverName,
+                                    displayRecordsUrl: BC_CONF.serverName,
                                     instanceUid: '',
                                     rank: 'kingdom',
                                     query: searchString.replace('?q=', '')
