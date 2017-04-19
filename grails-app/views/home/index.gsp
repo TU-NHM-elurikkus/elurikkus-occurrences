@@ -217,8 +217,8 @@
                 //setup onclick event for this object
                 var layer = e.layer;
                 //console.log("layer",layer, layer._latlng.lat);
-                generatePopup(layer, layer._latlng);
-                addClickEventForVector(layer);
+                generatePopup(layer, layer._latlng, MAP_VAR.query, MAP_VAR.map);
+                addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
                 MAP_VAR.drawnItems.addLayer(layer);
             });
 
@@ -226,8 +226,8 @@
                 //setup onclick event for this object
                 var layers = e.layers;
                 layers.eachLayer(function (layer) {
-                    generatePopup(layer, layer._latlng);
-                    addClickEventForVector(layer);
+                    generatePopup(layer, layer._latlng, MAP_VAR.query, MAP_VAR.map);
+                    addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
                 });
             });
 

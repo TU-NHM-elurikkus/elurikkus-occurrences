@@ -140,7 +140,8 @@ OccurrenceMap.prototype.initialize = function() {
     self.map.on('draw:created', function(e) {
         //setup onclick event for self object
         var layer = e.layer;
-        addClickEventForVector(layer);
+        addClickEventForVector(layer, self.query, self.map);
+        generatePopup(layer, e.latlng, self.query, self.map);
         self.drawnItems.addLayer(layer);
     });
 
@@ -253,16 +254,12 @@ OccurrenceMap.prototype.initialize = function() {
         var wkt = new Wkt.Wkt();
         wkt.read(self.wkt);
         var wktObject = wkt.toObject({color: '#bada55'});
-        //addClickEventForVector(wktObject); // can't click on points if self is set
-        //wktObject.editing.enable();
         wktObject.on('click', pointLookupClickRegister);
         self.drawnItems.addLayer(wktObject);
 
     } else if (isSpatialRadiusSearch()) {
         // draw circle onto map
         var circle = L.circle([$.url().param('lat'), $.url().param('lon')], ($.url().param('radius') * 1000), {color: '#bada55'});
-        //console.log("circle", circle);
-        //addClickEventForVector(circle);  // can't click on points if self is set
         circle.on('click', pointLookupClickRegister);
         self.drawnItems.addLayer(circle);
     }
@@ -271,7 +268,7 @@ OccurrenceMap.prototype.initialize = function() {
         //setup onclick event for self object
         var layers = e.layers;
         layers.eachLayer(function (layer) {
-            addClickEventForVector(layer);
+            addClickEventForVector(layer, self.query, self.map);
         });
     });
 
@@ -992,8 +989,8 @@ MapPopup.prototype.previous = function() {
 MapPopup.prototype.changeIndex = function(idx) {
     this.currentIdx = idx;
 
-    this.$popupClone.find('.nextRecord btn').toggleClass('disabled', idx >= this.total - 1);
-    this.$popupClone.find('.previousRecord btn').toggleClass('disabled', idx <= 0);
+    this.$popupClone.find('.nextRecord button').toggleClass('disabled', idx >= this.total - 1);
+    this.$popupClone.find('.previousRecord button').toggleClass('disabled', idx <= 0);
 
     this.$popupClone.find('.currentRecord').html(idx + 1);
 }
@@ -1012,14 +1009,12 @@ MapPopup.prototype.createElement = function() {
     // footer
     $popupClone.find('.multiRecordFooter').show();
 
-    $popupClone.find('.nextRecord btn').on('click', function() {
+    $popupClone.find('.nextRecord button').on('click', function() {
         this.next();
-        return false;
     }.bind(this));
 
-    $popupClone.find('.previousRecord btn').on('click', function() {
+    $popupClone.find('.previousRecord button').on('click', function() {
         this.previous();
-        return false;
     }.bind(this));
 
     this.$popupClone = $popupClone;
