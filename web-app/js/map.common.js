@@ -14,28 +14,27 @@
  */
 
 /*  Common map (Leaflet) functions */
-function addClickEventForVector(layer) {
+function addClickEventForVector(layer, query, map) {
     layer.on('click', function(e) {
-        generatePopup(layer, e.latlng);
+        generatePopup(layer, e.latlng, query, map);
     });
 }
 
-function generatePopup(layer, latlng) {
-    //console.log('generatePopup', layer, latlng);
+function generatePopup(layer, latlng, query, map) {
     var params = "";
     if (jQuery.isFunction(layer.getRadius)) {
         // circle
-        params = getParamsForCircle(layer);
+        params = getParamsForCircle(layer, query);
     } else {
         var wkt = new Wkt.Wkt();
         wkt.fromObject(layer);
-        params = getParamsforWKT(wkt.write());
+        params = getParamsforWKT(wkt.write(), query);
     }
 
     if (latlng == null) {
         latlng = layer.getBounds().getCenter();
     }
-    //console.log('latlng', latlng);
+
     L.popup()
         .setLatLng([latlng.lat, latlng.lng])
         .setContent(
@@ -45,9 +44,7 @@ function generatePopup(layer, latlng) {
                 jQuery.i18n.prop("search.map.popup.linkText") +
             "</a>"
         )
-        .openOn(MAP_VAR.map);
-
-    //layer.openPopup();
+        .openOn(map);
 
     getSpeciesCountInArea(params);
     getOccurrenceCountInArea(params);
@@ -72,18 +69,18 @@ function getOccurrenceCountInArea(params) {
         });
 }
 
-function getParamsforWKT(wkt) {
-    return "?" + getExistingParams() + "&wkt=" + encodeURI(wkt.replace(" ", "+"));
+function getParamsforWKT(wkt, query) {
+    return "?" + getExistingParams(query) + "&wkt=" + encodeURI(wkt.replace(" ", "+"));
 }
 
-function getParamsForCircle(circle) {
+function getParamsForCircle(circle, query) {
     var latlng = circle.getLatLng();
     var radius = Math.round((circle.getRadius() / 1000) * 10) / 10; // convert to km (from m) and round to 1 decmial place
-    return "?" + getExistingParams() + "&radius=" + radius + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
+    return "?" + getExistingParams(query) + "&radius=" + radius + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
 }
 
-function getExistingParams() {
-    var paramsObj = $.url(MAP_VAR.query).param();
+function getExistingParams(query) {
+    var paramsObj = $.url(query).param();
     if (!paramsObj.q) {
         paramsObj.q = "*:*";
     }
@@ -99,8 +96,8 @@ function drawWktObj(wktString) {
     var wkt = new Wkt.Wkt();
     wkt.read(wktString);
     var wktObject = wkt.toObject({color: '#bada55'});
-    generatePopup(wktObject,null);
-    addClickEventForVector(wktObject);
+    generatePopup(wktObject, null, MAP_VAR.query, MAP_VAR.map);
+    addClickEventForVector(wktObject, MAP_VAR.query, MAP_VAR.map);
     MAP_VAR.drawnItems.addLayer(wktObject);
 
     if (wktObject.getBounds !== undefined && typeof wktObject.getBounds === 'function') {
