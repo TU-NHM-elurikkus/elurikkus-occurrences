@@ -308,7 +308,7 @@ a.colour-by-legend-toggle {
             <div class="leaflet-control-layers-overlays">
                 <div style="overflow:auto; max-height:400px;">
                     <a href="#" class="hideColourControl pull-right" style="padding-left:10px;">
-                        <i class="icon-remove icon-grey"></i>
+                        <i class="fa fa-remove"></i>
                     </a>
 
                     <table class="legendTable"></table>
