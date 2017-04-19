@@ -435,8 +435,10 @@ a.colour-by-legend-toggle {
         </p>
 
         <div class="recordLink">
-            <a href="#" class="erk-button erk-button--light">
-                <g:message code="search.map.popup.viewRecord" default="View record"/>
+            <a href="#">
+                <button class="erk-button erk-button--light">
+                    <g:message code="search.map.popup.viewRecord" default="View record"/>
+                </button>
             </a>
         </div>
     </div>
