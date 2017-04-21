@@ -6,10 +6,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <alatag:addApplicationMetaTags />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    %{--<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">--}%
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700' rel='stylesheet' type='text/css'>
+    <g:render template="/manifest" plugin="elurikkus-commons" />
 
-    <title><g:layoutTitle /></title>
+    <title>
+        <g:layoutTitle />
+    </title>
 
     <r:require modules="elurikkusCoreHub, menu" />
     <r:script disposition='head'>
