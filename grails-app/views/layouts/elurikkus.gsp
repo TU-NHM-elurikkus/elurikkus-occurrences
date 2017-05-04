@@ -69,23 +69,15 @@
 <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
 <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}"/>
 
-<g:render plugin="elurikkus-commons" template="/menu"/>
+<g:render template="/menu" plugin="elurikkus-commons" />
 
 <div id="main-content">
     <g:layoutBody />
 </div>
 
-<div id="footer">
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <a href="http://creativecommons.org/licenses/by/3.0/au/" title="External link to Creative Commons"><img src="http://i.creativecommons.org/l/by/3.0/88x31.png" width="88" height="31" alt=""></a>
-            This site is licensed under a <a href="http://creativecommons.org/licenses/by/3.0/au/" title="External link to Creative Commons" class="external">Creative Commons Attribution 3.0 Australia License</a>.
-        Provider content may be covered by other <a href="#terms-of-use" title="Terms of Use">Terms of Use</a>.
-        </div>
-    </div>
-</div>
-<br/>
+<g:render template="/footer" plugin="elurikkus-commons" />
 
-<r:layoutResources/>
+<r:layoutResources />
+
 </body>
 </html>
