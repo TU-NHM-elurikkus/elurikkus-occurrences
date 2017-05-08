@@ -180,7 +180,7 @@ a.colour-by-legend-toggle {
         <button id="downloadWKT" class="erk-button erk-button--light" style="margin-bottom: 2px;" class="tooltip" onclick="downloadPolygon(); return false;">
             <span class="fa fa-stop"></span>&nbsp&nbsp;
             <g:message code="map.downloadwkt.btn.label" default="Download WKT"/>
-        </div>
+        </button>
     </g:if>
 
     <%--
