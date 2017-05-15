@@ -394,7 +394,17 @@
         <h3 id="soundsHeader" style="margin: 20px 0 0 0;"><g:message code="show.soundsheader.title" default="Sounds"/></h3>
         <div class="row-fluid">
             <div id="audioWrapper" class="span12">
-                <audio src="${record.sounds.get(0)?.alternativeFormats?.'audio/mpeg'}" preload="auto" />
+                <g:set var="soundURLFormats" value="${record.sounds.get(0)?.alternativeFormats}" />
+                <g:set var="soundURL">
+                    <g:if test="${soundURLFormats?.'audio/mpeg'}">
+                        ${soundURLFormats.'audio/mpeg'}
+                    </g:if>
+                    <g:else>
+                        ${soundURLFormats?.values()?.toArray()[0]}
+                    </g:else>
+                </g:set>
+
+                <audio src="${soundURL}" preload="auto" />
                 <div class="track-details">
                     ${record.raw.classification.scientificName}
                 </div>
