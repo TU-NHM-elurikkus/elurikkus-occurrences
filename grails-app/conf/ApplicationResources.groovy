@@ -85,4 +85,9 @@ modules = {
         resource url:[dir:'js/leaflet-plugins/wicket', file:'wicket-leaflet.js', plugin:'biocache-hubs']
         resource url:[dir:'js', file:'LeafletToWKT.js', plugin:'biocache-hubs']
     }
+
+    // Override biocache-hubs plugin style.
+    searchMapOverride {
+        resource url:[dir:'css', file:'searchMap.css'], attrs: [ media: 'all' ]
+    }
 }
