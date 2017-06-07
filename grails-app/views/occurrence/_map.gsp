@@ -311,7 +311,13 @@ a.colour-by-legend-toggle {
                         <i class="fa fa-remove"></i>
                     </a>
 
-                    <table class="legendTable"></table>
+                    <div class="legend-container">
+                        <table class="legendTable"></table>
+
+                        <button id="legendLoadMore" class="erk-button erk-button--light hidden-node">
+                            Load more
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
