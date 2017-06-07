@@ -685,59 +685,93 @@ ColorMode.prototype.initialize = function() {
         self.map.currentLayers.push(layer);
     }
 
+    function initLayerFacet() {
+        $('.layerFacet').click(function(e){
+            var controlIdx = 0;
+            self.map.additionalFqs = '';
+            self.map.removeFqs = ''
+
+            $('#colourByControl').find('.layerFacet').each(function(idx, layerInput){
+                var $input = $(layerInput), fq;
+                var include =  $input.is(':checked');
+
+                if(!include){
+                    self.map.additionalFqs = self.map.additionalFqs + '&HQ=' + controlIdx;
+                    fq = $input.attr('fq');
+                    // logic for facets with missing value is different from those with value
+                    if(fq && fq.startsWith('-')){
+                        // to ignore unknown or missing values, minus sign must be removed
+                        fq = fq.replace('-','');
+                    } else{
+                        // for all other values minus sign has to be added
+                        fq = '-' + fq;
+                    }
+
+                    // add fq to ensure the query in sync with dots displayed on map
+                    self.map.removeFqs += '&fq=' + fq;
+                }
+                controlIdx = controlIdx + 1;
+
+                self.map.clearLayers();
+                reinitLayer();
+            });
+        });
+    }
+
     function initLegend() {
+        $('.legendTable').html('');
+
         if(!self.facet){
-            $('.legendTable').html('');
             addDefaultLegendItem(self.map.props.pointColour);
         } else if (self.facet == 'grid') {
-            $('.legendTable').html('');
             self.map.addGridLegendItem();
         } else {
             //update the legend
-            $('.legendTable').html('<tr><td>Loading legend....</td></tr>');
+            var pageSize = 20;
+            var pageNum = 0;
 
-            $.ajax({
-                url: self.map.props.contextPath + '/occurrence/legend' + self.map.query + '&cm=' + self.facet + '&type=application/json',
-                success: function(data) {
-                    $('.legendTable').html('');
+            var loadMoreButton = $('#legendLoadMore');
 
-                    $.each(data, function(index, legendDef){
-                        var legItemName = legendDef.name ? legendDef.name : 'Not specified';
-                        addLegendItem(legItemName, legendDef.red,legendDef.green,legendDef.blue, legendDef );
-                    });
+            function updateLegend(data) {
+                $.each(data, function(index, legendDef){
+                    var legItemName = legendDef.name ? legendDef.name : 'Not specified';
 
-                    $('.layerFacet').click(function(e){
-                        var controlIdx = 0;
-                        self.map.additionalFqs = '';
-                        self.map.removeFqs = ''
+                    addLegendItem(legItemName, legendDef.red,legendDef.green,legendDef.blue, legendDef );
+                });
+            }
 
-                        $('#colourByControl').find('.layerFacet').each(function(idx, layerInput){
-                            var $input = $(layerInput), fq;
-                            var include =  $input.is(':checked');
+            function loadMoreLegend(onDone) {
+                loadMoreButton.addClass('hidden-node');
 
-                            if(!include){
-                                self.map.additionalFqs = self.map.additionalFqs + '&HQ=' + controlIdx;
-                                fq = $input.attr('fq');
-                                // logic for facets with missing value is different from those with value
-                                if(fq && fq.startsWith('-')){
-                                    // to ignore unknown or missing values, minus sign must be removed
-                                    fq = fq.replace('-','');
-                                } else{
-                                    // for all other values minus sign has to be added
-                                    fq = '-' + fq;
-                                }
+                pageNum++;
 
-                                // add fq to ensure the query in sync with dots displayed on map
-                                self.map.removeFqs += '&fq=' + fq;
-                            }
-                            controlIdx = controlIdx + 1;
+                $.ajax({
+                    url: self.map.props.contextPath + '/occurrence/legend' + self.map.query +
+                        '&cm=' + self.facet +
+                        '&pageNum=' + pageNum +
+                        '&pageSize=' + pageSize +
+                        '&type=application/json',
+                    success: function(data) {
+                        updateLegend(data);
 
-                            self.map.clearLayers();
-                            reinitLayer();
-                        });
-                    });
-                }
+                        if(data.length ===  pageSize) {
+                            loadMoreButton.removeClass('hidden-node');
+                        }
+
+                        if(onDone) {
+                            onDone();
+                        }
+                    }
+                });
+            }
+
+            loadMoreButton.off('click');
+            loadMoreButton.on('click', function() {
+                // Wrapped so that click event doesn't get passed
+                loadMoreLegend()
             });
+
+            loadMoreLegend(initLayerFacet);
         }
     }
 
