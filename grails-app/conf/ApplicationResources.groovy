@@ -88,6 +88,15 @@ modules = {
 
     // Override biocache-hubs plugin style.
     searchMapOverride {
-        resource url:[dir:'css', file:'searchMap.css'], attrs: [ media: 'all' ]
+        resource url: [dir:'css', file:'searchMap.css'], attrs: [media: 'all']
+    }
+
+    chartsOverride {
+        dependsOn 'bootstrapToggle', 'bootstrapMultiselect'
+        resource url: [dir: 'css', file: 'ALAChart.css'], attrs: [media: 'all']
+        resource url: [dir: 'js', file: 'Chart.min.js', plugin: 'ala-charts-plugin']
+        resource url: [dir: 'js', file: 'ALAChart.js', plugin: 'ala-charts-plugin']
+        resource url: [dir: 'js', file: 'slider.js', plugin: 'ala-charts-plugin']
+        resource url: [dir: 'js', file: 'moment.min.js', plugin: 'ala-charts-plugin']
     }
 }
