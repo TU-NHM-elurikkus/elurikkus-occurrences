@@ -93,10 +93,10 @@ modules = {
 
     chartsOverride {
         dependsOn 'bootstrapToggle', 'bootstrapMultiselect'
-        resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
         resource url: [dir: 'css', file: 'ALAChart.css'], attrs: [media: 'all']
+        resource url: [dir: 'js', file: 'ALAChart.js']
+        resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
         resource url: [dir: 'js', file: 'Chart.min.js', plugin: 'ala-charts-plugin']
-        resource url: [dir: 'js', file: 'ALAChart.js', plugin: 'ala-charts-plugin']
         resource url: [dir: 'js', file: 'slider.js', plugin: 'ala-charts-plugin']
         resource url: [dir: 'js', file: 'moment.min.js', plugin: 'ala-charts-plugin']
     }
