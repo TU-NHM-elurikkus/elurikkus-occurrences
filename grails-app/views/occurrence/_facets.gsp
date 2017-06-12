@@ -191,6 +191,7 @@
 
 <script type="text/javascript">
     var dynamicFacets = new Array();
+
     <g:each in="${dynamicFacets}" var="dynamicFacet">
         dynamicFacets.push('${dynamicFacet.name}');
     </g:each>

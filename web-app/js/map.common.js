@@ -40,7 +40,7 @@ function generatePopup(layer, latlng, query, map) {
         .setContent(
             "species count: <b id='speciesCountDiv'>calculating...</b><br>" +
             "occurrence count: <b id='occurrenceCountDiv'>calculating...</b><br>" +
-            "<a id='showOnlyTheseRecords' href='" + BC_CONF.contextPath + "/occurrences/search" + params + "#tab_mapView" + "'>" +
+            "<a id='showOnlyTheseRecords' href='" + BC_CONF.contextPath + "/occurrences/search" + params + "#tab-map" + "'>" +
                 jQuery.i18n.prop("search.map.popup.linkText") +
             "</a>"
         )

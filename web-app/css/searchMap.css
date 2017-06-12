@@ -33,13 +33,10 @@
     line-height: 18px;
     margin-bottom: 0px;
 }
+
 #wktInput {
     height: 280px;
-    width: 95%;
-}
-#addWkt {
-    display: inline-block;
-    margin-top: 5px;
+    width: 100%;
 }
 
 #spatialSearch .accordion-group {

@@ -25,9 +25,9 @@ var baseFacetChart = {
     chart: null,    // the google chart object
     width: 600,
     height: 450,
-    chartArea: {left:0, top:30, width:"90%", height: "70%"},
+    chartArea: {left: 0, top: 0, width:"100%", height: "100%"},
     is3D: false,
-    titleTextStyle: {color: "#555", fontName: 'Arial', fontSize: 15},
+    titleTextStyle: {color: "#555", fontName: 'Arial', fontSize: 16},
     sliceVisibilityThreshold: 0,
     legend: {position: "right"},
     chartType: "pie",
@@ -680,23 +680,23 @@ var biocacheWebappUrl = "http://biocache.ala.org.au";  // should be overridden f
 var taxonomyPieChartOptions = {
     width: 480,
     height: 350,
-    chartArea: {left:0, top:30, width:"100%", height: "70%"},
+    chartArea: { left: 0, top: 0, width: '100%', height: '100%' },
     is3D: false,
-    titleTextStyle: {color: "#555", fontName: 'Arial', fontSize: 15},
+    titleTextStyle: { color: '#555', fontName: 'Arial', fontSize: 16 },
     sliceVisibilityThreshold: 0,
-    legend: "right"
+    legend: 'right'
 };
 
 // defaults for facet charts
 var genericChartOptions = {
     width: 480,
     height: 350,
-    chartArea: {left:0, top:30, width:"100%", height: "70%"},
+    chartArea: {left: 0, top: 0, width: '100%', height: '100%' },
     is3D: false,
-    titleTextStyle: {color: "#555", fontName: 'Arial', fontSize: 15},
+    titleTextStyle: { color: '#555', fontName: 'Arial', fontSize: 16 },
     sliceVisibilityThreshold: 0,
-    legend: "right",
-    chartType: "pie"
+    legend: 'right',
+    chartType: 'pie'
 };
 
 // defaults for individual facet charts
@@ -1112,7 +1112,6 @@ var taxonomyChart = {
         var $outerContainer = $('#taxa');
         if ($outerContainer.length == 0) {
             $outerContainer = $('<div id="taxa"></div>'); // create it
-            $outerContainer.css('margin-bottom','-50px');
             var chartsDiv = $('div#' + (this.chartOptions.targetDivId ? this.chartOptions.targetDivId : 'charts'));
             // append it
             chartsDiv.prepend($outerContainer);
@@ -1139,11 +1138,10 @@ var taxonomyChart = {
         // draw the back button / instructions
         var $backLink = $('#backLink');
         if ($backLink.length == 0) {
-            $backLink = $('<div class="link" id="backLink">&laquo; Previous rank</div>').appendTo($outerContainer);  // create it
-            $backLink.css('position','relative').css('top','-75px');
+            $backLink = $('<div class="erk-button erk-button--inline" id="backLink">&laquo; Previous rank</div>').appendTo($outerContainer);  // create it
             $backLink.click(function() {
                 // only act if link was real
-                if (!$backLink.hasClass('link')) return;
+                if (!$backLink.hasClass('erk-button')) return;
 
                 // show spinner while loading
                 $container.append($('<img class="loading" style="position:absolute;left:130px;top:220px;z-index:2000" ' +
@@ -1162,18 +1160,17 @@ var taxonomyChart = {
         }
         if (this.hasState()) {
             // show the prev link
-            $backLink.html("&laquo; Previous rank").addClass('link');
+            $backLink.html("&laquo; Previous rank").addClass('erk-button');
         }
         else {
             // show the instruction
-            $backLink.html("Click a slice to drill into the next taxonomic level.").removeClass('link');
+            $backLink.html("Click a slice to drill into the next taxonomic level.").removeClass('erk-button');
         }
 
         // draw records link
         var $recordsLink = $('#recordsLink');
         if ($recordsLink.length == 0) {
-            $recordsLink = $('<div class="link under" id="recordsLink">View records</div>').appendTo($outerContainer);  // create it
-            $recordsLink.css('position','relative').css('top','-75px');
+            $recordsLink = $('<div class="erk-link" id="recordsLink">View records</div>').appendTo($outerContainer);  // create it
             $recordsLink.click(function () {
                 thisChart.showRecords();  // called explicitly so we have the correct 'this' context
             });
@@ -1261,7 +1258,7 @@ function initTaxonTree(treeOptions) {
     var $container = $('#' + targetDivId);
     var title = treeOptions.title || 'Explore records by taxonomy';
     if (treeOptions.title !== "") {
-        $container.append($('<h4>' + title + '</h4>'));
+        $container.append($('<h3>' + title + '</h3>'));
     }
     var $treeContainer = $('<div id="treeContainer"></div>').appendTo($container);
     $treeContainer.resizable({

@@ -11,8 +11,7 @@
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}"/>
 <g:set var="authService" bean="authService"></g:set>
 <!DOCTYPE html>
-<html>
-<head>
+<html> <head>
     <meta name="svn.revision" content="${meta(name: 'svn.revision')}"/>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="search"/>
@@ -67,7 +66,8 @@
         };
     </script>
 
-    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, charts, image-viewer, lightbox"/>
+    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, image-viewer, lightbox, chartsOverride"/>
+
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete"/>
     </g:if>
@@ -76,269 +76,264 @@
         <g:if test="${!grailsApplication.config.google.apikey}">
             google.load('maps','3.5',{ other_params: "sensor=false" });
         </g:if>
+
         google.load("visualization", "1", {packages:["corechart"]});
     </script>
 </head>
 
 <body class="occurrence-search">
-    <div id="listHeader" class="row heading-bar">
-        <div class="col-3">
-            <h1><alatag:message code="search.heading.list" default="Search results"/><a name="resultsTop">&nbsp;</a></h1>
-        </div>
-        <div id="searchBoxZ" class="col-9 text-right">
-            <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
-                <div class="input-append">
-                    <input type="text" id="taxaQuery" name="${searchQuery}" class="input-xlarge" value="${params.list(searchQuery).join(' OR ')}">
-                    <button type="submit" id="solrSubmit" class="erk-button erk-button--light"><g:message code="list.advancedsearchlink.button.label" default="Quick search"/></button>
-                </div>
+    <div id="listHeader" class="page-header">
+        <h1 class="page-header__title">
+            <alatag:message code="search.heading.list" default="Search results" />
 
-                <div id="advancedSearchLink"><a href="${g.createLink(uri: '/search')}#tab_advanceSearch"><g:message code="list.advancedsearchlink.navigator" default="Advanced search"/></a></div>
-            </form>
+            <%-- XXX --%>
+            <a name="resultsTop">
+                &nbsp;
+            </a>
+        </h1>
+
+        <div class="page-header__subtitle">
+            <div id="advancedSearchLink">
+                <a href="${g.createLink(uri: '/search')}#tab-advanced-search">
+                    <g:message code="list.advancedsearchlink.navigator" default="Advanced search"/>
+                </a>
+            </div>
         </div>
+
+        <%-- THE HELL --%>
         <input type="hidden" id="userId" value="${userId}">
         <input type="hidden" id="userEmail" value="${userEmail}">
         <input type="hidden" id="lsid" value="${params.lsid}"/>
     </div>
+
     <g:if test="${flash.message}">
         <div id="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" onclick="$(this).parent().hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>${flash.message}</h4>
-            <p>Please contact <a href="mailto:support@ala.org.au?subject=biocache error" style="text-decoration: underline;">support</a> if this error continues</p>
+            <button type="button" class="close" onclick="$(this).parent().hide()" aria-label="Close">
+                <span aria-hidden="true">
+                    &times;
+                </span>
+            </button>
+
+            <h4>
+                ${flash.message}
+            </h4>
+
+            <p>
+                Please contact <a href="mailto:support@ala.org.au?subject=biocache error" style="text-decoration: underline;">support</a> if this error continues
+            </p>
         </div>
     </g:if>
+
     <g:if test="${errors}">
         <div class="searchInfo searchError">
-            <h2 style="padding-left: 10px;"><g:message code="list.01.error" default="Error"/></h2>
-            <h4>${errors}</h4>
+            <h2 style="padding-left: 10px;">
+                <g:message code="list.01.error" default="Error"/>
+            </h2>
+
+            <h4>
+                ${errors}
+            </h4>
+
             Please contact <a href="mailto:support@ala.org.au?subject=biocache error">support</a> if this error continues
         </div>
     </g:if>
+
     <g:elseif test="${!sr || sr.totalRecords == 0}">
         <div class="searchInfo searchError">
             <g:if test="${queryDisplay =~ /lsid/ && params.taxa}"> <!-- ${raw(queryDisplay)} -->
                 <g:if test="${queryDisplay =~ /span/}">
-                    <p><g:message code="list.02.p01" default="No records found for"/> <span class="queryDisplay">${raw(queryDisplay.replaceAll('null:',''))}</span></p>
+                    <p>
+                        <g:message code="list.02.p01" default="No records found for"/>
+
+                        <span class="queryDisplay">
+                            ${raw(queryDisplay.replaceAll('null:',''))}
+                        </span>
+                    </p>
                 </g:if>
 
                 <g:else>
-                    <p><g:message code="list.02.p02" default="No records found for"/> <span class="queryDisplay">${params.taxa}</span></p>
+                    <p>
+                        <g:message code="list.02.p02" default="No records found for"/>
+
+                        <span class="queryDisplay">
+                            ${params.taxa}
+                        </span>
+                    </p>
                 </g:else>
 
                 <p>
-                    <g:message code="list.02.p03.01" default="Trying search for"/> <a href="?q=text:${params.taxa}"><g:message code="list.02.p03.02" default="text"/>:${params.taxa}</a>
+                    <g:message code="list.02.p03.01" default="Trying search for"/>
+
+                    <a href="?q=text:${params.taxa}">
+                        <g:message code="list.02.p03.02" default="text"/>:${params.taxa}
+                    </a>
                 </p>
             </g:if>
 
             <g:elseif test="${queryDisplay =~ /text:/ && queryDisplay =~ /\s+/ && !(queryDisplay =~ /\bOR\b/)}">
-                <p><g:message code="list.03.p01" default="No records found for"/> <span class="queryDisplay">${raw(queryDisplay)}</span></p>
+                <p>
+                    <g:message code="list.03.p01" default="No records found for"/>
+
+                    <span class="queryDisplay">
+                        ${raw(queryDisplay)}
+                    </span>
+                </p>
+
                 <g:set var="queryTerms" value="${queryDisplay.split(" ")}"/>
-                <p><g:message code="list.03.p02" default="Trying search for"/> <a href="?q=${queryTerms.join(" OR ")}">${queryTerms.join(" OR ")}</a></p>
+
+                <p>
+                    <g:message code="list.03.p02" default="Trying search for"/>
+
+                    <a href="?q=${queryTerms.join(" OR ")}">
+                        ${queryTerms.join(" OR ")}
+                    </a>
+                </p>
             </g:elseif>
 
             <g:else>
-                <p><g:message code="list.03.p03" default="No records found for"/> <span class="queryDisplay">${raw(queryDisplay)?:params.q}</span></p>
+                <p>
+                    <g:message code="list.03.p03" default="No records found for"/>
+
+                    <span class="queryDisplay">
+                        ${raw(queryDisplay)?:params.q}
+                    </span>
+                </p>
             </g:else>
         </div>
     </g:elseif>
 
     <g:else>
         <!--  first row (#searchInfoRow), contains customise facets button and number of results for query, etc.  -->
-        <div class="row clearfix" id="searchInfoRow">
-            <!-- facet column -->
-            <div class="col-3">
-                <p>
-                    <div class="dropdown">
-                        <button
-                            type="button"
-                            id="customiseFiltersButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            class="erk-button erk-button--light dropdown-toggle tooltips"
-                            title="Customise the contents of this column"
-                        >
-                            <span class="fa fa-cog"></span>
-                            <g:message code="search.filter.customise" />
+        <div class="row" id="searchInfoRow">
+            <%-- Results column --%>
+            <div class="col-md-9 push-md-3 search-info-column">
+                <%--- XXX ... XXX ---%>
+                <a name="map" class="jumpTo"></a>
+                <a name="list" class="jumpTo"></a>
+
+                <%-- OFF for now --%>
+                <g:if test="${false && flash.message}">
+                    <div class="alert alert-info" style="margin-left: -30px;">
+                        <button type="button" class="close" data-dismiss="alert">
+                            &times;
+                        </button>
+
+                        ${flash.message}
+                    </div>
+                </g:if>
+
+                <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
+                    <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
+                        class="tooltips newDownload"
+                        title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"
+                    >
+                        <%-- XXX BUTTON INSIDE LINK --%>
+                        <button id="downloads" class="erk-button erk-button--light">
+                            <span class="fa fa-download"></span>
+                            &nbsp;&nbsp;
+                            <g:message code="list.downloads.navigator" default="Download"/>
+                        </button>
+                    </a>
+                </g:if>
+
+                <div id="resultsReturned">
+                    <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="biocache-hubs" />
+
+                    <div id="searchBoxZ">
+                        <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
+                            <div class="input-plus">
+                                <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
+                                <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <span class="text-nowrap">
+                        <span id="returnedText">
+                            <strong><g:formatNumber number="${sr.totalRecords}" format="#,###,###"/></strong>
+                            <g:message code="list.resultsretuened.span.returnedtext" default="results for"/>
+                        </span>
+
+                        <span class="queryDisplay">
+                            <strong>${raw(queryDisplay)}</strong>
+                        </span>
+                    </span>
+
+                    <%--<g:set var="hasFq" value="${false}"/>--%>
+
+                    <g:if test="${sr.activeFacetMap?.size() > 0 || params.wkt || params.radius}">
+                        <g:render template="activeFilters" />
+                    </g:if>
+
+                    <%-- XXX XXX XXX jQuery template used for taxon drop-downs --%>
+                    <div class="btn-group invisible" id="template" style="display: none;">
+                        <a class="erk-button erk-button--light" href="" id="taxa_" title="view species page" target="BIE">
+                            <g:message code="list.resultsretuened.navigator01" default="placeholder"/>
+                        </a>
+
+                        <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="click for more info on this query">
                             <span class="caret"></span>
                         </button>
 
-                        <div class="dropdown-menu search-filter-menu" id="customiseFilters" aria-labelledby="customiseFiltersButton">
-                            %{-- XXX dropdown-item class --}%
-                            <h4 class="dropdown-item search-filter-menu--title">
-                                <g:message code="list.customisefacetsbutton.div01.title" default="Select the filter categories that you want to appear in the &quot;Refine results&quot; column"/>
-                            </h4>
+                        <div class="dropdown-menu" aria-labelledby="taxa_">
+                            <div class="taxaMenuContent">
+                                <g:message code="list.resultsretuened.div01.des01" default="The search results include records for synonyms and child taxa of"/>
+                                <b class="nameString"><g:message code="list.resultsretuened.div01.des02" default="placeholder"/></b> (<span class="speciesPageLink"><g:message code="list.resultsretuened.div01.des03" default="link placeholder"/></span>).
 
-                            <div class="search-filter-menu--buttons">
-                                <g:message code="list.facetcheckboxes.label01" default="Select"/>:
-
-                                <a href="#" id="selectAll">
-                                    <g:message code="list.facetcheckboxes.navigator01" default="All"/>
-                                </a>
-
-                                &nbsp;|&nbsp;
-
-                                <a href="#" id="selectNone">
-                                    <g:message code="list.facetcheckboxes.navigator02" default="None"/>
-                                </a>
-
-                                &nbsp;&nbsp;
-
-                                <button  id="updateFacetOptions" class="erk-button erk-button--light">
-                                    <g:message code="list.facetcheckboxes.button.updatefacetoptions" default="Update"/>
-                                </button>
-
-                                &nbsp;&nbsp;
-
-                                <g:set var="resetTitle" value="Restore default settings"/>
-
-                                <button id="resetFacetOptions" class="erk-button erk-button--light" title="${resetTitle}">
-                                    <g:message code="list.facetcheckboxes.button.resetfacetoptions" default="Reset to defaults"/>
-                                </button>
-                            </div>
-
-                            <div class="search-filter-menu--facets">
-                                <%-- iterate over the groupedFacets, checking the default facets for each entry --%>
-                                <g:set var="count" value="0"/>
-
-                                <g:each var="group" in="${groupedFacets}">
-                                    <g:if test="${defaultFacets.find { key, value -> group.value.any { it == key} }}">
-                                        <div class="search-filter-menu--facets--facet"> <!-- TEST -->
-                                            <div class="facetGroupName">
-                                                <g:message code="facet.group.${group.key}" default="${group.key}"/>
-                                            </div>
-
-                                            <g:each in="${group.value}" var="facetFromGroup">
-                                                <g:if test="${defaultFacets.containsKey(facetFromGroup)}">
-                                                    <g:set var="count" value="${count + 1}"/>
-
-                                                    <div class="search-filter-checkbox">
-                                                        <label class="search-filter-checkbox__label">
-                                                            <input type="checkbox" name="facets" class="search-filter-checkbox__label__input" value="${facetFromGroup}"
-                                                                ${(defaultFacets.get(facetFromGroup)) ? 'checked=checked' : ''}>
-                                                                <alatag:message code="facet.${facetFromGroup}"/>
-                                                        </label>
-                                                    </div>
-                                                </g:if>
-                                            </g:each>
+                                <form name="raw_taxon_search" class="rawTaxonSearch" action="${request.contextPath}/occurrences/search/taxa" method="POST">
+                                    <div class="refineTaxaSearch">
+                                        <g:message code="list.resultsretuened.form.des01" default="The result set contains records provided under the following names" />:
+                                        <input
+                                            type="submit"
+                                            class="erk-button erk-button--light rawTaxonSumbit"
+                                            value="<g:message code="list.resultsretuened.form.button01" default="Refine search"/>"
+                                            title="Restrict results to the selected names"
+                                        />
+                                        <div class="rawTaxaList">
+                                            <g:message code="list.resultsretuened.form.div01" default="placeholder taxa list"/>
                                         </div>
-                                    </g:if>
-                                </g:each>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                <p>
+                </div>
             </div>
 
-            <!-- Results column -->
-            <div class="col-9">
-                <p>
-                    %{--- XXX ... XXX ---}%
-                    <a name="map" class="jumpTo"></a>
-                    <a name="list" class="jumpTo"></a>
+            <%-- facet column --%>
+            <div class="col-md-3 pull-md-9 search-info-column">
+                <div class="dropdown">
+                    <button
+                        type="button"
+                        id="customiseFiltersButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
+                        title="Customise the contents of this column"
+                    >
+                        <span class="fa fa-cog"></span>
+                        <g:message code="search.filter.customise" />
+                        <span class="caret"></span>
+                    </button>
 
-                    <g:if test="${false && flash.message}"><%-- OFF for now --%>
-                        <div class="alert alert-info" style="margin-left: -30px;">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            ${flash.message}
-                        </div>
-                    </g:if>
-
-                    <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                        <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
-                           class="tooltips newDownload"
-                           title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records">
-                           <button id="downloads" class="erk-button erk-button--light">
-                               <i class="fa fa-download"></i>
-                                &nbsp;&nbsp;<g:message code="list.downloads.navigator" default="Download"/>
-                           </button>
-                        </a>
-                    </g:if>
-
-                    <div id="resultsReturned">
-                        <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="biocache-hubs"/>
-
-                        <span id="returnedText"><strong><g:formatNumber number="${sr.totalRecords}" format="#,###,###"/></strong> <g:message code="list.resultsretuened.span.returnedtext" default="results for"/></span>
-                            <span class="queryDisplay"><strong>${raw(queryDisplay)}</strong></span>&nbsp;&nbsp;
-                        %{--<g:set var="hasFq" value="${false}"/>--}%
-
-                        <g:if test="${sr.activeFacetMap?.size() > 0 || params.wkt || params.radius}">
-                            <div class="activeFilters">
-                                <b><alatag:message code="search.filters.heading" default="Current filters"/></b>:&nbsp;
-
-                                <g:each var="fq" in="${sr.activeFacetMap}">
-                                    <g:if test="${fq.key}">
-                                        <g:set var="hasFq" value="${true}"/>
-                                        <alatag:currentFilterItem item="${fq}" cssClass="erk-button erk-button--light" addCloseBtn="${true}"/>
-                                    </g:if>
-                                </g:each>
-
-                                <g:if test="${params.wkt}"><%-- WKT spatial filter   --%>
-                                    <g:set var="spatialType" value="${params.wkt =~ /^\w+/}"/>
-
-                                    <a href="${alatag.getQueryStringForWktRemove()}">
-                                        <button class="erk-button erk-button--light">
-                                            Spatial filter: ${spatialType[0]}
-                                            <span class="closeX">×</span>
-                                        </button>
-                                    </a>
-                                </g:if>
-                                <g:elseif test="${params.radius && params.lat && params.lon}">
-
-                                    <a href="${alatag.getQueryStringForRadiusRemove()}">
-                                        <button class="erk-button erk-button--light tooltips" title="Click to remove this filter">
-                                            Spatial filter: CIRCLE
-                                            <span class="closeX">×</span>
-                                        </button>
-                                    </a>
-                                </g:elseif>
-
-                                <g:if test="${sr.activeFacetMap?.size() > 1}">
-                                    <button class="erk-button erk-button--light activeFilter" data-facet="all"
-                                            title="Click to clear all filters"><span
-                                            class="closeX">&gt;&nbsp;</span><g:message code="list.resultsretuened.button01" default="Clear all"/></button>
-                                </g:if>
-                            </div>
-                        </g:if>
-
-                        <%-- jQuery template used for taxon drop-downs --%>
-                        <div class="btn-group invisible" id="template">
-                            <a class="erk-button erk-button--light" href="" id="taxa_" title="view species page" target="BIE"><g:message code="list.resultsretuened.navigator01" default="placeholder"/></a>
-
-                            <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="click for more info on this query">
-                                <span class="caret"></span>
-                            </button>
-
-                            <div class="dropdown-menu" aria-labelledby="taxa_">
-                                <div class="taxaMenuContent">
-                                    <g:message code="list.resultsretuened.div01.des01" default="The search results include records for synonyms and child taxa of"/>
-                                    <b class="nameString"><g:message code="list.resultsretuened.div01.des02" default="placeholder"/></b> (<span class="speciesPageLink"><g:message code="list.resultsretuened.div01.des03" default="link placeholder"/></span>).
-
-                                    <form name="raw_taxon_search" class="rawTaxonSearch" action="${request.contextPath}/occurrences/search/taxa" method="POST">
-                                        <div class="refineTaxaSearch">
-                                            <g:message code="list.resultsretuened.form.des01" default="The result set contains records provided under the following names"/>:
-                                            <input type="submit" class="erk-button erk-button--light rawTaxonSumbit"
-                                                   value="<g:message code="list.resultsretuened.form.button01" default="Refine search"/>" title="Restrict results to the selected names">
-                                            <div class="rawTaxaList"><g:message code="list.resultsretuened.form.div01" default="placeholder taxa list"/></div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <p>
+                    <g:render template="filters" />
+                </div>
             </div>
         </div><!-- /#searchInfoRow -->
 
         <!--  Second row - facet column and results column -->
         <div class="row" id="content">
-            <div class="col-3">
+            <div class="col-sm-4 col-md-3">
                 <g:render template="facets" />
             </div>
 
             <g:set var="postFacets" value="${System.currentTimeMillis()}"/>
 
             <!-- removed id of content 2 -->
-            <div class="col-9">
+            <div class="col-sm-8 col-md-9">
                 <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                     <div id="alert" class="modal fade invisible" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -361,7 +356,7 @@
                                            class="erk-button erk-button--light tooltips" title="Notify me when new annotations (corrections, comments, etc) come online for this search"><g:message code="list.alert.navigator02" default="Get email alerts for new annotations"/></a>
                                     </div>
 
-                                    %{-- XXX --}%
+                                    <%-- XXX --%>
                                     <p>&nbsp;</p>
 
                                     <p>
@@ -372,8 +367,15 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="list.alert.button01" default="Close"/></button>
-                                    %{--<button class="erk-button erk-button--light">Save changes</button>--}%
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">
+                                        <g:message code="list.alert.button01" default="Close"/>
+                                    </button>
+
+                                    <%--
+                                        <button class="erk-button erk-button--light">
+                                            Save changes
+                                        </button>
+                                    --%>
                                 </div>
                             </div>
                         </div>
@@ -382,27 +384,27 @@
 
                 <g:render template="download" />
 
-                %{--- XXX ---}%
+                <%--- XXX ---%>
                 <div style="display:none">
                 </div>
 
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
                         <li class="nav-item active">
-                            <a id="t1" href="#recordsView" data-toggle="tab" class="nav-link">
+                            <a id="t1" href="#records" data-toggle="tab" class="nav-link">
                                 <g:message code="list.link.t1" default="Records"/>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a id="t2" href="#mapView" data-toggle="tab" class="nav-link">
+                            <a id="t2" href="#map" data-toggle="tab" class="nav-link">
                                 <g:message code="list.link.t2" default="Map"/>
                             </a>
                         </li>
 
                         <plugin:isAvailable name="alaChartsPlugin">
                             <li class="nav-item">
-                                <a id="t3" href="#chartsView" data-toggle="tab" class="nav-link">
+                                <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
                                     <g:message code="list.link.t3" default="Charts"/>
                                 </a>
                             </li>
@@ -426,7 +428,7 @@
 
                         <g:if test="${hasImages}">
                             <li class="nav-item">
-                                <a id="t5" href="#recordImages" data-toggle="tab" class="nav-link">
+                                <a id="t5" href="#images" data-toggle="tab" class="nav-link">
                                     <g:message code="list.link.t5" default="Record images"/>
                                 </a>
                             </li>
@@ -435,60 +437,77 @@
                 </div>
 
                 <div class="tab-content clearfix">
-                    <div id="recordsView" role="tabpanel" class="tab-pane solrResults active" >
-                        <div id="searchControls" class="row">
-                            <div class="col-3">
+                    <div id="records" role="tabpanel" class="tab-pane solrResults active" >
+                        <div id="searchControls">
+                            <div class="search-control">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                                     <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                                       <i class="fa fa-download"></i>&nbsp;&nbsp;
-                                       <g:message code="list.downloads.navigator" default="Downloads"/>
+                                       <span class="fa fa-download"></span>
+                                       <g:message code="list.downloads.navigator" default="Downloads" />
                                     </button>
-                                </g:if>
-
-                                <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
-                                    <div id="alerts" class="erk-button erk-button--light">
-                                        <a href="#alert" role="button" data-toggle="modal" class="tooltips" title="Get email alerts for this search"><i class="fa fa-bell"></i>&nbsp;&nbsp;<g:message code="list.alerts.navigator" default="Alerts"/></a>
-                                    </div>
                                 </g:if>
                             </div>
 
-                            <div id="sortWidgets" class="col-9">
-                                <span class="hidden-phone"><g:message code="list.sortwidgets.span01" default="per"/> </span><g:message code="list.sortwidgets.span02" default="page"/>:
+                            <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
+                                <div id="alerts" class="erk-button erk-button--light">
+                                    <a href="#alert" role="button" data-toggle="modal" class="tooltips" title="Get email alerts for this search">
+                                        <span class="fa fa-bell"></span>
+                                        <g:message code="list.alerts.navigator" default="Alerts"/>
+                                    </a>
+                                </div>
+                            </g:if>
 
-                                <select id="per-page" name="per-page" class="input-small">
-                                    <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:"20"}"/>
-                                    <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
-                                    <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
-                                    <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>
-                                    <option value="100" <g:if test="${pageSizeVar == "100"}">selected</g:if>>100</option>
-                                </select>&nbsp;
-
+                            <div id="sortWidgets" class="sort-tools float-right">
+                                <%-- Can I move this up? I moved this up. --%>
                                 <g:set var="useDefault" value="${(!params.sort && !params.dir) ? true : false }"/>
-                                <g:message code="list.sortwidgets.sort.label" default="sort"/>:
 
-                                <select id="sort" name="sort" class="input-small">
-                                    <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>><g:message code="list.sortwidgets.sort.option01" default="Best match"/></option>
-                                    <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option02" default="Taxon name"/></option>
-                                    <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option03" default="Common name"/></option>
-                                    <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401", default:"Collecting date") :  g.message(code:"list.sortwidgets.sort.option0402", default:"Record date")}</option>
-                                    <g:if test="${skin != 'avh'}">
-                                        <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>><g:message code="list.sortwidgets.sort.option05" default="Record type"/></option>
-                                    </g:if>
-                                    <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option06" default="Date added"/></option>
-                                    <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option07" default="Last annotated"/></option>
-                                </select>&nbsp;
+                                <div class="search-control">
+                                    <span class="hidden-phone">
+                                        <g:message code="list.sortwidgets.span01" default="per"/>
+                                    </span>
 
-                                <g:message code="list.sortwidgets.dir.label" default="order"/>:
+                                    <g:message code="list.sortwidgets.span02" default="page"/>:
 
-                                <select id="dir" name="dir" class="input-small">
-                                    <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option01" default="Ascending"/></option>
-                                    <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option02" default="Descending"/></option>
-                                </select>
-                            </div><!-- sortWidget -->
-                        </div><!-- searchControls -->
+                                    <select id="per-page" name="per-page" class="input-small">
+                                        <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:"20"}"/>
+                                        <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
+                                        <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
+                                        <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>
+                                        <option value="100" <g:if test="${pageSizeVar == "100"}">selected</g:if>>100</option>
+                                    </select>
+                                </div>
 
-                        <div id="results">
-                            <g:set var="startList" value="${System.currentTimeMillis()}"/>
+                                <div class="search-control">
+                                    <g:message code="list.sortwidgets.sort.label" default="sort"/>:
+
+                                    <select id="sort" name="sort" class="input-small">
+                                        <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>><g:message code="list.sortwidgets.sort.option01" default="Best match"/></option>
+                                        <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option02" default="Taxon name"/></option>
+                                        <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option03" default="Common name"/></option>
+                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401", default:"Collecting date") :  g.message(code:"list.sortwidgets.sort.option0402", default:"Record date")}</option>
+                                        <g:if test="${skin != 'avh'}">
+                                            <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>><g:message code="list.sortwidgets.sort.option05" default="Record type"/></option>
+                                        </g:if>
+                                        <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option06" default="Date added"/></option>
+                                        <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option07" default="Last annotated"/></option>
+                                    </select>&nbsp;
+                                </div>
+
+                                <div class="search-control">
+                                    <g:message code="list.sortwidgets.dir.label" default="order"/>:
+
+                                    <select id="dir" name="dir" class="input-small">
+                                        <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option01" default="Ascending"/></option>
+                                        <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option02" default="Descending"/></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <%-- WIP --%>
+                        <div id="results" class="search-results">
+                            <g:set var="startList" value="${System.currentTimeMillis()}" />
+
                             <g:each var="occurrence" in="${sr.occurrences}">
                                 <alatag:formatListRecordRow occurrence="${occurrence}" />
                             </g:each>
@@ -505,23 +524,25 @@
                         </div>
                     </div><!--end solrResults-->
 
-                    <div id="mapView" role="tabpanel" class="tab-pane">
+                    <div id="map" role="tabpanel" class="tab-pane">
                         <g:render template="map"
-                                  model="[mappingUrl:alatag.getBiocacheAjaxUrl(),
-                                          searchString: searchString,
-                                          queryDisplayString:queryDisplay,
-                                          facets:sr.facetResults,
-                                          defaultColourBy:grailsApplication.config.map.defaultFacetMapColourBy
-                                  ]"
+                            model="[
+                                mappingUrl:alatag.getBiocacheAjaxUrl(),
+                                searchString: searchString,
+                                queryDisplayString: queryDisplay,
+                                facets: sr.facetResults,
+                                defaultColourBy: grailsApplication.config.map.defaultFacetMapColourBy
+                            ]"
                         />
                         <div id='envLegend'></div>
-                    </div><!-- end #mapwrapper -->
+                    </div>
 
                     <plugin:isAvailable name="alaChartsPlugin">
-                        <div id="chartsView" role="tabpanel" class="tab-pane">
+                        <div id="charts" role="tabpanel" class="tab-pane">
                             <g:render template="charts"
-                                      model="[searchString: searchString]"
-                                      plugin="biocache-hubs"/>
+                                model="[searchString: searchString]"
+                                plugin="biocache-hubs" />
+
                             <script>
                                 var searchString = '${searchString}';
 
@@ -533,14 +554,14 @@
                                     query: searchString.replace('?q=', '')
                                 });
                             </script>
-                        </div><!-- end #chartsWrapper -->
+                        </div>
 
                         <g:if test="${grailsApplication.config.userCharts && grailsApplication.config.userCharts?.toBoolean()}">
                             <div id="userChartsView" role="tabpanel" class="tab-pane">
                                 <g:render template="userCharts"
-                                          model="[searchString: searchString]"
-                                          plugin="biocache-hubs"/>
-                            </div><!-- end #chartsWrapper -->
+                                    model="[searchString: searchString]"
+                                    plugin="biocache-hubs" />
+                            </div>
                         </g:if>
                     </plugin:isAvailable>
 
@@ -563,7 +584,7 @@
 
                             <div id="speciesGallery">[<g:message code="list.speciesgallerycontrols.speciesgallery" default="image gallery should appear here"/>]</div>
 
-                            %{-- XXX --}%
+                            <%-- XXX --%>
                             <div id="loadMoreSpecies" style="display:none;">
                                 <button class="erk-button erk-button--light"><g:message code="list.speciesgallerycontrols.loadmorespecies.button" default="Show more images"/></button>
                                 <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon"/>
@@ -572,7 +593,7 @@
                     </g:if>
 
                     <g:if test="${hasImages}">
-                        <div id="recordImages" role="tabpanel" class="tab-pane">
+                        <div id="images" role="tabpanel" class="tab-pane">
                             <h3>
                                 <g:message code="list.speciesgallerycontrols.recordimages.title" default="Images from occurrence records"/>
                             </h3>
@@ -602,41 +623,40 @@
                                     </a>
                                 </div>
                             </div>
-                        </div><!-- end #imagesWrapper -->
+                        </div>
                     </g:if>
-                </div><!-- end .css-panes -->
+                </div>
 
                 <form name="raw_taxon_search" class="rawTaxonSearch" id="rawTaxonSearchForm" action="${request.contextPath}/occurrences/search/taxa" method="POST">
-                        <%-- taxon concept search drop-down div are put in here via Jquery --%>
-                    <div style="display:none;" >
-                    </div>
+                    <%-- taxon concept search drop-down div are put in here via Jquery --%>
+                    <div style="display:none;" ></div>
                 </form>
             </div>
         </div>
     </g:else>
 
-<div id="imageDialog" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div id="viewerContainerId">
+    <div id="imageDialog" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="viewerContainerId">
+                    </div>
                 </div>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-
-<g:if test="${params.benchmarks}">
-    <g:set var="endPageTime" value="${System.currentTimeMillis()}"/>
-
-    %{-- XXX --}%
-    <div style="color:#ddd;">
-        <g:message code="list.endpagetime01" default="post-facets time"/> = ${(endPageTime - postFacets)} ms<br>
-        <g:message code="list.endpagetime02" default="page render time"/> = ${(endPageTime - startPageTime)} ms<br>
-        <g:message code="list.endpagetime03" default="biocache-service GET time"/> = ${wsTime} ms<br>
-        <g:message code="list.endpagetime04" default="controller processing time"/> = ${processingTime} ms<br>
-        <g:message code="list.endpagetime05" default="total processing time"/> = ${(endPageTime - startPageTime) + processingTime} ms
+        </div>
     </div>
-</g:if>
+
+    <g:if test="${params.benchmarks}">
+        <g:set var="endPageTime" value="${System.currentTimeMillis()}" />
+
+        <%-- XXX --%>
+        <div style="color:#ddd;">
+            <g:message code="list.endpagetime01" default="post-facets time" /> = ${(endPageTime - postFacets)} ms<br />
+            <g:message code="list.endpagetime02" default="page render time" /> = ${(endPageTime - startPageTime)} ms<br />
+            <g:message code="list.endpagetime03" default="biocache-service GET time" /> = ${wsTime} ms<br />
+            <g:message code="list.endpagetime04" default="controller processing time" /> = ${processingTime} ms<br />
+            <g:message code="list.endpagetime05" default="total processing time" /> = ${(endPageTime - startPageTime) + processingTime} ms
+        </div>
+    </g:if>
 </body>
 </html>

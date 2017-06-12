@@ -17,7 +17,7 @@
     <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
     <title><g:message code="home.index.title" default="Search for records" /> | ${hubDisplayName}</title>
     <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
-    <r:require modules="jquery, leafletOverride, leafletPluginsOverride, mapCommonOverride, searchMap, bootstrapCombobox, menu" />
+    <r:require modules="jquery, leafletOverride, leafletPluginsOverride, mapCommonOverride, searchMapOverride, bootstrapCombobox, menu" />
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete" />
     </g:if>
@@ -282,9 +282,17 @@
 
     <div class="row" id="content">
         <div class="col-md-12 col-xl-10">
-            <h3>
-                <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}
-            </h3>
+            <div class="page-header">
+                <h1 class="page-header__title">
+                    Search
+                    %{-- <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)} --}%
+                </h1>
+
+                <div class="page-header__subtitle">
+                    %{-- TODO --}%
+                    <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}
+                </div>
+            </div>
 
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="searchTabs">
@@ -301,8 +309,6 @@
                     <div class="row">
                         <div class="col-xs-12 col-lg-6">
                             <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
-                                %{-- XXX --}%
-                                <br/>
                                 <div class="input-wrapper">
                                     <input type="text" name="taxa" id="taxa" class="input-wrapper__input">
                                     <button id="locationSearch" type="submit" class="erk-button erk-button--light input-wrapper__addon">
@@ -331,13 +337,13 @@
                         <p><g:message code="home.index.taxaupload.des01" default="Enter a list of taxon names/scientific names, one name per line (common names not currently supported)." /></p>
                         <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
                         <p><textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea></p>
-                        <p>
+                        <div>
                             <%--<input type="submit" name="action" value="Download" />--%>
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="raw_name" />
                             <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" default="Search" /> class="erk-button erk-button--light" />
-                        </p>
+                        </div>
                     </form>
                 </div><!-- end #uploadDiv div -->
 
@@ -353,14 +359,14 @@
                             <textarea id="catalogueSearchQueries" name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
                         </p>
 
-                        <p>
+                        <div>
                             <%--<input type="submit" name="action" value="Download" />--%>
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
                             %{-- XXX --}%
                             <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="home.index.catalogupload.button01" default="Search"/>  class="erk-button erk-button--light" />
-                        </p>
+                        </div>
                     </form>
                 </div><!-- end #catalogUploadDiv div -->
 
@@ -381,11 +387,21 @@
 
                                     <div id="collapseOne" class="accordion-body collapse">
                                         <div class="accordion-inner">
-                                            <p><g:message code="search.map.importText" /></p>
-                                            <p><g:message code="search.map.wktHelpText" default="Optionally, paste a WKT string: " /></p>
-                                            <textarea type="text" id="wktInput"></textarea>
-                                            <br>
-                                            <button class="erk-button erk-button--light" id="addWkt"><g:message code="search.map.wktButtonText" default="Add to map" /></button>
+                                            <p>
+                                                <g:message code="search.map.importText" />
+                                            </p>
+
+                                            <p>
+                                                <g:message code="search.map.wktHelpText" default="Optionally, paste a WKT string: " />
+                                            </p>
+
+                                            <p>
+                                                <textarea type="text" id="wktInput"></textarea>
+                                            </p>
+
+                                            <button class="erk-button erk-button--light" id="addWkt">
+                                                <g:message code="search.map.wktButtonText" default="Add to map" />
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -393,7 +409,8 @@
                         </div>
 
                         <div class="col-9">
-                            <div id="leafletMap" style="height:600px;"></div>
+                            <div id="leafletMap" style="height:600px;">
+                            </div>
                         </div>
                     </div>
                 </div>
