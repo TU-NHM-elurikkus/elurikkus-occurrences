@@ -4,7 +4,7 @@
 <%-- g:set target="${fieldsMap}" property="aKey" value="value for a key" /--%>
 <g:set var="fieldsMap" value="${[:]}"/>
 
-<div id="occurrenceDataset">
+<div>
     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: record?.raw?.attribution?.dataResourceUid]" />
 
     <h2><g:message code="recordcore.occurencedataset.title" default="Dataset"/></h2>
@@ -349,7 +349,7 @@
     </table>
 </div>
 
-<div id="occurrenceEvent">
+<div>
     <h2>
         <g:message code="recordcore.occurenceevent.title" default="Event"/>
     </h2>
@@ -423,7 +423,7 @@
     </table>
 </div>
 
-<div id="occurrenceTaxonomy">
+<div>
     <h2>
         <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
     </h2>
@@ -793,7 +793,7 @@
 </div>
 
 <g:if test="${compareRecord?.Location}">
-    <div id="occurrenceGeospatial">
+    <div>
         <h2>
             <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
         </h2>
@@ -1065,7 +1065,7 @@
 </g:if>
 
 <g:if test="${record.raw.miscProperties}">
-    <div id="additionalProperties">
+    <div>
         <h2>
             <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
         </h2>
