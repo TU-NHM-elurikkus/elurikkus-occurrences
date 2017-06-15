@@ -92,12 +92,10 @@
             </a>
         </h1>
 
-        <div class="page-header__subtitle">
-            <div id="advancedSearchLink">
-                <a href="${g.createLink(uri: '/search')}#tab-advanced-search">
-                    <g:message code="list.advancedsearchlink.navigator" default="Advanced search"/>
-                </a>
-            </div>
+        <div class="page-header-links">
+            <a href="${g.createLink(uri: '/search')}#tab-advanced-search" class="page-header-links__link">
+                <g:message code="list.advancedsearchlink.navigator" default="Advanced search"/>
+            </a>
         </div>
 
         <%-- THE HELL --%>
@@ -302,7 +300,7 @@
                 </div>
             </div>
 
-            <%-- facet column --%>
+            <%-- facet column XXX --%>
             <div class="col-md-3 pull-md-9 search-info-column">
                 <div class="dropdown">
                     <button

@@ -73,14 +73,24 @@
         </div>
     </div>
 </g:if>
+
 <g:if test="${contacts && contacts.size()}">
     <div class="sidebar" style="float:left;">
-        <button href="#contactCuratorView" class="erk-button erk-button--light" id="showCurator" role="button" data-toggle="modal"
-                title="Contact curator for more details on a record">
-            <span id="contactCuratorSpan" href="#contactCuratorView" title=""><i class="icon-envelope"></i> <g:message code="show.showcontactcurator.span" default="Contact curator"/></span>
+        <button
+            href="#contactCuratorView"
+            class="erk-button erk-button--light erk-button--inline"
+            id="showCurator"
+            role="button"
+            data-toggle="modal"
+            title="Contact curator for more details on a record"
+        >
+            <span id="contactCuratorSpan" href="#contactCuratorView" title="">
+                <i class="icon-envelope"></i> <g:message code="show.showcontactcurator.span" default="Contact curator"/>
+            </span>
         </button>
     </div>
 </g:if>
+
 <div class="clearfix"></div>
 
 <div class="sidebar-general-info">
@@ -215,59 +225,63 @@
         </div>
     </div>
 </g:if>
+
 %{--<g:if test="${isCollectionAdmin && (record.systemAssertions.failed || record.userAssertions) && ! recordIsVerified}">
     <div class="sidebar">
         <button class="erk-button erk-button--light" id="verifyButton" href="#verifyRecord" data-toggle="modal">
             <span id="verifyRecordSpan" title=""><g:message code="show.button.verifybtn.span" default="Verify record"/></span>
         </button>
 
-            <div id="verifyRecord" class="modal hide" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="loginOrFlagLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <h3><g:message code="show.verifyrecord.title" default="Confirmation"/></h3>
-                </div>
-                <div class="modal-body">
-                    <div id="verifyAsk">
-                        <g:set var="markedAssertions"/>
-                        <g:if test="!record.processed.geospatiallyKosher">
-                            <g:set var="markedAssertions"><g:message code="show.verifyask.set01" default="geospatially suspect"/></g:set>
-                        </g:if>
-                        <g:if test="!record.processed.taxonomicallyKosher">
-                            <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="show.verifyask.set02" default="taxonomically suspect"/></g:set>
-                        </g:if>
-                        <g:each var="sysAss" in="${record.systemAssertions.failed}">
-                            <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="${sysAss.name}" /></g:set>
-                        </g:each>
-                        <p>
-                            <g:message code="show.verifyrecord.p01" default="Record is marked as"/> <b>${markedAssertions}</b>
-                        </p>
-                        <p style="margin-bottom:10px;">
-                            <g:message code="show.verifyrecord.p02" default="Click the &quot;Confirm&quot; button to verify that this record is correct and that the listed &quot;validation issues&quot; are incorrect/invalid."/>
-                        </p>
-                        <p style="margin-top:20px;">
-                            <label for="userAssertionStatus"><g:message code="show.verifyrecord.p03" default="User Assertion Status:"/></label>
-                            <select name="userAssertionStatus" id="userAssertionStatus">
-                                <g:each in="${verificationCategory}" var="code">
-                                    <option value="${code}"><g:message code="${code}" default="${code}"/></option>
-                                </g:each>
-                            </select>
-                        </p>
-                        <p><textarea id="verifyComment" rows="3" style="width: 90%"></textarea></p><br>
-                        <button class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
-                        <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
-                        <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="hide" alt="spinner icon"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div id="verifyDone" style="display:none;">
-                        <g:message code="show.verifydone.message" default="Record successfully verified"/>
-                        <br/>
-                        <button class="erk-button erk-button--light closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
-                    </div>
-                </div>
+        <div id="verifyRecord" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="loginOrFlagLabel" aria-hidden="true">
+            <div class="modal-header">
+                <h3>
+                    <g:message code="show.verifyrecord.title" default="Confirmation"/>
+                </h3>
             </div>
 
+            <div class="modal-body">
+                <div id="verifyAsk">
+                    <g:set var="markedAssertions"/>
+                    <g:if test="!record.processed.geospatiallyKosher">
+                        <g:set var="markedAssertions"><g:message code="show.verifyask.set01" default="geospatially suspect"/></g:set>
+                    </g:if>
+                    <g:if test="!record.processed.taxonomicallyKosher">
+                        <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="show.verifyask.set02" default="taxonomically suspect"/></g:set>
+                    </g:if>
+                    <g:each var="sysAss" in="${record.systemAssertions.failed}">
+                        <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="${sysAss.name}" /></g:set>
+                    </g:each>
+                    <p>
+                        <g:message code="show.verifyrecord.p01" default="Record is marked as"/> <b>${markedAssertions}</b>
+                    </p>
+                    <p style="margin-bottom:10px;">
+                        <g:message code="show.verifyrecord.p02" default="Click the &quot;Confirm&quot; button to verify that this record is correct and that the listed &quot;validation issues&quot; are incorrect/invalid."/>
+                    </p>
+                    <p style="margin-top:20px;">
+                        <label for="userAssertionStatus"><g:message code="show.verifyrecord.p03" default="User Assertion Status:"/></label>
+                        <select name="userAssertionStatus" id="userAssertionStatus">
+                            <g:each in="${verificationCategory}" var="code">
+                                <option value="${code}"><g:message code="${code}" default="${code}"/></option>
+                            </g:each>
+                        </select>
+                    </p>
+                    <p><textarea id="verifyComment" rows="3" style="width: 90%"></textarea></p><br>
+                    <button class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
+                    <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
+                    <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="hide" alt="spinner icon"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="verifyDone" style="display:none;">
+                    <g:message code="show.verifydone.message" default="Record successfully verified"/>
+                    <br/>
+                    <button class="erk-button erk-button--light closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
+                </div>
+            </div>
+        </div>
     </div>
 </g:if>--}%
+
 <g:if test="${record.processed.attribution.provenance && record.processed.attribution.provenance == 'Draft'}">
     <div class="sidebar">
         <p class="grey-bg" style="padding:5px; margin-top:15px; margin-bottom:10px;">

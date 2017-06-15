@@ -25,7 +25,7 @@
     <g:elseif test="${params.radius && params.lat && params.lon}">
         <%-- WHAT IS THIS? --%>
         <a href="${alatag.getQueryStringForRadiusRemove()}">
-            <button class="erk-button erk-button--light tooltips" title="Click to remove this filter">
+            <button class="erk-button erk-button--light erk-button--inline tooltips" title="Click to remove this filter">
                 Spatial filter: CIRCLE
                 <span class="closeX">×</span>
             </button>
@@ -34,11 +34,10 @@
 
     <g:if test="${sr.activeFacetMap?.size() > 1}">
         <button
-            class="erk-button erk-button--light activeFilter"
+            class="erk-button erk-button--light erk-button--inline"
             data-facet="all"
             title="Click to clear all filters"
         >
-            <span class="closeX">&gt;&nbsp;</span>
             <g:message code="list.resultsretuened.button01" default="Clear all" />
         </button>
     </g:if>
