@@ -200,7 +200,7 @@ $(document).ready(function() {
     //});
     //</c:if>
 
-    $("#backBtn a").click(function(e) {
+    $("#backBtn").click(function(e) {
         e.preventDefault();
         var url = $(this).attr("href");
         if (url) {
@@ -285,8 +285,8 @@ $(document).ready(function() {
     var lastSearch = amplify.store('lastSearch');
     //console.log('lastSearch', lastSearch);
     if (lastSearch) {
-        $('#backBtn > a').attr('href', lastSearch);
-        $('#backBtn').show();
+        $('#backBtn').attr('href', lastSearch);
+        $('#backBtn').show(); // XXX You can not reveal that which has not been concealed.
     }
 
     // hide any DwC sections that are empty

@@ -6,6 +6,7 @@
 
 #facetWell {
     font-size: 12px;
+    margin-bottom: 1rem;
 }
 
 .subnavlist {
@@ -37,6 +38,18 @@
 
 .search-filter-menu {
     font-size: 12px; /* XXX */
+
+    /**
+     * Bootstrap v4 dropdown-menu is at the z-index of 1000, and so area leaflet map's controls.
+     * Rise search's dropdwon-menu above map controls.
+     */
+    z-index: 1001;
+
+    /**
+     * Bootstrap v4's rocking ~2px top-margin on dropdown menus.
+     * Override it with something that's more sensible in our use case.
+     */
+    margin: .5rem 0 0;
 }
 
 .search-filter-menu--title {
@@ -94,7 +107,7 @@
     border-bottom: 1px solid #DDD;
     border-right: 1px solid #DDD;
     border-left: 1px solid #DDD;
-    padding: 15px;
+    padding: 1rem;
 }
 
 /* RESULTS TABLE */
@@ -195,8 +208,34 @@
 #downloadForm .form-control {
     font-size: 12px;
     height: 30px !important;
-}
-
+} 
 #downloadForm input[type="radio"] {
     height: initial;
+}
+
+#searchBoxZ {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.search-control {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.sort-tools .search-control {
+    margin-left: 1rem;
+}
+
+.search-info-column {
+    margin-bottom: 1rem;
+}
+
+.search-results {
+    clear: both;
+}
+
+/* you are just making things up now */
+.activeFilters {
+    padding-top: 1rem;
 }

@@ -20,6 +20,7 @@
             <g:set var="queryParam" value="${sr.urlParameters.stripIndent(1)}" />
         </g:if>
 
+        <%-- Since we already list active filters elsewhere, this here is not necessary.
         <g:if test="${sr.activeFacetMap}">
             <div id="currentFilter">
                 <div class="FieldName">
@@ -30,7 +31,7 @@
                     <ul id="refinedFacets" class="erk-ulist">
                         <g:each var="item" in="${sr.activeFacetMap}">
                             <li class="erk-ulist__item">
-                                <alatag:currentFilterItem item="${item}" addCheckBox="${true}" cssClass="erk-button erk-button--light"/>
+                                <alatag:currentFilterItem item="${item}" addCheckBox="${true}" cssClass="erk-button erk-button--light erk-button--inline active-filter"/>
                             </li>
                         </g:each>
 
@@ -46,6 +47,7 @@
                 </div>
             </div>
         </g:if>
+        --%>
 
         ${alatag.logMsg(msg:"Before grouped facets facets.gsp")}
         <g:set var="facetMax" value="${10}"/><g:set var="i" value="${1}"/>
@@ -191,6 +193,7 @@
 
 <script type="text/javascript">
     var dynamicFacets = new Array();
+
     <g:each in="${dynamicFacets}" var="dynamicFacet">
         dynamicFacets.push('${dynamicFacet.name}');
     </g:each>

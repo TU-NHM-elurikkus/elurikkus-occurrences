@@ -352,7 +352,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="row">
         <input type="submit" value=<g:message code="advancedsearch.button.submit" default="Search" /> class="erk-button erk-button--light" />
         %{-- XXX --}%
         &nbsp;&nbsp;

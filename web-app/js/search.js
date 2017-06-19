@@ -56,7 +56,7 @@ $(document).ready(function() {
         var tab = $(e.target).attr('href').substr(1);
 
         amplify.store('search-tab-state', tab);
-        location.hash = 'tab_'+ tab;
+        location.hash = 'tab-'+ tab;
 
         if (id == "t2" && !tabsInit.map) {
             //console.log("tab2 FIRST");
@@ -88,8 +88,7 @@ $(document).ready(function() {
 
     // catch hash URIs and trigger tabs
     if (location.hash !== '') {
-        $('.nav-tabs a[href="' + location.hash.replace('tab_','') + '"]').tab('show');
-        //$('.nav-tabs li a[href="' + location.hash.replace('tab_','') + '"]').click();
+        $('.nav-tabs a[href="' + location.hash.replace('tab-','') + '"]').tab('show');
     } else if (storedSearchTab) {
         //console.log("stored value", storedSearchTab);
         $('.nav-tabs a[href="#' + storedSearchTab+ '"]').tab('show');
@@ -208,7 +207,7 @@ $(document).ready(function() {
             // reload page
             document.location.reload(true);
         } else {
-            alert("Please select at least elmo filter category to display");
+            alert("Please select at least one filter category to display");
         }
 
     });
@@ -812,7 +811,7 @@ function removeFilter(el) {
  * Load the default charts
  */
 function loadDefaultCharts() {
-    if (dynamicFacets && dynamicFacets.length > 0) {
+    if (this.dynamicFacets && this.dynamicFacets.length > 0) {
         var chartsConfigUri = BC_CONF.biocacheServiceUrl + "/upload/charts/" + BC_CONF.selectedDataResource + ".json";
         $.getJSON(chartsConfigUri, function (chartsConfig) {
 

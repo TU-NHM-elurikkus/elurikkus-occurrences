@@ -81,143 +81,113 @@
 
 <body class="occurrence-record">
     %{--<g:set var="json" value="${request.contextPath}/occurrences/${record?.raw?.uuid}.json" />--}%
+
     <g:if test="${record}">
         <g:if test="${record.raw}">
-            <div class="recordHeader clearfix" id="headingBar">
-                <div class="recordHeader__left">
+            <%-- WIP --%>
+            <div class="page-header">
+                <h1 class="page-header__title">
                     <g:if test="${collectionLogo}">
-                        <div class="sidebar">
-                            <img src="${collectionLogo}" alt="institution logo" id="institutionLogo"/>
-                        </div>
+                        <img src="${collectionLogo}" alt="institution logo" id="institutionLogo"/>
                     </g:if>
-                </div>
 
-                <div class="recordHeader__right">
-                    <div id="jsonLinkZ">
+                    <g:message code="show.headingbar01.title" default="Occurrence record" />
+
+                    <span id="recordId">
+                        ${recordId}
+                    </span>
+                </h1>
+
+                <div class="page-header__subtitle">
+                    <g:message code="basicOfRecord.${record.processed.occurrence?.basisOfRecord}" default="${record.processed.occurrence?.basisOfRecord}" />
+                    <g:message code="show.heading.of" default="of" />
+
+                    <g:if test="${record.processed.classification.scientificName}">
+                        <alatag:formatSciName rankId="${record.processed.classification.taxonRankID}" name="${record.processed.classification.scientificName}" />
+                        ${record.processed.classification.scientificNameAuthorship}
+                    </g:if>
+
+                    <g:elseif test="${record.raw.classification.scientificName}">
+                        <alatag:formatSciName rankId="${record.raw.classification.taxonRankID}" name="${record.raw.classification.scientificName}" />
+                        ${record.raw.classification.scientificNameAuthorship}
+                    </g:elseif>
+
+                    <g:else>
+                        <i>${record.raw.classification.genus} ${record.raw.classification.specificEpithet}</i>
+                        ${record.raw.classification.scientificNameAuthorship}
+                    </g:else>
+
+                    <g:if test="${record.processed.classification.vernacularName}">
+                        | ${record.processed.classification.vernacularName}
+                    </g:if>
+
+                    <g:elseif test="${record.raw.classification.vernacularName}">
+                        | ${record.raw.classification.vernacularName}
+                    </g:elseif>
+
+                    <g:if test="${record.processed.event?.eventDate || record.raw.event?.eventDate}">
+                        <g:message code="show.heading.recordedOn" default="recorded on" />
+                        ${record.processed.event?.eventDate ?: record.raw.event?.eventDate}
+                    </g:if>
+
+                    <%-- TODO MAYBE
+                    <span id="jsonLinkZ">
                         <g:if test="${isCollectionAdmin}">
                             <g:set var="admin" value=" - admin"/>
                         </g:if>
 
                         <g:if test="${false && alatag.loggedInUserDisplayname()}">
-                            <g:message code="show.jsonlink.login" default="Logged in as:"/> ${alatag.loggedInUserDisplayname()}
+                            <g:message code="show.jsonlink.login" default="Logged in as:"/>
+                            ${alatag.loggedInUserDisplayname()}
                         </g:if>
 
                         <g:if test="${clubView}">
-                            <div id="clubView"><g:message code="show.clubview.message" default="Showing &quot;Club View&quot;"/></div>
+                            <span id="clubView">
+                                <g:message code="show.clubview.message" default="Showing &quot;Club View&quot;"/>
+                            </span>
                         </g:if>
-                    </div>
-
-                    <div id="backBtn" class="float-right">
-                        <a href="#" title="Return to search results">
-                            <button class="erk-button erk-button--light">
-                                <g:message code="show.backbtn.navigator" default="Back to search results"/>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="recordHeader__center">
-                    <h1>
-                        <g:message code="show.headingbar01.title" default="Occurrence record"/>
-                        <span id="recordId">${recordId}</span>
-                    </h1>
-
-                    <g:if test="${record.raw.classification}">
-                        <div id="recordHeadingLine2">
-                            <g:message code="basicOfRecord.${record.processed.occurrence?.basisOfRecord}" default="${record.processed.occurrence?.basisOfRecord}"/>
-                            <g:message code="show.heading.of" default="of"/>
-
-                            <g:if test="${record.processed.classification.scientificName}">
-                                <alatag:formatSciName rankId="${record.processed.classification.taxonRankID}" name="${record.processed.classification.scientificName}"/>
-                                ${record.processed.classification.scientificNameAuthorship}
-                            </g:if>
-                            <g:elseif test="${record.raw.classification.scientificName}">
-                                <alatag:formatSciName rankId="${record.raw.classification.taxonRankID}" name="${record.raw.classification.scientificName}"/>
-                                ${record.raw.classification.scientificNameAuthorship}
-                            </g:elseif>
-                            <g:else>
-                                <i>${record.raw.classification.genus} ${record.raw.classification.specificEpithet}</i>
-                                ${record.raw.classification.scientificNameAuthorship}
-                            </g:else>
-
-                            <g:if test="${record.processed.classification.vernacularName}">
-                                | ${record.processed.classification.vernacularName}
-                            </g:if>
-                            <g:elseif test="${record.raw.classification.vernacularName}">
-                                | ${record.raw.classification.vernacularName}
-                            </g:elseif>
-                            <g:if test="${record.processed.event?.eventDate || record.raw.event?.eventDate}">
-                                <g:message code="show.heading.recordedOn" default="recorded on"/> ${record.processed.event?.eventDate ?: record.raw.event?.eventDate}
-                            </g:if>
-                        </div>
-                    </g:if>
-                </div>
-            </div>
-
-            <div class="record-navigation">
-                <a class="record-navigation__link" href="#occurrenceDataset">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-database"></span>
-                        <g:message code="recordcore.occurencedataset.title" default="Dataset"/>
-                    </button>
-                </a>
-
-                <a class="record-navigation__link" href="#occurrenceEvent">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-clock-o"></span>
-                        <g:message code="recordcore.occurenceevent.title" default="Dataset"/>
-                    </button>
-                </a>
-
-                <a class="record-navigation__link" href="#occurrenceTaxonomy">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-sitemap"></span>
-                        <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
-                    </button>
-                </a>
-
-                <a class="record-navigation__link" href="#occurrenceGeospatial">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-map-marker"></span>
-                        <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
-                    </button>
-                </a>
-
-                <g:if test="${record.raw.miscProperties}">
-                    <a class="record-navigation__link" href="#additionalProperties">
-                        <button class="erk-button erk-button--light">
-                            <span class="fa fa-cog"></span>
-                            <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
-                        </button>
-                    </a>
-                </g:if>
-
-                <button
-                    id="showRawProcessed"
-                    data-toggle="modal"
-                    href="#processedVsRawView"
-                    class="erk-button erk-button--light"
-                    role="button"
-                    title="Table showing both original and processed record values"
-                >
-                    <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                        <span class="fa fa-balance-scale"></span>
-                        <g:message code="show.sidebar02.showrawprocessed.span" default="View original vs processed values"/>
                     </span>
-                </button>
+                    --%>
+                </div>
+
+                <div class="page-header-links">
+                    <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">
+                        Search
+                    </a>
+
+                    <a href="#" id="backBtn" title="Return to search results" class="page-header-links__link">
+                        <g:message code="show.backbtn.navigator" default="Back to search results"/>
+                    </a>
+                </div>
             </div>
 
             <div class="row">
-                <div id="SidebarBoxZ" class="col-3">
+                <div id="SidebarBoxZ" class="col-sm-5 col-lg-3">
                     <g:render template="recordSidebar" />
-                </div><!-- end div#SidebarBox -->
+                </div>
 
-                <div id="content2Z" class="col-9">
+                <div id="content2Z" class="col-sm-7 col-lg-9">
                     <div class="text-right">
                     </div>
 
+                    <div class="record-navigation">
+                        <button
+                            id="showRawProcessed"
+                            data-toggle="modal"
+                            href="#processedVsRawView"
+                            class="erk-button erk-button--light erk-button--inline"
+                            role="button"
+                            title="Table showing both original and processed record values"
+                        >
+                            <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
+                                <span class="fa fa-balance-scale"></span>
+                                <g:message code="show.sidebar02.showrawprocessed.span" default="View original vs processed values"/>
+                            </span>
+                        </button>
+                    </div>
+
                     <g:render template="recordCore" />
-                </div><!-- end of div#content2 fu -->
+                </div>
             </div>
 
             <g:if test="${hasExpertDistribution}">
@@ -585,26 +555,69 @@
         </g:if>
 
         <g:if test="${contacts}">
-            <div id="contactCuratorView" class="modal hide " tabindex="-1" role="dialog" aria-labelledby="contactCuratorViewLabel" aria-hidden="true"><!-- BS modal div -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="contactCuratorViewLabel"><g:message code="show.contactcuratorview.title" default="Contact curator"/></h3>
-            </div>
-            <div class="modal-body">
-                <p><g:message code="show.contactcuratorview.message" default="For more details and to report issues about this record, please contact a person mentioned below."></g:message> </p>
-                <g:each in="${contacts}" var="c">
-                    <address>
-                        <strong>${c.contact.firstName} ${c.contact.lastName} <g:if test="${c.primaryContact}"><span class="primaryContact">*</span></g:if> </strong><br>
-                        ${c.role}<br>
-                        <g:if test="${c.contact.phone}"><abbr title="Phone">P:</abbr> ${c.contact.phone} <br></g:if>
-                        <g:if test="${c.contact.email}"><abbr title="Email">E:</abbr> <alatag:emailLink email="${c.contact.email}"><g:message code="show.contactcuratorview.emailtext" default="email this contact"></g:message> </alatag:emailLink> <br></g:if>
-                    </address>
-                </g:each>
-                <p><span class="primaryContact"><b>*</b></span> <g:message code="show.contactcuratorview.primarycontact" default="Primary Contact"></g:message> </p>
-            </div>
-            <div class="modal-footer">
-                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;"><g:message code="show.processedvsrawview.button.close" default="Close"/></button>
-            </div>
+            <div id="contactCuratorView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contactCuratorViewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+
+                            <h3 id="contactCuratorViewLabel">
+                                <g:message code="show.contactcuratorview.title" default="Contact curator"/>
+                            </h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>
+                                <g:message code="show.contactcuratorview.message" default="For more details and to report issues about this record, please contact a person mentioned below.">
+                                </g:message>
+                            </p>
+
+                            <g:each in="${contacts}" var="c">
+                                <address>
+                                    <strong>${c.contact.firstName} ${c.contact.lastName} <g:if test="${c.primaryContact}"><span class="primaryContact">*</span></g:if> </strong>
+
+                                    <br />
+
+                                    ${c.role}
+
+                                    <br />
+
+                                    <g:if test="${c.contact.phone}">
+                                        <abbr title="Phone">P:</abbr> ${c.contact.phone}
+                                        <br />
+                                    </g:if>
+
+                                    <g:if test="${c.contact.email}">
+                                        <abbr title="Email">E:</abbr>
+
+                                        <alatag:emailLink email="${c.contact.email}">
+                                            <g:message code="show.contactcuratorview.emailtext" default="email this contact"></g:message>
+                                        </alatag:emailLink>
+
+                                        <br />
+                                    </g:if>
+                                </address>
+                            </g:each>
+
+                            <p>
+                                <span class="primaryContact">
+                                    <b>*</b>
+                                </span>
+
+                                <g:message code="show.contactcuratorview.primarycontact" default="Primary Contact">
+                                </g:message>
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="erk-button erk-button--light float-right" data-dismiss="modal" aria-hidden="true">
+                                <g:message code="show.processedvsrawview.button.close" default="Close"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </g:if>
 

@@ -2,6 +2,11 @@ modules = {
     elurikkusCoreHub {
         dependsOn 'jquery_i18n'
         defaultBundle 'main-core'
+        /**
+         * New CSS with overrides. Should replace overrides with legimate CSS
+         * and the file should replace search.css completely.
+         */
+        resource url: [dir: 'css', file: 'elurikkus-search.css']
         resource url: [dir: 'css', file: 'autocomplete.css', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'jquery.autocomplete.js', plugin: 'biocache-hubs'], disposition: 'head'
         resource url: [dir: 'js', file: 'biocache-hubs.js', plugin: 'biocache-hubs']
@@ -13,16 +18,10 @@ modules = {
         resource url: [dir: 'js', file: 'search.js']
         // Maybe keep it, maybe ditch it.
         resource url: [dir: 'css', file: 'print-search.css', plugin: 'biocache-hubs'], attrs: [ media: 'print' ]
-        /**
-         * New CSS with overrides. Should replace overrides with legimate CSS
-         * and the file should replace search.css completely.
-         */
-        resource url: [dir: 'css', file: 'elurikkus-search.css']
         // Carried over from search-core module.
         resource url: [dir: 'js', file: 'jquery.cookie.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'jquery.inview.min.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'jquery.jsonp-2.4.0.min.js', plugin: 'biocache-hubs']
-        resource url: [dir: 'js', file: 'charts2.js', plugin: 'biocache-hubs'], disposition: 'head'
     }
 
     recordView {
@@ -32,7 +31,7 @@ modules = {
         resource url: [dir: 'js', file: 'audiojs/audio.min.js', plugin: 'biocache-hubs'], disposition: 'head', exclude: '*'
         resource url: [dir: 'js', file: 'jquery.i18n.properties-1.0.9.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'record-view.js']
-        resource url: [dir: 'js', file: 'charts2.js', plugin: 'biocache-hubs'], disposition: 'head'
+        resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
         resource url: [dir: 'js', file: 'wms2.js', plugin: 'biocache-hubs'], disposition: 'head'
     }
 
@@ -84,5 +83,21 @@ modules = {
         resource url:[dir:'js/leaflet-plugins/wicket', file:'wicket.js', plugin:'biocache-hubs']
         resource url:[dir:'js/leaflet-plugins/wicket', file:'wicket-leaflet.js', plugin:'biocache-hubs']
         resource url:[dir:'js', file:'LeafletToWKT.js', plugin:'biocache-hubs']
+    }
+
+
+    // Override biocache-hubs plugin style.
+    searchMapOverride {
+        resource url: [dir:'css', file:'searchMap.css'], attrs: [media: 'all']
+    }
+
+    chartsOverride {
+        dependsOn 'bootstrapToggle', 'bootstrapMultiselect'
+        resource url: [dir: 'css', file: 'ALAChart.css'], attrs: [media: 'all']
+        resource url: [dir: 'js', file: 'ALAChart.js']
+        resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
+        resource url: [dir: 'js', file: 'Chart.min.js', plugin: 'ala-charts-plugin']
+        resource url: [dir: 'js', file: 'slider.js', plugin: 'ala-charts-plugin']
+        resource url: [dir: 'js', file: 'moment.min.js', plugin: 'ala-charts-plugin']
     }
 }
