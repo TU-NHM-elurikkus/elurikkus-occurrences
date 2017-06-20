@@ -42,52 +42,63 @@
 </head>
 
 <body class="nav-locations explore-your-area">
-    <div class="row">
-        <div class="col-md-12 col-lg-6">
-            <h3>
-                <g:message code="eya.header.title" default="Explore Your Area"/>
-            </h3>
+    <div class="page-header">
+        <h1 class="page-header__title">
+            <g:message code="eya.header.title" default="Explore Your Area"/>
+        </h1>
 
-            <p>
-                <form name="searchForm" id="searchForm" action="" method="GET" class="form-group">
-                    <label for="address">
-                        <g:message code="eya.searchform.label01" default="Enter your location or address"/>
-                    </label>
+        <%-- TODO --%>
+        <div class="page-header__subtitle">
+        </div>
 
-                    <div class="input-wrapper">
-                        <input type="text" name="address" id="address" class="input-wrapper__input">
-                        <input type="hidden" name="latitude" id="latitude" value="${latitude}"/>
-                        <input type="hidden" name="longitude" id="longitude" value="${longitude}"/>
-                        <input type="hidden" name="location" id="location" value="${location}"/>
+        <div class="page-header-links">
+            <span id="viewAllRecords" class="erk-link page-header-links__link">
+                <g:message code="eya.searchform.a.viewallrecords.01" default="View" />
 
-                        <button id="locationSearch" type="submit" class="erk-button erk-button--light input-wrapper__addon">
-                            <g:message code="eya.searchform.btn01" default="Search"/>
-                        </button>
-                    </div>
+                <span id="recordsGroupText">
+                    <g:message code="eya.searchform.a.viewallrecords.02" default="all" />
+                </span>
 
-                    <small class="form-text text-muted">
-                        <g:message code="eya.searchform.des01" default="E.g. a street address, place name, postcode or GPS coordinates (as lat, long)"/>
-                    </small>
-                </form>
-            </p>
+                <g:message code="eya.searchform.a.viewallrecords.03" default="records" />
+            </span>
         </div>
     </div>
 
-    %{-- TODO --}%
     <div class="row">
         <div class="col-12">
-            <g:if test="${true || location}">
-                <form class="float-left">
-                    <p>
-                        <g:message code="eya.searchform.label02" default="Showing records for"/>:
+            <%-- RESUTLS --%>
+            <div class="float-left">
+                <%-- SEARCH INPUT --%>
+                <form name="searchForm" id="searchForm" action="" method="GET" class="form-group">
+                    <div class="input-plus">
+                        <input
+                            type="text"
+                            name="address"
+                            id="address"
+                            placeholder="<g:message code="eya.searchform.des01" default="E.g. a street address, place name, postcode or GPS coordinates (as lat, long)" />"
+                            class="input-plus__field"
+                        />
+
+                        <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
+                            <g:message code="eya.searchform.btn01" default="Search" />
+                        </button>
+                    </div>
+
+                    <input type="hidden" name="latitude" id="latitude" value="${latitude}"/>
+                    <input type="hidden" name="longitude" id="longitude" value="${longitude}"/>
+                    <input type="hidden" name="location" id="location" value="${location}"/>
+
+                    <g:if test="${true || location}">
+                        <g:message code="eya.searchform.label02" default="Showing records for" />:
+
                         <span id="markerAddress">${location}</span>&nbsp;&nbsp;
 
                         <a href="#" id="addressHelp" style="text-decoration: none">
                             <span class="help-container">&nbsp;</span>
                         </a>
-                    </p>
+                    </g:if>
                 </form>
-            </g:if>
+            </div>
 
             <div class="form-linline float-right">
                 <p>
@@ -101,17 +112,6 @@
 
                     <g:message code="eya.searchformradius.label02" default="km radius"/>
 
-                    <a href="#" id="viewAllRecords">
-                        <button class="erk-button erk-button--light">
-                            <i class="fa fa-list"></i>&nbsp;&nbsp;
-                            <g:message code="eya.searchform.a.viewallrecords.01" default="View"/>
-                            <span id="recordsGroupText">
-                                <g:message code="eya.searchform.a.viewallrecords.02" default="all"/>
-                            </span>
-                            <g:message code="eya.searchform.a.viewallrecords.03" default="records"/>
-                        </button>
-                    </a>
-
                     <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                         <i class="icon-download"></i>
                         <g:message code="eya.searchform.a.downloads" default="Downloads"/>
@@ -124,18 +124,18 @@
                 <p>
                     %{-- TODO XXX --}%
                     <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-                    <g:message code="eya.dialogconfirm01" default="You are about to download a list of species found within a"/>
+                    <g:message code="eya.dialogconfirm01" default="You are about to download a list of species found within a" />
                     <span id="rad"></span>
-                    <g:message code="eya.dialogconfirm02" default="km radius of"/>
+                    <g:message code="eya.dialogconfirm02" default="km radius of" />
                     <code>${location}</code>.<br/>
-                    <g:message code="eya.dialogconfirm03" default="Format: tab-delimited text file (called data.xls)"/>
+                    <g:message code="eya.dialogconfirm03" default="Format: tab-delimited text file (called data.xls)" />
                 </p>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-md-7 col-lg-5">
             <div id="taxaBox">
                 <div id="leftList">
                     <table id="taxa-level-0">
