@@ -34,6 +34,7 @@
 
     <g:if test="${sr.activeFacetMap?.size() > 1}">
         <button
+            id="clear-filters-btn"
             class="erk-button erk-button--light erk-button--inline"
             data-facet="all"
             title="Click to clear all filters"

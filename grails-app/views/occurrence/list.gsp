@@ -92,9 +92,26 @@
             </a>
         </h1>
 
+        <div class="page-header__subtitle">
+            Search for records in eElurikkus
+        </div>
+
+        <%-- TODO MAYBE KEEP IT MAYBE NOT --%>
         <div class="page-header-links">
             <a href="${g.createLink(uri: '/search')}#tab-advanced-search" class="page-header-links__link">
-                <g:message code="list.advancedsearchlink.navigator" default="Advanced search"/>
+                <g:message code="home.index.navigator02" default="Advanced search" />
+            </a>
+
+            <a href="${g.createLink(uri: '/search')}#tab-taxa-upload" class="page-header-links__link">
+                <g:message code="home.index.navigator03" default="Batch taxon search" />
+            </a>
+
+            <a href="${g.createLink(uri: '/search')}#tab-catalog-upload" class="page-header-links__link">
+                <g:message code="home.index.navigator04" default="Catalogue number search" />
+            </a>
+
+            <a href="${g.createLink(uri: '/search')}#tab-spatial-search" class="page-header-links__link">
+                <g:message code="home.index.navigator05" default="Spatial search" />
             </a>
         </div>
 
@@ -204,7 +221,7 @@
         <!--  first row (#searchInfoRow), contains customise facets button and number of results for query, etc.  -->
         <div class="row" id="searchInfoRow">
             <%-- Results column --%>
-            <div class="col-md-9 push-md-3 search-info-column">
+            <div class="col">
                 <%--- XXX ... XXX ---%>
                 <a name="map" class="jumpTo"></a>
                 <a name="list" class="jumpTo"></a>
@@ -237,18 +254,17 @@
                 <div id="resultsReturned">
                     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="biocache-hubs" />
 
-                    <div id="searchBoxZ">
-                        <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
-                            <div class="input-plus">
-                                <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
-                                <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
-                                    Search
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
+                        <div class="input-plus">
+                            <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
 
-                    <span class="text-nowrap">
+                            <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+
+                    <p>
                         <span id="returnedText">
                             <strong><g:formatNumber number="${sr.totalRecords}" format="#,###,###"/></strong>
                             <g:message code="list.resultsretuened.span.returnedtext" default="results for"/>
@@ -257,9 +273,12 @@
                         <span class="queryDisplay">
                             <strong>${raw(queryDisplay)}</strong>
                         </span>
-                    </span>
+                    </p>
 
-                    <%--<g:set var="hasFq" value="${false}"/>--%>
+                    <%--
+                        What is this?
+                        <g:set var="hasFq" value="${false}"/>
+                    --%>
 
                     <g:if test="${sr.activeFacetMap?.size() > 0 || params.wkt || params.radius}">
                         <g:render template="activeFilters" />
@@ -299,33 +318,36 @@
                     </div>
                 </div>
             </div>
-
-            <%-- facet column XXX --%>
-            <div class="col-md-3 pull-md-9 search-info-column">
-                <div class="dropdown">
-                    <button
-                        type="button"
-                        id="customiseFiltersButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
-                        title="Customise the contents of this column"
-                    >
-                        <span class="fa fa-cog"></span>
-                        <g:message code="search.filter.customise" />
-                        <span class="caret"></span>
-                    </button>
-
-                    <g:render template="filters" />
-                </div>
-            </div>
         </div><!-- /#searchInfoRow -->
 
         <!--  Second row - facet column and results column -->
         <div class="row" id="content">
             <div class="col-sm-4 col-md-3">
-                <g:render template="facets" />
+                <div id="facetWell" class="well well-small">
+                    <div id="filters-selection" class="dropdown">
+                        <button
+                            type="button"
+                            id="customiseFiltersButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
+                            title="Customise the contents of this column"
+                        >
+                            <span class="fa fa-cog"></span>
+
+                            <span>
+                                <g:message code="search.filter.customise" />
+                            </span>
+
+                            <span class="caret"></span>
+                        </button>
+
+                        <g:render template="filters" />
+                    </div>
+
+                    <g:render template="facets" />
+                </div>
             </div>
 
             <g:set var="postFacets" value="${System.currentTimeMillis()}"/>
@@ -456,14 +478,10 @@
                             </g:if>
 
                             <div id="sortWidgets" class="sort-tools float-right">
-                                <%-- Can I move this up? I moved this up. --%>
                                 <g:set var="useDefault" value="${(!params.sort && !params.dir) ? true : false }"/>
 
                                 <div class="search-control">
-                                    <span class="hidden-phone">
-                                        <g:message code="list.sortwidgets.span01" default="per"/>
-                                    </span>
-
+                                    <g:message code="list.sortwidgets.span01" default="per"/>
                                     <g:message code="list.sortwidgets.span02" default="page"/>:
 
                                     <select id="per-page" name="per-page" class="input-small">
@@ -502,14 +520,13 @@
                             </div>
                         </div>
 
-                        <%-- WIP --%>
                         <div id="results" class="search-results">
                             <g:set var="startList" value="${System.currentTimeMillis()}" />
 
                             <g:each var="occurrence" in="${sr.occurrences}">
                                 <alatag:formatListRecordRow occurrence="${occurrence}" />
                             </g:each>
-                        </div><!--close results-->
+                        </div>
 
                         <g:if test="${params.benchmarks}">
                             <div style="color:#ddd;">

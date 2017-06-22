@@ -47,8 +47,8 @@
             <g:message code="eya.header.title" default="Explore Your Area"/>
         </h1>
 
-        <%-- TODO --%>
         <div class="page-header__subtitle">
+            Search for records in eElurikkus
         </div>
 
         <div class="page-header-links">
@@ -66,7 +66,7 @@
 
     <div class="row">
         <div class="col-12">
-            <%-- RESUTLS --%>
+            <%-- RESULTS --%>
             <div class="float-left">
                 <%-- SEARCH INPUT --%>
                 <form name="searchForm" id="searchForm" action="" method="GET" class="form-group">

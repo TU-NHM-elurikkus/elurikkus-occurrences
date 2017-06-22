@@ -152,7 +152,7 @@ $(document).ready(function() {
     }
 
     // active facets/filters
-    $('.activeFilter').click(function(e) {
+    $('#clear-filters-btn').click(function(e) {
         e.preventDefault();
         removeFilter(this);
     });

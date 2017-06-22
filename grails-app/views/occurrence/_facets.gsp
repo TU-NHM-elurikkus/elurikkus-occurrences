@@ -1,192 +1,156 @@
-<div id="facetWell" class="well well-small">
-    <g:set var="startTime" value="${System.currentTimeMillis()}"/>
-    ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
+<g:set var="startTime" value="${System.currentTimeMillis()}" />
 
-    <!-- XXX Decide what to do with it. Probably remove for forever.
-    <h3 class="visible-phone">
-        <a href="#" id="toggleFacetDisplay"><i class="icon-chevron-down" id="facetIcon"></i>
-            <alatag:message code="search.facets.heading" default="Refine results"/></a>
-    </h3>
-    -->
+${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
 
-    <div class="sidebar hidden-phone">
-        <h3 class="hidden-phone"><alatag:message code="search.facets.heading" default="Refine results"/></h3>
-    </div>
+<h3>
+    <alatag:message code="search.facets.heading" default="Refine results"/>
+</h3>
 
-    <div class="sidebar hidden-phone" style="clear:both;">
-        <g:if test="${sr.query}">
-            <g:set var="queryStr" value="${params.q ? params.q : searchRequestParams.q}"/>
-            <g:set var="paramList" value=""/>
-            <g:set var="queryParam" value="${sr.urlParameters.stripIndent(1)}" />
-        </g:if>
+<div style="clear:both;">
+    <g:if test="${sr.query}">
+        <g:set var="queryStr" value="${params.q ? params.q : searchRequestParams.q}" />
+        <g:set var="paramList" value=""/>
+        <g:set var="queryParam" value="${sr.urlParameters.stripIndent(1)}" />
+    </g:if>
 
-        <%-- Since we already list active filters elsewhere, this here is not necessary.
-        <g:if test="${sr.activeFacetMap}">
-            <div id="currentFilter">
-                <div class="FieldName">
-                    <alatag:message code="search.filters.heading" default="Current filters"/>
-                </div>
+    ${alatag.logMsg(msg:"Before grouped facets facets.gsp")}
 
-                <div class="subnavlist">
-                    <ul id="refinedFacets" class="erk-ulist">
-                        <g:each var="item" in="${sr.activeFacetMap}">
-                            <li class="erk-ulist__item">
-                                <alatag:currentFilterItem item="${item}" addCheckBox="${true}" cssClass="erk-button erk-button--light erk-button--inline active-filter"/>
-                            </li>
-                        </g:each>
+    <g:set var="facetMax" value="${10}"/><g:set var="i" value="${1}" />
 
-                        <g:if test="${sr.activeFacetMap?.size() > 1}">
-                            <li class="erk-ulist__item">
-                                <a href="#" class="activeFilter" data-facet="all">
-                                    <span class="closeX" style="margin-left:7px;">&gt;&nbsp;</span>
-                                    <g:message code="facets.currentfilter.link" default="Clear all"/>
-                                </a>
-                            </li>
-                        </g:if>
-                    </ul>
-                </div>
-            </div>
-        </g:if>
-        --%>
+    <g:each var="group" in="${groupedFacets}">
+        <g:set var="keyCamelCase" value="${group.key.replaceAll(/\s+/,'')}"/>
 
-        ${alatag.logMsg(msg:"Before grouped facets facets.gsp")}
-        <g:set var="facetMax" value="${10}"/><g:set var="i" value="${1}"/>
+        <div class="facetGroupName dropdown-toggle" id="heading_${keyCamelCase}">
+            <a href="#" class="showHideFacetGroup" data-name="${keyCamelCase}">
+                <g:message code="facet.group.${group.key}" default="${group.key}"/>
+            </a>
+        </div>
 
-        <g:each var="group" in="${groupedFacets}">
-            <g:set var="keyCamelCase" value="${group.key.replaceAll(/\s+/,'')}"/>
+        <%-- Starting with display none. TODO: Hide with classes. --%>
+        <div id="group_${keyCamelCase}" style="display: none;" class="facetsGroup">
+            <g:set var="firstGroup" value="${false}"/>
+            <g:each in="${group.value}" var="facetFromGroup">
+                <%--  Do a lookup on groupedFacetsMap for the current facet --%>
+                <g:set var="facetResult" value="${groupedFacetsMap.get(facetFromGroup)}"/>
 
-            <div class="facetGroupName dropdown-toggle" id="heading_${keyCamelCase}">
-                <a href="#" class="showHideFacetGroup" data-name="${keyCamelCase}">
-                    <g:message code="facet.group.${group.key}" default="${group.key}"/>
-                </a>
-            </div>
+                <%--  Tests for when to display a facet --%>
+                <g:if test="${facetResult && facetResult.fieldResult.length() >= 1 && facetResult.fieldResult[0].count != sr.totalRecords && ! sr.activeFacetMap?.containsKey(facetResult.fieldName ) }">
+                    <g:set var="fieldDisplayName" value="${alatag.formatDynamicFacetName(fieldName:"${facetResult.fieldName}")}"/>
 
-            <%-- Starting with display none. TODO: Hide with classes. --%>
-            <div id="group_${keyCamelCase}" style="display: none;" class="facetsGroup">
-                <g:set var="firstGroup" value="${false}"/>
-                <g:each in="${group.value}" var="facetFromGroup">
-                    <%--  Do a lookup on groupedFacetsMap for the current facet --%>
-                    <g:set var="facetResult" value="${groupedFacetsMap.get(facetFromGroup)}"/>
+                    <div class="FieldName">
+                        ${fieldDisplayName?:facetResult.fieldName}
+                    </div>
 
-                    <%--  Tests for when to display a facet --%>
-                    <g:if test="${facetResult && facetResult.fieldResult.length() >= 1 && facetResult.fieldResult[0].count != sr.totalRecords && ! sr.activeFacetMap?.containsKey(facetResult.fieldName ) }">
-                        <g:set var="fieldDisplayName" value="${alatag.formatDynamicFacetName(fieldName:"${facetResult.fieldName}")}"/>
+                    %{-- WIP Removed nano class. --}%
+                    <div class="subnavlist" style="clear:left">
+                        <alatag:facetLinkList facetResult="${facetResult}" queryParam="${queryParam}"/>
+                    </div>
 
-                        <div class="FieldName">
-                            ${fieldDisplayName?:facetResult.fieldName}
+                    %{--<div class="fadeout"></div>--}%
+                    <g:if test="${facetResult.fieldResult.length() > 0}">
+                        <div class="showHide">
+                            <a href="#multipleFacets" class="multipleFacetsLink" id="multi-${facetResult.fieldName}" role="button" data-toggle="modal" data-displayname="${fieldDisplayName}"
+                               title="See more options or refine with multiple values"><i class="icon-hand-right"></i> <g:message code="facets.facetfromgroup.link" default="choose more"/>...</a>
                         </div>
-
-                        %{-- WIP Removed nano class. --}%
-                        <div class="subnavlist" style="clear:left">
-                            <alatag:facetLinkList facetResult="${facetResult}" queryParam="${queryParam}"/>
-                        </div>
-
-                        %{--<div class="fadeout"></div>--}%
-                        <g:if test="${facetResult.fieldResult.length() > 0}">
-                            <div class="showHide">
-                                <a href="#multipleFacets" class="multipleFacetsLink" id="multi-${facetResult.fieldName}" role="button" data-toggle="modal" data-displayname="${fieldDisplayName}"
-                                   title="See more options or refine with multiple values"><i class="icon-hand-right"></i> <g:message code="facets.facetfromgroup.link" default="choose more"/>...</a>
-                            </div>
-                        </g:if>
                     </g:if>
-                </g:each>
-            </div>
-        </g:each>
-        ${alatag.logMsg(msg:"After grouped facets facets.gsp")}
-    </div>
+                </g:if>
+            </g:each>
+        </div>
+    </g:each>
+    ${alatag.logMsg(msg:"After grouped facets facets.gsp")}
+</div>
 </div><!--end facets-->
 
 <!-- modal popup for "choose more" link -->
 %{-- XXX Hide doesn't work with Bootstrap 4.--}%
 <div id="multipleFacets" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="multipleFacetsLabel" aria-hidden="true"><!-- BS modal div -->
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
-                <h3 id="multipleFacetsLabel">
-                    <g:message code="facets.multiplefacets.title" default="Refine your search"/>
-                </h3>
+            <h3 id="multipleFacetsLabel">
+                <g:message code="facets.multiplefacets.title" default="Refine your search"/>
+            </h3>
+        </div>
+
+        <div class="modal-body">
+            <div id="dynamic" class="tableContainer">
+                <form name="facetRefineForm" id="facetRefineForm" method="GET" action="/occurrences/search/facets">
+                    <table class="table table-sm table-bordered table-striped scrollTable" id="fullFacets">
+                        <thead class="fixedHeader">
+                            <tr class="tableHead">
+                                <th>&nbsp;</th>
+                                <th id="indexCol" width="80%"><a href="#index" class="fsort" data-sort="index" data-foffset="0"></a></th>
+                                <th style="border-right-style: none;text-align: right;">
+                                    <a href="#count" class="fsort" data-sort="count" data-foffset="0" title="Sort by record count">
+                                        <g:message code="facets.multiplefacets.tableth01" default="Count"/>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="scrollContent">
+                            %{-- XXX Hide doesn't work with Bootstrap 4.--}%
+                            <tr class="hide">
+                                <td><input type="checkbox" name="fqs" class="fqs" value=""></td>
+                                <td><a href=""></a></td>
+                                <td style="text-align: right; border-right-style: none;"></td>
+                            </tr>
+                            <tr id="spinnerRow">
+                                <td colspan="3" style="text-align: center;"><g:message code="facets.multiplefacets.tabletr01td01" default="loading data"/>... <g:img plugin="biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon"/></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </form>
             </div>
+        </div>
 
-            <div class="modal-body">
-                <div id="dynamic" class="tableContainer">
-                    <form name="facetRefineForm" id="facetRefineForm" method="GET" action="/occurrences/search/facets">
-                        <table class="table table-sm table-bordered table-striped scrollTable" id="fullFacets">
-                            <thead class="fixedHeader">
-                                <tr class="tableHead">
-                                    <th>&nbsp;</th>
-                                    <th id="indexCol" width="80%"><a href="#index" class="fsort" data-sort="index" data-foffset="0"></a></th>
-                                    <th style="border-right-style: none;text-align: right;">
-                                        <a href="#count" class="fsort" data-sort="count" data-foffset="0" title="Sort by record count">
-                                            <g:message code="facets.multiplefacets.tableth01" default="Count"/>
-                                        </a>
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody class="scrollContent">
-                                %{-- XXX Hide doesn't work with Bootstrap 4.--}%
-                                <tr class="hide">
-                                    <td><input type="checkbox" name="fqs" class="fqs" value=""></td>
-                                    <td><a href=""></a></td>
-                                    <td style="text-align: right; border-right-style: none;"></td>
-                                </tr>
-                                <tr id="spinnerRow">
-                                    <td colspan="3" style="text-align: center;"><g:message code="facets.multiplefacets.tabletr01td01" default="loading data"/>... <g:img plugin="biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon"/></td>
-                                </tr>
-                            </tbody>
-
-                        </table>
-                    </form>
-                </div>
-            </div>
-
-            <div id="submitFacets" class="modal-footer" style="text-align: left;">
-                <div class="btn-group">
-                    <button type="submit" class="submit erk-button erk-button--light" id="include">
-                        <g:message code="facets.includeSelected.button" default="INCLUDE selected items"/>
-                    </button>
-
-                    <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-
-                    <ul class="dropdown-menu">
-                        <!-- dropdown menu links -->
-                        <li>
-                            <a href="#" class="dropdown-item wildcard" id="includeAll"><g:message code="facets.submitfacets.li01" default="INCLUDE all values (wildcard include)"/></a>
-                        </li>
-                    </ul>
-                </div>
-                &nbsp;
-                <div class="btn-group">
-                    <button type="submit" class="submit erk-button erk-button--light" id="exclude">
-                        <g:message code="facets.excludeSelected.button" default="EXCLUDE selected items"/>
-                    </button>
-
-                    <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-
-                    <ul class="dropdown-menu">
-                        <!-- dropdown menu links -->
-                        <li>
-                            <a href="#" class="dropdown-item wildcard" id="excludeAll"><g:message code="facets.submitfacets.li02" default="EXCLUDE all values (wildcard exclude)"/></a>
-                        </li>
-                    </ul>
-                </div>
-                &nbsp;
-                %{-- XXX Hide doesn't work with Bootstrap 4.--}%
-                <button id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}">
-                    <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"></i>
-                    <span class="hide"><g:message code="facets.downloadfacets.button" default="Download"/></span>
+        <div id="submitFacets" class="modal-footer" style="text-align: left;">
+            <div class="btn-group">
+                <button type="submit" class="submit erk-button erk-button--light" id="include">
+                    <g:message code="facets.includeSelected.button" default="INCLUDE selected items"/>
                 </button>
 
-                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;">
-                    <g:message code="facets.submitfacets.button" default="Close"/>
+                <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
                 </button>
+
+                <ul class="dropdown-menu">
+                    <!-- dropdown menu links -->
+                    <li>
+                        <a href="#" class="dropdown-item wildcard" id="includeAll"><g:message code="facets.submitfacets.li01" default="INCLUDE all values (wildcard include)"/></a>
+                    </li>
+                </ul>
             </div>
+            &nbsp;
+            <div class="btn-group">
+                <button type="submit" class="submit erk-button erk-button--light" id="exclude">
+                    <g:message code="facets.excludeSelected.button" default="EXCLUDE selected items"/>
+                </button>
+
+                <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu">
+                    <!-- dropdown menu links -->
+                    <li>
+                        <a href="#" class="dropdown-item wildcard" id="excludeAll"><g:message code="facets.submitfacets.li02" default="EXCLUDE all values (wildcard exclude)"/></a>
+                    </li>
+                </ul>
+            </div>
+            &nbsp;
+            %{-- XXX Hide doesn't work with Bootstrap 4.--}%
+            <button id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}">
+                <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"></i>
+                <span class="hide"><g:message code="facets.downloadfacets.button" default="Download"/></span>
+            </button>
+
+            <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;">
+                <g:message code="facets.submitfacets.button" default="Close"/>
+            </button>
         </div>
     </div>
 </div>
