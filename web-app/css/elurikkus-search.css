@@ -237,5 +237,14 @@
 
 /* you are just making things up now */
 .activeFilters {
-    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#customiseFiltersButton {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+#filters-selection {
+    margin-bottom: 1rem;
 }

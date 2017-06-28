@@ -172,7 +172,7 @@ a.colour-by-legend-toggle {
     </g:if>
 
     <button id="downloadMaps" data-toggle="modal" data-target="#downloadMap" class="erk-button erk-button--light" style="margin-bottom: 2px;">
-        <i class="fa fa-download"></i>&nbsp&nbsp;
+        <span class="fa fa-download"></span>
         <g:message code="map.downloadmaps.btn.label" default="Download map"/>
     </button>
 
