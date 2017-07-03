@@ -267,7 +267,7 @@
                     <p>
                         <span id="returnedText">
                             <strong><g:formatNumber number="${sr.totalRecords}" format="#,###,###"/></strong>
-                            <g:message code="list.resultsretuened.span.returnedtext" default="results for"/>
+                            <g:message code="list.resultsretuened.span.returnedtext" default="results for" />
                         </span>
 
                         <span class="queryDisplay">

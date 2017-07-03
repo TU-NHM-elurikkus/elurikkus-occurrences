@@ -1,4 +1,7 @@
-<div class="activeFilters">
+<p class="activeFilters">
+    <%--
+        TODO: Something about the semicolon.
+    --%>
     <b>
         <alatag:message code="search.filters.heading" default="Current filters" />
     </b>:
@@ -42,4 +45,4 @@
             <g:message code="list.resultsretuened.button01" default="Clear all" />
         </button>
     </g:if>
-</div>
+</p>
