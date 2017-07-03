@@ -246,7 +246,7 @@ $(document).ready(function() {
     });
 
     // taxa search - show included synonyms with popup to allow user to refine to a single name
-    $("span.lsid").not('.searchError .lsid').each(function(i, el) {
+    $("span.lsid").not('.searchError, .lsid').each(function(i, el) {
         var lsid = $(this).attr("id");
         var nameString = $(this).html();
         var maxFacets = 20;
@@ -274,7 +274,7 @@ $(document).ready(function() {
             var synListSize = 0;
             var synList1 = "";
             $.each(data.facetResults, function(k, el) {
-                //console.log("el", el);
+                // console.log("el", el);
                 if (el.fieldName == "raw_taxon_name") {
                     $.each(el.fieldResult, function(j, el1) {
                         synListSize++;
@@ -290,36 +290,37 @@ $(document).ready(function() {
                 synList1 += "[no records found]";
             }
 
-            //synList1 += "</div>";
+            // synList1 += "</div>";
 
             if (synListSize >= maxFacets) {
                 synList1 += "<div><br>Only showing the first " + maxFacets + " names<br>See the \"Scientific name (unprocessed)\" section in the \"Refine results\" column on the left for a complete list</div>";
             }
 
-//            synList += "</div>";
+            // synList += "</div>";
 
             $clone.find('div.rawTaxaList').html(synList1);
-            $clone.removeClass("hide");
+            $clone.removeClass("hide"); // XXX This won't work.
             // prevent BS dropdown from closing when clicking on content
             $clone.find('.stopProp').children().not('input.rawTaxonSumbit').click(function(e) {
                 e.stopPropagation();
             });
 
-//            $("#rawTaxonSearchForm").append(synList);
+            // $("#rawTaxonSearchForm").append(synList);
             // position it under the drop down
-//            $("#refineTaxaSearch_"+i).position({
-//                my: "right top",
-//                at: "right bottom",
-//                of: $(el), // or this
-//                offset: "0 -1",
-//                collision: "none"
-//            });
-//            $("#refineTaxaSearch_"+i).hide();
+            // $("#refineTaxaSearch_"+i).position({
+                // my: "right top",
+                // at: "right bottom",
+                // of: $(el), // or this
+                // offset: "0 -1",
+                // collision: "none"
+            // });
+            // $("#refineTaxaSearch_"+i).hide();
         });
+
         // format display with drop-down
-        //$("span.lsid").before("<span class='plain'> which matched: </span>");
-//        $(el).html("<a href='#' title='click for details about this taxon search' id='lsid_" + i + "'>" + nameString + "</a>");
-//        $(el).addClass("dropDown");
+        // $("span.lsid").before("<span class='plain'> which matched: </span>");
+        // $(el).html("<a href='#' title='click for details about this taxon search' id='lsid_" + i + "'>" + nameString + "</a>");
+        // $(el).addClass("dropDown");
         $(el).html($clone);
     });
 

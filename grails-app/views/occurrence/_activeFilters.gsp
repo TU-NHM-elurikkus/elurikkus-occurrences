@@ -42,7 +42,7 @@
             data-facet="all"
             title="Click to clear all filters"
         >
-            <g:message code="list.resultsretuened.button01" default="Clear all" />
+            <g:message code="list.resultsreturned.button01" default="Clear all" />
         </button>
     </g:if>
 </p>
