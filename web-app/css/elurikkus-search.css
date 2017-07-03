@@ -7,6 +7,9 @@
 #facetWell {
     font-size: 12px;
     margin-bottom: 1rem;
+    padding: 1.25rem;
+    border: 1px solid #DDD;
+    border-radius: .25rem;
 }
 
 .subnavlist {
@@ -24,16 +27,6 @@
      * in such way.
      */
     margin: 0;
-}
-
-/**
- * Override tab style.
- * Will be removed when we get rid of original ALA search CSS.
- */
-.nav-tabs li a {
-    background-color: initial;
-    border: initial;
-    margin-right: initial;
 }
 
 .search-filter-menu {
@@ -85,12 +78,6 @@
     height: initial;
 }
 
-#facetWell {
-    border: 1px solid #DDD;
-    border-radius: .25rem;
-    padding: 16px;
-}
-
 .showHideFacetGroup {
     text-transform: uppercase;
     font-size: 14px;
@@ -100,14 +87,6 @@
 /* XXX */ */ */ */
 .FieldName {
     font-weight: bold;
-}
-
-/* RESULTS TABLE */
-.tab-content {
-    border-bottom: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    border-left: 1px solid #DDD;
-    padding: 1rem;
 }
 
 /* RESULTS TABLE */
@@ -233,11 +212,6 @@
 
 .search-results {
     clear: both;
-}
-
-/* you are just making things up now */
-.activeFilters {
-    margin-bottom: 1rem;
 }
 
 #customiseFiltersButton {

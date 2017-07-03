@@ -139,9 +139,9 @@ class OccurrenceTagLib {
         def mb = new MarkupBuilder(out)
         mb.button (
                 class: "${attrs.cssClass} tooltips activeFilter",
-                    "data-facet": item.key
-                    //"data-facet":"${item.key}:${item.value.value.encodeAsURL()}",
-                    //onClick:"removeFacet(this); return false;"
+                    "data-facet": item.key,
+                    // "data-facet": "${item.key}:${item.value.value.encodeAsURL()}",
+                    "onClick": "removeFacet(this); return false;"
             ) {
             if (attrs.addCheckBox) {
                 span(class:'fa fa-check-square-o') {
