@@ -309,9 +309,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-lg-6">
                             <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
-                                <div class="input-wrapper">
-                                    <input type="text" name="taxa" id="taxa" class="input-wrapper__input">
-                                    <button id="locationSearch" type="submit" class="erk-button erk-button--light input-wrapper__addon">
+                                <div class="input-plus">
+                                    <input type="text" name="taxa" id="taxa" class="input-plus__field">
+
+                                    <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
                                         <g:message code="home.index.simsplesearch.button" default="Search" />
                                     </button>
                                 </div>
@@ -380,12 +381,12 @@
                             <div class="accordion accordion-caret" id="accordion2">
                                 <div class="accordion-group">
                                     <div class="accordion-heading">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
                                             <g:message code="search.map.importToggle" default="Import WKT" />
                                         </a>
                                     </div>
 
-                                    <div id="collapseOne" class="accordion-body collapse">
+                                    <div id="collapseOne" class="accordion-body collapse show">
                                         <div class="accordion-inner">
                                             <p>
                                                 <g:message code="search.map.importText" />
