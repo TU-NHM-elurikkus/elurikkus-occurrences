@@ -251,10 +251,10 @@
                     </a>
                 </g:if>
 
-                <div id="resultsReturned">
+                <section id="resultsReturned" class="search-section">
                     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="biocache-hubs" />
 
-                    <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm" class="">
+                    <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm">
                         <div class="input-plus">
                             <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
 
@@ -316,15 +316,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </div><!-- /#searchInfoRow -->
 
         <!--  Second row - facet column and results column -->
         <div class="row" id="content">
-            <div class="col-sm-4 col-md-3">
-                <div id="facetWell" class="well well-small">
+            <div class="col-sm-5 col-md-3">
+                <div class="card card-block filters-container">
                     <div id="filters-selection" class="dropdown">
+                        <h2 class="card-title">
+                            <alatag:message code="search.facets.heading" default="Refine results" />
+                        </h2>
+
                         <button
                             type="button"
                             id="customiseFiltersButton"
@@ -336,9 +340,7 @@
                         >
                             <span class="fa fa-cog"></span>
 
-                            <span>
-                                <g:message code="search.filter.customise" />
-                            </span>
+                            <g:message code="search.filter.customise" />
 
                             <span class="caret"></span>
                         </button>
@@ -353,7 +355,7 @@
             <g:set var="postFacets" value="${System.currentTimeMillis()}"/>
 
             <!-- removed id of content 2 -->
-            <div class="col-sm-8 col-md-9">
+            <div class="col-sm-7 col-md-9">
                 <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                     <div id="alert" class="modal fade invisible" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -458,16 +460,15 @@
 
                 <div class="tab-content clearfix">
                     <div id="records" role="tabpanel" class="tab-pane solrResults active" >
-                        <div id="searchControls">
-                            <div class="search-control">
-                                <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                                    <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                                       <span class="fa fa-download"></span>
-                                       <g:message code="list.downloads.navigator" default="Downloads" />
-                                    </button>
-                                </g:if>
-                            </div>
+                        <div class="search-controls">
+                            <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
+                                <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                   <span class="fa fa-download"></span>
+                                   <g:message code="list.downloads.navigator" default="Downloads" />
+                                </button>
+                            </g:if>
 
+                            <%-- XXX Not going to alert anyone right now.
                             <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                                 <div id="alerts" class="erk-button erk-button--light">
                                     <a href="#alert" role="button" data-toggle="modal" class="tooltips" title="Get email alerts for this search">
@@ -476,15 +477,17 @@
                                     </a>
                                 </div>
                             </g:if>
+                            --%>
 
-                            <div id="sortWidgets" class="sort-tools float-right">
+                            <form class="form-inline float-right">
                                 <g:set var="useDefault" value="${(!params.sort && !params.dir) ? true : false }"/>
 
-                                <div class="search-control">
-                                    <g:message code="list.sortwidgets.span01" default="per"/>
-                                    <g:message code="list.sortwidgets.span02" default="page"/>:
+                                <div class="form-group">
+                                    <label for="per-page">
+                                        Results per page
+                                    </label>
 
-                                    <select id="per-page" name="per-page" class="input-small">
+                                    <select id="per-page" name="per-page">
                                         <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:"20"}"/>
                                         <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
                                         <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
@@ -493,14 +496,16 @@
                                     </select>
                                 </div>
 
-                                <div class="search-control">
-                                    <g:message code="list.sortwidgets.sort.label" default="sort"/>:
+                                <div class="form-group">
+                                    <label for="sort">
+                                        Sort by
+                                    </label>
 
-                                    <select id="sort" name="sort" class="input-small">
+                                    <select id="sort" name="sort">
                                         <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>><g:message code="list.sortwidgets.sort.option01" default="Best match"/></option>
                                         <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option02" default="Taxon name"/></option>
                                         <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option03" default="Common name"/></option>
-                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401", default:"Collecting date") :  g.message(code:"list.sortwidgets.sort.option0402", default:"Record date")}</option>
+                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401", default:"Collecting date") : g.message(code:"list.sortwidgets.sort.option0402", default:"Record date")}</option>
                                         <g:if test="${skin != 'avh'}">
                                             <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>><g:message code="list.sortwidgets.sort.option05" default="Record type"/></option>
                                         </g:if>
@@ -509,15 +514,17 @@
                                     </select>&nbsp;
                                 </div>
 
-                                <div class="search-control">
-                                    <g:message code="list.sortwidgets.dir.label" default="order"/>:
+                                <div class="form-group">
+                                    <label for="dir">
+                                        Sort order
+                                    </label>
 
-                                    <select id="dir" name="dir" class="input-small">
+                                    <select id="dir" name="dir">
                                         <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option01" default="Ascending"/></option>
                                         <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option02" default="Descending"/></option>
                                     </select>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
                         <div id="results" class="search-results">

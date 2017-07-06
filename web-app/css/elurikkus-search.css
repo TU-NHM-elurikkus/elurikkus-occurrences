@@ -4,20 +4,8 @@
  * TO SEE
  */
 
-#facetWell {
-    font-size: 12px;
-    margin-bottom: 1rem;
-    padding: 1.25rem;
-    border: 1px solid #DDD;
-    border-radius: .25rem;
-}
-
 .subnavlist {
-    /**
-     * 3 * body line height. Should result in about  3 line heights.
-     * At least this is what it should be.
-     */
-    max-height: 3.7rem;
+    max-height: 4.2rem;
     overflow-y: scroll;
 }
 
@@ -92,13 +80,12 @@
 /* RESULTS TABLE */
 #results .rowA {
     color: #555;
-    margin-top: 4px;
+    margin: .5rem 0;
     font-weight: bold;
 }
 
 /* RESULTS TABLE */
 #results .rowB {
-    font-size: 12px;
     color: #222;
     padding-bottom: 4px;
     border-bottom: 1px solid #DDD;
@@ -197,15 +184,6 @@
     margin-right: 1rem;
 }
 
-.search-control {
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-
-.sort-tools .search-control {
-    margin-left: 1rem;
-}
-
 .search-info-column {
     margin-bottom: 1rem;
 }
@@ -215,6 +193,7 @@
 }
 
 #customiseFiltersButton {
+    max-width: 100%;
     overflow-x: hidden;
     text-overflow: ellipsis;
 }
