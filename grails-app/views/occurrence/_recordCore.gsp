@@ -1075,7 +1075,14 @@
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
                 <g:set var="entryHtml"><span class='dwc'>${entry.key}</span></g:set>
                 <g:set var="label"><alatag:camelCaseToHuman text="${entryHtml}"/></g:set>
-                <alatag:occurrenceTableRow annotate="true" section="geospatial" fieldCode="${entry.key}" fieldName="${label}">${entry.value}</alatag:occurrenceTableRow>
+                <alatag:occurrenceTableRow annotate="true" section="geospatial" fieldCode="${entry.key}" fieldName="${label}">
+                    <g:if test="${StringUtils.startsWith(entry.value,'http')}">
+                        <a href="${entry.value}">${entry.value}</a>
+                    </g:if>
+                    <g:else>
+                        ${entry.value}
+                    </g:else>
+                </alatag:occurrenceTableRow>
             </g:each>
         </table>
     </div>
