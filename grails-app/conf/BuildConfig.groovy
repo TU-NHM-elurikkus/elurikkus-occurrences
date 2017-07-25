@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
         build ":release:3.0.1"
         // plugins for the build system only
         build ":tomcat:7.0.54"
-        compile ':cache:1.1.1'
+        compile ':cache:1.1.8'
         compile ":cache-headers:1.1.6"
         runtime ":resources:1.2.8"
         runtime ":cached-resources:1.0"
