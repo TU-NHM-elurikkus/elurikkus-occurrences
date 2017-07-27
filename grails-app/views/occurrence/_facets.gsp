@@ -55,7 +55,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                                 data-displayname="${fieldDisplayName}"
                                 title="See more options or refine with multiple values"
                             >
-                               <i class="icon-hand-right"></i> <g:message code="facets.facetfromgroup.link" default="choose more"/>...
+                               <i class="icon-hand-right"></i> <g:message code="facets.facetfromgroup.link"/>...
                             </a>
                         </div>
                     </g:if>
@@ -76,7 +76,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                 <h3 id="multipleFacetsLabel">
-                    <g:message code="facets.multiplefacets.title" default="Refine your search"/>
+                    <g:message code="facets.multiplefacets.title"/>
                 </h3>
             </div>
 
@@ -90,7 +90,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                                     <th id="indexCol" width="80%"><a href="#index" class="fsort" data-sort="index" data-foffset="0"></a></th>
                                     <th style="border-right-style: none;text-align: right;">
                                         <a href="#count" class="fsort" data-sort="count" data-foffset="0" title="Sort by record count">
-                                            <g:message code="facets.multiplefacets.tableth01" default="Count"/>
+                                            <g:message code="facets.multiplefacets.tableth01"/>
                                         </a>
                                     </th>
                                 </tr>
@@ -104,7 +104,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                                     <td style="text-align: right; border-right-style: none;"></td>
                                 </tr>
                                 <tr id="spinnerRow">
-                                    <td colspan="3" style="text-align: center;"><g:message code="facets.multiplefacets.tabletr01td01" default="loading data"/>... <g:img plugin="biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon"/></td>
+                                    <td colspan="3" style="text-align: center;"><g:message code="facets.multiplefacets.tabletr01td01"/>... <g:img plugin="biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon"/></td>
                                 </tr>
                             </tbody>
 
@@ -116,7 +116,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
             <div id="submitFacets" class="modal-footer" style="text-align: left;">
                 <div class="btn-group">
                     <button type="submit" class="submit erk-button erk-button--light" id="include">
-                        <g:message code="facets.includeSelected.button" default="INCLUDE selected items"/>
+                        <g:message code="facets.includeSelected.button"/>
                     </button>
 
                     <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
@@ -126,7 +126,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                     <ul class="dropdown-menu">
                         <!-- dropdown menu links -->
                         <li>
-                            <a href="#" class="dropdown-item wildcard" id="includeAll"><g:message code="facets.submitfacets.li01" default="INCLUDE all values (wildcard include)"/></a>
+                            <a href="#" class="dropdown-item wildcard" id="includeAll"><g:message code="facets.submitfacets.li01"/></a>
                         </li>
                     </ul>
                 </div>
@@ -135,7 +135,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
 
                 <div class="btn-group">
                     <button type="submit" class="submit erk-button erk-button--light" id="exclude">
-                        <g:message code="facets.excludeSelected.button" default="EXCLUDE selected items"/>
+                        <g:message code="facets.excludeSelected.button"/>
                     </button>
 
                     <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
@@ -145,7 +145,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                     <ul class="dropdown-menu">
                         <!-- dropdown menu links -->
                         <li>
-                            <a href="#" class="dropdown-item wildcard" id="excludeAll"><g:message code="facets.submitfacets.li02" default="EXCLUDE all values (wildcard exclude)"/></a>
+                            <a href="#" class="dropdown-item wildcard" id="excludeAll"><g:message code="facets.submitfacets.li02"/></a>
                         </li>
                     </ul>
                 </div>
@@ -153,16 +153,16 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                 &nbsp;
 
                 %{-- XXX Hide doesn't work with Bootstrap 4.--}%
-                <button id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}">
-                    <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button', default:'Download this list')}"></i>
+                <button id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button')}">
+                    <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button')}"></i>
 
                     <span class="hide">
-                        <g:message code="facets.downloadfacets.button" default="Download" />
+                        <g:message code="facets.downloadfacets.button"/>
                     </span>
                 </button>
 
                 <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;">
-                    <g:message code="facets.submitfacets.button" default="Close" />
+                    <g:message code="facets.submitfacets.button" />
                 </button>
             </div>
         </div>
@@ -183,6 +183,6 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
     ${alatag.logMsg(msg:"End of facets.gsp - " + endTime + " => " + (endTime - startTime))}
 
     <div style="color:#ddd;">
-        <g:message code="facets.endtime.l" default="facets render time"/> = ${(endTime - startTime)} <g:message code="facets.endtime.r" default="ms" />
+        <g:message code="facets.endtime.l"/> = ${(endTime - startTime)} <g:message code="facets.endtime.r" />
     </div>
 </g:if>

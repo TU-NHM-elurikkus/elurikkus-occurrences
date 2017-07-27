@@ -15,7 +15,7 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}" />
     <meta name="section" content="search" />
     <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
-    <title><g:message code="home.index.title" default="Search for records" /> | ${hubDisplayName}</title>
+    <title><g:message code="home.index.title" /> | ${hubDisplayName}</title>
     <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
     <r:require modules="jquery, leafletOverride, leafletPluginsOverride, mapCommonOverride, searchMapOverride, bootstrapCombobox, menu" />
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
@@ -50,7 +50,6 @@
             var mapInit = false;
 
             $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-                // console.log("this", $(this).attr('id'));
 
                 var id = $(this).attr('id');
 
@@ -276,7 +275,7 @@
     <g:if test="${flash.message}">
         <div class="message alert alert-info">
             <button type="button" class="close" onclick="$(this).parent().hide()">×</button>
-            <b><g:message code="home.index.body.alert" default="Alert:" /></b> ${raw(flash.message)}
+            <b><g:message code="home.index.body.alert" /></b> ${raw(flash.message)}
         </div>
     </g:if>
 
@@ -285,22 +284,22 @@
             <div class="page-header">
                 <h1 class="page-header__title">
                     Search
-                    %{-- <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)} --}%
+                    %{-- <g:message code="home.index.body.title" /> ${raw(hubDisplayName)} --}%
                 </h1>
 
                 <div class="page-header__subtitle">
                     %{-- TODO --}%
-                    <g:message code="home.index.body.title" default="Search for records in" /> ${raw(hubDisplayName)}
+                    <g:message code="home.index.body.title" /> ${raw(hubDisplayName)}
                 </div>
             </div>
 
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="searchTabs">
-                    <li class="nav-item"><a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active"><g:message code="home.index.navigator01" default="Simple search" /></a></li>
-                    <li class="nav-item"><a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator02" default="Advanced search" /></a></li>
-                    <li class="nav-item"><a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator03" default="Batch taxon search" /></a></li>
-                    <li class="nav-item"><a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator04" default="Catalogue number search" /></a></li>
-                    <li class="nav-item"><a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator05" default="Spatial search" /></a></li>
+                    <li class="nav-item"><a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active"><g:message code="home.index.navigator01" /></a></li>
+                    <li class="nav-item"><a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator02" /></a></li>
+                    <li class="nav-item"><a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator03" /></a></li>
+                    <li class="nav-item"><a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator04" /></a></li>
+                    <li class="nav-item"><a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator05" /></a></li>
                 </ul>
             </div>
 
@@ -313,7 +312,7 @@
                                     <input type="text" name="taxa" id="taxa" class="input-plus__field">
 
                                     <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
-                                        <g:message code="home.index.simsplesearch.button" default="Search" />
+                                        <g:message code="home.index.simsplesearch.button" />
                                     </button>
                                 </div>
                             </form>
@@ -323,7 +322,7 @@
                     <div class="row">
                         <div class="col">
                             <small>
-                                <g:message code="home.index.simsplesearch.span" default="Note: the simple search attempts to match a known species/taxon - by its scientific name or common name. If there are no name matches, a full text search will be performed on your query" />
+                                <g:message code="home.index.simsplesearch.help" />
                             </small>
                         </div>
                     </div>
@@ -335,7 +334,7 @@
 
                 <div id="taxa-upload" class="tab-pane">
                     <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
-                        <p><g:message code="home.index.taxaupload.des01" default="Enter a list of taxon names/scientific names, one name per line (common names not currently supported)." /></p>
+                        <p><g:message code="home.index.taxaupload.des01" /></p>
                         <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
                         <p><textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea></p>
                         <div>
@@ -343,7 +342,7 @@
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="raw_name" />
-                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" default="Search" /> class="erk-button erk-button--light" />
+                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" /> class="erk-button erk-button--light" />
                         </div>
                     </form>
                 </div><!-- end #uploadDiv div -->
@@ -351,7 +350,7 @@
                 <div id="catalog-upload" class="tab-pane">
                     <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
                         <p>
-                            <g:message code="home.index.catalogupload.des01" default="Enter a list of catalogue numbers (one number per line)." />
+                            <g:message code="home.index.catalogupload.des01" />
                         </p>
 
                         <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
@@ -366,7 +365,7 @@
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
                             %{-- XXX --}%
-                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="home.index.catalogupload.button01" default="Search"/>  class="erk-button erk-button--light" />
+                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="home.index.catalogupload.button01"/>  class="erk-button erk-button--light" />
                         </div>
                     </form>
                 </div><!-- end #catalogUploadDiv div -->
@@ -375,14 +374,14 @@
                     <div class="row">
                         <div class="col-3">
                             <p>
-                                <g:message code="search.map.helpText" default="Select one of the draw tools (polygon, rectangle, circle), draw a shape and click the search link that pops up." />
+                                <g:message code="search.map.helpText" />
                             </p>
 
                             <div class="accordion accordion-caret" id="accordion2">
                                 <div class="accordion-group">
                                     <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                            <g:message code="search.map.importToggle" default="Import WKT" />
+                                            <g:message code="search.map.importToggle" />
                                         </a>
                                     </div>
 
@@ -393,7 +392,7 @@
                                             </p>
 
                                             <p>
-                                                <g:message code="search.map.wktHelpText" default="Optionally, paste a WKT string: " />
+                                                <g:message code="search.map.wktHelpText" />
                                             </p>
 
                                             <p>
@@ -401,7 +400,7 @@
                                             </p>
 
                                             <button class="erk-button erk-button--light" id="addWkt">
-                                                <g:message code="search.map.wktButtonText" default="Add to map" />
+                                                <g:message code="search.map.wktButtonText" />
                                             </button>
                                         </div>
                                     </div>

@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : downloadDiv
     Created on : Feb 25, 2011, 4:20:32 PM
     Author     : "Nick dos Remedios <Nick.dosRemedios@csiro.au>"
@@ -9,16 +9,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="downloadsLabel"><g:message code="download.download.title" default="Downloads"/></h3>
+                <h3 id="downloadsLabel"><g:message code="download.download.title"/></h3>
             </div>
 
             <div class="modal-body">
                 <p id="termsOfUseDownload">
-                    <g:message code="download.termsofusedownload.01" default="By downloading this content you are agreeing to use it in accordance with the Atlas of Living Australia"/>
-                    <a href="http://www.ala.org.au/about/terms-of-use/#TOUusingcontent"><g:message code="download.termsofusedownload.02" default="Terms of Use"/></a>
-                    <g:message code="download.termsofusedownload.03" default="and any Data Provider Terms associated with the data download."/>
+                    <g:message code="download.termsofusedownload.01"/>
+                    <a href="http://www.ala.org.au/about/terms-of-use/#TOUusingcontent"><g:message code="download.termsofusedownload.02"/></a>
+                    <g:message code="download.termsofusedownload.03"/>
                     <br/><br/>
-                    <g:message code="download.termsofusedownload.04" default="Please provide the following details before downloading (* required)"/>:
+                    <g:message code="download.termsofusedownload.04"/>:
                 </p>
 
                 <form id="downloadForm">
@@ -39,19 +39,19 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="email"><g:message code="download.downloadform.label01" default="Email"/></label>
+                            <label for="email"><g:message code="download.downloadform.label01"/></label>
                             <input type="text" name="email" id="email" value="${request.remoteUser}" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="filename"><g:message code="download.downloadform.label02" default="Filename"/></label>
+                            <label for="filename"><g:message code="download.downloadform.label02"/></label>
                             <input type="text" name="filename" id="filename" value="data" class="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="reasonTypeId" style="vertical-align: top"><g:message code="download.downloadform.label03" default="Download reason"/> *</label>
+                            <label for="reasonTypeId" style="vertical-align: top"><g:message code="download.downloadform.label03"/> *</label>
                             <select name="reasonTypeId" id="reasonTypeId" class="form-control">
-                                <option value="">-- <g:message code="download.downloadformreasontypeid.option" default="select a reason"/> --</option>
+                                <option value="">-- <g:message code="download.downloadformreasontypeid.option"/> --</option>
                                 <g:each var="it" in="${alatag.getLoggerReasons()}">
                                     <option value="${it.id}">${it.name}</option>
                                 </g:each>
@@ -60,9 +60,9 @@
 
                         <div>
                             <label for="filename">
-                                <g:message code="download.downloadform.label04" default="Download type"/>
+                                <g:message code="download.downloadform.label04"/>
                             </label>
-                            
+
                             <br>
 
                             <div style="padding-left: 5px;">
@@ -73,10 +73,10 @@
                                     class="tooltips"
                                     title="Download the occurrence records"
                                     checked="checked"/>
-                                &nbsp; 
+                                &nbsp;
 
                                 <span>
-                                    <g:message code="download.downloadform.radio01" default="All Records"/>
+                                    <g:message code="download.downloadform.radio01"/>
                                 </span>
                                 <br>
 
@@ -84,26 +84,26 @@
                                 &nbsp;
 
                                 <span>
-                                    <g:message code="download.downloadform.radio02" default="Species Checklist"/><br/>
+                                    <g:message code="download.downloadform.radio02"/><br/>
                                 </span>
 
                                 <g:if test="${skin != 'avh'}">
                                     <input type="radio" name="downloadType" value="fieldGuide" class="tooltips" title="PDF file listing species with images and distribution maps"/>
                                     &nbsp;
-                                    
+
                                     <span>
-                                        <g:message code="download.downloadform.radio03" default="Species Field Guide"/>
+                                        <g:message code="download.downloadform.radio03"/>
                                     </span>
                                 </g:if>
                             </div>
                         </div>
 
                         <div style="clear: both; text-align: center;">
-                            <br/><input type="submit" value="<g:message code="download.downloadform.button.submit" default="Start Download"/>" id="downloadStart" class="erk-button erk-button--light tooltips"/>
+                            <br/><input type="submit" value="<g:message code="download.downloadform.button.submit"/>" id="downloadStart" class="erk-button erk-button--light tooltips"/>
                         </div>
 
                         <div style="margin-top:10px;">
-                            <strong><g:message code="download.note.01" default="Note"/></strong>: <g:message code="download.note.02" default="The field guide may take several minutes to prepare and download"/>.
+                            <strong><g:message code="download.note.01"/></strong>: <g:message code="download.note.02"/>.
                         </div>
 
                         <div id="statusMsg" style="text-align: center; font-weight: bold; "></div>
@@ -204,7 +204,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true"><g:message code="download.button.close" default="Close"/></button>
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true"><g:message code="download.button.close"/></button>
             </div>
         </div>
     </div>

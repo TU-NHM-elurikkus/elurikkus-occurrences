@@ -1,26 +1,26 @@
 <div class="dropdown-menu search-filter-menu" id="customiseFilters" aria-labelledby="customiseFiltersButton">
     %{-- XXX dropdown-item class --}%
     <h4 class="dropdown-item search-filter-menu--title">
-        <g:message code="list.customisefacetsbutton.div01.title" default="Select the filter categories that you want to appear in the &quot;Refine results&quot; column" />
+        <g:message code="list.customisefacetsbutton.div01.title" />
     </h4>
 
     <div class="search-filter-menu--buttons">
-        <g:message code="list.facetcheckboxes.label01" default="Select"/>:
+        <g:message code="list.facetcheckboxes.label01"/>:
 
         <a href="#" id="selectAll">
-            <g:message code="list.facetcheckboxes.navigator01" default="All"/>
+            <g:message code="list.facetcheckboxes.navigator01"/>
         </a>
 
         &nbsp;|&nbsp;
 
         <a href="#" id="selectNone">
-            <g:message code="list.facetcheckboxes.navigator02" default="None"/>
+            <g:message code="list.facetcheckboxes.navigator02"/>
         </a>
 
         &nbsp;&nbsp;
 
         <button id="updateFacetOptions" class="erk-button erk-button--light">
-            <g:message code="list.facetcheckboxes.button.updatefacetoptions" default="Update"/>
+            <g:message code="list.facetcheckboxes.button.updatefacetoptions"/>
         </button>
 
         &nbsp;&nbsp;
@@ -28,7 +28,7 @@
         <g:set var="resetTitle" value="Restore default settings"/>
 
         <button id="resetFacetOptions" class="erk-button erk-button--light" title="${resetTitle}">
-            <g:message code="list.facetcheckboxes.button.resetfacetoptions" default="Reset to defaults"/>
+            <g:message code="list.facetcheckboxes.button.resetfacetoptions"/>
         </button>
     </div>
 
