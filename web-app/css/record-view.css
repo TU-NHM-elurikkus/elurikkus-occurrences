@@ -2,6 +2,10 @@ td.noStripe {
     background-color: #ffffff;
 }
 
+.occurrenceTable {
+    table-layout: fixed;
+}
+
 /**
  * Because the dwcLabel class is not in template, nor added in JQuery hacks.
  */
@@ -11,7 +15,7 @@ td.noStripe {
 }
 
 .occurrenceTable td {
-    word-break: break-word;
+    word-wrap: break-word;
 }
 
 .recordHeader__right {
