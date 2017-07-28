@@ -116,7 +116,7 @@ class OccurrenceTagLib {
         }  else if (rec.kingdom) {
             name = rec.kingdom
         } else {
-            name = g.message(code:"record.noNameSupplied", default: "No name supplied")
+            name = g.message(code:"record.noNameSupplied")
         }
 
         out << name
