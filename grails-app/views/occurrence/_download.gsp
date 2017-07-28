@@ -204,7 +204,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true"><g:message code="download.button.close"/></button>
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true"><g:message code="generic.button.close"/></button>
             </div>
         </div>
     </div>

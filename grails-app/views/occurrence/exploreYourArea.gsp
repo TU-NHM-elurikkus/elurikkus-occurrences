@@ -27,7 +27,7 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="yourArea"/>
-    <title><g:message code="eya.title01" default="Explore Your Area"/> | <g:message code="eya.title02" default="Atlas of Living Australia"/></title>
+    <title><g:message code="eya.title01"/> | <g:message code="eya.title02"/></title>
 
     <g:render template="/layouts/global" plugin="biocache-hubs"/>
 
@@ -44,7 +44,7 @@
 <body class="nav-locations explore-your-area">
     <div class="page-header">
         <h1 class="page-header__title">
-            <g:message code="eya.header.title" default="Explore Your Area"/>
+            <g:message code="eya.title01"/>
         </h1>
 
         <div class="page-header__subtitle">
@@ -53,13 +53,13 @@
 
         <div class="page-header-links">
             <span id="viewAllRecords" class="erk-link page-header-links__link">
-                <g:message code="eya.searchform.a.viewallrecords.01" default="View" />
+                <g:message code="eya.searchform.a.viewallrecords.01"/>
 
                 <span id="recordsGroupText">
-                    <g:message code="eya.searchform.a.viewallrecords.02" default="all" />
+                    <g:message code="eya.searchform.a.viewallrecords.02" />
                 </span>
 
-                <g:message code="eya.searchform.a.viewallrecords.03" default="records" />
+                <g:message code="eya.searchform.a.viewallrecords.03" />
             </span>
         </div>
     </div>
@@ -75,12 +75,12 @@
                             type="text"
                             name="address"
                             id="address"
-                            placeholder="<g:message code="eya.searchform.des01" default="E.g. a street address, place name, postcode or GPS coordinates (as lat, long)" />"
+                            placeholder="<g:message code="eya.searchform.des01" />"
                             class="input-plus__field"
                         />
 
                         <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
-                            <g:message code="eya.searchform.btn01" default="Search" />
+                            <g:message code="advancedsearch.button.submit" />
                         </button>
                     </div>
 
@@ -89,7 +89,7 @@
                     <input type="hidden" name="location" id="location" value="${location}"/>
 
                     <g:if test="${true || location}">
-                        <g:message code="eya.searchform.label02" default="Showing records for" />:
+                        <g:message code="eya.searchform.label02" />:
 
                         <span id="markerAddress">${location}</span>&nbsp;&nbsp;
 
@@ -102,7 +102,7 @@
 
             <div class="form-linline float-right">
                 <p>
-                    <g:message code="eya.searchformradius.label01" default="Display records in a"/>
+                    <g:message code="eya.searchformradius.label01"/>
 
                     <select id="radius" name="radius" class="">
                         <option value="1" <g:if test="${radius == 1}">selected</g:if>>1</option>
@@ -110,11 +110,11 @@
                         <option value="10" <g:if test="${radius == 10}">selected</g:if>>10</option>
                     </select>
 
-                    <g:message code="eya.searchformradius.label02" default="km radius"/>
+                    <g:message code="eya.searchformradius.label02"/>
 
                     <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                         <i class="icon-download"></i>
-                        <g:message code="eya.searchform.a.downloads" default="Downloads"/>
+                        <g:message code="download.download.title"/>
                     </button>
                 </p>
             </div>
@@ -124,11 +124,11 @@
                 <p>
                     %{-- TODO XXX --}%
                     <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-                    <g:message code="eya.dialogconfirm01" default="You are about to download a list of species found within a" />
+                    <g:message code="eya.dialogconfirm01" />
                     <span id="rad"></span>
-                    <g:message code="eya.dialogconfirm02" default="km radius of" />
+                    <g:message code="eya.dialogconfirm02" />
                     <code>${location}</code>.<br/>
-                    <g:message code="eya.dialogconfirm03" default="Format: tab-delimited text file (called data.xls)" />
+                    <g:message code="eya.dialogconfirm03" />
                 </p>
             </div>
         </div>
@@ -141,8 +141,8 @@
                     <table id="taxa-level-0">
                         <thead>
                             <tr>
-                                <th><g:message code="eya.table.01.th01" default="Group"/></th>
-                                <th><g:message code="eya.table.01.th02" default="Species"/></th>
+                                <th><g:message code="eya.table.01.th01"/></th>
+                                <th><g:message code="eya.table.01.th02"/></th>
                             </tr>
                         </thead>
 
@@ -158,17 +158,17 @@
 
                                 <th class="sciName">
                                     <a href="0" id="speciesSort" data-sort="taxa" title="sort by taxa">
-                                        <g:message code="eya.table.02.th01" default="Species"/>
+                                        <g:message code="eya.table.01.th02"/>
                                     </a>
 
                                     <span id="sortSeparator">:</span>
 
-                                    <a href="0" id="commonSort" data-sort="common" title="sort by common name"><g:message code="eya.table.02.th01.a" default="Common Name"/></a>
+                                    <a href="0" id="commonSort" data-sort="common" title="sort by common name"><g:message code="eya.table.02.th01.a"/></a>
                                 </th>
 
                                 <th class="rightCounts">
                                     <a href="0" data-sort="count" title="sort by record count">
-                                        <g:message code="eya.table.02.th02" default="Records"/>
+                                        <g:message code="eya.table.02.th02"/>
                                     </a>
                                 </th>
                             </tr>
@@ -190,7 +190,7 @@
                 <table id="cellCountsLegend">
                     <tr>
                         <td style="background-color:#000; color:white; text-align:right;">
-                            <g:message code="eya.table.03.td" default="Records"/>:&nbsp;
+                            <g:message code="eya.table.02.th02"/>:&nbsp;
                         </td>
 
                         <td style="background-color:#ffff00;">1&ndash;9</td>
@@ -204,8 +204,8 @@
             </div>
 
             <div id="mapTips">
-                <b><g:message code="eya.maptips.01" default="Tip"/></b>:
-                <g:message code="eya.maptips.02" default="you can fine-tune the location of the area by dragging the red marker icon"/>
+                <b><g:message code="eya.maptips.01"/></b>:
+                <g:message code="eya.maptips.02"/>
             </div>
         </div>
     </div>

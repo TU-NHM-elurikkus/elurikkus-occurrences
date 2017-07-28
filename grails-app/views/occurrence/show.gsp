@@ -268,7 +268,7 @@
             <div class="row">
                 <div class="col-12">
                     <div id="userAnnotationsDiv" class="additionalData">
-                        <h2><g:message code="show.userannotationsdiv.title" default="User flagged issues"/><a id="userAnnotations">&nbsp;</a></h2>
+                        <h2><g:message code="show.userannotations.title"/><a id="userAnnotations">&nbsp;</a></h2>
                         <h4><g:message code="user.assertion.status" default="User Assertion Status"/>: <i><span id="userAssertionStatus"></span></i></h4>
                         <ul id="userAnnotationsList" style="list-style: none; margin:0;"></ul>
                     </div>
@@ -279,7 +279,7 @@
             <div id="outlierFeedback">
                 <g:if test="${record.processed.occurrence.outlierForLayers}">
                     <div id="outlierInformation" class="additionalData">
-                        <h2><g:message code="show.outlierinformation.title" default="Outlier information"/> <a id="outlierReport" href="#outlierReport">&nbsp;</a></h2>
+                        <h2><g:message code="show.outlierinformation.title"/> <a id="outlierReport" href="#outlierReport">&nbsp;</a></h2>
                         <p>
                             <g:message code="show.outlierinformation.p01" default="This record has been detected as an outlier using the"/>
                             <a href="https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/DETECTED_OUTLIER_JACKKNIFE"><g:message code="show.outlierinformation.p.vavigator" default="Reverse Jackknife algorithm"/></a>
@@ -355,7 +355,7 @@
 				<g:if test="${record.processed.occurrence.duplicationStatus}">
 					<div id="inferredOccurrenceDetails">
                         <a href="#inferredOccurrenceDetails" name="inferredOccurrenceDetails" id="inferredOccurrenceDetails" hidden="true"></a>
-                        <h2><g:message code="show.inferredoccurrencedetails.title" default="Inferred associated occurrence details"/></h2>
+                        <h2><g:message code="show.inferredoccurrencedetails.title"/></h2>
                         <p style="margin-top:5px;">
                             <g:if test="${record.processed.occurrence.duplicationStatus == 'R' }">
                                 <g:message code="show.inferredoccurrencedetails.p01" default="This record has been identified as the representative occurrence in a group of associated occurrences."/>
@@ -685,7 +685,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3>
-                            <g:message code="show.verifyrecord.title" default="Confirmation"/>
+                            <g:message code="show.verifyrecord.title"/>
                         </h3>
                     </div>
 
@@ -693,11 +693,11 @@
                         <div id="verifyAsk">
                             <g:set var="markedAssertions"/>
                             <g:if test="!record.processed.geospatiallyKosher">
-                                <g:set var="markedAssertions"><g:message code="show.verifyask.set01" default="geospatially suspect"/></g:set>
+                                <g:set var="markedAssertions"><g:message code="show.verifyask.set01"/></g:set>
                             </g:if>
 
                             <g:if test="!record.processed.taxonomicallyKosher">
-                                <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="show.verifyask.set02" default="taxonomically suspect"/></g:set>
+                                <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="show.verifyask.set02"/></g:set>
                             </g:if>
 
                             <g:each var="sysAss" in="${record.systemAssertions.failed}">
@@ -705,16 +705,16 @@
                             </g:each>
 
                             <p>
-                                <g:message code="show.verifyrecord.p01" default="Record is marked as"/> <b>${markedAssertions}</b>
+                                <g:message code="show.verifyrecord.p01"/> <b>${markedAssertions}</b>
                             </p>
 
                             <p style="margin-bottom:10px;">
-                                <g:message code="show.verifyrecord.p02" default="Click the &quot;Confirm&quot; button to verify that this record is correct and that the listed &quot;validation issues&quot; are incorrect/invalid."/>
+                                <g:message code="show.verifyrecord.p02"/>
                             </p>
 
                             <p style="margin-top:20px;">
                                 <label for="userAssertionStatusSelection">
-                                    <g:message code="show.verifyrecord.p03" default="User Assertion Status:"/>
+                                    <g:message code="show.verifyrecord.p03"/>
                                 </label>
 
                                 <select name="userAssertionStatusSelection" id="userAssertionStatusSelection">
@@ -730,17 +730,17 @@
 
                             <br>
 
-                            <button id="confirmVerify" class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify" default="Confirm"/></button>
-                            <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.verifyrecord.btn.cancel" default="Cancel"/></button>
+                            <button id="confirmVerify" class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify"/></button>
+                            <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.btn.cancel"/></button>
                             <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon"/>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <div id="verifyDone" style="display:none;">
-                            <g:message code="show.verifydone.message" default="Record successfully verified"/>
+                            <g:message code="show.verifydone.message"/>
                             <br/>
-                            <button class="erk-button erk-button--light closeVerify" data-dismiss="modal"><g:message code="show.verifydone.btn.closeverify" default="Close"/></button>
+                            <button class="erk-button erk-button--light closeVerify" data-dismiss="modal"><g:message code="show.button.close"/></button>
                         </div>
                     </div>
 k               </div>

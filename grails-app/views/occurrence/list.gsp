@@ -15,7 +15,7 @@
     <meta name="svn.revision" content="${meta(name: 'svn.revision')}"/>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="search"/>
-    <title><g:message code="list.title" default="Search"/>: ${sr?.queryTitle?.replaceAll("<(.|\n)*?>", '')} | <alatag:message code="search.heading.list" default="Search results"/> | ${grailsApplication.config.skin.orgNameLong}</title>
+    <title><g:message code="list.title"/>: ${sr?.queryTitle?.replaceAll("<(.|\n)*?>", '')} | <g:message code="search.heading.list"/> | ${grailsApplication.config.skin.orgNameLong}</title>
 
     <g:if test="${grailsApplication.config.google.apikey}">
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
@@ -84,7 +84,7 @@
 <body class="occurrence-search">
     <div id="listHeader" class="page-header">
         <h1 class="page-header__title">
-            <alatag:message code="search.heading.list" default="Search results" />
+            <g:message code="search.heading.list"/>
 
             <%-- XXX --%>
             <a name="resultsTop">
@@ -99,19 +99,19 @@
         <%-- TODO MAYBE KEEP IT MAYBE NOT --%>
         <div class="page-header-links">
             <a href="${g.createLink(uri: '/search')}#tab-advanced-search" class="page-header-links__link">
-                <g:message code="home.index.navigator02" default="Advanced search" />
+                <g:message code="home.index.navigator02"/>
             </a>
 
             <a href="${g.createLink(uri: '/search')}#tab-taxa-upload" class="page-header-links__link">
-                <g:message code="home.index.navigator03" default="Batch taxon search" />
+                <g:message code="home.index.navigator03"/>
             </a>
 
             <a href="${g.createLink(uri: '/search')}#tab-catalog-upload" class="page-header-links__link">
-                <g:message code="home.index.navigator04" default="Catalogue number search" />
+                <g:message code="home.index.navigator04"/>
             </a>
 
             <a href="${g.createLink(uri: '/search')}#tab-spatial-search" class="page-header-links__link">
-                <g:message code="home.index.navigator05" default="Spatial search" />
+                <g:message code="home.index.navigator05"/>
             </a>
         </div>
 
@@ -142,7 +142,7 @@
     <g:if test="${errors}">
         <div class="searchInfo searchError">
             <h2 style="padding-left: 10px;">
-                <g:message code="list.01.error" default="Error"/>
+                <g:message code="list.01.error"/>
             </h2>
 
             <h4>
@@ -158,7 +158,7 @@
             <g:if test="${queryDisplay =~ /lsid/ && params.taxa}"> <!-- ${raw(queryDisplay)} -->
                 <g:if test="${queryDisplay =~ /span/}">
                     <p>
-                        <g:message code="list.02.p01" default="No records found for"/>
+                        <g:message code="list.norecords"/>
 
                         <span class="queryDisplay">
                             ${raw(queryDisplay.replaceAll('null:',''))}
@@ -168,7 +168,7 @@
 
                 <g:else>
                     <p>
-                        <g:message code="list.02.p02" default="No records found for"/>
+                        <g:message code="list.norecords"/>
 
                         <span class="queryDisplay">
                             ${params.taxa}
@@ -177,17 +177,17 @@
                 </g:else>
 
                 <p>
-                    <g:message code="list.02.p03.01" default="Trying search for"/>
+                    <g:message code="list.tryingsearch"/>
 
                     <a href="?q=text:${params.taxa}">
-                        <g:message code="list.02.p03.02" default="text"/>:${params.taxa}
+                        <g:message code="list.02.p03.02"/>:${params.taxa}
                     </a>
                 </p>
             </g:if>
 
-            <g:elseif test="${queryDisplay =~ /text:/ && queryDisplay =~ /\s+/ && !(queryDisplay =~ /\bOR\b/)}">
+            <g:elseif test="${queryDisplay =~ /text: / && queryDisplay =~ /\s+/ && !(queryDisplay =~ /\bOR\b/)}">
                 <p>
-                    <g:message code="list.03.p01" default="No records found for"/>
+                    <g:message code="list.norecords"/>
 
                     <span class="queryDisplay">
                         ${raw(queryDisplay)}
@@ -197,7 +197,7 @@
                 <g:set var="queryTerms" value="${queryDisplay.split(" ")}"/>
 
                 <p>
-                    <g:message code="list.03.p02" default="Trying search for"/>
+                    <g:message code="list.tryingsearch"/>
 
                     <a href="?q=${queryTerms.join(" OR ")}">
                         ${queryTerms.join(" OR ")}
@@ -207,7 +207,7 @@
 
             <g:else>
                 <p>
-                    <g:message code="list.03.p03" default="No records found for"/>
+                    <g:message code="list.norecords"/>
 
                     <span class="queryDisplay">
                         ${raw(queryDisplay)?:params.q}
@@ -246,7 +246,7 @@
                         <button id="downloads" class="erk-button erk-button--light">
                             <span class="fa fa-download"></span>
                             &nbsp;&nbsp;
-                            <g:message code="list.downloads.navigator" default="Download"/>
+                            <g:message code="download.download.label"/>
                         </button>
                     </a>
                 </g:if>
@@ -267,7 +267,7 @@
                     <p>
                         <span id="returnedText">
                             <strong><g:formatNumber number="${sr.totalRecords}" format="#,###,###"/></strong>
-                            <g:message code="list.resultsretuened.span.returnedtext" default="results for" />
+                            <g:message code="list.resultsretuened.returnedtext" />
                         </span>
 
                         <span class="queryDisplay">
@@ -287,7 +287,7 @@
                     <%-- XXX XXX XXX jQuery template used for taxon drop-downs --%>
                     <div class="btn-group invisible" id="template" style="display: none;">
                         <a class="erk-button erk-button--light" href="" id="taxa_" title="view species page" target="BIE">
-                            <g:message code="list.resultsretuened.navigator01" default="placeholder"/>
+                            <g:message code="list.resultsretuened.navigator01"/>
                         </a>
 
                         <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="click for more info on this query">
@@ -296,20 +296,20 @@
 
                         <div class="dropdown-menu" aria-labelledby="taxa_">
                             <div class="taxaMenuContent">
-                                <g:message code="list.resultsretuened.div01.des01" default="The search results include records for synonyms and child taxa of"/>
-                                <b class="nameString"><g:message code="list.resultsretuened.div01.des02" default="placeholder"/></b> (<span class="speciesPageLink"><g:message code="list.resultsretuened.div01.des03" default="link placeholder"/></span>).
+                                <g:message code="list.resultsretuened.des01"/>
+                                <b class="nameString"><g:message code="list.resultsretuened.navigator01"/></b> (<span class="speciesPageLink"><g:message code="list.resultsretuened.des03"/></span>).
 
                                 <form name="raw_taxon_search" class="rawTaxonSearch" action="${request.contextPath}/occurrences/search/taxa" method="POST">
                                     <div class="refineTaxaSearch">
-                                        <g:message code="list.resultsretuened.form.des01" default="The result set contains records provided under the following names" />:
+                                        <g:message code="list.resultsretuened.form.des01" />:
                                         <input
                                             type="submit"
                                             class="erk-button erk-button--light rawTaxonSumbit"
-                                            value="<g:message code="list.resultsretuened.form.button01" default="Refine search"/>"
-                                            title="Restrict results to the selected names"
+                                            value="<g:message code="list.resultsretuened.form.label"/>"
+                                            title="<g:message code="list.resultsretuened.form.title"/>"
                                         />
                                         <div class="rawTaxaList">
-                                            <g:message code="list.resultsretuened.form.div01" default="placeholder taxa list"/>
+                                            <g:message code="list.resultsretuened.form.placeholder"/>
                                         </div>
                                     </div>
                                 </form>
@@ -326,7 +326,7 @@
                 <div class="card card-block filters-container">
                     <div id="filters-selection" class="dropdown">
                         <h2 class="card-title">
-                            <alatag:message code="search.facets.heading" default="Refine results" />
+                            <alatag:message code="search.filter.customise.title"/>
                         </h2>
 
                         <button
@@ -336,11 +336,11 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                             class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
-                            title="Customise the contents of this column"
+                            title="<g:message code="search.filter.title"/>"
                         >
                             <span class="fa fa-cog"></span>
 
-                            <g:message code="search.filter.customise" />
+                            <g:message code="search.filter.customise.label" />
 
                             <span class="caret"></span>
                         </button>
@@ -362,20 +362,20 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3 id="myModalLabel"><g:message code="list.alert.title" default="Email alerts"/></h3>
+                                    <h3 id="myModalLabel"><g:message code="list.alert.title"/></h3>
                                 </div>
 
                                 <div class="modal-body">
                                     <div class="">
                                         <a href="#alertNewRecords" id="alertNewRecords" class="erk-button erk-button--light tooltips" data-method="createBiocacheNewRecordsAlert"
-                                           title="Notify me when new records come online for this search"><g:message code="list.alert.navigator01" default="Get email alerts for new records"/> </a>
+                                           title="Notify me when new records come online for this search"><g:message code="list.alert.navigator01"/> </a>
                                     </div>
 
                                     <br/>
 
                                     <div class="">
                                         <a href="#alertNewAnnotations" id="alertNewAnnotations" data-method="createBiocacheNewAnnotationsAlert"
-                                           class="erk-button erk-button--light tooltips" title="Notify me when new annotations (corrections, comments, etc) come online for this search"><g:message code="list.alert.navigator02" default="Get email alerts for new annotations"/></a>
+                                           class="erk-button erk-button--light tooltips" title="Notify me when new annotations (corrections, comments, etc) come online for this search"><g:message code="list.alert.navigator02"/></a>
                                     </div>
 
                                     <%-- XXX --%>
@@ -383,14 +383,14 @@
 
                                     <p>
                                         <a href="${grailsApplication.config.alerts.baseUrl}/notification/myAlerts">
-                                            <g:message code="list.alert.navigator03" default="View your current alerts" />
+                                            <g:message code="list.alert.navigator03" />
                                         </a>
                                     </p>
                                 </div>
 
                                 <div class="modal-footer">
                                     <button class="btn" data-dismiss="modal" aria-hidden="true">
-                                        <g:message code="list.alert.button01" default="Close"/>
+                                        <g:message code="show.button.close"/>
                                     </button>
 
                                     <%--
@@ -414,27 +414,27 @@
                     <ul class="nav nav-tabs">
                         <li class="nav-item active">
                             <a id="t1" href="#records" data-toggle="tab" class="nav-link">
-                                <g:message code="list.link.t1" default="Records"/>
+                                <g:message code="list.records.label"/>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a id="t2" href="#map" data-toggle="tab" class="nav-link">
-                                <g:message code="list.link.t2" default="Map"/>
+                                <g:message code="map.map.label"/>
                             </a>
                         </li>
 
                         <plugin:isAvailable name="alaChartsPlugin">
                             <li class="nav-item">
                                 <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
-                                    <g:message code="list.link.t3" default="Charts"/>
+                                    <g:message code="list.link.t3"/>
                                 </a>
                             </li>
 
                             <g:if test="${grailsApplication.config.userCharts && grailsApplication.config.userCharts.toBoolean()}">
                                 <li class="nav-item">
                                     <a id="t6" href="#userChartsView" data-toggle="tab" class="nav-link">
-                                        <g:message code="list.link.t6" default="Custom Charts"/>
+                                        <g:message code="list.link.t6"/>
                                     </a>
                                 </li>
                             </g:if>
@@ -443,7 +443,7 @@
                         <g:if test="${showSpeciesImages}">
                             <li class="nav-item">
                                 <a id="t4" href="#speciesImages" data-toggle="tab" class="nav-link">
-                                    <g:message code="list.link.t4" default="Species images"/>
+                                    <g:message code="list.link.t4"/>
                                 </a>
                             </li>
                         </g:if>
@@ -451,7 +451,7 @@
                         <g:if test="${hasImages}">
                             <li class="nav-item">
                                 <a id="t5" href="#images" data-toggle="tab" class="nav-link">
-                                    <g:message code="list.link.t5" default="Record images"/>
+                                    <g:message code="list.link.t5"/>
                                 </a>
                             </li>
                         </g:if>
@@ -464,7 +464,7 @@
                             <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                                 <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                                    <span class="fa fa-download"></span>
-                                   <g:message code="list.downloads.navigator" default="Downloads" />
+                                   <g:message code="download.download.title"/>
                                 </button>
                             </g:if>
 
@@ -473,7 +473,7 @@
                                 <div id="alerts" class="erk-button erk-button--light">
                                     <a href="#alert" role="button" data-toggle="modal" class="tooltips" title="Get email alerts for this search">
                                         <span class="fa fa-bell"></span>
-                                        <g:message code="list.alerts.navigator" default="Alerts"/>
+                                        <g:message code="list.alerts.navigator"/>
                                     </a>
                                 </div>
                             </g:if>
@@ -502,15 +502,15 @@
                                     </label>
 
                                     <select id="sort" name="sort">
-                                        <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>><g:message code="list.sortwidgets.sort.option01" default="Best match"/></option>
-                                        <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option02" default="Taxon name"/></option>
-                                        <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option03" default="Common name"/></option>
-                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401", default:"Collecting date") : g.message(code:"list.sortwidgets.sort.option0402", default:"Record date")}</option>
+                                        <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>><g:message code="list.sortwidgets.sort.option01"/></option>
+                                        <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option02"/></option>
+                                        <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>><g:message code="list.sortwidgets.sort.option03"/></option>
+                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401") : g.message(code:"list.sortwidgets.sort.option0402")}</option>
                                         <g:if test="${skin != 'avh'}">
-                                            <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>><g:message code="list.sortwidgets.sort.option05" default="Record type"/></option>
+                                            <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>><g:message code="list.sortwidgets.sort.option05"/></option>
                                         </g:if>
-                                        <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option06" default="Date added"/></option>
-                                        <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option07" default="Last annotated"/></option>
+                                        <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option06"/></option>
+                                        <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>><g:message code="list.sortwidgets.sort.option07"/></option>
                                     </select>&nbsp;
                                 </div>
 
@@ -520,8 +520,8 @@
                                     </label>
 
                                     <select id="dir" name="dir">
-                                        <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option01" default="Ascending"/></option>
-                                        <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option02" default="Descending"/></option>
+                                        <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option01"/></option>
+                                        <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>><g:message code="list.sortwidgets.dir.option02"/></option>
                                     </select>
                                 </div>
                             </form>
@@ -537,7 +537,7 @@
 
                         <g:if test="${params.benchmarks}">
                             <div style="color:#ddd;">
-                                <g:message code="list.recordsview.benchmarks.01" default="list render time"/> = ${(System.currentTimeMillis() - startList)} <g:message code="list.recordsview.benchmarks.02" default="ms"/><br>
+                                <g:message code="list.recordsview.benchmarks.01"/> = ${(System.currentTimeMillis() - startList)} <g:message code="list.recordsview.benchmarks.02"/><br>
                             </div>
                         </g:if>
 
@@ -589,26 +589,26 @@
 
                     <g:if test="${showSpeciesImages}">
                         <div id="speciesImages" role="tabpanel" class="tab-pane">
-                            <h3><g:message code="list.speciesimages.title" default="Representative images of species"/></h3>
+                            <h3><g:message code="list.speciesimages.title"/></h3>
                             <div id="speciesGalleryControls">
-                                <g:message code="list.speciesgallerycontrols.label01" default="Filter by group"/>
+                                <g:message code="list.speciesgallerycontrols.label.01"/>
                                 <select id="speciesGroup">
-                                    <option><g:message code="list.speciesgallerycontrols.speciesgroup.option01" default="no species groups loaded"/></option>
+                                    <option><g:message code="list.speciesgallerycontrols.speciesgroup.option01"/></option>
                                 </select>
                                 &nbsp;
-                                <g:message code="list.speciesgallerycontrols.label02" default="Sort by"/>
+                                <g:message code="list.speciesgallerycontrols.label.02"/>
                                 <select id="speciesGallerySort">
-                                    <option value="common"><g:message code="list.speciesgallerycontrols.speciesgallerysort.option01" default="Common name"/></option>
-                                    <option value="taxa"><g:message code="list.speciesgallerycontrols.speciesgallerysort.option02" default="Scientific name"/></option>
-                                    <option value="count"><g:message code="list.speciesgallerycontrols.speciesgallerysort.option03" default="Record count"/></option>
+                                    <option value="common"><g:message code="list.speciesgallerycontrols.speciesgallerysort.option01"/></option>
+                                    <option value="taxa"><g:message code="list.speciesgallerycontrols.speciesgallerysort.option02"/></option>
+                                    <option value="count"><g:message code="list.speciesgallerycontrols.speciesgallerysort.option03"/></option>
                                 </select>
                             </div>
 
-                            <div id="speciesGallery">[<g:message code="list.speciesgallerycontrols.speciesgallery" default="image gallery should appear here"/>]</div>
+                            <div id="speciesGallery">[<g:message code="list.speciesgallerycontrols.speciesgallery"/>]</div>
 
                             <%-- XXX --%>
                             <div id="loadMoreSpecies" style="display:none;">
-                                <button class="erk-button erk-button--light"><g:message code="list.speciesgallerycontrols.loadmorespecies.button" default="Show more images"/></button>
+                                <button class="erk-button erk-button--light"><g:message code="list.speciesgallerycontrols.loadmorespecies.button"/></button>
                                 <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon"/>
                             </div>
                         </div><!-- end #speciesWrapper -->
@@ -617,19 +617,19 @@
                     <g:if test="${hasImages}">
                         <div id="images" role="tabpanel" class="tab-pane">
                             <h3>
-                                <g:message code="list.speciesgallerycontrols.recordimages.title" default="Images from occurrence records"/>
+                                <g:message code="list.speciesgallerycontrols.recordimages.title"/>
                             </h3>
 
                             <%--<p>(see also <a href="#tab_speciesImages">representative species images</a>)</p>--%>
 
                             <div id="imagesGrid">
-                                <g:message code="list.speciesgallerycontrols.imagesgrid" default="loading images"/>...
+                                <g:message code="list.speciesgallerycontrols.imagesgrid"/>...
                             </div>
 
                             <div id="loadMoreImages" style="display:none;">
                                 <p>
                                     <button class="erk-button erk-button--light">
-                                        <g:message code="list.speciesgallerycontrols.loadmoreimages.button" default="Show more images"/>
+                                        <g:message code="list.speciesgallerycontrols.loadmoreimages.button"/>
                                         <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon"/>
                                      </button>
                                  </p>
@@ -673,11 +673,11 @@
 
         <%-- XXX --%>
         <div style="color:#ddd;">
-            <g:message code="list.endpagetime01" default="post-facets time" /> = ${(endPageTime - postFacets)} ms<br />
-            <g:message code="list.endpagetime02" default="page render time" /> = ${(endPageTime - startPageTime)} ms<br />
-            <g:message code="list.endpagetime03" default="biocache-service GET time" /> = ${wsTime} ms<br />
-            <g:message code="list.endpagetime04" default="controller processing time" /> = ${processingTime} ms<br />
-            <g:message code="list.endpagetime05" default="total processing time" /> = ${(endPageTime - startPageTime) + processingTime} ms
+            <g:message code="list.endpagetime01" /> = ${(endPageTime - postFacets)} ms<br />
+            <g:message code="list.endpagetime02" /> = ${(endPageTime - startPageTime)} ms<br />
+            <g:message code="list.endpagetime03" /> = ${wsTime} ms<br />
+            <g:message code="list.endpagetime04" /> = ${processingTime} ms<br />
+            <g:message code="list.endpagetime05" /> = ${(endPageTime - startPageTime) + processingTime} ms
         </div>
     </g:if>
 </body>

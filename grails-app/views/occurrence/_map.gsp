@@ -166,7 +166,7 @@ a.colour-by-legend-toggle {
                 title="Continue analysis in ALA Spatial Portal"
             >
                 <i class="fa fa-map-marker"></i>&nbsp&nbsp;
-                <g:message code="map.spatialportal.btn.label/>
+                <g:message code="map.spatialportal.btn.label"/>
             </a>
         </div>
     </g:if>
@@ -626,7 +626,7 @@ a.colour-by-legend-toggle {
                     </button>
 
                     <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
-                        <g:message code="map.downloadmap.button02.label"/>
+                        <g:message code="generic.button.close"/>
                     </button>
                 </div>
             </form>
@@ -653,7 +653,6 @@ a.colour-by-legend-toggle {
                     b.getWest() + " " + b.getNorth() + "))";
             //console.log('wkt', wkt);
             var url = "${g.createLink(uri:'/occurrences/search')}" + occMap.query + "&wkt=" + encodeURIComponent(wkt);
-            //console.log('new url', url);
             window.location.href = url;
         });
     });

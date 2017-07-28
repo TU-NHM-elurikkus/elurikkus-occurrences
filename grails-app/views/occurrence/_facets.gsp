@@ -162,7 +162,7 @@ ${alatag.logMsg(msg:"Start of facets.gsp - " + startTime)}
                 </button>
 
                 <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;">
-                    <g:message code="facets.submitfacets.button" />
+                    <g:message code="generic.button.close" />
                 </button>
             </div>
         </div>
