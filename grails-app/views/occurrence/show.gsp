@@ -29,7 +29,7 @@
     <meta name="svn.revision" content="${meta(name: 'svn.revision')}"/>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="search"/>
-    <title><g:message code="show.title" default="Record"/>: ${recordId} | <g:message code="show.occurrenceRecord" default="Occurrence record"/>  | ${hubDisplayName}</title>
+    <title><g:message code="show.title"/>: ${recordId} | <g:message code="show.occurrenceRecord"/>  | ${hubDisplayName}</title>
 
     <g:if test="${grailsApplication.config.google.apikey}">
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
@@ -91,16 +91,13 @@
                         <img src="${collectionLogo}" alt="institution logo" id="institutionLogo"/>
                     </g:if>
 
-                    <g:message code="show.headingbar01.title" default="Occurrence record" />
-
-                    <span id="recordId">
-                        ${recordId}
-                    </span>
+                    <g:message code="show.occurrenceRecord"/>:
+                    <span id="recordId">${recordId}</span>
                 </h1>
 
                 <div class="page-header__subtitle">
                     <g:message code="basicOfRecord.${record.processed.occurrence?.basisOfRecord}" default="${record.processed.occurrence?.basisOfRecord}" />
-                    <g:message code="show.heading.of" default="of" />
+                    <g:message code="show.heading.of"/>
 
                     <g:if test="${record.processed.classification.scientificName}">
                         <alatag:formatSciName rankId="${record.processed.classification.taxonRankID}" name="${record.processed.classification.scientificName}" />
@@ -126,7 +123,7 @@
                     </g:elseif>
 
                     <g:if test="${record.processed.event?.eventDate || record.raw.event?.eventDate}">
-                        <g:message code="show.heading.recordedOn" default="recorded on" />
+                        <g:message code="show.heading.recordedOn" />
                         ${record.processed.event?.eventDate ?: record.raw.event?.eventDate}
                     </g:if>
 
@@ -137,13 +134,13 @@
                         </g:if>
 
                         <g:if test="${false && alatag.loggedInUserDisplayname()}">
-                            <g:message code="show.jsonlink.login" default="Logged in as:"/>
+                            <g:message code="show.jsonlink.login"/>:
                             ${alatag.loggedInUserDisplayname()}
                         </g:if>
 
                         <g:if test="${clubView}">
                             <span id="clubView">
-                                <g:message code="show.clubview.message" default="Showing &quot;Club View&quot;"/>
+                                <g:message code="show.clubview.message"/>
                             </span>
                         </g:if>
                     </span>
@@ -156,7 +153,7 @@
                     </a>
 
                     <a href="#" id="backBtn" title="Return to search results" class="page-header-links__link">
-                        <g:message code="show.backbtn.navigator" default="Back to search results"/>
+                        <g:message code="show.backbtn.navigator"/>
                     </a>
                 </div>
             </div>
@@ -177,11 +174,11 @@
                             href="#processedVsRawView"
                             class="erk-button erk-button--light erk-button--inline"
                             role="button"
-                            title="Table showing both original and processed record values"
+                            title="<g:message code="show.sidebar02.showrawprocessed.title"/>"
                         >
                             <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
                                 <span class="fa fa-balance-scale"></span>
-                                <g:message code="show.sidebar02.showrawprocessed.span" default="View original vs processed values"/>
+                                <g:message code="show.sidebar02.showrawprocessed.label"/>
                             </span>
                         </button>
                     </div>
@@ -192,7 +189,7 @@
 
             <g:if test="${hasExpertDistribution}">
                 <div id="hasExpertDistribution"  class="additionalData" style="clear:both;padding-top: 20px;">
-                    <h2><g:message code="show.hasexpertdistribution.title" default="Record outside of expert distribution area (shown in red)"/> <a id="expertReport" href="#expertReport">&nbsp;</a></h2>
+                    <h2><g:message code="show.hasexpertdistribution.title"/> <a id="expertReport" href="#expertReport">&nbsp;</a></h2>
                     <script type="text/javascript" src="${request.contextPath}/js/wms2.js"></script>
                     <script type="text/javascript">
                         $(document).ready(function() {
@@ -269,7 +266,7 @@
                 <div class="col-12">
                     <div id="userAnnotationsDiv" class="additionalData">
                         <h2><g:message code="show.userannotations.title"/><a id="userAnnotations">&nbsp;</a></h2>
-                        <h4><g:message code="user.assertion.status" default="User Assertion Status"/>: <i><span id="userAssertionStatus"></span></i></h4>
+                        <h4><g:message code="user.assertion.status"/>: <i><span id="userAssertionStatus"></span></i></h4>
                         <ul id="userAnnotationsList" style="list-style: none; margin:0;"></ul>
                     </div>
 
@@ -281,28 +278,28 @@
                     <div id="outlierInformation" class="additionalData">
                         <h2><g:message code="show.outlierinformation.title"/> <a id="outlierReport" href="#outlierReport">&nbsp;</a></h2>
                         <p>
-                            <g:message code="show.outlierinformation.p01" default="This record has been detected as an outlier using the"/>
-                            <a href="https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/DETECTED_OUTLIER_JACKKNIFE"><g:message code="show.outlierinformation.p.vavigator" default="Reverse Jackknife algorithm"/></a>
-                            <g:message code="show.outlierinformation.p02" default="for the following layers"/>:
+                            <g:message code="show.outlierinformation.p01"/>
+                            <a href="https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/DETECTED_OUTLIER_JACKKNIFE"><g:message code="show.outlierinformation.p.navigator"/></a>
+                            <g:message code="show.outlierinformation.p02"/>:
                         </p>
 
                         <ul>
                             <g:each in="${metadataForOutlierLayers}" var="layerMetadata">
                                 <li>
                                     <a href="${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${layerMetadata.name}">${layerMetadata.displayname} - ${layerMetadata.source}</a><br/>
-                                    <g:message code="show.outlierinformation.each.label01" default="Notes"/>: ${layerMetadata.notes}
+                                    <g:message code="show.outlierinformation.each.label01"/>: ${layerMetadata.notes}
                                     <br/>
-                                    <g:message code="show.outlierinformation.each.label02" default="Scale"/>: ${layerMetadata.scale}
+                                    <g:message code="show.outlierinformation.each.label02"/>: ${layerMetadata.scale}
                                 </li>
                             </g:each>
                         </ul>
 
                         <p style="margin-top:20px;">
-                            <g:message code="show.outlierinformation.p.label" default="More information on the data quality work being undertaken by the Atlas is available here"/>:
+                            <g:message code="show.outlierinformation.p.label"/>:
 
                             <ul>
                                 <li><a href="https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/DETECTED_OUTLIER_JACKKNIFE">https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/DETECTED_OUTLIER_JACKKNIFE</a></li>
-                                <li><a href="https://docs.google.com/open?id=0B7rqu1P0r1N0NGVhZmVhMjItZmZmOS00YmJjLWJjZGQtY2Y0ZjczZmUzZTZl"><g:message code="show.outlierinformation.p.li02" default="Notes on Methods for Detecting Spatial Outliers"/></a></li>
+                                <li><a href="https://docs.google.com/open?id=0B7rqu1P0r1N0NGVhZmVhMjItZmZmOS00YmJjLWJjZGQtY2Y0ZjczZmUzZTZl"><g:message code="show.outlierinformation.p.li02"/></a></li>
                             </ul>
                         </p>
                     </div>
@@ -358,11 +355,11 @@
                         <h2><g:message code="show.inferredoccurrencedetails.title"/></h2>
                         <p style="margin-top:5px;">
                             <g:if test="${record.processed.occurrence.duplicationStatus == 'R' }">
-                                <g:message code="show.inferredoccurrencedetails.p01" default="This record has been identified as the representative occurrence in a group of associated occurrences."/>
+                                <g:message code="show.inferredoccurrencedetails.p01"/>
                             </g:if>
-                            <g:else><g:message code="show.inferredoccurrencedetails.p02" default="This record is associated with the representative record."/>
+                            <g:else><g:message code="show.inferredoccurrencedetails.p02"/>
                             </g:else>
-                            <g:message code="show.inferredoccurrencedetails.p03" default="More information about the duplication detection methods and terminology in use is available here"/>:
+                            <g:message code="show.inferredoccurrencedetails.p03"/>:
                             <ul>
                                 <li>
                                 <a href="https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/INFERRED_DUPLICATE_RECORD">https://github.com/AtlasOfLivingAustralia/ala-dataquality/wiki/INFERRED_DUPLICATE_RECORD</a>
@@ -371,7 +368,7 @@
                         </p>
                         <g:if test="${duplicateRecordDetails && duplicateRecordDetails.duplicates?.size() > 0}">
                             <table class="duplicationTable table table-sm table-striped table-bordered" style="border-bottom:none;">
-                                <tr class="sectionName"><td colspan="4"><g:message code="show.table01.title" default="Representative Record"/></td></tr>
+                                <tr class="sectionName"><td colspan="4"><g:message code="show.table01.title"/></td></tr>
                                 <g:if test="${duplicateRecordDetails.uuid}">
                                     <alatag:occurrenceTableRow
                                             annotate="false"
@@ -431,7 +428,7 @@
                                 ${duplicateRecordDetails.day}</alatag:occurrenceTableRow>
                                 </g:if>
                                 <!-- Loop through all the duplicate records -->
-                                <tr class="sectionName"><td colspan="4"><g:message code="show.table02.title" default="Related records"/></td></tr>
+                                <tr class="sectionName"><td colspan="4"><g:message code="show.table02.title"/></td></tr>
                                 <g:each in="${duplicateRecordDetails.duplicates }" var="dup">
                                     <g:if test="${dup.uuid}">
                                         <alatag:occurrenceTableRow
@@ -521,7 +518,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                             <h3 id="processedVsRawViewLabel">
-                                <g:message code="show.processedvsrawview.title" default="&quot;Original versus Processed&quot; Comparison Table"/>
+                                <g:message code="show.processedvsrawview.title"/>
                             </h3>
                         </div>
 
@@ -530,10 +527,10 @@
                                 <table class="table table-sm table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th><g:message code="show.processedvsrawview.table.th01" default="Group"/></th>
-                                            <th><g:message code="show.processedvsrawview.table.th02" default="Field Name"/></th>
-                                            <th><g:message code="show.processedvsrawview.table.th03" default="Original Value"/></th>
-                                            <th><g:message code="show.processedvsrawview.table.th04" default="Processed Value"/></th>
+                                            <th><g:message code="show.processedvsrawview.table.th01"/></th>
+                                            <th><g:message code="show.processedvsrawview.table.th02"/></th>
+                                            <th><g:message code="show.processedvsrawview.table.th03"/></th>
+                                            <th><g:message code="show.processedvsrawview.table.th04"/></th>
                                         </tr>
                                     </thead>
 
@@ -546,7 +543,7 @@
 
                         <div class="modal-footer">
                             <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true" style="float:right;">
-                                <g:message code="show.processedvsrawview.button.close" default="Close"/>
+                                <g:message code="generic.button.close"/>
                             </button>
                         </div>
                     </div>
@@ -564,14 +561,13 @@
                             </button>
 
                             <h3 id="contactCuratorViewLabel">
-                                <g:message code="show.contactcuratorview.title" default="Contact curator"/>
+                                <g:message code="show.contactcuratorview.title"/>
                             </h3>
                         </div>
 
                         <div class="modal-body">
                             <p>
-                                <g:message code="show.contactcuratorview.message" default="For more details and to report issues about this record, please contact a person mentioned below.">
-                                </g:message>
+                                <g:message code="show.contactcuratorview.message"/>
                             </p>
 
                             <g:each in="${contacts}" var="c">
@@ -593,7 +589,7 @@
                                         <abbr title="Email">E:</abbr>
 
                                         <alatag:emailLink email="${c.contact.email}">
-                                            <g:message code="show.contactcuratorview.emailtext" default="email this contact"></g:message>
+                                            <g:message code="show.contactcuratorview.emailtext"></g:message>
                                         </alatag:emailLink>
 
                                         <br />
@@ -606,14 +602,13 @@
                                     <b>*</b>
                                 </span>
 
-                                <g:message code="show.contactcuratorview.primarycontact" default="Primary Contact">
-                                </g:message>
+                                <g:message code="show.contactcuratorview.primarycontact"/>
                             </p>
                         </div>
 
                         <div class="modal-footer">
                             <button class="erk-button erk-button--light float-right" data-dismiss="modal" aria-hidden="true">
-                                <g:message code="show.processedvsrawview.button.close" default="Close"/>
+                                <g:message code="generic.button.close"/>
                             </button>
                         </div>
                     </div>
@@ -624,7 +619,7 @@
         <ul style="display:none;">
             <li id="userAnnotationTemplate" class="userAnnotationTemplate well">
                 <h3>
-                    <span class="issue" /> - <g:message code="show.userannotationtemplate.title" default="flagged by"/> <span class="user"></span><span class="userRole"></span><span class="userEntity"></span>
+                    <span class="issue" /> - <g:message code="show.userannotationtemplate.title"/> <span class="user"></span><span class="userRole"></span><span class="userEntity"></span>
                 </h3>
 
                 <p class="comment"></p>
@@ -632,7 +627,7 @@
                 <p class="created"></p>
                 <p class="viewMore" style="display:none;">
                    <a class="viewMoreLink" href="#">
-                       <g:message code="show.userannotationtemplate.p01.navigator" default="View more with this annotation"/>
+                       <g:message code="show.userannotationtemplate.p01.navigator"/>
                     </a>
                 </p>
 
@@ -640,7 +635,7 @@
 
                 <p class="deleteAnnotation" style="display:block;">
                     <a class="deleteAnnotationButton erk-button erk-button--light" href="#">
-                        <g:message code="show.userannotationtemplate.p02.navigator" default="Delete this annotation"/>
+                        <g:message code="show.userannotationtemplate.p02.navigator"/>
                     </a>
 
                     <span class="deleteAssertionSubmitProgress" style="display:none;">
@@ -657,7 +652,7 @@
                             <div class="col-4 comment"></div>
                             <div class="col-2 userDisplayName"></div>
                             <div class="col-2 created"></div>
-                            <div class="col-2 deleteVerification"><a class="deleteVerificationButton" style="text-align: right" href="#"><g:message code="show.userannotationtemplate.p04.navigator" default="Delete this verification"/></a>
+                            <div class="col-2 deleteVerification"><a class="deleteVerificationButton" style="text-align: right" href="#"><g:message code="show.userannotationtemplate.p04.navigator"/></a>
                             </div>
                         </g:if>
 
@@ -674,7 +669,7 @@
 
                 <g:if test="${isCollectionAdmin}">
                     <p class="verifyAnnotation" style="display:none;">
-                        <a class="verifyAnnotationButton erk-button erk-button--light"  href="#verifyRecordModal" data-toggle="modal"><g:message code="show.userannotationtemplate.p03.navigator" default="Verify this annotation"/></a>
+                        <a class="verifyAnnotationButton erk-button erk-button--light"  href="#verifyRecordModal" data-toggle="modal"><g:message code="show.userannotationtemplate.p03.navigator"/></a>
                     </p>
                 </g:if>
             </li>
@@ -718,9 +713,9 @@
                                 </label>
 
                                 <select name="userAssertionStatusSelection" id="userAssertionStatusSelection">
-                                    <option value="50001"><alatag:message code="user_assertions.50001" default="Open issue"/></option>
-                                    <option value="50002"><alatag:message code="user_assertions.50002" default="Verified"/></option>
-                                    <option value="50003"><alatag:message code="user_assertions.50003" default="Corrected"/></option>
+                                    <option value="50001"><alatag:message code="user.assertions.50001"/></option>
+                                    <option value="50002"><alatag:message code="user.assertions.50002"/></option>
+                                    <option value="50003"><alatag:message code="user.assertions.50003"/></option>
                                 </select>
                             </p>
 
@@ -749,8 +744,8 @@ k               </div>
 
         <g:if test="${!record.raw}">
             <div id="headingBar">
-                <h1><g:message code="show.headingbar02.title" default="Record Not Found"/></h1>
-                <p><g:message code="show.headingbar02.p01" default="The requested record ID"/> "${uuid}" <g:message code="show.headingbar02.p02" default="was not found"/></p>
+                <h1><g:message code="show.headingbar02.title"/></h1>
+                <p><g:message code="show.headingbar02.p01"/> "${uuid}" <g:message code="show.headingbar02.p02"/></p>
             </div>
         </g:if>
 
@@ -764,7 +759,7 @@ k               </div>
     </g:if>
 
     <g:else>
-        <h3><g:message code="show.body.error.title" default="An error occurred"/> <br/>${flash.message}</h3>
+        <h3><g:message code="show.body.error.title"/> <br/>${flash.message}</h3>
     </g:else>
 </body>
 </html>
