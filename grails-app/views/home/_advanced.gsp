@@ -56,20 +56,6 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title03" />
-        </legend>
-
-        <label class="col-2">
-            <g:message code="advancedsearch.table03col01.title" />
-        </label>
-
-        <div class="col-10">
-            <input type="text" name="raw_taxon_name" id="raw_taxon_name" class="dataset form-control" placeholder="" size="60" value="" />
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <legend class="col-form-legend">
             <g:message code="advancedsearch.title04" />
         </legend>
 
