@@ -308,7 +308,7 @@
         </alatag:occurrenceTableRow>
 
         <!-- associatedOccurrences - handles the duplicates that are added via ALA Duplication Detection -->
-        <g:if test="${record.processed.occurrence.duplicationStatus}">
+         <g:if test="${record.processed.occurrence.duplicationStatus}">
             ${fieldsMap.put("duplicationStatus", true)}
             ${fieldsMap.put("associatedOccurrences", true)}
 
@@ -399,7 +399,7 @@
             <g:elseif test="${record.raw.event.year || record.raw.event.month || record.raw.event.day}">
                 <br>
                 <span class="originalValue">
-                    <g:message code="recordcore.occurrencedatelabel.08"/>
+                    <g:message code="recordcore.label.suppliedas"/>
                     <g:if test="${record.raw.event.year}"><g:message code="recordcore.occurrencedatelabel.09"/>:${record.raw.event.year}&nbsp;</g:if>
                     <g:if test="${record.raw.event.month}"><g:message code="recordcore.occurrencedatelabel.10"/>:${record.raw.event.month}&nbsp;</g:if>
                     <g:if test="${record.raw.event.day}"><g:message code="recordcore.occurrencedatelabel.11"/>:${record.raw.event.day}&nbsp;</g:if>
@@ -408,7 +408,7 @@
             <g:elseif test="${record.raw.event.eventDate != record.processed.event.eventDate && record.raw.event.eventDate}">
                 <br>
                 <span class="originalValue">
-                    <g:message code="recordcore.occurrencedatelabel.12"/> "${record.raw.event.eventDate}"
+                    <g:message code="recordcore.occurrencedatelabel.07"/> "${record.raw.event.eventDate}"
                 </span>
             </g:elseif>
         </alatag:occurrenceTableRow>
@@ -1002,7 +1002,7 @@
             <alatag:occurrenceTableRow annotate="false" section="geospatial" fieldCode="coordinatePrecision" fieldName="Coordinate precision">
                 ${fieldsMap.put("coordinatePrecision", true)}
                 <g:if test="${record.raw.location.decimalLatitude || record.raw.location.decimalLongitude}">
-                    ${record.raw.location.coordinatePrecision ? record.raw.location.coordinatePrecision : 'Unknown'}
+                    <g:message code="${record.raw.location.coordinatePrecision ? record.raw.location.coordinatePrecision : 'unspecified'}" />
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -1010,7 +1010,7 @@
             <alatag:occurrenceTableRow annotate="false" section="geospatial" fieldCode="coordinateUncertaintyInMeters" fieldName="Coordinate uncertainty in metres">
                 ${fieldsMap.put("coordinateUncertaintyInMeters", true)}
                 <g:if test="${record.processed.location.coordinateUncertaintyInMeters}">
-                    ${record.processed.location.coordinateUncertaintyInMeters ? record.processed.location.coordinateUncertaintyInMeters : 'Unknown'}
+                    <g:message code="${record.processed.location.coordinateUncertaintyInMeters ? record.processed.location.coordinateUncertaintyInMeters : 'unspecified'}" />
                 </g:if>
             </alatag:occurrenceTableRow>
 
