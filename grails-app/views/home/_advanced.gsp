@@ -68,7 +68,9 @@
             <select class="species_group" name="species_group" id="species_group">
                 <option value=""><g:message code="advancedsearch.table04col01.option.label" /></option>
                 <g:each var="group" in="${request.getAttribute("species_group")}">
-                    <option value="${group.key}">${group.value}</option>
+                    <option value="${group.key}">
+                        <g:message code="${group.key}" />
+                    </option>
                 </g:each>
             </select>
         </div>
@@ -267,7 +269,7 @@
 
                     <g:each var="bor" in="${request.getAttribute("basis_of_record")}">
                         <option value="${bor.key}">
-                            <g:message code="${bor.value}" />
+                            <g:message code="${bor.key}" />
                         </option>
                     </g:each>
                 </select>

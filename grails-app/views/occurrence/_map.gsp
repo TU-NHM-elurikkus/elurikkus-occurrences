@@ -524,7 +524,7 @@ a.colour-by-legend-toggle {
 
                         <p>
                             <label for="popacity">
-                                <g:message code="map.downloadmap.field04.label"/>
+                                <g:message code="map.maplayercontrols.tr01td03.label"/>
                             </label>
 
                             <select name="popacity" id="popacity">
@@ -563,10 +563,10 @@ a.colour-by-legend-toggle {
                             </label>
 
                             <input type="radio" name="scale" value="on" id="scale_on" checked="checked"/>
-                            <g:message code="map.downloadmap.field07.option01"/> &nbsp;
+                            <g:message code="generic.button.yes"/> &nbsp;
 
                             <input type="radio" name="scale" value="off" />
-                            <g:message code="map.downloadmap.field07.option02"/>
+                            <g:message code="generic.button.no"/>
                         </p>
 
                         <p>
@@ -575,10 +575,10 @@ a.colour-by-legend-toggle {
                             </label>
 
                             <input type="radio" name="outline" value="true" id="outline" checked="checked"/>
-                            <g:message code="map.downloadmap.field08.option01"/> &nbsp;
+                            <g:message code="generic.button.yes"/> &nbsp;
 
                             <input type="radio" name="outline" value="false" />
-                            <g:message code="map.downloadmap.field08.option02"/>
+                            <g:message code="generic.button.no"/>
                         </p>
 
                         <p>
@@ -622,7 +622,7 @@ a.colour-by-legend-toggle {
 
                 <div class="modal-footer">
                     <button id="submitDownloadMap" class="erk-button erk-button--light" style="float:left;">
-                        <g:message code="map.downloadmap.button01.label"/>
+                        <g:message code="download.download.label"/>
                     </button>
 
                     <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
