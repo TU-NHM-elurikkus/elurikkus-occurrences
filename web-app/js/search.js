@@ -15,7 +15,6 @@
 
 // Jquery Document.onLoad equivalent
 $(document).ready(function() {
-    //alert("doc is loaded");
     // listeners for sort & paging widgets
     $("select#sort").change(function() {
         var val = $("option:selected", this).val();
@@ -145,7 +144,6 @@ $(document).ready(function() {
     }
 
     // remove *:* query from search bar
-    //var q = $.url().param('q');
     var q =  $.url().param('q');
     if (q && q[0] == "*:*") {
         $(":input#solrQuery").val("");

@@ -283,13 +283,12 @@
         <div class="col-md-12 col-xl-10">
             <div class="page-header">
                 <h1 class="page-header__title">
-                    Search
-                    %{-- <g:message code="home.index.body.title" /> ${raw(hubDisplayName)} --}%
+                    <g:message code="home.index.title" />
                 </h1>
 
                 <div class="page-header__subtitle">
                     %{-- TODO --}%
-                    <g:message code="home.index.body.title" /> ${raw(hubDisplayName)}
+                    <g:message code="home.index.subtitle" args="${[raw(hubDisplayName)]}" />
                 </div>
             </div>
 
@@ -312,7 +311,7 @@
                                     <input type="text" name="taxa" id="taxa" class="input-plus__field">
 
                                     <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
-                                        <g:message code="home.index.simsplesearch.button" />
+                                        <g:message code="advancedsearch.button.submit" />
                                     </button>
                                 </div>
                             </form>
@@ -342,7 +341,7 @@
                             <%--&nbsp;OR&nbsp;--%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="raw_name" />
-                            <input type="submit" name="action" value=<g:message code="home.index.taxaupload.button01" /> class="erk-button erk-button--light" />
+                            <input type="submit" name="action" value=<g:message code="advancedsearch.button.submit" /> class="erk-button erk-button--light" />
                         </div>
                     </form>
                 </div><!-- end #uploadDiv div -->
@@ -365,7 +364,7 @@
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
                             %{-- XXX --}%
-                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="home.index.catalogupload.button01"/>  class="erk-button erk-button--light" />
+                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit"/>  class="erk-button erk-button--light" />
                         </div>
                     </form>
                 </div><!-- end #catalogUploadDiv div -->
@@ -387,17 +386,9 @@
 
                                     <div id="collapseOne" class="accordion-body collapse show">
                                         <div class="accordion-inner">
-                                            <p>
-                                                <g:message code="search.map.importText" />
-                                            </p>
+                                            <p><g:message code="search.map.importText" /></p>
 
-                                            <p>
-                                                <g:message code="search.map.wktHelpText" />
-                                            </p>
-
-                                            <p>
-                                                <textarea type="text" id="wktInput"></textarea>
-                                            </p>
+                                            <p><textarea type="text" id="wktInput"></textarea></p>
 
                                             <button class="erk-button erk-button--light" id="addWkt">
                                                 <g:message code="search.map.wktButtonText" />

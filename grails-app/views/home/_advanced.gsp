@@ -89,34 +89,42 @@
                     <g:message code="advancedsearch.table05col01.option01.label" />
                 </option>
 
+                <%-- ToDo: This select should be dynamic --%>
                 <g:each var="inst" in="${request.getAttribute("institution_uid")}">
-                    <optgroup label="${inst.value}">
-                        <option value="${inst.key}">
-                            <g:message code="advancedsearch.table05col01.option02.label" /> ${inst.value}
-                        </option>
+                    <g:if test="${StringUtils.startsWith(inst.key, 'in')}">
+                        <optgroup label="${inst.value}">
+                            <option value="${inst.key}">
+                                <g:message code="advancedsearch.table05col01.option02.label" />
+                            </option>
 
-                        <g:each var="coll" in="${request.getAttribute("collection_uid")}">
-                            <g:if test="${inst.key == 'in13' && StringUtils.startsWith(coll.value, inst.value)}">
-                                <option value="${coll.key}">
-                                    ${StringUtils.replace(StringUtils.replace(coll.value, inst.value, ""), " - " ,"")}
-                                    <g:message code="advancedsearch.table05col01.option03.label" />
-                                </option>
-                            </g:if>
+                            <g:each var="coll" in="${request.getAttribute("collection_uid")}">
+                                <g:if test="${inst.key == 'in4' && StringUtils.startsWith(coll.value, 'TAM')}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:if>
 
-                            <g:elseif test="${inst.key == 'in6' && StringUtils.startsWith(coll.value, 'Australian National')}">
-                                <%-- <option value="${coll.key}">${fn:replace(coll.value,"Australian National ", "")}</option> --%>
-                                <option value="${coll.key}">
-                                    ${coll.value}
-                                </option>
-                            </g:elseif>
+                                <g:elseif test="${inst.key == 'in5' && coll.value == 'TALL'}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:elseif>
 
-                            <g:elseif test="${StringUtils.startsWith(coll.value, inst.value)}">
-                                <option value="${coll.key}">
-                                    ${StringUtils.replace(coll.value, inst.value, "")}
-                                </option>
-                            </g:elseif>
-                        </g:each>
-                    </optgroup>
+                                <g:elseif test="${inst.key == 'in6' && (coll.value == 'EAA' || coll.value == 'TAAM')}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:elseif>
+
+                                <g:elseif test="${inst.key == 'in7' && StringUtils.startsWith(coll.value, 'TU')}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:elseif>
+
+                            </g:each>
+                        </optgroup>
+                    </g:if>
                 </g:each>
             </select>
         </div>
@@ -339,10 +347,18 @@
     </div>
 
     <div class="row">
-        <input type="submit" value=<g:message code="advancedsearch.button.submit" /> class="erk-button erk-button--light" />
-        %{-- XXX --}%
+        <input
+            type="submit"
+            value="<g:message code="advancedsearch.button.submit" />"
+            class="erk-button erk-button--light" />
         &nbsp;&nbsp;
-        <input type="reset" value="Clear all" id="clearAll" class="erk-button erk-button--light" onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;" />
+        <input
+            type="reset"
+            value="<g:message code="advancedsearch.button.clearAll"/>"
+            id="clearAll"
+            class="erk-button erk-button--light"
+            onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;"
+        />
     </div>
 </form>
 
