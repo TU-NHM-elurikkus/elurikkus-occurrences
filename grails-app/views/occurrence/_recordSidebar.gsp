@@ -82,7 +82,7 @@
             id="showCurator"
             role="button"
             data-toggle="modal"
-            title="Contact curator for more details on a record"
+            title="<g:message code="show.showcontactcurator.title"/>"
         >
             <span id="contactCuratorSpan" href="#contactCuratorView" title="">
                 <i class="icon-envelope"></i> <g:message code="show.showcontactcurator.label"/>
@@ -266,8 +266,15 @@
                         </select>
                     </p>
                     <p><textarea id="verifyComment" rows="3" style="width: 90%"></textarea></p><br>
-                    <button class="erk-button erk-button--light confirmVerify"><g:message code="show.verifyrecord.btn.confirmverify"/></button>
-                    <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal"><g:message code="show.btn.cancel"/></button>
+                    <button
+                        class="erk-button erk-button--light confirmVerify">
+                        <g:message code="show.verifyrecord.btn.confirmverify"/>
+                    </button>
+                    <button
+                        class="erk-button erk-button--light cancelVerify"
+                        data-dismiss="modal">
+                        <g:message code="generic.button.cancel"/>
+                    </button>
                     <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="hide" alt="spinner icon"/>
                 </div>
             </div>

@@ -269,7 +269,7 @@
 
                     <g:each var="bor" in="${request.getAttribute("basis_of_record")}">
                         <option value="${bor.key}">
-                            <g:message code="${bor.key}" />
+                            <g:message code="basisOfRecord.${bor.key}" default=""/>
                         </option>
                     </g:each>
                 </select>

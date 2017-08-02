@@ -96,7 +96,7 @@
                 </h1>
 
                 <div class="page-header__subtitle">
-                    <g:message code="basicOfRecord.${record.processed.occurrence?.basisOfRecord}" default="${record.processed.occurrence?.basisOfRecord}" />
+                    <g:message code="basisOfRecord.${record.processed.occurrence?.basisOfRecord}" default="${record.processed.occurrence?.basisOfRecord}" />
                     <g:message code="show.heading.of"/>
 
                     <g:if test="${record.processed.classification.scientificName}">
@@ -149,7 +149,7 @@
 
                 <div class="page-header-links">
                     <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">
-                        Search
+                        <g:message code="home.index.title"/>
                     </a>
 
                     <a href="#" id="backBtn" title="Return to search results" class="page-header-links__link">
