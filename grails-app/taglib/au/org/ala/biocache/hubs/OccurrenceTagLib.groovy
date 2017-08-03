@@ -304,8 +304,8 @@ class OccurrenceTagLib {
      * @attr skin
      */
     def getRecordId = { attrs ->
-        def record = attrs.record?:null
-        def skin = attrs.skin?:"ala"
+        def record = attrs.record ?: null
+        def skin = attrs.skin ?: "ala"
         def recordId = record.raw.uuid
 
         if (skin == 'avh') {
@@ -497,11 +497,9 @@ class OccurrenceTagLib {
 
         compareRecord.get(group).each { cr ->
             def key = cr.name
-            def label = alatag.message(code:key, default:"")?:alatag.camelCaseToHuman(text: key)?:StringUtils.capitalize(key)
-
+            def label = alatag.message(code:"recordcore.dynamic.${key}", default:"${key}") ?: alatag.camelCaseToHuman(text: key) ?: StringUtils.capitalize(key)
             // only output fields not already included (by checking fieldsMap Map) && not in excluded list
             if (!fieldsMap.containsKey(key) && !StringUtils.containsIgnoreCase(exclude, key)) {
-                //def mb = new MarkupBuilder(out)
                 def tagBody
 
                 if (cr.processed && cr.raw && cr.processed == cr.raw) {
@@ -511,7 +509,13 @@ class OccurrenceTagLib {
                 } else if (cr.raw && !cr.processed) {
                     tagBody = cr.raw
                 } else {
-                    tagBody = "${cr.processed} <br/><span class='originalValue'>Supplied as ${cr.raw}</span>"
+                    tagBody = """
+                        ${cr.processed}
+                        <br />
+                        <span class="originalValue">
+                            ${g.message(code: 'recordcore.label.suppliedas')} "${cr.raw}"
+                        </span>
+                    """
                 }
                 output += alatag.occurrenceTableRow(annotate:"true", section:"dataset", fieldCode:"${key}", fieldName:"<span class='dwc'>${label}</span>") {
                     tagBody

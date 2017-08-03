@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dos009@csiro.au
-  Date: 11/02/14
-  Time: 10:52 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
 <g:set var="recordId" value="${alatag.getRecordId(record: record, skin: skin)}"/>

@@ -442,7 +442,7 @@
             <g:if test="${record.processed.event.eventDate && record.raw.event.eventDate && record.raw.event.eventDate != record.processed.event.eventDate}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.occurrencedatelabel.07"/> "${record.raw.event.eventDate}"
+                    <g:message code="recordcore.label.suppliedas"/> "${record.raw.event.eventDate}"
                 </span>
             </g:if>
             <g:elseif test="${record.raw.event.year || record.raw.event.month || record.raw.event.day}">
@@ -463,7 +463,7 @@
             <g:elseif test="${record.raw.event.eventDate != record.processed.event.eventDate && record.raw.event.eventDate}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.occurrencedatelabel.07"/> "${record.raw.event.eventDate}"
+                    <g:message code="recordcore.label.suppliedas"/> "${record.raw.event.eventDate}"
                 </span>
             </g:elseif>
         </alatag:occurrenceTableRow>
@@ -514,7 +514,7 @@
             <g:if test="${record.processed.classification.scientificName && record.raw.classification.scientificName && (record.processed.classification.scientificName.toLowerCase() != record.raw.classification.scientificName.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.occurencetaxonomy.originalName"/> "${record.raw.classification.scientificName}"
+                    <g:message code="recordcore.label.suppliedas"/> "${record.raw.classification.scientificName}"
                 </span>
             </g:if>
 
@@ -1163,16 +1163,17 @@
         </h2>
 
         <table class="occurrenceTable table table-sm table-bordered table-striped " id="miscellaneousPropertiesTable">
-            <!-- Higher Geography -->
+            <!-- Misc properties -->
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
-                <g:set var="entryHtml"><span class='dwc'>${entry.key}</span></g:set>
-                <g:set var="label"><alatag:camelCaseToHuman text="${entryHtml}"/></g:set>
-                <alatag:occurrenceTableRow annotate="true" section="geospatial" fieldCode="${entry.key}" fieldName="${label}">
+                <g:set var="label">
+                    <g:message code="recordcore.dynamic.${entry.key}" default="${entry.key}" />
+                </g:set>
+                <alatag:occurrenceTableRow annotate="true" section="misc" fieldCode="${entry.key}" fieldName="${label}">
                     <g:if test="${StringUtils.startsWith(entry.value,'http')}">
                         <a href="${entry.value}">${entry.value}</a>
                     </g:if>
                     <g:else>
-                        ${entry.value}
+                        <g:message code="${entry.value}" />
                     </g:else>
                 </alatag:occurrenceTableRow>
             </g:each>
@@ -1201,14 +1202,17 @@
                         section="contextual"
                         fieldCode="${sample.layerName}"
                         fieldName="${fn}">
-                ${sample.value}</alatag:occurrenceTableRow>
+                    ${sample.value}
+                </alatag:occurrenceTableRow>
             </g:each>
             </tbody>
         </table>
     </g:if>
 
     <g:if test="${environmentalSampleInfo}">
-        <h2 id="environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02"/></h2>
+        <h2 id="environmentalSampleInfo">
+            <g:message code="show.outlierinformation.02.title02"/>
+        </h2>
         <table class="layerIntersections table table-sm table-striped table-bordered " >
             <tbody>
             <g:each in="${environmentalSampleInfo}" var="sample" status="vs">

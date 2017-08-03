@@ -484,8 +484,12 @@
     <table class="table table-sm table-striped table-bordered">
         <thead>
             <tr class="sectionName">
-                <td class="dataQualityTestName"><g:message code="show.tabledataqualityresultscol01.title"/></td>
-                <td class="dataQualityTestResult"><g:message code="show.tabledataqualityresultscol02.title"/></td>
+                <td class="dataQualityTestName">
+                    <g:message code="show.tabledataqualityresultscol01.title" />
+                </td>
+                <td class="dataQualityTestResult">
+                    <g:message code="show.tabledataqualityresultscol02.title" />
+                </td>
             </tr>
         </thead>
 
@@ -499,8 +503,8 @@
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showErrorAndWarningTests">
                             <g:message code="show.tabledataqualityresults.showhide"/>
-                            ${failedTestSet ? failedTestSet.length() : 0} failed tests and
-                            ${warningTestSet ? warningTestSet.length() : 0} warnings
+                            ${failedTestSet ? failedTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.fail" />
+                            ${warningTestSet ? warningTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.warning" />
                         </a>
                     </td>
                 </tr>
@@ -541,8 +545,7 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showPassedTests">
-                            <g:message code="show.tabledataqualityresults.showhide"/>
-                            ${record.systemAssertions.passed.length()} passed tests
+                            <g:message code="show.tabledataqualityresults.showhide"/> ${record.systemAssertions.passed.length()} <g:message code="show.tabledataqualityresults.tr03td01" />
                         </a>
                     </td>
                 </tr>
@@ -566,7 +569,9 @@
             <g:if test="${record.systemAssertions.missing}">
                 <tr>
                     <td colspan="2">
-                    <a href="javascript:void(0)" id="showMissingPropResult"><g:message code="show.tabledataqualityresults.showhide"/>  ${record.systemAssertions.missing.length()} missing properties</a>
+                        <a href="javascript:void(0)" id="showMissingPropResult">
+                            <g:message code="show.tabledataqualityresults.showhide"/> ${record.systemAssertions.missing.length()} <g:message code="show.tabledataqualityresults.tr04td01" />
+                        </a>
                     </td>
                 </tr>
             </g:if>
@@ -574,15 +579,23 @@
             <g:set var="testSet" value="${record.systemAssertions.missing}"/>
             <g:each in="${testSet}" var="test">
             <tr class="missingPropResult" style="display:none;">
-                <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                <td><i class="fa fa-question-circle"></i> <g:message code="show.tabledataqualityresults.tr05td02"/></td>
+                <td>
+                    <g:message code="${test.name}" default="${test.name}"/>
+                    <alatag:dataQualityHelp code="${test.code}"/>
+                </td>
+                <td>
+                    <i class="fa fa-question-circle" />
+                    <g:message code="show.tabledataqualityresults.tr05td02"/>
+                </td>
             </tr>
             </g:each>
 
             <g:if test="${record.systemAssertions.unchecked}">
                 <tr>
                     <td colspan="2">
-                    <a href="javascript:void(0)" id="showUncheckedTests"><g:message code="show.tabledataqualityresults.showhide"/>  ${record.systemAssertions.unchecked.length()} tests that have not been run</a>
+                        <a href="javascript:void(0)" id="showUncheckedTests">
+                            <g:message code="show.tabledataqualityresults.showhide"/> ${record.systemAssertions.unchecked.length()} <g:message code="show.tabledataqualityresults.tr06td01" />
+                        </a>
                     </td>
                 </tr>
             </g:if>
@@ -590,8 +603,13 @@
             <g:set var="testSet" value="${record.systemAssertions.unchecked}"/>
             <g:each in="${testSet}" var="test">
             <tr class="uncheckTestResult" style="display:none;">
-                <td><g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/></td>
-                <td><i class="fa fa-ban"></i> <g:message code="show.tabledataqualityresults.tr07td02"/></td>
+                <td>
+                    <g:message code="${test.name}" default="${test.name}"/><alatag:dataQualityHelp code="${test.code}"/>
+                </td>
+                <td>
+                    <i class="fa fa-ban" />
+                    <g:message code="show.tabledataqualityresults.tr07td02"/>
+                </td>
             </tr>
             </g:each>
         </tbody>
