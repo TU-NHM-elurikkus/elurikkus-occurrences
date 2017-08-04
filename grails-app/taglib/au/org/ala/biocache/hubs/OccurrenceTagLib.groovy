@@ -171,13 +171,14 @@ class OccurrenceTagLib {
      *
      *  @attr facetResult REQUIRED
      *  @attr queryParam REQUIRED
-     *  @attr fieldDisplayName
+     *  @attr fieldDisplayName REQUIRED
      */
     def facetLinkList = { attrs ->
         def facetResult = attrs.facetResult
         def queryParam = attrs.queryParam
+        def fieldDisplayName = attrs.fieldDisplayName
         def mb = new MarkupBuilder(out)
-        def linkTitle = "Filter results by ${attrs.fieldDisplayName ?: facetResult.fieldName}"
+        def linkTitle = g.message(code: 'facets.results.filterBy', args: [fieldDisplayName])
 
         def addCounts = { count ->
             mb.span(class:"facetCount") {
@@ -211,7 +212,7 @@ class OccurrenceTagLib {
                                     mkp.yieldUnescaped("&nbsp;")
                                 }
                                 span(class: "facet-item") {
-                                    mkp.yield(alatag.message(code: fieldResult.label ?: 'unknown'))
+                                    mkp.yield(alatag.message(code: fieldResult.label ?: 'search.results.field.absent'))
                                     addCounts(fieldResult.count)
                                 }
 
@@ -569,7 +570,7 @@ class OccurrenceTagLib {
         mb.div(class:'recordRow', id:occurrence.uuid ) {
             p(class:'rowA') {
                 if (occurrence.taxonRank && occurrence.scientificName) {
-                    span(style:'text-transform: capitalize', occurrence.taxonRank)
+                    span(style:'text-transform: capitalize', g.message(code:"taxonomy.rank.${occurrence.taxonRank}", default: occurrence.taxonRank))
                     mkp.yieldUnescaped(":&nbsp;")
                     span(class:'occurrenceNames') {
                         mkp.yieldUnescaped(alatag.formatSciName(rankId:occurrence.taxonRankID?:'6000', name:"${occurrence.scientificName}"))
@@ -585,14 +586,30 @@ class OccurrenceTagLib {
 
                 span(class:'eventAndLocation') {
                     if (occurrence.eventDate) {
-                        outputResultsLabel("Date: ", g.formatDate(date: new Date(occurrence.eventDate), format:"yyyy-MM-dd"), true)
+                        outputResultsLabel(
+                            "${g.message(code:'record.eventDate.label')}: ",
+                            g.formatDate(date: new Date(occurrence.eventDate), format:"yyyy-MM-dd"),
+                            true
+                        )
                     } else if (occurrence.year) {
-                        outputResultsLabel("Year: ", occurrence.year, true)
+                        outputResultsLabel(
+                            "${g.message(code:'recordcore.occurrencedatelabel.04')}: ",
+                            occurrence.year,
+                            true
+                        )
                     }
                     if (occurrence.stateProvince) {
-                        outputResultsLabel("State: ", alatag.message(code:occurrence.stateProvince), true)
+                        outputResultsLabel(
+                            "${g.message(code:'recordcore.geospatial.state')}: ",
+                            alatag.message(code:occurrence.stateProvince),
+                           true
+                        )
                     } else if (occurrence.country) {
-                        outputResultsLabel("Country: ", alatag.message(code:occurrence.country), true)
+                        outputResultsLabel(
+                            "${g.message(code:'recordcore.geospatial.country')}: ",
+                            alatag.message(code:occurrence.country),
+                            true
+                        )
                     }
                 }
 
@@ -624,16 +641,35 @@ class OccurrenceTagLib {
                 }
             }
             p(class:'rowB') {
-                outputResultsLabel("Institution: ", alatag.message(code:occurrence.institutionName), occurrence.institutionName)
-                outputResultsLabel("Collection: ", alatag.message(code:occurrence.collectionName), occurrence.collectionName)
-                outputResultsLabel("Data&nbsp;Resource: ", alatag.message(code:occurrence.dataResourceName), !occurrence.collectionName && occurrence.dataResourceName)
-                outputResultsLabel("Basis&nbsp;of&nbsp;record: ", alatag.message(code:occurrence.basisOfRecord), occurrence.basisOfRecord)
-                outputResultsLabel("Catalog&nbsp;number: ", "${occurrence.raw_collectionCode ? occurrence.raw_collectionCode + ':' : ''}${occurrence.raw_catalogNumber}", occurrence.raw_catalogNumber)
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.Institution')}: ",
+                    alatag.message(code:occurrence.institutionName),
+                    occurrence.institutionName
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.Collection')}: ",
+                    alatag.message(code:occurrence.collectionName),
+                    occurrence.collectionName
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.dataResource')}: ",
+                    alatag.message(code:occurrence.dataResourceName),
+                    !occurrence.collectionName && occurrence.dataResourceName
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.basisOfRecord')}: ",
+                    alatag.message(code:occurrence.basisOfRecord),
+                    occurrence.basisOfRecord
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.catalogueNumber')}: ",
+                    "${occurrence.raw_collectionCode ? occurrence.raw_collectionCode + ':' : ''}${occurrence.raw_catalogNumber}",
+                    occurrence.raw_catalogNumber
+                )
                 a(
-                        href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
-                        class:"occurrenceLink",
-//                        style:"margin-left: 15px;",
-                        "View record"
+                    href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
+                    class: "occurrenceLink",
+                    g.message(code:'formatListRecordRow.viewRecord')
                 )
             }
         }
@@ -759,7 +795,6 @@ class OccurrenceTagLib {
         paramsCopy.remove("action")
         paramsCopy.remove("controller")
         def queryString = WebUtils.toQueryString(paramsCopy)
-        log.debug "queryString = ${queryString}"
         out << queryString
     }
 
@@ -771,7 +806,6 @@ class OccurrenceTagLib {
         paramsCopy.remove("action")
         paramsCopy.remove("controller")
         def queryString = WebUtils.toQueryString(paramsCopy)
-        log.debug "queryString = ${queryString}"
         out << queryString
     }
 

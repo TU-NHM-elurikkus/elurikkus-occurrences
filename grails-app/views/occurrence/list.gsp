@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dos009@csiro.au
-  Date: 11/02/14
-  Time: 10:52 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <g:set var="startPageTime" value="${System.currentTimeMillis()}"/>
 <g:set var="queryDisplay" value="${sr?.queryTitle?:searchRequestParams?.displayString?:''}"/>
@@ -57,16 +50,25 @@
             disableLikeDislikeButton: ${authService.getUserId() ? false : true},
             addLikeDislikeButton: ${(grailsApplication.config.addLikeDislikeButton == false) ? false : true},
             addPreferenceButton: ${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains("ROLE_ADMIN") ? true : false) : false},
-            userRatingHelpText: '<div><b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>'+
-            ' Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.<br/><br/>'+
-            '<b>Down vote (<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>) an image:</b>'+
-            ' Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.<br/></div>',
+            // whatever this is
+            userRatingHelpText: `
+                <div>
+                    <b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>
+                    Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.
+                    <br /><br />
+                    <b>Down vote (<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>) an image:</b>
+                    Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.
+                    <br />
+                </div>
+            `,
             savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
             getPreferredSpeciesListUrl:  "${grailsApplication.config.speciesList.baseURL}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
         };
     </script>
 
-    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, image-viewer, lightbox, chartsOverride"/>
+    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, \
+                        moment, mapCommonOverride, image-viewer, lightbox, chartsOverride"
+    />
 
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete"/>
@@ -83,13 +85,8 @@
 
 <body class="occurrence-search">
     <div id="listHeader" class="page-header">
-        <h1 class="page-header__title">
+        <h1 class="page-header__title" name="resultsTop">
             <g:message code="search.heading.list"/>
-
-            <%-- XXX --%>
-            <a name="resultsTop">
-                &nbsp;
-            </a>
         </h1>
 
         <div class="page-header__subtitle">
@@ -121,6 +118,7 @@
         <input type="hidden" id="lsid" value="${params.lsid}"/>
     </div>
 
+    <%-- Seems like unneeded code --%>
     <g:if test="${flash.message}">
         <div id="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" onclick="$(this).parent().hide()" aria-label="Close">
@@ -218,7 +216,7 @@
     </g:elseif>
 
     <g:else>
-        <!--  first row (#searchInfoRow), contains customise facets button and number of results for query, etc.  -->
+        <%--  first row (#searchInfoRow), contains customise facets button and number of results for query, etc.  --%>
         <div class="row" id="searchInfoRow">
             <%-- Results column --%>
             <div class="col">
@@ -239,8 +237,8 @@
 
                 <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                     <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
-                        class="tooltips newDownload"
-                        title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"
+                            class="tooltips newDownload"
+                            title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"
                     >
                         <%-- XXX BUTTON INSIDE LINK --%>
                         <button id="downloads" class="erk-button erk-button--light">
@@ -320,7 +318,7 @@
             </div>
         </div><!-- /#searchInfoRow -->
 
-        <!--  Second row - facet column and results column -->
+        <%--  Second row - facet column and results column --%>
         <div class="row" id="content">
             <div class="col-sm-5 col-md-3">
                 <div class="card card-block filters-container">
@@ -484,7 +482,7 @@
 
                                 <div class="form-group">
                                     <label for="per-page">
-                                        Results per page
+                                        <g:message code="list.table.resultsPerPage.label" />
                                     </label>
 
                                     <select id="per-page" name="per-page">
@@ -498,7 +496,7 @@
 
                                 <div class="form-group">
                                     <label for="sort">
-                                        Sort by
+                                        <g:message code="list.table.sortBy.label" />
                                     </label>
 
                                     <select id="sort" name="sort">
@@ -516,7 +514,7 @@
 
                                 <div class="form-group">
                                     <label for="dir">
-                                        Sort order
+                                        <g:message code="list.table.sortOrder.label" />
                                     </label>
 
                                     <select id="dir" name="dir">
@@ -589,7 +587,9 @@
 
                     <g:if test="${showSpeciesImages}">
                         <div id="speciesImages" role="tabpanel" class="tab-pane">
-                            <h3><g:message code="list.speciesimages.title"/></h3>
+                            <h3>
+                                <g:message code="list.speciesimages.title"/>
+                            </h3>
                             <div id="speciesGalleryControls">
                                 <g:message code="list.speciesgallerycontrols.label.01"/>
                                 <select id="speciesGroup">
@@ -604,7 +604,9 @@
                                 </select>
                             </div>
 
-                            <div id="speciesGallery">[<g:message code="list.speciesgallerycontrols.speciesgallery"/>]</div>
+                            <div id="speciesGallery">
+                                [<g:message code="list.speciesgallerycontrols.speciesgallery"/>]
+                            </div>
 
                             <%-- XXX --%>
                             <div id="loadMoreSpecies" style="display:none;">
@@ -616,14 +618,12 @@
 
                     <g:if test="${hasImages}">
                         <div id="images" role="tabpanel" class="tab-pane">
-                            <h3>
-                                <g:message code="list.speciesgallerycontrols.recordimages.title"/>
-                            </h3>
-
-                            <%--<p>(see also <a href="#tab_speciesImages">representative species images</a>)</p>--%>
+                            <%-- <p>
+                                (see also <a href="#tab_speciesImages">representative species images</a>)
+                            </p> --%>
 
                             <div id="imagesGrid">
-                                <g:message code="list.speciesgallerycontrols.imagesgrid"/>...
+                                <g:message code="list.speciesgallerycontrols.imagesgrid" />...
                             </div>
 
                             <div id="loadMoreImages" style="display:none;">
@@ -641,7 +641,7 @@
                                     <a class="cbLink" rel="thumbs" href="" id="thumb">
                                         <img src="" alt="${tc?.taxonConcept?.nameString} image thumbnail"/>
                                         <div class="meta brief"></div>
-                                        <div class="meta detail invisible""></div>
+                                        <div class="meta detail invisible"></div>
                                     </a>
                                 </div>
                             </div>

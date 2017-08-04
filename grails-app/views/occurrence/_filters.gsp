@@ -43,8 +43,8 @@
                         <g:message code="facet.group.${group.key}" default="${group.key}"/>
                     </div>
 
-                    <g:each in="${group.value}" var="facetFromGroup">
-                        <g:if test="${defaultFacets.containsKey(facetFromGroup)}">
+                    <g:each in="${group.value}" var="fieldValue">
+                        <g:if test="${defaultFacets.containsKey(fieldValue)}">
                             <g:set var="count" value="${count + 1}"/>
 
                             <div class="search-filter-checkbox">
@@ -53,10 +53,10 @@
                                         type="checkbox"
                                         name="facets"
                                         class="search-filter-checkbox__label__input"
-                                        value="${facetFromGroup}"
-                                        ${(defaultFacets.get(facetFromGroup)) ? 'checked=checked' : ''}
+                                        value="${fieldValue}"
+                                        ${(defaultFacets.get(fieldValue)) ? 'checked=checked' : ''}
                                     >
-                                    <alatag:message code="facet.${facetFromGroup}"/>
+                                    <alatag:message code="facet.${fieldValue}"/>
                                 </label>
                             </div>
                         </g:if>
