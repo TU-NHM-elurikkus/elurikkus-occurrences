@@ -133,7 +133,7 @@
 
 #imageDialog.modal {
     width: 90%; /* desired relative width */
-    min-height:80%;
+    min-height: 80%;
     left: 5%; /* (100%-width)/2 */
     margin: auto auto auto auto; /* place center */
 }
@@ -174,7 +174,7 @@
 #downloadForm .form-control {
     font-size: 12px;
     height: 30px !important;
-} 
+}
 #downloadForm input[type="radio"] {
     height: initial;
 }
