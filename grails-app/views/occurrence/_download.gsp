@@ -15,7 +15,7 @@
             <div class="modal-body">
                 <p id="termsOfUseDownload">
                     <g:message code="download.termsofusedownload.01"/>
-                    <a href="http://www.ala.org.au/about/terms-of-use/#TOUusingcontent"><g:message code="download.termsofusedownload.02"/></a>
+                    <a href="https://plutof.ut.ee/#/privacy-policy"><g:message code="download.termsofusedownload.02"/></a>
                     <g:message code="download.termsofusedownload.03"/>
                     <br/><br/>
                     <g:message code="download.termsofusedownload.04"/>:
@@ -53,7 +53,7 @@
                             <select name="reasonTypeId" id="reasonTypeId" class="form-control">
                                 <option value="">-- <g:message code="download.downloadformreasontypeid.option"/> --</option>
                                 <g:each var="it" in="${alatag.getLoggerReasons()}">
-                                    <option value="${it.id}">${it.name}</option>
+                                    <option value="${it.id}"><g:message code="${it.rkey}"/></option>
                                 </g:each>
                             </select>
                         </div>

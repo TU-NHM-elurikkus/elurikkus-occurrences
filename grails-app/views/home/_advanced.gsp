@@ -69,7 +69,7 @@
                 <option value=""><g:message code="advancedsearch.table04col01.option.label" /></option>
                 <g:each var="group" in="${request.getAttribute("species_group")}">
                     <option value="${group.key}">
-                        <g:message code="${group.key}" />
+                        <g:message code="${group.value}" />
                     </option>
                 </g:each>
             </select>
@@ -94,12 +94,13 @@
                 <%-- ToDo: This select should be dynamic --%>
                 <g:each var="inst" in="${request.getAttribute("institution_uid")}">
                     <g:if test="${StringUtils.startsWith(inst.key, 'in')}">
-                        <optgroup label="${inst.value}">
+                        <optgroup label="${message(code: inst.value)}">
                             <option value="${inst.key}">
                                 <g:message code="advancedsearch.table05col01.option02.label" />
                             </option>
 
-                            <g:each var="coll" in="${request.getAttribute("collection_uid")}">
+                            <g:each var="coll" in="${request.getAttribute('collection_uid')}">
+                                coll
                                 <g:if test="${inst.key == 'in4' && StringUtils.startsWith(coll.value, 'TAM')}">
                                     <option value="${coll.key}">
                                         ${coll.value}
@@ -127,6 +128,11 @@
                             </g:each>
                         </optgroup>
                     </g:if>
+                    <g:else>
+                        <option value="${inst.key}">
+                            <g:message code="${inst.value}" />
+                        </option>
+                    </g:else>
                 </g:each>
             </select>
         </div>
@@ -149,7 +155,7 @@
 
                 <g:each var="country" in="${request.getAttribute("country")}">
                     <option value="${country.key}">
-                        ${country.value}
+                        <g:message code="${country.value}" />
                     </option>
                 </g:each>
             </select>
@@ -269,7 +275,7 @@
 
                     <g:each var="bor" in="${request.getAttribute("basis_of_record")}">
                         <option value="${bor.key}">
-                            <g:message code="basisOfRecord.${bor.key}" default=""/>
+                            <g:message code="${bor.value}" />
                         </option>
                     </g:each>
                 </select>
