@@ -1,6 +1,15 @@
-<%@ page import="au.org.ala.biocache.hubs.FacetsName; org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ contentType="text/html;charset=UTF-8" %>
+
 <g:render template="/layouts/global" plugin="biocache-hubs" />
-<form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST" class="container-fluid">
+
+<form
+    name="advancedSearchForm"
+    id="advancedSearchForm"
+    action="${request.contextPath}/advancedSearch"
+    method="POST"
+    class="container-fluid"
+>
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}" />
     <input type="hidden" name="nameType" value="${grailsApplication.config.advancedTaxaField?:'matched_name_children'}" />
 
@@ -18,7 +27,7 @@
         </div>
     </div>
 
-    %{-- XXX row classes --}%
+    <%-- XXX row classes --%>
     <fieldset class="form-group">
         <legend class="col-form-legend row">
             <g:message code="advancedsearch.title02" default="Find records for ANY of the following taxa (matched/processed taxon concepts)" />
@@ -33,7 +42,7 @@
                 </label>
 
                 <div class="col-10">
-                    <input type="text" value="" id="taxa_${i}" name="taxonText" class="name_autocomplete form-control" size="60">
+                    <input type="text" value="" id="taxa_${i}" name="taxonText" class="name_autocomplete form-control" size="60" />
                     <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}" value="" />
                 </div>
             </div>
@@ -80,9 +89,13 @@
         <%-- TODO: Classes. --%>
         <div class="col-10">
             <select class="species_group" name="species_group" id="species_group">
-                <option value=""><g:message code="advancedsearch.table04col01.option.label" default="-- select a species group --" /></option>
+                <option value="">
+                    <g:message code="advancedsearch.table04col01.option.label" default="-- select a species group --" />
+                </option>
                 <g:each var="group" in="${request.getAttribute("species_group")}">
-                    <option value="${group.key}">${group.value}</option>
+                    <option value="${group.key}">
+                        ${group.value}
+                    </option>
                 </g:each>
             </select>
         </div>
@@ -138,7 +151,7 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title06" default="Find records from the following regions" /></b>
+            <g:message code="advancedsearch.title06" default="Find records from the following regions" />
         </legend>
 
         <label class="col-2">
@@ -222,9 +235,13 @@
 
             <div class="col-10">
                 <select class="lga form-control" name="lga" id="lga">
-                    <option value=""><g:message code="advancedsearch.table06col05.option.label" default="-- select local government area--" /></option>
+                    <option value="">
+                        <g:message code="advancedsearch.table06col05.option.label" default="-- select local government area--" />
+                    </option>
                     <g:each var="region" in="${request.getAttribute("cl959").sort()}">
-                        <option value="${region.key}">${region.value}</option>
+                        <option value="${region.key}">
+                            ${region.value}
+                        </option>
                     </g:each>
                 </select>
             </div>
@@ -295,7 +312,9 @@
                 <select class="dataset bscombobox" name="dataset" id="dataset">
                     <option value=""></option>
                     <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
-                        <option value="${region.key}">${region.value}</option>
+                        <option value="${region.key}">
+                            ${region.value}
+                        </option>
                     </g:each>
                 </select>
             </div>
@@ -304,7 +323,7 @@
         <div class="form-group row">
             <label class="col-2">
                 <g:message code="advancedsearch.table09col01.title" default="Catalogue Number" />
-            </label/>
+            </label>
 
             <div class="col-10">
                 <input type="text" name="catalogue_number" id="catalogue_number" class="dataset form-control" placeholder="" value="" />
@@ -319,7 +338,7 @@
             <div class="col-10">
                 <input type="text" name="record_number" id="record_number" class="dataset form-control" placeholder="" value="" />
             </div>
-        </dig>
+        </div>
     </fieldset>
 
     <div class="form-group row">
@@ -354,7 +373,7 @@
 
     <div class="row">
         <input type="submit" value=<g:message code="advancedsearch.button.submit" default="Search" /> class="erk-button erk-button--light" />
-        %{-- XXX --}%
+        <%-- XXX --%>
         &nbsp;&nbsp;
         <input type="reset" value="Clear all" id="clearAll" class="erk-button erk-button--light" onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;" />
     </div>

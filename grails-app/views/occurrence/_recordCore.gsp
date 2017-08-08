@@ -1,13 +1,15 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
-%{--<% Map fieldsMap = new HashMap(); pageContext.setAttribute("fieldsMap", fieldsMap); %>--}%
+<%--<% Map fieldsMap = new HashMap(); pageContext.setAttribute("fieldsMap", fieldsMap); %>--%>
 <%-- g:set target="${fieldsMap}" property="aKey" value="value for a key" /--%>
-<g:set var="fieldsMap" value="${[:]}"/>
+<g:set var="fieldsMap" value="${[:]}" />
 
 <div>
     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: record?.raw?.attribution?.dataResourceUid]" />
 
-    <h2><g:message code="recordcore.occurencedataset.title" default="Dataset"/></h2>
+    <h2>
+        <g:message code="recordcore.occurencedataset.title" default="Dataset" />
+    </h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped " id="datasetTable">
         <!-- Data Provider -->
@@ -51,7 +53,7 @@
                 ${fieldsMap.put("institutionUid", true)}
                 ${fieldsMap.put("institutionName", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.institutionUid}">
-                ${record.processed.attribution.institutionName}
+                    ${record.processed.attribution.institutionName}
                 </a>
             </g:if>
             <g:else>
@@ -60,8 +62,12 @@
             </g:else>
             <g:if test="${record.raw.occurrence.institutionCode}">
                 ${fieldsMap.put("institutionCode", true)}
-                <g:if test="${record.processed.attribution.institutionName}"><br/></g:if>
-                <span class="originalValue"><g:message code="recordcore.span01" default="Supplied institution code"/> "${record.raw.occurrence.institutionCode}"</span>
+                <g:if test="${record.processed.attribution.institutionName}">
+                    <br />
+                </g:if>
+                <span class="originalValue">
+                    <g:message code="recordcore.span01" default="Supplied institution code" /> "${record.raw.occurrence.institutionCode}"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -71,6 +77,7 @@
                 ${fieldsMap.put("collectionUid", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.collectionUid}">
             </g:if>
+
             <g:if test="${record.processed.attribution.collectionName}">
                 ${fieldsMap.put("collectionName", true)}
                 ${record.processed.attribution.collectionName}
@@ -79,13 +86,19 @@
                 ${fieldsMap.put("collectionName", true)}
                 ${collectionName}
             </g:elseif>
+
             <g:if test="${record.processed.attribution.collectionUid && collectionsWebappContext}">
                 </a>
             </g:if>
+
             <g:if test="${false && record.raw.occurrence.collectionCode}">
                 ${fieldsMap.put("collectionCode", true)}
-                <g:if test="${collectionName || record.processed.attribution.collectionName}"><br/></g:if>
-                <span class="originalValue" style="display:none"><g:message code="recordcore.span02" default="Supplied collection code"/> "${record.raw.occurrence.collectionCode}"</span>
+                <g:if test="${collectionName || record.processed.attribution.collectionName}">
+                    <br />
+                </g:if>
+                <span class="originalValue" style="display:none">
+                    <g:message code="recordcore.span02" default="Supplied collection code" /> "${record.raw.occurrence.collectionCode}"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -94,7 +107,10 @@
             ${fieldsMap.put("catalogNumber", true)}
             <g:if test="${record.processed.occurrence.catalogNumber && record.raw.occurrence.catalogNumber}">
                 ${record.processed.occurrence.catalogNumber}
-                <br/><span class="originalValue"><g:message code="recordcore.span03" default="Supplied as"/> "${record.raw.occurrence.catalogNumber}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.span03" default="Supplied as" /> "${record.raw.occurrence.catalogNumber}"
+                </span>
             </g:if>
             <g:else>
                 ${record.raw.occurrence.catalogNumber}
@@ -112,15 +128,18 @@
             ${fieldsMap.put("occurrenceID", true)}
             <g:if test="${record.processed.occurrence.occurrenceID && record.raw.occurrence.occurrenceID}">
                 <%-- links removed as per issue #6 (github)  --%>
-                %{--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"><a href="${record.processed.occurrence.occurrenceID}" target="_blank"></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"><a href="${record.processed.occurrence.occurrenceID}" target="_blank"></g:if>--%>
                 ${record.processed.occurrence.occurrenceID}
-                %{--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"></a></g:if>--}%
-                <br/><span class="originalValue">Supplied as "${record.raw.occurrence.occurrenceID}"</span>
+                <%--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"></a></g:if>--%>
+                <br />
+                <span class="originalValue">
+                    Supplied as "${record.raw.occurrence.occurrenceID}"
+                </span>
             </g:if>
             <g:else>
-                %{--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"><a href="${record.raw.occurrence.occurrenceID}" target="_blank"></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"><a href="${record.raw.occurrence.occurrenceID}" target="_blank"></g:if>--%>
                 ${record.raw.occurrence.occurrenceID}
-                %{--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"></a></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"></a></g:if>--%>
             </g:else>
         </alatag:occurrenceTableRow>
 
@@ -133,20 +152,23 @@
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="basisOfRecord" fieldName="Basis of record">
             ${fieldsMap.put("basisOfRecord", true)}
             <g:if test="${record.processed.occurrence.basisOfRecord && record.raw.occurrence.basisOfRecord && record.processed.occurrence.basisOfRecord == record.raw.occurrence.basisOfRecord}">
-                <g:message code="${record.processed.occurrence.basisOfRecord}"/>
+                <g:message code="${record.processed.occurrence.basisOfRecord}" />
             </g:if>
             <g:elseif test="${record.processed.occurrence.basisOfRecord && record.raw.occurrence.basisOfRecord}">
-                <g:message code="${record.processed.occurrence.basisOfRecord}"/>
-                <br/><span class="originalValue"><g:message code="recordcore.span04" default="Supplied basis"/> "${record.raw.occurrence.basisOfRecord}"</span>
+                <g:message code="${record.processed.occurrence.basisOfRecord}" />
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.span04" default="Supplied basis" /> "${record.raw.occurrence.basisOfRecord}"
+                </span>
             </g:elseif>
             <g:elseif test="${record.processed.occurrence.basisOfRecord}">
-                <g:message code="${record.processed.occurrence.basisOfRecord}"/>
+                <g:message code="${record.processed.occurrence.basisOfRecord}" />
             </g:elseif>
             <g:elseif test="${! record.raw.occurrence.basisOfRecord}">
-                <g:message code="recordcore.span04.01" default="Not supplied"/>
+                <g:message code="recordcore.span04.01" default="Not supplied" />
             </g:elseif>
             <g:else>
-                <g:message code="${record.raw.occurrence.basisOfRecord}"/>
+                <g:message code="${record.raw.occurrence.basisOfRecord}" />
             </g:else>
         </alatag:occurrenceTableRow>
 
@@ -176,22 +198,34 @@
 
         <!-- Collector/Observer -->
         <g:set var="collectorNameLabel">
-            <g:if test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'specimen')}"><g:message code="recordcore.collectornamelabel.01" default="Collector"/></g:if>
-            <g:elseif test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'observation')}"><g:message code="recordcore.collectornamelabel.02" default="Observer"/></g:elseif>
-            <g:else><g:message code="recordcore.collectornamelabel.03" default="Collector/Observer"/></g:else>
+            <g:if test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'specimen')}">
+                <g:message code="recordcore.collectornamelabel.01" default="Collector" />
+            </g:if>
+            <g:elseif test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'observation')}">
+                <g:message code="recordcore.collectornamelabel.02" default="Observer" />
+            </g:elseif>
+            <g:else>
+                <g:message code="recordcore.collectornamelabel.03" default="Collector/Observer" />
+            </g:else>
         </g:set>
 
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="collectorName" fieldName="${collectorNameLabel}">
             <g:set var="recordedByField">
-                <g:if test="${record.raw.occurrence.recordedBy}"><g:message code="recordcore.recorededbyfield.01" default="recordedBy"/></g:if>
-                <g:elseif test="${record.raw.occurrence.userId}"><g:message code="recordcore.recorededbyfield.02" default="userId"/></g:elseif>
-                <g:else>recordedBy</g:else>
+                <g:if test="${record.raw.occurrence.recordedBy}">
+                    <g:message code="recordcore.recorededbyfield.01" default="recordedBy" />
+                </g:if>
+                <g:elseif test="${record.raw.occurrence.userId}">
+                    <g:message code="recordcore.recorededbyfield.02" default="userId" />
+                </g:elseif>
+                <g:else>
+                    recordedBy
+                </g:else>
             </g:set>
 
-            <g:set var="recordedByField" value="${recordedByField.trim()}"/>
+            <g:set var="recordedByField" value="${recordedByField.trim()}" />
             ${fieldsMap.put(recordedByField, true)}
-            <g:set var="rawRecordedBy" value="${record.raw.occurrence[recordedByField]}"/>
-            <g:set var="proRecordedBy" value="${record.processed.occurrence[recordedByField]}"/>
+            <g:set var="rawRecordedBy" value="${record.raw.occurrence[recordedByField]}" />
+            <g:set var="proRecordedBy" value="${record.processed.occurrence[recordedByField]}" />
 
             <g:if test="${record.processed.occurrence[recordedByField] && record.raw.occurrence[recordedByField] && record.processed.occurrence[recordedByField] == record.raw.occurrence[recordedByField]}">
                     ${proRecordedBy}
@@ -199,7 +233,10 @@
             <g:elseif test="${record.processed.occurrence[recordedByField] && record.raw.occurrence[recordedByField]}">
                 ${proRecordedBy}
                 <g:if test="${proRecordedBy != rawRecordedBy}">
-                    <br/><span class="originalValue"><g:message code="recordcore.span05" default="Supplied as"/> "${rawRecordedBy}"</span>
+                    <br />
+                    <span class="originalValue">
+                        <g:message code="recordcore.span05" default="Supplied as" /> "${rawRecordedBy}"
+                    </span>
                 </g:if>
             </g:elseif>
             <g:elseif test="${record.processed.occurrence[recordedByField]}">
@@ -213,14 +250,20 @@
         <!-- ALA user id -->
         <g:if test="${record.raw.occurrence.userId}">
             <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="userId" fieldNameIsMsgCode="true" fieldName="Atlas User">
-                <a href="${grailsApplication.config.sightings.baseUrl}/spotter/${record.raw.occurrence.userId}">${record.alaUserName}</a>
+                <a href="${grailsApplication.config.sightings.baseUrl}/spotter/${record.raw.occurrence.userId}">
+                    ${record.alaUserName}
+                </a>
             </alatag:occurrenceTableRow>
         </g:if>
 
         <!-- Record Number -->
         <g:set var="recordNumberLabel">
-            <g:if test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'specimen')}"><g:message code="recordcore.recordnumberlabel.01" default="Collecting number"/></g:if>
-            <g:else><g:message code="recordcore.recordnumberlabel.02" default="Record number"/></g:else>
+            <g:if test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'specimen')}">
+                <g:message code="recordcore.recordnumberlabel.01" default="Collecting number" />
+            </g:if>
+            <g:else>
+                <g:message code="recordcore.recordnumberlabel.02" default="Record number" />
+            </g:else>
         </g:set>
 
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="recordNumber" fieldName="${recordNumberLabel}">
@@ -228,18 +271,20 @@
 
             <g:if test="${record.processed.occurrence.recordNumber && record.raw.occurrence.recordNumber}">
                 ${record.processed.occurrence.recordNumber}
-                <br/><span class="originalValue"><g:message code="recordcore.span06" default="Supplied as"/> "${record.raw.occurrence.recordNumber}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.span06" default="Supplied as" /> "${record.raw.occurrence.recordNumber}"
+                </span>
             </g:if>
             <g:else>
                 <g:if test="${record.raw.occurrence.recordNumber && StringUtils.startsWith(record.raw.occurrence.recordNumber,'http://')}">
                     <a href="${record.raw.occurrence.recordNumber}">
-                </g:if>
-
-                ${record.raw.occurrence.recordNumber}
-
-                <g:if test="${record.raw.occurrence.recordNumber && StringUtils.startsWith(record.raw.occurrence.recordNumber,'http://')}">
+                        ${record.raw.occurrence.recordNumber}
                     </a>
-                </g:if>
+                </if>
+                <g:else>
+                    ${record.raw.occurrence.recordNumber}
+                </g:else>
             </g:else>
         </alatag:occurrenceTableRow>
 
@@ -247,13 +292,18 @@
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="typeStatus" fieldName="Type status">
             ${fieldsMap.put("typeStatus", true)}
             <g:if test="${record.processed.identification.typeStatus}">
-                <span style="text-transform: capitalize;">${record.processed.identification.typeStatus}</span>
+                <span style="text-transform: capitalize;">
+                    ${record.processed.identification.typeStatus}
+                </span>
             </g:if>
             <g:else>
                 ${record.raw.identification.typeStatus}
             </g:else>
             <g:if test="${record.processed.identification.typeStatus && record.raw.identification.typeStatus && (record.processed.identification.typeStatus.toLowerCase() != record.raw.identification.typeStatus.toLowerCase())}">
-                <br/><span class="originalValue"><g:message code="recordcore.st.01" default="Supplied as"/> "${record.raw.identification.typeStatus}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.st.01" default="Supplied as" /> "${record.raw.identification.typeStatus}"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -303,7 +353,9 @@
         <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="occurrenceDetails" fieldName="More details">
             ${fieldsMap.put("occurrenceDetails", true)}
             <g:if test="${record.raw.occurrence.occurrenceDetails && StringUtils.startsWith(record.raw.occurrence.occurrenceDetails,'http://')}">
-                <a href="${record.raw.occurrence.occurrenceDetails}" target="_blank">${record.raw.occurrence.occurrenceDetails}</a>
+                <a href="${record.raw.occurrence.occurrenceDetails}" target="_blank">
+                    ${record.raw.occurrence.occurrenceDetails}
+                </a>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -313,25 +365,25 @@
             ${fieldsMap.put("associatedOccurrences", true)}
 
             <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="duplicationStatus" fieldName="Associated Occurrence Status">
-                <g:message code="duplication.${record.processed.occurrence.duplicationStatus}"/>
+                <g:message code="duplication.${record.processed.occurrence.duplicationStatus}" />
             </alatag:occurrenceTableRow>
 
             <!-- Now handle the associatedOccurrences -->
             <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="associatedOccurrences" fieldName="Inferred Associated Occurrences">
                 <g:if test="${record.processed.occurrence.duplicationStatus == 'R'}">
-                    <g:message code="recordcore.iao.01" default="This record has"/>
+                    <g:message code="recordcore.iao.01" default="This record has" />
                     ${record.processed.occurrence.associatedOccurrences.tokenize("|").size() } inferred associated occurrences
                 </g:if>
                 <g:else>
-                    <g:message code="recordcore.iao.02" default="The occurrence is associated with a representative record"/>.
+                    <g:message code="recordcore.iao.02" default="The occurrence is associated with a representative record" />.
                 </g:else>
 
-                <br>
+                <br />
 
-                <g:message code="recordcore.iao.03" default="For more information see"/>
+                <g:message code="recordcore.iao.03" default="For more information see" />
 
                 <a href="#inferredOccurrenceDetails">
-                    <g:message code="recordcore.iao.04" default="Inferred associated occurrence details"/>
+                    <g:message code="recordcore.iao.04" default="Inferred associated occurrence details" />
                 </a>
             </alatag:occurrenceTableRow>
 
@@ -343,15 +395,15 @@
         </g:if>
 
         <!-- output any tags not covered already (excluding those in dwcExcludeFields) -->
-        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Attribution" exclude="${dwcExcludeFields}"/>
-        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Occurrence" exclude="${dwcExcludeFields}"/>
-        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Identification" exclude="${dwcExcludeFields}"/>
+        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Attribution" exclude="${dwcExcludeFields}" />
+        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Occurrence" exclude="${dwcExcludeFields}" />
+        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Identification" exclude="${dwcExcludeFields}" />
     </table>
 </div>
 
 <div>
     <h2>
-        <g:message code="recordcore.occurenceevent.title" default="Event"/>
+        <g:message code="recordcore.occurenceevent.title" default="Event" />
     </h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped " id="eventTable">
@@ -370,45 +422,56 @@
         <!-- Record Date -->
         <g:set var="occurrenceDateLabel">
             <g:if test="${StringUtils.containsIgnoreCase(record.processed.occurrence.basisOfRecord, 'specimen')}">
-                <g:message code="recordcore.occurrencedatelabel.01" default="Collecting date"/>
+                <g:message code="recordcore.occurrencedatelabel.01" default="Collecting date" />
             </g:if>
             <g:else>
-                <g:message code="recordcore.occurrencedatelabel.02" default="Record date"/>
+                <g:message code="recordcore.occurrencedatelabel.02" default="Record date" />
             </g:else>
         </g:set>
 
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="occurrenceDate" fieldName="${occurrenceDateLabel}">
             ${fieldsMap.put("eventDate", true)}
             <g:if test="${!record.processed.event.eventDate && record.raw.event.eventDate && !record.raw.event.year && !record.raw.event.month && !record.raw.event.day}">
-                [<g:message code="recordcore.occurrencedatelabel.03" default="date not supplied"/>]
+                [<g:message code="recordcore.occurrencedatelabel.03" default="date not supplied" />]
             </g:if>
 
             <g:if test="${record.processed.event.eventDate}">
-                <span class="isoDate">${record.processed.event.eventDate}</span>
+                <span class="isoDate">
+                    ${record.processed.event.eventDate}
+                </span>
             </g:if>
 
             <g:if test="${!record.processed.event.eventDate && (record.processed.event.year || record.processed.event.month || record.processed.event.day)}">
-                <g:message code="recordcore.occurrencedatelabel.04" default="Year"/>: ${record.processed.event.year},
-                <g:message code="recordcore.occurrencedatelabel.05" default="Month"/>: ${record.processed.event.month},
-                <g:message code="recordcore.occurrencedatelabel.06" default="Day"/>: ${record.processed.event.day}
+                <g:message code="recordcore.occurrencedatelabel.04" default="Year" />: ${record.processed.event.year},
+                <g:message code="recordcore.occurrencedatelabel.05" default="Month" />: ${record.processed.event.month},
+                <g:message code="recordcore.occurrencedatelabel.06" default="Day" />: ${record.processed.event.day}
             </g:if>
 
             <g:if test="${record.processed.event.eventDate && record.raw.event.eventDate && record.raw.event.eventDate != record.processed.event.eventDate}">
-                <br/><span class="originalValue"><g:message code="recordcore.occurrencedatelabel.07" default="Supplied date"/> "${record.raw.event.eventDate}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.occurrencedatelabel.07" default="Supplied date" /> "${record.raw.event.eventDate}"
+                </span>
             </g:if>
             <g:elseif test="${record.raw.event.year || record.raw.event.month || record.raw.event.day}">
-                <br>
+                <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.occurrencedatelabel.08" default="Supplied as"/>
-                    <g:if test="${record.raw.event.year}"><g:message code="recordcore.occurrencedatelabel.09" default="year"/>:${record.raw.event.year}&nbsp;</g:if>
-                    <g:if test="${record.raw.event.month}"><g:message code="recordcore.occurrencedatelabel.10" default="month"/>:${record.raw.event.month}&nbsp;</g:if>
-                    <g:if test="${record.raw.event.day}"><g:message code="recordcore.occurrencedatelabel.11" default="day"/>:${record.raw.event.day}&nbsp;</g:if>
+                    <g:message code="recordcore.occurrencedatelabel.08" default="Supplied as" />
+                    <g:if test="${record.raw.event.year}">
+                        <g:message code="recordcore.occurrencedatelabel.09" default="year" />:${record.raw.event.year}&nbsp;
+                    </g:if>
+                    <g:if test="${record.raw.event.month}">
+                        <g:message code="recordcore.occurrencedatelabel.10" default="month" />:${record.raw.event.month}&nbsp;
+                    </g:if>
+                    <g:if test="${record.raw.event.day}">
+                        <g:message code="recordcore.occurrencedatelabel.11" default="day" />:${record.raw.event.day}&nbsp;
+                    </g:if>
                 </span>
             </g:elseif>
             <g:elseif test="${record.raw.event.eventDate != record.processed.event.eventDate && record.raw.event.eventDate}">
-                <br>
+                <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.occurrencedatelabel.12" default="Supplied date"/> "${record.raw.event.eventDate}"
+                    <g:message code="recordcore.occurrencedatelabel.12" default="Supplied date" /> "${record.raw.event.eventDate}"
                 </span>
             </g:elseif>
         </alatag:occurrenceTableRow>
@@ -419,13 +482,13 @@
             ${record.raw.occurrence.samplingProtocol}
         </alatag:occurrenceTableRow>
 
-        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Event" exclude="${dwcExcludeFields}"/>
+        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Event" exclude="${dwcExcludeFields}" />
     </table>
 </div>
 
 <div>
     <h2>
-        <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy"/>
+        <g:message code="recordcore.occurencetaxonomy.title" default="Taxonomy" />
     </h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped " id="taxonomyTable">
@@ -444,16 +507,22 @@
                 <a href="${taxaLinks.baseUrl}${record.processed.classification.taxonConceptID}">
             </g:if>
 
-            <g:if test="${record.processed.classification.taxonRankID?.toInteger() > 5000}"><i></g:if>
+            <g:if test="${record.processed.classification.taxonRankID?.toInteger() > 5000}">
+                <i>
+            </g:if>
+
             ${record.processed.classification.scientificName?:''}
-            <g:if test="${record.processed.classification.taxonRankID?.toInteger() > 5000}"></i></g:if>
+
+            <g:if test="${record.processed.classification.taxonRankID?.toInteger() > 5000}">
+                </i>
+            </g:if>
 
             <g:if test="${taxaLinks.baseUrl && record.processed.classification.taxonConceptID}">
                 </a>
             </g:if>
 
             <g:if test="${record.processed.classification.scientificName && record.raw.classification.scientificName && (record.processed.classification.scientificName.toLowerCase() != record.raw.classification.scientificName.toLowerCase())}">
-                <br>
+                <br />
 
                 <span class="originalValue">
                     Supplied scientific name "${record.raw.classification.scientificName}"
@@ -489,7 +558,7 @@
             </g:if>
 
             <g:if test="${record.processed.classification.originalNameUsage && record.raw.classification.originalNameUsage && (record.processed.classification.originalNameUsage.toLowerCase() != record.raw.classification.originalNameUsage.toLowerCase())}">
-                <br>
+                <br />
 
                 <span class="originalValue">
                     Supplied as "${record.raw.classification.originalNameUsage}"
@@ -503,20 +572,24 @@
             ${fieldsMap.put("taxonRankID", true)}
 
             <g:if test="${record.processed.classification.taxonRank}">
-                <span style="text-transform: capitalize;">${record.processed.classification.taxonRank}</span>
+                <span style="text-transform: capitalize;">
+                    ${record.processed.classification.taxonRank}
+                </span>
             </g:if>
             <g:elseif test="${!record.processed.classification.taxonRank && record.raw.classification.taxonRank}">
-                <span style="text-transform: capitalize;">${record.raw.classification.taxonRank}</span>
+                <span style="text-transform: capitalize;">
+                    ${record.raw.classification.taxonRank}
+                </span>
             </g:elseif>
             <g:else>
-                [<g:message code="recordcore.tr01" default="rank not known"/>]
+                [<g:message code="recordcore.tr01" default="rank not known" />]
             </g:else>
 
             <g:if test="${record.processed.classification.taxonRank && record.raw.classification.taxonRank  && (record.processed.classification.taxonRank.toLowerCase() != record.raw.classification.taxonRank.toLowerCase())}">
-                <br>
+                <br />
 
                 <span class="originalValue">
-                    <g:message code="recordcore.tr02" default="Supplied as"/>
+                    <g:message code="recordcore.tr02" default="Supplied as" />
                     "${record.raw.classification.taxonRank}"
                 </span>
             </g:if>
@@ -535,10 +608,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.vernacularName && record.raw.classification.vernacularName && (record.processed.classification.vernacularName.toLowerCase() != record.raw.classification.vernacularName.toLowerCase())}">
-                <br>
+                <br />
 
                 <span class="originalValue">
-                    <g:message code="recordcore.cn.01" default="Supplied common name"/>
+                    <g:message code="recordcore.cn.01" default="Supplied common name" />
                     "${record.raw.classification.vernacularName}"
                 </span>
             </g:if>
@@ -568,7 +641,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.kingdom && record.raw.classification.kingdom && (record.processed.classification.kingdom.toLowerCase() != record.raw.classification.kingdom.toLowerCase())}">
-                <br/><span class="originalValue"><g:message code="recordcore.kingdom.01" default="Supplied as"/> "${record.raw.classification.kingdom}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.kingdom.01" default="Supplied as" /> "${record.raw.classification.kingdom}"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -596,10 +672,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.phylum && record.raw.classification.phylum && (record.processed.classification.phylum.toLowerCase() != record.raw.classification.phylum.toLowerCase())}">
-                <br>
+                <br />
 
                 <span class="originalValue">
-                    <g:message code="recordcore.phylum.01" default="Supplied as"/>
+                    <g:message code="recordcore.phylum.01" default="Supplied as" />
                     "${record.raw.classification.phylum}"
                 </span>
             </g:if>
@@ -629,10 +705,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.classs && record.raw.classification.classs && (record.processed.classification.classs.toLowerCase() != record.raw.classification.classs.toLowerCase())}">
-                <br>
+                <br />
 
                 <span classs="originalValue">
-                    <g:message code="recordcore.class.01" default="Supplied as"/>
+                    <g:message code="recordcore.class.01" default="Supplied as" />
                     "${record.raw.classification.classs}"
                 </span>
             </g:if>
@@ -662,7 +738,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.order && record.raw.classification.order && (record.processed.classification.order.toLowerCase() != record.raw.classification.order.toLowerCase())}">
-                <br/><span class="originalValue"><g:message code="recordcore.order.01" default="Supplied as"/> "${record.raw.classification.order}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.order.01" default="Supplied as" /> "${record.raw.classification.order}"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -690,7 +769,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.family && record.raw.classification.family && (record.processed.classification.family.toLowerCase() != record.raw.classification.family.toLowerCase())}">
-                <br/><span class="originalValue"><g:message code="recordcore.family.01" default="Supplied as"/> "${record.raw.classification.family}"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.family.01" default="Supplied as" /> "${record.raw.classification.family}"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -706,11 +788,15 @@
             </g:if>
 
             <g:if test="${record.processed.classification.genus}">
-                <i>${record.processed.classification.genus}</i>
+                <i>
+                    ${record.processed.classification.genus}
+                </i>
             </g:if>
 
             <g:if test="${!record.processed.classification.genus && record.raw.classification.genus}">
-                <i>${record.raw.classification.genus}</i>
+                <i>
+                    ${record.raw.classification.genus}
+                </i>
             </g:if>
 
             <g:if test="${taxaLinks.baseUrl && record.processed.classification.genusID}">
@@ -718,7 +804,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.genus && record.raw.classification.genus && (record.processed.classification.genus.toLowerCase() != record.raw.classification.genus.toLowerCase())}">
-                <br/><span class="originalValue"><g:message code="recordcore.genus.01" default="Supplied as"/> "<i>${record.raw.classification.genus}</i>"</span>
+                <br />
+                <span class="originalValue">
+                    <g:message code="recordcore.genus.01" default="Supplied as" /> "<i>${record.raw.classification.genus}</i>"
+                </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -735,13 +824,19 @@
             </g:if>
 
             <g:if test="${record.processed.classification.species}">
-                <i>${record.processed.classification.species}</i>
+                <i>
+                    ${record.processed.classification.species}
+                </i>
             </g:if>
             <g:elseif test="${record.raw.classification.species}">
-                <i>${record.raw.classification.species}</i>
+                <i>
+                    ${record.raw.classification.species}
+                </i>
             </g:elseif>
             <g:elseif test="${record.raw.classification.specificEpithet && record.raw.classification.genus}">
-                <i>${record.raw.classification.genus}&nbsp;${record.raw.classification.specificEpithet}</i>
+                <i>
+                    ${record.raw.classification.genus}&nbsp;${record.raw.classification.specificEpithet}
+                </i>
             </g:elseif>
 
             <g:if test="${taxaLinks.baseUrl && record.processed.classification.speciesID}">
@@ -749,7 +844,10 @@
             </g:if>
 
             <g:if test="${record.processed.classification.species && record.raw.classification.species && (record.processed.classification.species.toLowerCase() != record.raw.classification.species.toLowerCase())}">
-                <br/><span class="originalValue"><g:message code="recordcore.species.01" default="Supplied as"/> "<i>${record.raw.classification.species}</i>"</span>
+                <br />
+                    <span class="originalValue">
+                        <g:message code="recordcore.species.01" default="Supplied as" /> "<i>${record.raw.classification.species}</i>"
+                    </span>
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -757,13 +855,18 @@
         <g:if test="${record.raw.occurrence.associatedTaxa}">
             <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="associatedTaxa" fieldName="Associated species">
                 ${fieldsMap.put("associatedTaxa", true)}
-                <g:set var="colon" value=":"/>
+                <g:set var="colon" value=":" />
                 <g:if test="${taxaLinks.baseUrl && StringUtils.contains(record.raw.occurrence.associatedTaxa,colon)}">
-                    <g:set var="associatedName" value="${StringUtils.substringAfter(record.raw.occurrence.associatedTaxa,colon)}"/>
-                    ${StringUtils.substringBefore(record.raw.occurrence.associatedTaxa,colon) }: <a href="${taxaLinks.baseUrl}${StringUtils.replace(associatedName, '  ', ' ')}">${associatedName}</a>
+                    <g:set var="associatedName" value="${StringUtils.substringAfter(record.raw.occurrence.associatedTaxa,colon)}" />
+                    ${StringUtils.substringBefore(record.raw.occurrence.associatedTaxa,colon) }:
+                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(associatedName, '  ', ' ')}">
+                        ${associatedName}
+                    </a>
                 </g:if>
                 <g:elseif test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(record.raw.occurrence.associatedTaxa, '  ', ' ')}">${record.raw.occurrence.associatedTaxa}</a>
+                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(record.raw.occurrence.associatedTaxa, '  ', ' ')}">
+                        ${record.raw.occurrence.associatedTaxa}
+                    </a>
                 </g:elseif>
             </alatag:occurrenceTableRow>
         </g:if>
@@ -771,9 +874,9 @@
         <g:if test="${record.processed.classification.taxonomicIssue}">
             <!-- Taxonomic issues -->
             <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="taxonomicIssue" fieldName="Taxonomic issues">
-                %{--<alatag:formatJsonArray text="${record.processed.classification.taxonomicIssue}"/>--}%
+                <%--<alatag:formatJsonArray text="${record.processed.classification.taxonomicIssue}" />--%>
                 <g:each var="issue" in="${record.processed.classification.taxonomicIssue}">
-                    <g:message code="${issue}"/>
+                    <g:message code="${issue}" />
                 </g:each>
             </alatag:occurrenceTableRow>
         </g:if>
@@ -781,21 +884,21 @@
         <g:if test="${record.processed.classification.nameMatchMetric}">
             <!-- Taxonomic issues -->
             <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="nameMatchMetric" fieldName="Name match metric">
-                <g:message code="${record.processed.classification.nameMatchMetric}" default="${record.processed.classification.nameMatchMetric}"/>
-                <br/>
-                <g:message code="nameMatch.${record.processed.classification.nameMatchMetric}" default=""/>
+                <g:message code="${record.processed.classification.nameMatchMetric}" default="${record.processed.classification.nameMatchMetric}" />
+                <br />
+                <g:message code="nameMatch.${record.processed.classification.nameMatchMetric}" default="" />
             </alatag:occurrenceTableRow>
         </g:if>
 
         <!-- output any tags not covered already (excluding those in dwcExcludeFields) -->
-        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Classification" exclude="${dwcExcludeFields}"/>
+        <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Classification" exclude="${dwcExcludeFields}" />
     </table>
 </div>
 
 <g:if test="${compareRecord?.Location}">
     <div>
         <h2>
-            <g:message code="recordcore.occurencegeospatial.title" default="Geospatial"/>
+            <g:message code="recordcore.occurencegeospatial.title" default="Geospatial" />
         </h2>
 
         <table class="occurrenceTable table table-sm table-bordered table-striped " id="geospatialTable">
@@ -812,13 +915,16 @@
                     ${record.processed.location.country}
                 </g:if>
                 <g:elseif test="${record.processed.location.countryCode}">
-                    <g:message code="country.${record.processed.location.countryCode}"/>
+                    <g:message code="country.${record.processed.location.countryCode}" />
                 </g:elseif>
                 <g:else>
                     ${record.raw.location.country}
                 </g:else>
                 <g:if test="${record.processed.location.country && record.raw.location.country && (record.processed.location.country.toLowerCase() != record.raw.location.country.toLowerCase())}">
-                    <br/><span class="originalValue"><g:message code="recordcore.st.01" default="Supplied as"/> "${record.raw.location.country}"</span>
+                    <br />
+                    <span class="originalValue">
+                        <g:message code="recordcore.st.01" default="Supplied as" /> "${record.raw.location.country}"
+                    </span>
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -832,7 +938,10 @@
                         <%--</a>--%>
                 </g:if>
                 <g:if test="${record.processed.location.stateProvince && record.raw.location.stateProvince && (record.processed.location.stateProvince.toLowerCase() != record.raw.location.stateProvince.toLowerCase())}">
-                    <br/><span class="originalValue"><g:message code="recordcore.locality.01" default="Supplied as"/>: "${record.raw.location.stateProvince}"</span>
+                    <br />
+                        <span class="originalValue">
+                            <g:message code="recordcore.locality.01" default="Supplied as" />: "${record.raw.location.stateProvince}"
+                        </span>
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -857,7 +966,10 @@
                     ${record.raw.location.locality}
                 </g:if>
                 <g:if test="${record.processed.location.locality && record.raw.location.locality && (record.processed.location.locality.toLowerCase() != record.raw.location.locality.toLowerCase())}">
-                    <br/><span class="originalValue">Supplied as: "${record.raw.location.locality}"</span>
+                    <br />
+                    <span class="originalValue">
+                        Supplied as: "${record.raw.location.locality}"
+                    </span>
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -877,7 +989,10 @@
                 ${fieldsMap.put("habitat", true)}
                 ${record.processed.location.habitat}
                 <g:if test="${record.raw.location.habitat && record.raw.location.habitat != record.processed.location.habitat}">
-                    <br/><span class="originalValue"><g:message code="recordcore.span03" default="Supplied as"/> "${record.raw.location.habitat}"</span>
+                    <br />
+                    <span class="originalValue">
+                        <g:message code="recordcore.span03" default="Supplied as" /> "${record.raw.location.habitat}"
+                    </span>
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -888,7 +1003,11 @@
                     ${record.raw.location.decimalLatitude}
                 </g:if>
                 <g:elseif test="${record.raw.location.decimalLatitude && record.raw.location.decimalLatitude != record.processed.location.decimalLatitude}">
-                    ${record.processed.location.decimalLatitude}<br/><span class="originalValue">Supplied as: "${record.raw.location.decimalLatitude}"</span>
+                    ${record.processed.location.decimalLatitude}
+                    <br />
+                    <span class="originalValue">
+                        Supplied as: "${record.raw.location.decimalLatitude}"
+                    </span>
                 </g:elseif>
                 <g:elseif test="${record.processed.location.decimalLatitude}">
                     ${record.processed.location.decimalLatitude}
@@ -905,7 +1024,11 @@
                     ${record.raw.location.decimalLongitude}
                 </g:if>
                 <g:elseif test="${record.raw.location.decimalLongitude && record.raw.location.decimalLongitude != record.processed.location.decimalLongitude}">
-                    ${record.processed.location.decimalLongitude}<br/><span class="originalValue">Supplied as: "${record.raw.location.decimalLongitude}"</span>
+                    ${record.processed.location.decimalLongitude}
+                    <br />
+                    <span class="originalValue">
+                        Supplied as: "${record.raw.location.decimalLongitude}"
+                    </span>
                 </g:elseif>
                 <g:elseif test="${record.processed.location.decimalLongitude}">
                     ${record.processed.location.decimalLongitude}
@@ -922,7 +1045,11 @@
                     ${record.raw.location.geodeticDatum}
                 </g:if>
                 <g:elseif test="${record.raw.location.geodeticDatum && record.raw.location.geodeticDatum != record.processed.location.geodeticDatum}">
-                    ${record.processed.location.geodeticDatum}<br/><span class="originalValue">Supplied datum: "${record.raw.location.geodeticDatum}"</span>
+                    ${record.processed.location.geodeticDatum}
+                    <br />
+                    <span class="originalValue">
+                        Supplied datum: "${record.raw.location.geodeticDatum}"
+                    </span>
                 </g:elseif>
                 <g:elseif test="${record.processed.location.geodeticDatum}">
                     ${record.processed.location.geodeticDatum}
@@ -1021,7 +1148,12 @@
                     ${record.processed.occurrence.dataGeneralizations}
                 </g:if>
                 <g:elseif test="${record.processed.occurrence.dataGeneralizations}">
-                    <g:message code="recordcore.cg.label" default="Due to sensitivity concerns, the coordinates of this record have been generalised"/>: &quot;<span class="dataGeneralizations">${record.processed.occurrence.dataGeneralizations}</span>&quot;.
+                    <g:message code="recordcore.cg.label" default="Due to sensitivity concerns, the coordinates of this record have been generalised" />:
+                    &quot;
+                    <span class="dataGeneralizations">
+                        ${record.processed.occurrence.dataGeneralizations}
+                    </span>
+                    &quot;.
                     ${(clubView) ? 'NOTE: current user has "club view" and thus coordinates are not generalise.' : ''}
                 </g:elseif>
             </alatag:occurrenceTableRow>
@@ -1030,7 +1162,9 @@
             <alatag:occurrenceTableRow annotate="false" section="geospatial" fieldCode="informationWithheld" fieldName="Information withheld">
                 ${fieldsMap.put("informationWithheld", true)}
                 <g:if test="${record.processed.occurrence.informationWithheld}">
-                    <span class="dataGeneralizations">${record.processed.occurrence.informationWithheld}</span>
+                    <span class="dataGeneralizations">
+                        ${record.processed.occurrence.informationWithheld}
+                    </span>
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -1059,7 +1193,7 @@
             </alatag:occurrenceTableRow>
 
             <!-- output any tags not covered already (excluding those in dwcExcludeFields) -->
-            <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Location" exclude="${dwcExcludeFields}"/>
+            <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Location" exclude="${dwcExcludeFields}" />
         </table>
     </div>
 </g:if>
@@ -1067,17 +1201,25 @@
 <g:if test="${record.raw.miscProperties}">
     <div>
         <h2>
-            <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties"/>
+            <g:message code="recordcore.div.addtionalproperties.title" default="Additional properties" />
         </h2>
 
         <table class="occurrenceTable table table-sm table-bordered table-striped " id="miscellaneousPropertiesTable">
             <!-- Higher Geography -->
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
-                <g:set var="entryHtml"><span class='dwc'>${entry.key}</span></g:set>
-                <g:set var="label"><alatag:camelCaseToHuman text="${entryHtml}"/></g:set>
+                <g:set var="entryHtml">
+                    <span class='dwc'>
+                        ${entry.key}
+                    </span>
+                </g:set>
+                <g:set var="label">
+                    <alatag:camelCaseToHuman text="${entryHtml}" />
+                </g:set>
                 <alatag:occurrenceTableRow annotate="true" section="geospatial" fieldCode="${entry.key}" fieldName="${label}">
                     <g:if test="${StringUtils.startsWith(entry.value,'http')}">
-                        <a href="${entry.value}">${entry.value}</a>
+                        <a href="${entry.value}">
+                            ${entry.value}
+                        </a>
                     </g:if>
                     <g:else>
                         ${entry.value}
@@ -1090,42 +1232,64 @@
 
 <div id="outlierInformation" class="additionalData">
     <g:if test="${contextualSampleInfo}">
-        <h2 id="contextualSampleInfo"><g:message code="show.outlierinformation.02.title01" default="Additional geographic & environmental information"/></h2>
+        <h2 id="contextualSampleInfo">
+            <g:message code="show.outlierinformation.02.title01" default="Additional geographic & environmental information" />
+        </h2>
         <table class="layerIntersections table table-sm table-striped table-bordered ">
             <tbody>
-            <g:each in="${contextualSampleInfo}" var="sample" status="vs">
-                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
-                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                </g:if>
-                <g:set var="fn"><a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title='more information about this layer'>${sample.layerDisplayName}</a></g:set>
-                <alatag:occurrenceTableRow
-                        annotate="false"
-                        section="contextual"
-                        fieldCode="${sample.layerName}"
-                        fieldName="${fn}">
-                ${sample.value}</alatag:occurrenceTableRow>
-            </g:each>
+                <g:each in="${contextualSampleInfo}" var="sample" status="vs">
+                    <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
+                        <tr class="sectionName">
+                            <td colspan="2">
+                                ${sample.classification1}
+                            </td>
+                        </tr>
+                    </g:if>
+                    <g:set var="fn">
+                        <a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title='more information about this layer'>
+                            ${sample.layerDisplayName}
+                        </a>
+                    </g:set>
+                    <alatag:occurrenceTableRow
+                            annotate="false"
+                            section="contextual"
+                            fieldCode="${sample.layerName}"
+                            fieldName="${fn}"
+                    >
+                        ${sample.value}
+                    </alatag:occurrenceTableRow>
+                </g:each>
             </tbody>
         </table>
     </g:if>
 
     <g:if test="${environmentalSampleInfo}">
-        <h2 id="environmentalSampleInfo"><g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location"/></h2>
+        <h2 id="environmentalSampleInfo">
+            <g:message code="show.outlierinformation.02.title02" default="Environmental sampling for this location" />
+        </h2>
         <table class="layerIntersections table table-sm table-striped table-bordered " >
             <tbody>
-            <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
-                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
-                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                </g:if>
-                <g:set var="fn"><a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title='More information about this layer'>${sample.layerDisplayName}</a></g:set>
-                <alatag:occurrenceTableRow
-                        annotate="false"
-                        section="contextual"
-                        fieldCode="${sample.layerName}"
-                        fieldName="${fn}">
-                    ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
-                </alatag:occurrenceTableRow>
-            </g:each>
+                <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
+                    <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
+                        <tr class="sectionName">
+                            <td colspan="2">
+                                ${sample.classification1}
+                            </td>
+                        </tr>
+                    </g:if>
+                    <g:set var="fn">
+                        <a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title='More information about this layer'>
+                            ${sample.layerDisplayName}
+                        </a>
+                    </g:set>
+                    <alatag:occurrenceTableRow
+                            annotate="false"
+                            section="contextual"
+                            fieldCode="${sample.layerName}"
+                            fieldName="${fn}">
+                        ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
+                    </alatag:occurrenceTableRow>
+                </g:each>
             </tbody>
         </table>
     </g:if>
