@@ -300,7 +300,7 @@ a.colour-by-legend-toggle {
 
 <div id="template" style="display:none">
     <div class="colourbyTemplate">
-        <a class="colour-by-legend-toggle colour-by-control tooltips" href="#" title="Map legend - click to expand">
+        <a class="colour-by-legend-toggle colour-by-control tooltips" href="#" title="${message(code: 'map.legend.title')}">
             <i class="fa fa-list-ul fa-lg"></i>
         </a>
 

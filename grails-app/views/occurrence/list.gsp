@@ -255,7 +255,7 @@
                             <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
 
                             <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
-                                Search
+                                <g:message code="advancedsearch.button.submit"/>
                             </button>
                         </div>
                     </form>
@@ -282,11 +282,11 @@
 
                     <%-- XXX XXX XXX jQuery template used for taxon drop-downs --%>
                     <div class="btn-group invisible" id="template" style="display: none;">
-                        <a class="erk-button erk-button--light" href="" id="taxa_" title="view species page" target="BIE">
+                        <a class="erk-button erk-button--light" href="" id="taxa_" title="${message(code: 'list.resultsretuened.speciesLink.title')}" target="BIE">
                             <g:message code="list.resultsretuened.navigator01"/>
                         </a>
 
-                        <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="click for more info on this query">
+                        <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="${message(code: 'list.resultsretuened.speciesLink.title')}">
                             <span class="caret"></span>
                         </button>
 
