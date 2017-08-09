@@ -607,7 +607,7 @@ class OccurrenceTagLib {
                     } else if (occurrence.country) {
                         outputResultsLabel(
                             "${g.message(code:'recordcore.geospatial.country')}: ",
-                            alatag.message(code:occurrence.country),
+                            g.message(code: "country.${occurrence.country}", default:occurrence.country),
                             true
                         )
                     }

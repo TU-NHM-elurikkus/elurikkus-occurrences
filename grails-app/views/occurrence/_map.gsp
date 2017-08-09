@@ -165,7 +165,7 @@ a.colour-by-legend-toggle {
                 href="${grailsApplication.config.spatial.baseUrl}${spatialPortalLink}${spatialPortalUrlParams}"
                 title="Continue analysis in ALA Spatial Portal"
             >
-                <i class="fa fa-map-marker"></i>&nbsp&nbsp;
+                <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
                 <g:message code="map.spatialportal.btn.label"/>
             </a>
         </div>
@@ -267,7 +267,7 @@ a.colour-by-legend-toggle {
                 </label>
 
                 <div class="layerControls">
-                    <span class="slider-val" id="sizeslider-val">4</span>
+                    <span class="slider-val" id="sizeslider-val">1</span>
                 </div>
 
                 <div id="sizeslider" style="width:75px;"></div>
@@ -279,7 +279,7 @@ a.colour-by-legend-toggle {
                 </label>
 
                 <div class="layerControls">
-                    <span class="slider-val" id="opacityslider-val">0.8</span>
+                    <span class="slider-val" id="opacityslider-val">0.9</span>
                 </div>
 
                 <div id="opacityslider" style="width:75px;"></div>
@@ -290,7 +290,7 @@ a.colour-by-legend-toggle {
                     <g:message code="map.maplayercontrols.tr01td04.label"/>:
                 </label>
 
-                <input type="checkbox" name="outlineDots" checked="checked" value="true" class="layerControls" id="outlineDots">
+                <input type="checkbox" name="outlineDots" value="false" class="layerControls" id="outlineDots">
             </td>
         </tr>
     </table>
@@ -315,7 +315,7 @@ a.colour-by-legend-toggle {
                         <table class="legendTable"></table>
 
                         <button id="legendLoadMore" class="erk-button erk-button--light hidden-node">
-                            Load more
+                            <g:message code="generic.button.loadMore"/>
                         </button>
                     </div>
                 </div>
@@ -393,7 +393,6 @@ a.colour-by-legend-toggle {
       var link = document.createElement("a");
       link.download = name;
       link.href = uri;
-      //console.log("downloadPolygon",link);
       document.body.appendChild(link);
       link.click();
       // Cleanup the DOM
@@ -420,9 +419,7 @@ a.colour-by-legend-toggle {
             </a>
         </div>
 
-        <div class="recordSummary">
-
-        </div>
+        <div class="recordSummary"></div>
 
         <p>
             <div class="hide multiRecordFooter">

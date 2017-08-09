@@ -66,9 +66,7 @@
         };
     </script>
 
-    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, \
-                        moment, mapCommonOverride, image-viewer, lightbox, chartsOverride"
-    />
+    <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, image-viewer, lightbox, chartsOverride" />
 
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete"/>
@@ -90,7 +88,7 @@
         </h1>
 
         <div class="page-header__subtitle">
-            Search for records in eElurikkus
+            <g:message code="home.index.subtitle" args="${['eElurikkus']}" />
         </div>
 
         <%-- TODO MAYBE KEEP IT MAYBE NOT --%>
