@@ -1290,23 +1290,10 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     //Problematic URL http://biocache.ala.org.au/occurrences/search?q=lsid:urn:lsid:biodiversity.org.au:afd.taxon:b76f8dcf-fabd-4e48-939c-fd3cafc1887a&fq=geospatial_kosher:true&fq=state:%22Australian%20Capital%20Territory%22
                     var link = BC_CONF.searchString + "&fq=" + fqParam;
                     // ToDo: remove this outcommented line when it's certain that normalRow/alternateRow was some deprecated hack
-                    //var rowType = (i % 2 == 0) ? "normalRow" : "alternateRow";
-                    // this html is backup if template literals don't work somewhere and rollback is needed
-                    // html += "<tr class='" + rowType + "'><td>" +
-                    //     "<input type='checkbox' name='fqs' class='fqs' value='"  + fqParam +
-                    //     "'/></td><td><a href=\"" + link + "\"> " + label + "</a></td><td style='text-align: right'>" + el.count + "</td></tr>";
-                    html += `
-                        <tr ${trIdAttr}>
-                            <td>
-                                <input type="checkbox" name="fqs" class="fqs" value="${fqParam}" />
-                            </td>
-                            <td>
-                                <a href="${link}">${label}</a>
-                            </td>
-                            <td style="text-align: right">
-                                ${el.count}
-                            </td>
-                        </tr>`;
+                    // var rowType = (i % 2 == 0) ? "normalRow" : "alternateRow";
+                    html += "<tr class='" + rowType + "'><td>" +
+                        "<input type='checkbox' name='fqs' class='fqs' value='"  + fqParam +
+                        "'/></td><td><a href=\"" + link + "\"> " + label + "</a></td><td style='text-align: right'>" + el.count + "</td></tr>";
                 }
                 if (i >= facetLimit - 1) {
                     hasMoreFacets = true;
@@ -1322,18 +1309,9 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             if (hasMoreFacets) {
                 var offsetInt = Number(foffset);
                 var flimitInt = Number(facetLimit);
-                // ToDo: restore this code if template literals don't work out
-                // var loadMore = "<tr id='loadMore' class=''><td colspan='3'><a href='#index' class='loadMoreValues' data-sort='" +
-                //     fsort + "' data-foffset='" + (offsetInt + flimitInt) +
-                //     "'>Loading " + facetLimit + " more values...</a></td></tr>";
-                var loadMore = `
-                    <tr id="loadMore" class="">
-                        <td colspan="3">
-                            <a href="#index" class="loadMoreValues" data-sort="${fsort}" data-foffset="${(offsetInt + flimitInt)}">
-                                Loading ${facetLimit} more values...
-                            </a>
-                        </td>
-                    </tr>`;
+                var loadMore = "<tr id='loadMore' class=''><td colspan='3'><a href='#index' class='loadMoreValues' data-sort='" +
+                    fsort + "' data-foffset='" + (offsetInt + flimitInt) +
+                    "'>Loading " + facetLimit + " more values...</a></td></tr>";
                 $("table#fullFacets tbody").append(loadMore);
                 //$("tr#loadMore").fadeIn('slow');
             }

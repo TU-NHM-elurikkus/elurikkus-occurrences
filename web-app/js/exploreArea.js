@@ -447,19 +447,10 @@ function loadExploreArea(EYA_CONF) {
                 fqParam = "&fq=species_group:" + state.speciesGroup;
             }
 
-            // This is here in case tempalte string below doesn't work out
-            var content = '<div class="infoWindow">Number of records: '+n.properties.count+'<br/>'+
-                    '<a href="'+ EYA_CONF.contextPath +'/occurrences/search?q='+solrQuery+fqParam+
-                    '&lat='+n.geometry.coordinates[1]+'&lon='+n.geometry.coordinates[0]+'&radius=0.05">View list of records</a></div>';
+            var content = '<div class="infoWindow">Number of records: ' + n.properties.count + '<br/>' +
+                '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery+fqParam +
+                '&lat=' + n.geometry.coordinates[1] + '&lon='+n.geometry.coordinates[0] + '&radius=0.05">View list of records</a></div>';
 
-            var content = `
-                <div class="infoWindow">
-                    Number of records: ${n.properties.count}
-                    <br />
-                    <a href="${EYA_CONF.contextPath}/occurrences/search?q=${solrQuery}${fqParam}&lat=${n.geometry.coordinates[1]}&lon=${n.geometry.coordinates[0]}&radius=0.05">
-                        View list of records
-                    </a>
-                </div>`;
             infoWindows[i] = new google.maps.InfoWindow({
                 content: content,
                 maxWidth: 200,
