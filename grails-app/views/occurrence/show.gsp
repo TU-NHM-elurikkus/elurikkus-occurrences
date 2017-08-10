@@ -57,7 +57,6 @@
             if(!OCC_REC.hasGoogleKey) {
                 google.load('maps', '3.3', {other_params: "sensor=false"});
             }
-            //google.load("visualization", "1", {packages:["corechart"]});
         </script>
 
         <g:render template="/layouts/global" />
@@ -65,9 +64,9 @@
         <r:require modules="recordView, amplify, moment" />
         <r:script disposition="head">
             $(document).ready(function() {
-                <g:if test="${record.processed.attribution.provenance == 'Draft'}">\
-                    // draft view button\
-                    $('#viewDraftButton').click(function(){
+                <g:if test="${record.processed.attribution.provenance == 'Draft'}">
+                    // draft view button
+                    $('#viewDraftButton').click(function() {
                         document.location.href = '${record.raw.occurrence.occurrenceID}';
                     });
                 </g:if>
@@ -162,24 +161,37 @@
                     </div>
 
                     <div id="content2Z" class="col-sm-7 col-lg-9">
-                        <div class="text-right">
-                        </div>
+                        <div class="float-right">
+                            <g:if test="${contacts && contacts.size()}">
+                                <button
+                                    href="#contactCuratorView"
+                                    class="erk-button erk-button--light erk-button--inline"
+                                    id="showCurator"
+                                    role="button"
+                                    data-toggle="modal"
+                                    title="${message(code: 'show.showcontactcurator.title')}"
+                                >
+                                    <span id="contactCuratorSpan" href="#contactCuratorView" title="">
+                                        <i class="fa fa-envelope-o"></i> <g:message code="show.showcontactcurator.label" />
+                                    </span>
+                                </button>
+                            </g:if>
 
-                        <div class="record-navigation">
                             <button
                                 id="showRawProcessed"
                                 data-toggle="modal"
                                 href="#processedVsRawView"
                                 class="erk-button erk-button--light erk-button--inline"
                                 role="button"
-                                title="<g:message code="show.sidebar02.showrawprocessed.title" />"
+                                title="<g:message code='show.sidebar02.showrawprocessed.title' />"
                             >
                                 <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                                    <span class="fa fa-balance-scale"></span>
-                                    <g:message code="show.sidebar02.showrawprocessed.label" />
+                                    <i class="fa fa-balance-scale"></i> <g:message code="show.sidebar02.showrawprocessed.label" />
                                 </span>
                             </button>
                         </div>
+
+                        <br />
 
                         <g:render template="recordCore" />
                     </div>
@@ -805,14 +817,6 @@
                         <g:message code="show.headingbar02.p02" />
                     </p>
                 </div>
-            </g:if>
-
-            <g:if test="${record.sounds}">
-                <script>
-                  audiojs.events.ready(function() {
-                      var as = audiojs.createAll();
-                  });
-                </script>
             </g:if>
         </g:if>
         <g:else>

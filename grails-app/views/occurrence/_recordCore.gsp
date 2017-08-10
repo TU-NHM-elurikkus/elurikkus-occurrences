@@ -6,7 +6,7 @@
     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: record?.raw?.attribution?.dataResourceUid]" />
 
     <h2>
-        <g:message code="recordcore.occurencedataset.title"/>
+        <g:message code="recordcore.occurencedataset.title" />
     </h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped " id="datasetTable">
