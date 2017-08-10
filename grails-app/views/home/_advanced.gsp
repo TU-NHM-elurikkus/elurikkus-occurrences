@@ -140,7 +140,7 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title06" /></b>
+            <g:message code="advancedsearch.title06" />
         </legend>
 
         <label class="col-2">
@@ -306,7 +306,7 @@
         <div class="form-group row">
             <label class="col-2">
                 <g:message code="advancedsearch.table09col01.title" />
-            </label/>
+            </label>
 
             <div class="col-10">
                 <input type="text" name="catalogue_number" id="catalogue_number" class="dataset form-control" placeholder="" value="" />
@@ -321,7 +321,7 @@
             <div class="col-10">
                 <input type="text" name="record_number" id="record_number" class="dataset form-control" placeholder="" value="" />
             </div>
-        </dig>
+        </div>
     </fieldset>
 
     <div class="form-group row">

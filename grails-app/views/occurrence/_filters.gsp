@@ -5,22 +5,22 @@
     </h4>
 
     <div class="search-filter-menu--buttons">
-        <g:message code="list.facetcheckboxes.label01"/>:
+        <g:message code="list.facetcheckboxes.label01" />:
 
         <a href="#" id="selectAll">
-            <g:message code="list.facetcheckboxes.navigator01"/>
+            <g:message code="list.facetcheckboxes.navigator01" />
         </a>
 
         &nbsp;|&nbsp;
 
         <a href="#" id="selectNone">
-            <g:message code="list.facetcheckboxes.navigator02"/>
+            <g:message code="list.facetcheckboxes.navigator02" />
         </a>
 
         &nbsp;&nbsp;
 
         <button id="updateFacetOptions" class="erk-button erk-button--light">
-            <g:message code="list.facetcheckboxes.button.updatefacetoptions"/>
+            <g:message code="list.facetcheckboxes.button.updatefacetoptions" />
         </button>
 
         &nbsp;&nbsp;
@@ -28,7 +28,7 @@
         <g:set var="resetTitle" value="Restore default settings"/>
 
         <button id="resetFacetOptions" class="erk-button erk-button--light" title="${resetTitle}">
-            <g:message code="list.facetcheckboxes.button.resetfacetoptions"/>
+            <g:message code="list.facetcheckboxes.button.resetfacetoptions" />
         </button>
     </div>
 
@@ -38,9 +38,9 @@
 
         <g:each var="group" in="${groupedFacets}">
             <g:if test="${defaultFacets.find { key, value -> group.value.any { it == key} }}">
-                <div class="search-filter-menu--facets--facet"> <!-- TEST -->
+                <div class="search-filter-menu--facets--facet"> <%-- TEST --%>
                     <div class="facetGroupName">
-                        <g:message code="facet.group.${group.key}" default="${group.key}"/>
+                        <g:message code="facet.group.${group.key}" default="${group.key}" />
                     </div>
 
                     <g:each in="${group.value}" var="fieldValue">
@@ -56,7 +56,7 @@
                                         value="${fieldValue}"
                                         ${(defaultFacets.get(fieldValue)) ? 'checked=checked' : ''}
                                     >
-                                    <alatag:message code="facet.${fieldValue}"/>
+                                    <alatag:message code="facet.${fieldValue}" />
                                 </label>
                             </div>
                         </g:if>

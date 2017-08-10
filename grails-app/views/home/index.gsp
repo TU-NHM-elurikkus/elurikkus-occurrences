@@ -15,12 +15,19 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}" />
     <meta name="section" content="search" />
     <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
-    <title><g:message code="home.index.title" /> | ${hubDisplayName}</title>
+
+    <title>
+        <g:message code="home.index.title" /> | ${hubDisplayName}
+    </title>
+
     <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
+
     <r:require modules="jquery, leafletOverride, leafletPluginsOverride, mapCommonOverride, searchMapOverride, bootstrapCombobox, menu" />
+
     <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
         <r:require module="bieAutocomplete" />
     </g:if>
+
     <r:script>
         // global var for GSP tags/vars to be passed into JS functions
         var BC_CONF = {
@@ -64,7 +71,6 @@
             // catch hash URIs and trigger tabs
             if (location.hash !== '') {
                 $('.nav-tabs a[href="' + location.hash.replace('tab-','') + '"]').tab('show');
-                //$('.nav-tabs li a[href="' + location.hash.replace('tab-','') + '"]').click();
             } else {
                 $('.nav-tabs a:first').tab('show');
             }
@@ -294,11 +300,31 @@
 
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="searchTabs">
-                    <li class="nav-item"><a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active"><g:message code="home.index.navigator01" /></a></li>
-                    <li class="nav-item"><a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator02" /></a></li>
-                    <li class="nav-item"><a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator03" /></a></li>
-                    <li class="nav-item"><a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator04" /></a></li>
-                    <li class="nav-item"><a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link"><g:message code="home.index.navigator05" /></a></li>
+                    <li class="nav-item">
+                        <a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active">
+                            <g:message code="home.index.navigator01" />
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link">
+                            <g:message code="home.index.navigator02" />
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link">
+                            <g:message code="home.index.navigator03" />
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link">
+                            <g:message code="home.index.navigator04" />
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link">
+                            <g:message code="home.index.navigator05" />
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -329,22 +355,22 @@
 
                 <div id="advanced-search" class="tab-pane">
                     <g:render template="advanced" />
-                </div><!-- end #advancedSearch div -->
+                </div> <%-- end #advancedSearch div --%>
 
                 <div id="taxa-upload" class="tab-pane">
                     <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
                         <p><g:message code="home.index.taxaupload.des01" /></p>
-                        <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
+                        <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
                         <p><textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea></p>
                         <div>
-                            <%--<input type="submit" name="action" value="Download" />--%>
-                            <%--&nbsp;OR&nbsp;--%>
+                            <%-- <input type="submit" name="action" value="Download" /> --%>
+                            <%-- &nbsp;OR&nbsp; --%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="raw_name" />
                             <input type="submit" name="action" value=<g:message code="advancedsearch.button.submit" /> class="erk-button erk-button--light" />
                         </div>
                     </form>
-                </div><!-- end #uploadDiv div -->
+                </div> <!-- end #uploadDiv div -->
 
                 <div id="catalog-upload" class="tab-pane">
                     <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
@@ -352,22 +378,22 @@
                             <g:message code="home.index.catalogupload.des01" />
                         </p>
 
-                        <%--<p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p>--%>
+                        <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
 
                         <p>
                             <textarea id="catalogueSearchQueries" name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
                         </p>
 
                         <div>
-                            <%--<input type="submit" name="action" value="Download" />--%>
-                            <%--&nbsp;OR&nbsp;--%>
+                            <%-- <input type="submit" name="action" value="Download" /> --%>
+                            <%-- &nbsp;OR&nbsp; --%>
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
                             %{-- XXX --}%
                             <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit"/>  class="erk-button erk-button--light" />
                         </div>
                     </form>
-                </div><!-- end #catalogUploadDiv div -->
+                </div><%-- end #catalogUploadDiv div --%>
 
                 <div id="spatial-search" class="tab-pane">
                     <div class="row">

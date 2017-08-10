@@ -1,13 +1,13 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
-%{--<% Map fieldsMap = new HashMap(); pageContext.setAttribute("fieldsMap", fieldsMap); %>--}%
-<%-- g:set target="${fieldsMap}" property="aKey" value="value for a key" /--%>
 <g:set var="fieldsMap" value="${[:]}"/>
 
 <div>
     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: record?.raw?.attribution?.dataResourceUid]" />
 
-    <h2><g:message code="recordcore.occurencedataset.title"/></h2>
+    <h2>
+        <g:message code="recordcore.occurencedataset.title"/>
+    </h2>
 
     <table class="occurrenceTable table table-sm table-bordered table-striped " id="datasetTable">
         <!-- Data Provider -->
@@ -51,7 +51,7 @@
                 ${fieldsMap.put("institutionUid", true)}
                 ${fieldsMap.put("institutionName", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.institutionUid}">
-                ${record.processed.attribution.institutionName}
+                    ${record.processed.attribution.institutionName}
                 </a>
             </g:if>
             <g:else>
@@ -60,7 +60,9 @@
             </g:else>
             <g:if test="${record.raw.occurrence.institutionCode}">
                 ${fieldsMap.put("institutionCode", true)}
-                <g:if test="${record.processed.attribution.institutionName}"><br /></g:if>
+                <g:if test="${record.processed.attribution.institutionName}">
+                <br />
+            </g:if>
                 <span class="originalValue">
                     <g:message code="recordcore.label.suppliedas"/> "${record.raw.occurrence.institutionCode}"
                 </span>
