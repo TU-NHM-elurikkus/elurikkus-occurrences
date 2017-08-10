@@ -1,14 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dos009@csiro.au
-  Date: 28/02/2014
-  Time: 3:15 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="org.springframework.web.servlet.support.RequestContextUtils; au.org.ala.biocache.hubs.FacetsName; org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
 <g:set var="hubDisplayName" value="${grailsApplication.config.skin.orgNameLong}" />
 <g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocache.baseUrl}" />
 <g:set var="serverName" value="${grailsApplication.config.serverName?:grailsApplication.config.biocache.baseUrl}" />
+
 <!DOCTYPE html>
 <html>
 <head>
