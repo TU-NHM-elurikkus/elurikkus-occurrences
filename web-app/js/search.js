@@ -1291,7 +1291,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     var link = BC_CONF.searchString + "&fq=" + fqParam;
                     // ToDo: remove this outcommented line when it's certain that normalRow/alternateRow was some deprecated hack
                     // var rowType = (i % 2 == 0) ? "normalRow" : "alternateRow";
-                    html += "<tr class='" + rowType + "'><td>" +
+                    html += "<tr><td>" +
                         "<input type='checkbox' name='fqs' class='fqs' value='"  + fqParam +
                         "'/></td><td><a href=\"" + link + "\"> " + label + "</a></td><td style='text-align: right'>" + el.count + "</td></tr>";
                 }
