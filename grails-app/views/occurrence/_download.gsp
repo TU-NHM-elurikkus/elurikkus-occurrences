@@ -125,7 +125,6 @@
                                         name="downloadType"
                                         value="fieldGuide"
                                         class="tooltips"
-                                        title="PDF file listing species with images and distribution maps"
                                         title="${message(code: 'download.downloadform.downloadType.option.fieldGuide.title')}"
                                     />
                                     &nbsp;
@@ -208,12 +207,11 @@
                                     window.open(downloadUrl);
                                     notifyDownloadStarted();
                                 } else {
-                                    alert("Download type not recognised");
+                                    // can't happen as type is a fixed list
+                                    alert("${message(code:'download.downloadform.downloadType.option.invalid')}");
                                 }
                             }
                         });
-
-
                     });
 
                     function generateDownloadPrefix(downloadUrlPrefix) {
@@ -223,7 +221,9 @@
                             downloadUrlPrefix += searchParams;
                         } else {
                             // EYA page is JS driven
-                            downloadUrlPrefix += "?q=*:*&lat="+$('#latitude').val()+"&lon="+$('#longitude').val()+"&radius="+$('#radius').val();
+                            downloadUrlPrefix += "?q=*:*&lat=" + $('#latitude').val() +
+                                "&lon=" + $('#longitude').val() +
+                                "&radius=" + $('#radius').val();
                             if (eyaState.speciesGroup && eyaState.speciesGroup != "ALL_SPECIES") {
                                 downloadUrlPrefix += "&fq=species_group:" + eyaState.speciesGroup;
                             }
@@ -249,7 +249,7 @@
                         } else {
                             $("#reasonTypeId").focus();
                             $("label[for='reasonTypeId']").css("color","red");
-                            alert("Please select a \"download reason\" from the drop-down list");
+                            alert("${message(code:'download.downloadform.reason.notSelected')}");
                         }
 
                         return isValid;
@@ -259,7 +259,9 @@
             </div>
 
             <div class="modal-footer">
-                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true"><g:message code="generic.button.close"/></button>
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
+                    <g:message code="generic.button.close"/>
+                </button>
             </div>
         </div>
     </div>
