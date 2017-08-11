@@ -12,7 +12,7 @@
                     ×
                 </button>
                 <h3 id="downloadsLabel">
-                    <g:message code="download.download.title" />
+                    <g:message code="download.download.label" />
                 </h3>
             </div>
 

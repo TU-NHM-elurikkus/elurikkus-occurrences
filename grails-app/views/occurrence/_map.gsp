@@ -173,12 +173,13 @@ a.colour-by-legend-toggle {
 
     <button id="downloadMaps" data-toggle="modal" data-target="#downloadMap" class="erk-button erk-button--light" style="margin-bottom: 2px;">
         <span class="fa fa-download"></span>
-        <g:message code="map.downloadmaps.btn.label" />
+        <g:message code="download.download.label" />
     </button>
 
     <g:if test="${params.wkt}">
         <button id="downloadWKT" class="erk-button erk-button--light" style="margin-bottom: 2px;" class="tooltip" onclick="downloadPolygon(); return false;">
-            <span class="fa fa-stop"></span>&nbsp&nbsp;
+            <span class="fa fa-stop"></span>
+            &nbsp;&nbsp;
             <g:message code="map.downloadwkt.btn.label" />
         </button>
     </g:if>
@@ -612,7 +613,12 @@ a.colour-by-legend-toggle {
                                 <g:message code="map.downloadmap.field10.label" />
                             </label>
 
-                            <input type="text" name="fileName" id="fileName" value="MyMap" />
+                            <input
+                                type="text"
+                                name="fileName"
+                                id="fileName"
+                                value="${message(code: 'map.downloadmap.fileName.value')}"
+                            />
                         </p>
                     </fieldset>
                 </div>

@@ -351,7 +351,6 @@ $(document).ready(function() {
         $(this).addClass('disabled');
         $(this).find('img').show(); // turn on spinner
         var start = $("#imagesGrid").data('count');
-        //console.log("start", start);
         loadImages(start);
     });
 
@@ -361,7 +360,6 @@ $(document).ready(function() {
         var start = $("#speciesGallery").data('count');
         var group = $("#speciesGroup :selected").val();
         var sort = $("#speciesGallery").data('sort');
-        //console.log("start", start);
         loadSpeciesInTab(start, sort, group);
     });
 
@@ -955,7 +953,7 @@ function loadImages(start) {
                     $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
                     // brief metadata
                     var briefHtml = el.raw_scientificName;
-                    var br = "<br>";
+                    var br = "<br />";
                     if (el.typeStatus) briefHtml += br + el.typeStatus;
                     if (el.institutionName) briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName;
                     $ImgConTmpl.find('.brief').html(briefHtml);

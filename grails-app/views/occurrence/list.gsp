@@ -246,7 +246,6 @@
                             <%-- XXX BUTTON INSIDE LINK --%>
                             <button id="downloads" class="erk-button erk-button--light">
                                 <span class="fa fa-download"></span>
-                                &nbsp;&nbsp;
                                 <g:message code="download.download.label" />
                             </button>
                         </a>
@@ -337,7 +336,7 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                                 class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
-                                title="<g:message code="search.filter.title" />"
+                                title="${message(code: 'search.filter.title')}"
                             >
                                 <span class="fa fa-cog"></span>
 
@@ -420,7 +419,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- /#alerts -->
+                        </div>  <%-- /#alerts --%>
                     </g:if>
 
                     <g:render template="download" />
@@ -483,7 +482,7 @@
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                                     <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                                        <span class="fa fa-download"></span>
-                                       <g:message code="download.download.title" />
+                                       <g:message code="download.download.label" />
                                     </button>
                                 </g:if>
 
@@ -574,9 +573,17 @@
                             </div>
 
                             <div id="searchNavBar" class="pagination">
-                                <g:paginate total="${sr.totalRecords}" max="${sr.pageSize}" offset="${sr.startIndex}" omitLast="true" params="${[taxa:params.taxa, q:params.q, fq:params.fq, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}" />
+                                <g:paginate
+                                    total="${sr.totalRecords}"
+                                    max="${sr.pageSize}"
+                                    offset="${sr.startIndex}"
+                                    omitLast="true"
+                                    next="${message(code: 'list.paginate.next')}"
+                                    prev="${message(code: 'list.paginate.prev')}&nbsp;"
+                                    params="${[taxa:params.taxa, q:params.q, fq:params.fq, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}"
+                                />
                             </div>
-                        </div><!--end solrResults-->
+                        </div>  <%-- end solrResults --%>
 
                         <div id="map" role="tabpanel" class="tab-pane">
                             <g:render template="map"
