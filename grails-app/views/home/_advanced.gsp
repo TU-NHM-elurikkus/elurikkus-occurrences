@@ -6,11 +6,11 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title01" default="Find records that have" />
+            <g:message code="advancedsearch.title01" />
         </legend>
 
         <label for="text" class="col-2">
-            <g:message code="advancedsearch.table01col01.title" default="ALL of these words (full text)" />
+            <g:message code="advancedsearch.table01col01.title" />
         </label>
 
         <div class="col-10">
@@ -21,14 +21,14 @@
     %{-- XXX row classes --}%
     <fieldset class="form-group">
         <legend class="col-form-legend row">
-            <g:message code="advancedsearch.title02" default="Find records for ANY of the following taxa (matched/processed taxon concepts)" />
+            <g:message code="advancedsearch.title02" />
         </legend>
 
         <g:each in="${1..4}" var="i">
             <g:set var="lsidParam" value="lsid_${i}" />
             <div class="form-group row">
                 <label for="taxa_${i}" class="col-2">
-                    <g:message code="advancedsearch.table02col01.title" default="Species/Taxon" />
+                    <g:message code="advancedsearch.table02col01.title" />
                     <g:set var="lsidParam" value="lsid_${i}" />
                 </label>
 
@@ -42,11 +42,11 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title03" default="Find records that specify the following scientific name (verbatim/unprocessed name)" />
+            <g:message code="advancedsearch.title03" />
         </legend>
 
         <label class="col-2">
-            <g:message code="advancedsearch.table03col01.title" default="Raw Scientific Name" />
+            <g:message code="advancedsearch.table03col01.title" />
         </label>
 
         <div class="col-10">
@@ -56,33 +56,21 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title03" default="Find records that specify the following scientific name (verbatim/unprocessed name)" />
+            <g:message code="advancedsearch.title04" />
         </legend>
 
         <label class="col-2">
-            <g:message code="advancedsearch.table03col01.title" default="Raw Scientific Name" />
-        </label>
-
-        <div class="col-10">
-            <input type="text" name="raw_taxon_name" id="raw_taxon_name" class="dataset form-control" placeholder="" size="60" value="" />
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <legend class="col-form-legend">
-            <g:message code="advancedsearch.title04" default="Find records from the following species group" />
-        </legend>
-
-        <label class="col-2">
-            <g:message code="advancedsearch.table04col01.title" default="Species Group" />
+            <g:message code="advancedsearch.table04col01.title" />
         </label>
 
         <%-- TODO: Classes. --%>
         <div class="col-10">
             <select class="species_group" name="species_group" id="species_group">
-                <option value=""><g:message code="advancedsearch.table04col01.option.label" default="-- select a species group --" /></option>
+                <option value=""><g:message code="advancedsearch.table04col01.option.label" /></option>
                 <g:each var="group" in="${request.getAttribute("species_group")}">
-                    <option value="${group.key}">${group.value}</option>
+                    <option value="${group.key}">
+                        <g:message code="${group.value}" />
+                    </option>
                 </g:each>
             </select>
         </div>
@@ -90,47 +78,61 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title05" default="Find records from the following institution or collection" />
+            <g:message code="advancedsearch.title05" />
         </legend>
 
         <label class="col-2">
-            <g:message code="advancedsearch.table05col01.title" default="Institution or Collection" />
+            <g:message code="advancedsearch.table05col01.title" />
         </label>
 
         <div class="col-10">
             <select class="institution_uid collection_uid" name="institution_collection" id="institution_collection">
                 <option value="">
-                    <g:message code="advancedsearch.table05col01.option01.label" default="-- select an institution or collection --" />
+                    <g:message code="advancedsearch.table05col01.option01.label" />
                 </option>
 
+                <%-- ToDo: This select should be dynamic --%>
                 <g:each var="inst" in="${request.getAttribute("institution_uid")}">
-                    <optgroup label="${inst.value}">
+                    <g:if test="${StringUtils.startsWith(inst.key, 'in')}">
+                        <optgroup label="${message(code: inst.value)}">
+                            <option value="${inst.key}">
+                                <g:message code="advancedsearch.table05col01.option02.label" />
+                            </option>
+
+                            <g:each var="coll" in="${request.getAttribute('collection_uid')}">
+                                coll
+                                <g:if test="${inst.key == 'in4' && StringUtils.startsWith(coll.value, 'TAM')}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:if>
+
+                                <g:elseif test="${inst.key == 'in5' && coll.value == 'TALL'}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:elseif>
+
+                                <g:elseif test="${inst.key == 'in6' && (coll.value == 'EAA' || coll.value == 'TAAM')}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:elseif>
+
+                                <g:elseif test="${inst.key == 'in7' && StringUtils.startsWith(coll.value, 'TU')}">
+                                    <option value="${coll.key}">
+                                        ${coll.value}
+                                    </option>
+                                </g:elseif>
+
+                            </g:each>
+                        </optgroup>
+                    </g:if>
+                    <g:else>
                         <option value="${inst.key}">
-                            <g:message code="advancedsearch.table05col01.option02.label" default="All records from" /> ${inst.value}
+                            <g:message code="${inst.value}" />
                         </option>
-
-                        <g:each var="coll" in="${request.getAttribute("collection_uid")}">
-                            <g:if test="${inst.key == 'in13' && StringUtils.startsWith(coll.value, inst.value)}">
-                                <option value="${coll.key}">
-                                    ${StringUtils.replace(StringUtils.replace(coll.value, inst.value, ""), " - " ,"")}
-                                    <g:message code="advancedsearch.table05col01.option03.label" default="Collection" />
-                                </option>
-                            </g:if>
-
-                            <g:elseif test="${inst.key == 'in6' && StringUtils.startsWith(coll.value, 'Australian National')}">
-                                <%-- <option value="${coll.key}">${fn:replace(coll.value,"Australian National ", "")}</option> --%>
-                                <option value="${coll.key}">
-                                    ${coll.value}
-                                </option>
-                            </g:elseif>
-
-                            <g:elseif test="${StringUtils.startsWith(coll.value, inst.value)}">
-                                <option value="${coll.key}">
-                                    ${StringUtils.replace(coll.value, inst.value, "")}
-                                </option>
-                            </g:elseif>
-                        </g:each>
-                    </optgroup>
+                    </g:else>
                 </g:each>
             </select>
         </div>
@@ -138,22 +140,22 @@
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title06" default="Find records from the following regions" /></b>
+            <g:message code="advancedsearch.title06" />
         </legend>
 
         <label class="col-2">
-            <g:message code="advancedsearch.table06col01.title" default="Country" />
+            <g:message code="advancedsearch.table06col01.title" />
         </label>
 
         <div class="col-10">
             <select class="country" name="country" id="country">
                 <option value="">
-                    <g:message code="advancedsearch.table06col01.option.label" default="-- select a country --" />
+                    <g:message code="advancedsearch.table06col01.option.label" />
                 </option>
 
                 <g:each var="country" in="${request.getAttribute("country")}">
                     <option value="${country.key}">
-                        ${country.value}
+                        <g:message code="${country.value}" default="${country.key}" />
                     </option>
                 </g:each>
             </select>
@@ -170,13 +172,13 @@
                 <abbr title="Interim Biogeographic Regionalisation of Australia">
                     IBRA
                 </abbr>
-                <g:message code="advancedsearch.table06col03.title" default="region" />
+                <g:message code="advancedsearch.table06col03.title" />
             </label>
 
             <div class="col-10">
                 <select class="biogeographic_region form-control" name="ibra" id="ibra">
                     <option value="">
-                        <g:message code="advancedsearch.table06col03.option.label" default="-- select an IBRA region --" />
+                        <g:message code="advancedsearch.table06col03.option.label" />
                     </option>
 
                     <g:each var="region" in="${request.getAttribute("cl1048").sort()}">
@@ -195,13 +197,13 @@
                 <abbr title="Integrated Marine and Coastal Regionalisation of Australia">
                     IMCRA
                 </abbr>
-                <g:message code="advancedsearch.table06col04.title" default="region" />
+                <g:message code="advancedsearch.table06col04.title" />
             </label>
 
             <div class="col-10">
                 <select class="biogeographic_region form-control" name="imcra" id="imcra">
                     <option value="">
-                        <g:message code="advancedsearch.table06col04.option.label" default="-- select an IMCRA region --" />
+                        <g:message code="advancedsearch.table06col04.option.label" />
                     </option>
 
                     <g:each var="region" in="${request.getAttribute("cl21").sort()}">
@@ -217,12 +219,12 @@
     <g:if test="${request.getAttribute("cl959") && request.getAttribute("cl959").size() > 1}">
         <div class="form-group row">
             <label class="col-2">
-                <g:message code="advancedsearch.table06col05.title" default="Local Govt. Area" />
+                <g:message code="advancedsearch.table06col05.title" />
             </label>
 
             <div class="col-10">
                 <select class="lga form-control" name="lga" id="lga">
-                    <option value=""><g:message code="advancedsearch.table06col05.option.label" default="-- select local government area--" /></option>
+                    <option value=""><g:message code="advancedsearch.table06col05.option.label" /></option>
                     <g:each var="region" in="${request.getAttribute("cl959").sort()}">
                         <option value="${region.key}">${region.value}</option>
                     </g:each>
@@ -234,16 +236,16 @@
     <g:if test="${request.getAttribute("type_status") && request.getAttribute("type_status").size() > 1}">
         <div class="form-group row">
             <legend class="col-form-legend">
-                <g:message code="advancedsearch.title07" default="Find records from the following type status" />
+                <g:message code="advancedsearch.title07" />
             </legend>
 
             <label class="col-2">
-                <g:message code="advancedsearch.table07col01.title" default="Type Status" />
+                <g:message code="advancedsearch.table07col01.title" />
             </label>
 
             <select class="type_status" name="type_status" id="type_status">
                 <option value="">
-                    <g:message code="advancedsearch.table07col01.option.label" default="-- select a type status --" />
+                    <g:message code="advancedsearch.table07col01.option.label" />
                 </option>
 
                 <g:each var="type" in="${request.getAttribute("type_status")}">
@@ -258,17 +260,17 @@
     <g:if test="${request.getAttribute("basis_of_record") && request.getAttribute("basis_of_record").size() > 1}">
         <div class="from-group row">
             <legend class="col-form-legend">
-                <g:message code="advancedsearch.title08" default="Find records from the following basis of record (record type)" />
+                <g:message code="advancedsearch.title08" />
             </legend>
 
             <label class="col-2">
-                <g:message code="advancedsearch.table08col01.title" default="Basis of record" />
+                <g:message code="advancedsearch.table08col01.title" />
             </label>
 
             <div class="col-10">
                 <select class="basis_of_record" name="basis_of_record" id="basis_of_record">
                     <option value="">
-                        <g:message code="advancedsearch.table08col01.option.label" default="-- select a basis of record --" />
+                        <g:message code="advancedsearch.table08col01.option.label" />
                     </option>
 
                     <g:each var="bor" in="${request.getAttribute("basis_of_record")}">
@@ -283,13 +285,13 @@
 
     <fieldset class="from-group">
         <legend class="col-form-legend row">
-            <g:message code="advancedsearch.title09" default="Find records with the following dataset fields" />
+            <g:message code="advancedsearch.title09" />
         </legend>
 
         <g:if test="${request.getAttribute("data_resource_uid") && request.getAttribute("data_resource_uid").size() > 1}">
             <div class="form-group row">
                 <label class="col-2">
-                    <g:message code="advancedsearch.dataset.col.label" default="dataset name" />
+                    <g:message code="advancedsearch.dataset.col.label" />
                 </label>
 
                 <select class="dataset bscombobox" name="dataset" id="dataset">
@@ -303,8 +305,8 @@
 
         <div class="form-group row">
             <label class="col-2">
-                <g:message code="advancedsearch.table09col01.title" default="Catalogue Number" />
-            </label/>
+                <g:message code="advancedsearch.table09col01.title" />
+            </label>
 
             <div class="col-10">
                 <input type="text" name="catalogue_number" id="catalogue_number" class="dataset form-control" placeholder="" value="" />
@@ -313,50 +315,58 @@
 
         <div class="form-group row">
             <label class="col-2">
-                <g:message code="advancedsearch.table09col02.title" default="Record Number" />
+                <g:message code="advancedsearch.table09col02.title" />
             </label>
 
             <div class="col-10">
                 <input type="text" name="record_number" id="record_number" class="dataset form-control" placeholder="" value="" />
             </div>
-        </dig>
+        </div>
     </fieldset>
 
     <div class="form-group row">
         <legend class="col-form-legend">
-            <g:message code="advancedsearch.title10" default="Find records within the following date range" />
+            <g:message code="advancedsearch.title10" />
         </legend>
 
         <label class="col-2">
-            <g:message code="advancedsearch.table10col01.title" default="Begin Date" />
+            <g:message code="advancedsearch.table10col01.title" />
         </label>
 
         <div class="col-10">
             <input type="text" name="start_date" id="startDate" class="occurrence_date form-control" placeholder="" value="" />
             <small class="form-text text-muted">
-                <g:message code="advancedsearch.table10col01.des" default="(YYYY-MM-DD) leave blank for earliest record date" />
+                <g:message code="advancedsearch.table10col01.des" />
             </small>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-2">
-            <g:message code="advancedsearch.table10col02.title" default="End Date" />
+            <g:message code="advancedsearch.table10col02.title" />
         </label>
 
         <div class="col-10">
             <input type="text" name="end_date" id="endDate" class="occurrence_date form-control" placeholder="" value="" />
             <small class="form-text text-muted">
-                <g:message code="advancedsearch.table10col02.des" default="(YYYY-MM-DD) leave blank for most recent record date" />
+                <g:message code="advancedsearch.table10col02.des" />
             </small>
         </div>
     </div>
 
     <div class="row">
-        <input type="submit" value=<g:message code="advancedsearch.button.submit" default="Search" /> class="erk-button erk-button--light" />
-        %{-- XXX --}%
+        <input
+            type="submit"
+            value="<g:message code="advancedsearch.button.submit" />"
+            class="erk-button erk-button--light" />
         &nbsp;&nbsp;
-        <input type="reset" value="Clear all" id="clearAll" class="erk-button erk-button--light" onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;" />
+        <input
+            type="reset"
+            value="<g:message code="advancedsearch.button.clearAll" />"
+            id="clearAll"
+            class="erk-button erk-button--light"
+            onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;"
+        />
     </div>
 </form>
 

@@ -15,7 +15,6 @@
 
 // Jquery Document.onLoad equivalent
 $(document).ready(function() {
-    //alert("doc is loaded");
     // listeners for sort & paging widgets
     $("select#sort").change(function() {
         var val = $("option:selected", this).val();
@@ -145,7 +144,6 @@ $(document).ready(function() {
     }
 
     // remove *:* query from search bar
-    //var q = $.url().param('q');
     var q =  $.url().param('q');
     if (q && q[0] == "*:*") {
         $(":input#solrQuery").val("");
@@ -353,7 +351,6 @@ $(document).ready(function() {
         $(this).addClass('disabled');
         $(this).find('img').show(); // turn on spinner
         var start = $("#imagesGrid").data('count');
-        //console.log("start", start);
         loadImages(start);
     });
 
@@ -363,7 +360,6 @@ $(document).ready(function() {
         var start = $("#speciesGallery").data('count');
         var group = $("#speciesGroup :selected").val();
         var sort = $("#speciesGallery").data('sort');
-        //console.log("start", start);
         loadSpeciesInTab(start, sort, group);
     });
 
@@ -957,7 +953,7 @@ function loadImages(start) {
                     $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
                     // brief metadata
                     var briefHtml = el.raw_scientificName;
-                    var br = "<br>";
+                    var br = "<br />";
                     if (el.typeStatus) briefHtml += br + el.typeStatus;
                     if (el.institutionName) briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName;
                     $ImgConTmpl.find('.brief').html(briefHtml);
@@ -1208,7 +1204,7 @@ function loadMoreFacets(facetName, displayName, fsort, foffset) {
     $('table#fullFacets').data('facet', facetName); // data attribute for storing facet field
     $('table#fullFacets').data('label', displayName); // data attribute for storing facet display name
     $('#indexCol a').html(displayName); // table heading
-    $('#indexCol a').attr('title', 'sort by ' + displayName); // table heading
+    // $('#indexCol a').attr('oldtitle', 'sort by ' + displayName); // table heading
 
     $("a.fsort").qtip({
         style: {
@@ -1247,14 +1243,20 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                 // remove any facet values in table
                 $("table#fullFacets tr").not("tr.tableHead").not("#spinnerRow").remove();
             }
+            // ToDo this table generatiing should be moved to groovy file where uniform translations can be applied
             $.each(data.facetResults[0].fieldResult, function(i, el) {
-                //console.log("0. facet", el);
                 if (el.count > 0) {
                     // surround with quotes: fq value if contains spaces but not for range queries
                     var fqEsc = ((el.label.indexOf(" ") != -1 || el.label.indexOf(",") != -1 || el.label.indexOf("lsid") != -1) && el.label.indexOf("[") != 0)
                         ? "\"" + el.label + "\""
                         : el.label; // .replace(/:/g,"\\:")
-                    var label = (el.displayLabel) ? el.displayLabel : el.label ;
+                    var label = (el.displayLabel) ? el.displayLabel : el.label;
+                    var trIdAttr = '';
+                    if (!label) {
+                        label = 'absent';
+                        $("tr#facets-row-absent").remove();  // remove the absent row, as it is reinserted
+                        var trIdAttr = 'id=facets-row-absent'  // not proud of it, but has to do now
+                    }
                     var encodeFq = true;
                     if (label.indexOf("@") != -1) {
                         label = label.substring(0,label.indexOf("@"));
@@ -1262,7 +1264,6 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                         // i18n substitution
                         var code = facetName + "." + label;
                         var i18nLabel = jQuery.i18n.prop(code);
-                        //console.log(label, code, i18nLabel, jQuery.i18n.prop(label))
                         label = (i18nLabel.indexOf("[") == -1) ? i18nLabel : jQuery.i18n.prop(label);
                     } else if (facetName.indexOf("outlier_layer") != -1 || /^el\d+/.test(label)) {
                         label = jQuery.i18n.prop("layer." + label);
@@ -1277,32 +1278,28 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     } else {
                         var code = facetName + "." + label;
                         var i18nLabel = jQuery.i18n.prop(code);
-                        //console.log("ELSE",label, code, i18nLabel, jQuery.i18n.prop(label))
                         var newLabel = (i18nLabel.indexOf("[") == -1) ? i18nLabel : (jQuery.i18n.prop(label));
                         label = (newLabel.indexOf("[") == -1) ? newLabel : label;
                     }
                     facetName = facetName.replace(/_RNG$/,""); // remove range version if present
-                    //console.log("label", label, facetName, el);
                     var fqParam = (el.fq) ? encodeURIComponent(el.fq) : facetName + ":" + ((encodeFq) ? encodeURIComponent(fqEsc) : fqEsc) ;
-                    //var link = BC_CONF.searchString.replace("'", "&apos;") + "&fq=" + fqParam;
 
                     //NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues
                     //Problematic URL http://biocache.ala.org.au/occurrences/search?q=lsid:urn:lsid:biodiversity.org.au:afd.taxon:b76f8dcf-fabd-4e48-939c-fd3cafc1887a&fq=geospatial_kosher:true&fq=state:%22Australian%20Capital%20Territory%22
                     var link = BC_CONF.searchString + "&fq=" + fqParam;
-                    //console.log(link)
-                    var rowType = (i % 2 == 0) ? "normalRow" : "alternateRow";
-                    html += "<tr class='" + rowType + "'><td>" +
+                    // ToDo: remove this outcommented line when it's certain that normalRow/alternateRow was some deprecated hack
+                    // var rowType = (i % 2 == 0) ? "normalRow" : "alternateRow";
+                    html += "<tr><td>" +
                         "<input type='checkbox' name='fqs' class='fqs' value='"  + fqParam +
                         "'/></td><td><a href=\"" + link + "\"> " + label + "</a></td><td style='text-align: right'>" + el.count + "</td></tr>";
                 }
-                if (i == facetLimit - 1) {
-                    //console.log("got to end of page of facets: " + i);
+                if (i >= facetLimit - 1) {
                     hasMoreFacets = true;
                 }
             });
             $("table#fullFacets tbody").append(html);
             $('#spinnerRow').hide();
-            // Fix some border issues
+            // Fix some border issues - ToDo this only somewhat fixes...
             $("table#fullFacets tr:last td").css("border-bottom", "1px solid #CCCCCC");
             $("table#fullFacets td:last-child, table#fullFacets th:last-child").css("border-right", "none");
             //$("tr.hidden").fadeIn('slow');
@@ -1310,7 +1307,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             if (hasMoreFacets) {
                 var offsetInt = Number(foffset);
                 var flimitInt = Number(facetLimit);
-                var loadMore =  "<tr id='loadMore' class=''><td colspan='3'><a href='#index' class='loadMoreValues' data-sort='" +
+                var loadMore = "<tr id='loadMore' class=''><td colspan='3'><a href='#index' class='loadMoreValues' data-sort='" +
                     fsort + "' data-foffset='" + (offsetInt + flimitInt) +
                     "'>Loading " + facetLimit + " more values...</a></td></tr>";
                 $("table#fullFacets tbody").append(loadMore);

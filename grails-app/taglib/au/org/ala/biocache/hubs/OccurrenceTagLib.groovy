@@ -116,7 +116,7 @@ class OccurrenceTagLib {
         }  else if (rec.kingdom) {
             name = rec.kingdom
         } else {
-            name = g.message(code:"record.noNameSupplied", default: "No name supplied")
+            name = g.message(code:"record.noNameSupplied")
         }
 
         out << name
@@ -171,13 +171,14 @@ class OccurrenceTagLib {
      *
      *  @attr facetResult REQUIRED
      *  @attr queryParam REQUIRED
-     *  @attr fieldDisplayName
+     *  @attr fieldDisplayName REQUIRED
      */
     def facetLinkList = { attrs ->
         def facetResult = attrs.facetResult
         def queryParam = attrs.queryParam
+        def fieldDisplayName = attrs.fieldDisplayName
         def mb = new MarkupBuilder(out)
-        def linkTitle = "Filter results by ${attrs.fieldDisplayName ?: facetResult.fieldName}"
+        def linkTitle = g.message(code: 'facets.results.filterBy', args: [fieldDisplayName])
 
         def addCounts = { count ->
             mb.span(class:"facetCount") {
@@ -211,7 +212,7 @@ class OccurrenceTagLib {
                                     mkp.yieldUnescaped("&nbsp;")
                                 }
                                 span(class: "facet-item") {
-                                    mkp.yield(alatag.message(code: fieldResult.label ?: 'unknown'))
+                                    mkp.yield(alatag.message(code: fieldResult.label ?: 'search.results.field.absent'))
                                     addCounts(fieldResult.count)
                                 }
 
@@ -304,8 +305,8 @@ class OccurrenceTagLib {
      * @attr skin
      */
     def getRecordId = { attrs ->
-        def record = attrs.record?:null
-        def skin = attrs.skin?:"ala"
+        def record = attrs.record ?: null
+        def skin = attrs.skin ?: "ala"
         def recordId = record.raw.uuid
 
         if (skin == 'avh') {
@@ -497,11 +498,9 @@ class OccurrenceTagLib {
 
         compareRecord.get(group).each { cr ->
             def key = cr.name
-            def label = alatag.message(code:key, default:"")?:alatag.camelCaseToHuman(text: key)?:StringUtils.capitalize(key)
-
+            def label = alatag.message(code:"recordcore.dynamic.${key}", default:"${key}") ?: alatag.camelCaseToHuman(text: key) ?: StringUtils.capitalize(key)
             // only output fields not already included (by checking fieldsMap Map) && not in excluded list
             if (!fieldsMap.containsKey(key) && !StringUtils.containsIgnoreCase(exclude, key)) {
-                //def mb = new MarkupBuilder(out)
                 def tagBody
 
                 if (cr.processed && cr.raw && cr.processed == cr.raw) {
@@ -511,7 +510,13 @@ class OccurrenceTagLib {
                 } else if (cr.raw && !cr.processed) {
                     tagBody = cr.raw
                 } else {
-                    tagBody = "${cr.processed} <br/><span class='originalValue'>Supplied as ${cr.raw}</span>"
+                    tagBody = """
+                        ${cr.processed}
+                        <br />
+                        <span class="originalValue">
+                            ${g.message(code: 'recordcore.label.suppliedas')} "${cr.raw}"
+                        </span>
+                    """
                 }
                 output += alatag.occurrenceTableRow(annotate:"true", section:"dataset", fieldCode:"${key}", fieldName:"<span class='dwc'>${label}</span>") {
                     tagBody
@@ -565,7 +570,7 @@ class OccurrenceTagLib {
         mb.div(class:'recordRow', id:occurrence.uuid ) {
             p(class:'rowA') {
                 if (occurrence.taxonRank && occurrence.scientificName) {
-                    span(style:'text-transform: capitalize', occurrence.taxonRank)
+                    span(style:'text-transform: capitalize', g.message(code:"taxonomy.rank.${occurrence.taxonRank}", default: occurrence.taxonRank))
                     mkp.yieldUnescaped(":&nbsp;")
                     span(class:'occurrenceNames') {
                         mkp.yieldUnescaped(alatag.formatSciName(rankId:occurrence.taxonRankID?:'6000', name:"${occurrence.scientificName}"))
@@ -581,14 +586,30 @@ class OccurrenceTagLib {
 
                 span(class:'eventAndLocation') {
                     if (occurrence.eventDate) {
-                        outputResultsLabel("Date: ", g.formatDate(date: new Date(occurrence.eventDate), format:"yyyy-MM-dd"), true)
+                        outputResultsLabel(
+                            "${g.message(code:'record.eventDate.label')}: ",
+                            g.formatDate(date: new Date(occurrence.eventDate), format:"yyyy-MM-dd"),
+                            true
+                        )
                     } else if (occurrence.year) {
-                        outputResultsLabel("Year: ", occurrence.year, true)
+                        outputResultsLabel(
+                            "${g.message(code:'recordcore.occurrencedatelabel.04')}: ",
+                            occurrence.year,
+                            true
+                        )
                     }
                     if (occurrence.stateProvince) {
-                        outputResultsLabel("State: ", alatag.message(code:occurrence.stateProvince), true)
+                        outputResultsLabel(
+                            "${g.message(code:'recordcore.geospatial.state')}: ",
+                            alatag.message(code:occurrence.stateProvince),
+                           true
+                        )
                     } else if (occurrence.country) {
-                        outputResultsLabel("Country: ", alatag.message(code:occurrence.country), true)
+                        outputResultsLabel(
+                            "${g.message(code:'recordcore.geospatial.country')}: ",
+                            "${occurrence.country}",
+                            true
+                        )
                     }
                 }
 
@@ -620,16 +641,35 @@ class OccurrenceTagLib {
                 }
             }
             p(class:'rowB') {
-                outputResultsLabel("Institution: ", alatag.message(code:occurrence.institutionName), occurrence.institutionName)
-                outputResultsLabel("Collection: ", alatag.message(code:occurrence.collectionName), occurrence.collectionName)
-                outputResultsLabel("Data&nbsp;Resource: ", alatag.message(code:occurrence.dataResourceName), !occurrence.collectionName && occurrence.dataResourceName)
-                outputResultsLabel("Basis&nbsp;of&nbsp;record: ", alatag.message(code:occurrence.basisOfRecord), occurrence.basisOfRecord)
-                outputResultsLabel("Catalog&nbsp;number: ", "${occurrence.raw_collectionCode ? occurrence.raw_collectionCode + ':' : ''}${occurrence.raw_catalogNumber}", occurrence.raw_catalogNumber)
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.Institution')}: ",
+                    alatag.message(code:occurrence.institutionName),
+                    occurrence.institutionName
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.Collection')}: ",
+                    alatag.message(code:occurrence.collectionName),
+                    occurrence.collectionName
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.dataResource')}: ",
+                    alatag.message(code:occurrence.dataResourceName),
+                    !occurrence.collectionName && occurrence.dataResourceName
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.basisOfRecord')}: ",
+                    alatag.message(code:occurrence.basisOfRecord),
+                    occurrence.basisOfRecord
+                )
+                outputResultsLabel(
+                    "${g.message(code:'recordcore.dataset.catalogueNumber')}: ",
+                    "${occurrence.raw_collectionCode ? occurrence.raw_collectionCode + ':' : ''}${occurrence.raw_catalogNumber}",
+                    occurrence.raw_catalogNumber
+                )
                 a(
-                        href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
-                        class:"occurrenceLink",
-//                        style:"margin-left: 15px;",
-                        "View record"
+                    href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
+                    class: "occurrenceLink",
+                    g.message(code:'formatListRecordRow.viewRecord')
                 )
             }
         }
@@ -755,7 +795,6 @@ class OccurrenceTagLib {
         paramsCopy.remove("action")
         paramsCopy.remove("controller")
         def queryString = WebUtils.toQueryString(paramsCopy)
-        log.debug "queryString = ${queryString}"
         out << queryString
     }
 
@@ -767,14 +806,13 @@ class OccurrenceTagLib {
         paramsCopy.remove("action")
         paramsCopy.remove("controller")
         def queryString = WebUtils.toQueryString(paramsCopy)
-        log.debug "queryString = ${queryString}"
         out << queryString
     }
 
     /**
      * Output the meta tags (HTML head section) for the build meta data in application.properties
      * E.g.
-     * <meta name="svn.revision" content="${g.meta(name:'svn.revision')}"/>
+     * <meta name="svn.revision" content="${g.meta(name:'svn.revision')}" />
      * etc.
      *
      * Updated to use properties provided by build-info plugin
