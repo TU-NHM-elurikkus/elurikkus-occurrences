@@ -609,7 +609,14 @@
 
                                 <g:each in="${contacts}" var="c">
                                     <address>
-                                        <strong>${c.contact.firstName} ${c.contact.lastName} <g:if test="${c.primaryContact}"><span class="primaryContact">*</span></g:if> </strong>
+                                        <strong>
+                                            ${c.contact.firstName} ${c.contact.lastName}
+                                            <g:if test="${c.primaryContact}">
+                                                <span class="primaryContact">
+                                                    *
+                                                </span>
+                                            </g:if>
+                                        </strong>
 
                                         <br />
 
@@ -618,18 +625,20 @@
                                         <br />
 
                                         <g:if test="${c.contact.phone}">
-                                            <abbr title="Phone">
-                                                P:
+                                            <abbr title="${message(code: 'general.contact.phone.title')}">
+                                                <g:message code="general.contact.phone.abbr" />:
                                             </abbr>
                                             ${c.contact.phone}
                                             <br />
                                         </g:if>
 
                                         <g:if test="${c.contact.email}">
-                                            <abbr title="Email">E:</abbr>
+                                            <abbr title="${message(code: 'general.contact.email.title')}">
+                                                <g:message code="general.contact.email.abbr" />:
+                                            </abbr>
 
                                             <alatag:emailLink email="${c.contact.email}">
-                                                <g:message code="show.contactcuratorview.emailtext"></g:message>
+                                                <g:message code="show.contactcuratorview.emailtext" />
                                             </alatag:emailLink>
 
                                             <br />
@@ -643,7 +652,6 @@
                                             *
                                         </b>
                                     </span>
-
                                     <g:message code="show.contactcuratorview.primarycontact" />
                                 </p>
                             </div>
