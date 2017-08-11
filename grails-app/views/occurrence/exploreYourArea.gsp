@@ -207,7 +207,10 @@
             </div>
 
             <div id="mapTips">
-                <b><g:message code="eya.maptips.01" /></b>:&nbsp;
+                <b>
+                    <g:message code="eya.maptips.01" />
+                </b>
+                :&nbsp;
                 <g:message code="eya.maptips.02" />
             </div>
         </div>

@@ -151,7 +151,10 @@
                         </div>
 
                         <div style="margin-top:10px;">
-                            <strong><g:message code="download.note.01" /></strong>: <g:message code="download.note.02" />.
+                            <strong>
+                                <g:message code="download.note.01" />:
+                            </strong>
+                            <g:message code="download.note.02" />.
                         </div>
 
                         <div id="statusMsg" style="text-align: center; font-weight: bold; "></div>
