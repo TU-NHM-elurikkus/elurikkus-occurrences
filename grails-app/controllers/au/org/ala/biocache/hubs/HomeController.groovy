@@ -9,7 +9,7 @@ class HomeController {
     }
 
     def advancedSearch(AdvancedSearchParams requestParams) {
-        redirect(controller: "occurrences", action:"search", params: requestParams.toParamMap())
+        redirect(controller: "occurrences", action: "search", params: requestParams.toParamMap())
     }
 
     private Map addCommonModel() {

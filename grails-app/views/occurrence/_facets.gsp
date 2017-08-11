@@ -38,7 +38,7 @@
 
                     %{-- WIP Removed nano class. --}%
                     <div class="subnavlist" style="clear:left">
-                        <alatag:facetLinkList facetResult="${facetResult}" queryParam="${queryParam}" fieldDisplayName="${fieldDisplayName}"/>
+                        <alatag:facetLinkList facetResult="${facetResult}" queryParam="${queryParam}" fieldDisplayName="${fieldDisplayName}" />
                     </div>
 
                     %{--<div class="fadeout"></div>--}%

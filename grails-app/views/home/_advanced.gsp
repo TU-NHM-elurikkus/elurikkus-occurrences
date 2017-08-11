@@ -155,7 +155,7 @@
 
                 <g:each var="country" in="${request.getAttribute("country")}">
                     <option value="${country.key}">
-                        <g:message code="${country.value}" />
+                        <g:message code="${country.value}" default="${country.key}" />
                     </option>
                 </g:each>
             </select>

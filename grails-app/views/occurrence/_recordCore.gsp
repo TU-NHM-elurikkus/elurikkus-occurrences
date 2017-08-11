@@ -61,8 +61,8 @@
             <g:if test="${record.raw.occurrence.institutionCode}">
                 ${fieldsMap.put("institutionCode", true)}
                 <g:if test="${record.processed.attribution.institutionName}">
-                <br />
-            </g:if>
+                    <br />
+                </g:if>
                 <span class="originalValue">
                     <g:message code="recordcore.label.suppliedas"/> "${record.raw.occurrence.institutionCode}"
                 </span>
@@ -214,7 +214,7 @@
                 </g:else>
             </g:set>
 
-                <g:set var="recordedByField" value="${recordedByField.trim()}"/>
+            <g:set var="recordedByField" value="${recordedByField.trim()}" />
             ${fieldsMap.put(recordedByField, true)}
             <g:set var="rawRecordedBy" value="${record.raw.occurrence[recordedByField]}"/>
             <g:set var="proRecordedBy" value="${record.processed.occurrence[recordedByField]}"/>
@@ -1096,7 +1096,7 @@
             <alatag:occurrenceTableRow annotate="false" section="geospatial" fieldCode="coordinatePrecision" fieldName="${message(code: 'recordcore.geospatial.coordinatePrecision')}">
                 ${fieldsMap.put("coordinatePrecision", true)}
                 <g:if test="${record.raw.location.decimalLatitude || record.raw.location.decimalLongitude}">
-                    <g:message code="${record.raw.location.coordinatePrecision ? record.raw.location.coordinatePrecision : 'unspecified'}" />
+                    <g:message code="${record.raw.location.coordinatePrecision ? record.raw.location.coordinatePrecision : 'recordcore.record.value.unspecified'}" />
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -1104,7 +1104,7 @@
             <alatag:occurrenceTableRow annotate="false" section="geospatial" fieldCode="coordinateUncertaintyInMeters" fieldName="${message(code: 'recordcore.geospatial.coordinateUncertaintyInMeters')}">
                 ${fieldsMap.put("coordinateUncertaintyInMeters", true)}
                 <g:if test="${record.processed.location.coordinateUncertaintyInMeters}">
-                    <g:message code="${record.processed.location.coordinateUncertaintyInMeters ? record.processed.location.coordinateUncertaintyInMeters : 'unspecified'}" />
+                    <g:message code="${record.processed.location.coordinateUncertaintyInMeters ? record.processed.location.coordinateUncertaintyInMeters : 'recordcore.record.value.unspecified'}" />
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -1172,10 +1172,12 @@
                 </g:set>
                 <alatag:occurrenceTableRow annotate="true" section="misc" fieldCode="${entry.key}" fieldName="${label}">
                     <g:if test="${StringUtils.startsWith(entry.value,'http')}">
-                        <a href="${entry.value}">${entry.value}</a>
+                        <a href="${entry.value}">
+                            ${entry.value}
+                        </a>
                     </g:if>
                     <g:else>
-                        <g:message code="${entry.value}" />
+                        <g:message code="recordcore.dynamic.${entry.value}" default="${entry.value}" />
                     </g:else>
                 </alatag:occurrenceTableRow>
             </g:each>

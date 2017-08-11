@@ -426,7 +426,7 @@
 <g:if test="${record.images}">
     <div class="sidebar">
         <h2 id="images">
-            <g:message code="show.sidebar03.title" />
+            <g:message code="show.sidebar.image.title" />
         </h2>
 
         <div id="occurrenceImages" style="margin-top:5px;">
@@ -434,7 +434,11 @@
                 <div style="margin-bottom:10px;">
                     <g:if test="${grailsApplication.config.skin.useAlaImageService.toBoolean()}">
                         <a href="${grailsApplication.config.images.viewerUrl}${image.filePath}" target="_blank">
-                            <img src="${image.alternativeFormats.smallImageUrl}" style="max-width: 100%;" alt="Click to view this image in a large viewer" />
+                            <img
+                                src="${image.alternativeFormats.smallImageUrl}"
+                                style="max-width: 100%;"
+                                alt="Click to view this image in a large viewer"
+                            />
                         </a>
                     </g:if>
                     <g:else>
@@ -445,31 +449,31 @@
                     <br />
                     <g:if test="${record.raw.occurrence.photographer || image.metadata?.creator}">
                         <cite>
-                            <g:message code="show.sidebar03.cite01" />: ${record.raw.occurrence.photographer ?: image.metadata?.creator}
+                            <g:message code="show.sidebar.image.creator" />: ${record.raw.occurrence.photographer ?: image.metadata?.creator}
                         </cite>
                         <br />
                     </g:if>
                     <g:if test="${record.raw.occurrence.rights || image.metadata?.rights}">
                         <cite>
-                            <g:message code="show.sidebar03.cite02" />: ${record.raw.occurrence.rights ?: image.metadata?.rights}
+                            <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights ?: image.metadata?.rights}
                         </cite>
                         <br />
                     </g:if>
                     <g:if test="${record.raw.occurrence.rightsholder || image.metadata?.rightsholder}">
                         <cite>
-                            <g:message code="show.sidebar03.cite03" />: ${record.raw.occurrence.rightsholder ?: image.metadata?.rightsholder}
+                            <g:message code="recordcore.dynamic.rightsholder" />: ${record.raw.occurrence.rightsholder ?: image.metadata?.rightsholder}
                         </cite>
                         <br />
                     </g:if>
                     <g:if test="${record.raw.miscProperties.rightsHolder}">
                         <cite>
-                            <g:message code="show.sidebar03.cite03" />: ${record.raw.miscProperties.rightsHolder}
+                            <g:message code="recordcore.dynamic.rightsholder" />: ${record.raw.miscProperties.rightsHolder}
                         </cite>
                         <br />
                     </g:if>
                     <g:if test="${image.metadata?.license}">
                         <cite>
-                            <g:message code="show.sidebar03.image.license" />: ${image.metadata?.license}
+                            <g:message code="recordcore.dynamic.license" />: ${image.metadata?.license}
                         </cite>
                         <br />
                     </g:if>
@@ -504,7 +508,7 @@
                 </g:else>
             </g:set>
 
-            <audio controls>
+            <audio controls class="audio-player">
                 <source src="${soundURL}">
                 <g:message code="show.soundsheader.notSupported" />
             </audio>
@@ -513,7 +517,7 @@
         <g:if test="${record.raw.occurrence.rights}">
             <br />
             <cite>
-                <g:message code="show.sidebar04.cite" />: ${record.raw.occurrence.rights}
+                <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights}
             </cite>
         </g:if>
     </div>
