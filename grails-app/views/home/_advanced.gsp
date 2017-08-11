@@ -10,7 +10,7 @@
         </legend>
 
         <label for="text" class="col-2">
-            <g:message code="advancedsearch.table01col01.title"/>
+            <g:message code="advancedsearch.table01col01.title" />
         </label>
 
         <div class="col-10">
@@ -285,7 +285,7 @@
 
     <fieldset class="from-group">
         <legend class="col-form-legend row">
-            <g:message code="advancedsearch.title09"/>
+            <g:message code="advancedsearch.title09" />
         </legend>
 
         <g:if test="${request.getAttribute("data_resource_uid") && request.getAttribute("data_resource_uid").size() > 1}">
@@ -362,7 +362,7 @@
         &nbsp;&nbsp;
         <input
             type="reset"
-            value="<g:message code="advancedsearch.button.clearAll"/>"
+            value="<g:message code="advancedsearch.button.clearAll" />"
             id="clearAll"
             class="erk-button erk-button--light"
             onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;"

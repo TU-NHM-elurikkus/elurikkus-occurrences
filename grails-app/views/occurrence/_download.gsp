@@ -12,7 +12,7 @@
                     ×
                 </button>
                 <h3 id="downloadsLabel">
-                    <g:message code="download.download.title"/>
+                    <g:message code="download.download.title" />
                 </h3>
             </div>
 
@@ -144,14 +144,14 @@
                             <br />
                             <input
                                 type="submit"
-                                value="<g:message code="download.downloadform.button.submit"/>"
+                                value="<g:message code="download.downloadform.button.submit" />"
                                 id="downloadStart"
                                 class="erk-button erk-button--light tooltips"
                             />
                         </div>
 
                         <div style="margin-top:10px;">
-                            <strong><g:message code="download.note.01"/></strong>: <g:message code="download.note.02"/>.
+                            <strong><g:message code="download.note.01" /></strong>: <g:message code="download.note.02" />.
                         </div>
 
                         <div id="statusMsg" style="text-align: center; font-weight: bold; "></div>
@@ -265,7 +265,7 @@
 
             <div class="modal-footer">
                 <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
-                    <g:message code="generic.button.close"/>
+                    <g:message code="generic.button.close" />
                 </button>
             </div>
         </div>

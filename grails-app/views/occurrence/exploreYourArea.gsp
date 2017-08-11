@@ -19,19 +19,19 @@
   Time: 4:39 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocache.baseUrl}"/>
-<g:set var="queryContext" value="${grailsApplication.config.biocache.queryContext}"/>
+<g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocache.baseUrl}" />
+<g:set var="queryContext" value="${grailsApplication.config.biocache.queryContext}" />
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-    <meta name="section" content="yourArea"/>
+    <meta name="layout" content="${grailsApplication.config.skin.layout}" />
+    <meta name="section" content="yourArea" />
     <title>
         <g:message code="eya.title" /> | eElurikkus
     </title>
 
-    <g:render template="/layouts/global" plugin="biocache-hubs"/>
+    <g:render template="/layouts/global" plugin="biocache-hubs" />
 
     <g:if test="${grailsApplication.config.google.apikey}">
         <script src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
@@ -40,13 +40,13 @@
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     </g:else>
 
-    <r:require modules="exploreArea, qtip"/>
+    <r:require modules="exploreArea, qtip" />
 </head>
 
 <body class="nav-locations explore-your-area">
     <div class="page-header">
         <h1 class="page-header__title">
-            <g:message code="eya.title"/>
+            <g:message code="eya.title" />
         </h1>
 
         <div class="page-header__subtitle">
@@ -55,7 +55,7 @@
 
         <div class="page-header-links">
             <span id="viewAllRecords" class="erk-link page-header-links__link">
-                <g:message code="eya.searchform.a.viewallrecords.label"/>
+                <g:message code="eya.searchform.a.viewallrecords.label" />
             </span>
         </div>
     </div>
@@ -80,9 +80,9 @@
                         </button>
                     </div>
 
-                    <input type="hidden" name="latitude" id="latitude" value="${latitude}"/>
-                    <input type="hidden" name="longitude" id="longitude" value="${longitude}"/>
-                    <input type="hidden" name="location" id="location" value="${location}"/>
+                    <input type="hidden" name="latitude" id="latitude" value="${latitude}" />
+                    <input type="hidden" name="longitude" id="longitude" value="${longitude}" />
+                    <input type="hidden" name="location" id="location" value="${location}" />
 
                     <g:if test="${location}">
                         <g:message code="eya.searchform.label02" />:
@@ -98,7 +98,7 @@
 
             <div class="form-linline float-right">
                 <p>
-                    <g:message code="eya.searchformradius.label"/>
+                    <g:message code="eya.searchformradius.label" />
 
                     <select id="radius" name="radius" class="">
                         <option value="1" <g:if test="${radius == 1}">selected</g:if>>1</option>
@@ -108,13 +108,13 @@
 
                     <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                         <i class="icon-download"></i>
-                        <g:message code="download.download.title"/>
+                        <g:message code="download.download.title" />
                     </button>
                 </p>
             </div>
 
             %{-- TODO XXX --}%
-            <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title'/>" style="display: none">
+            <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
                 <p>
                     %{-- TODO XXX --}%
                     <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
@@ -137,10 +137,10 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <g:message code="eya.groupTable.header.group.label"/>
+                                    <g:message code="eya.groupTable.header.group.label" />
                                 </th>
                                 <th>
-                                    <g:message code="eya.groupTable.header.count.label"/>
+                                    <g:message code="eya.groupTable.header.count.label" />
                                 </th>
                             </tr>
                         </thead>
@@ -193,7 +193,7 @@
                 <table id="cellCountsLegend">
                     <tr>
                         <td style="background-color:#000; color:white; text-align:right;">
-                            <g:message code="eya.speciesTable.header.count.label"/>:&nbsp;
+                            <g:message code="eya.speciesTable.header.count.label" />:&nbsp;
                         </td>
 
                         <td style="background-color:#ffff00;">1&ndash;9</td>
@@ -207,13 +207,13 @@
             </div>
 
             <div id="mapTips">
-                <b><g:message code="eya.maptips.01"/></b>:&nbsp;
-                <g:message code="eya.maptips.02"/>
+                <b><g:message code="eya.maptips.01" /></b>:&nbsp;
+                <g:message code="eya.maptips.02" />
             </div>
         </div>
     </div>
 
-    <g:render template="/occurrence/download"/>
+    <g:render template="/occurrence/download" />
 
     <script type="text/javascript">
         // Global variables for yourAreaMap.js

@@ -156,8 +156,8 @@ a.colour-by-legend-toggle {
 
 <div style="margin-bottom: 10px">
     <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
-        <g:set var='spatialPortalLink' value="${sr.urlParameters}"/>
-        <g:set var='spatialPortalUrlParams' value="${grailsApplication.config.spatial.params}"/>
+        <g:set var='spatialPortalLink' value="${sr.urlParameters}" />
+        <g:set var='spatialPortalUrlParams' value="${grailsApplication.config.spatial.params}" />
 
         <div id="spatialPortalBtn" class="erk-button erk-button--light" style="margin-bottom: 2px;">
             <a id="spatialPortalLink"
@@ -166,20 +166,20 @@ a.colour-by-legend-toggle {
                 title="Continue analysis in ALA Spatial Portal"
             >
                 <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
-                <g:message code="map.spatialportal.btn.label"/>
+                <g:message code="map.spatialportal.btn.label" />
             </a>
         </div>
     </g:if>
 
     <button id="downloadMaps" data-toggle="modal" data-target="#downloadMap" class="erk-button erk-button--light" style="margin-bottom: 2px;">
         <span class="fa fa-download"></span>
-        <g:message code="map.downloadmaps.btn.label"/>
+        <g:message code="map.downloadmaps.btn.label" />
     </button>
 
     <g:if test="${params.wkt}">
         <button id="downloadWKT" class="erk-button erk-button--light" style="margin-bottom: 2px;" class="tooltip" onclick="downloadPolygon(); return false;">
             <span class="fa fa-stop"></span>&nbsp&nbsp;
-            <g:message code="map.downloadwkt.btn.label"/>
+            <g:message code="map.downloadwkt.btn.label" />
         </button>
     </g:if>
 
@@ -201,21 +201,21 @@ a.colour-by-legend-toggle {
         <tr>
             <td>
                 <label for="colourBySelect">
-                    <g:message code="map.maplayercontrols.tr01td01.label"/>:&nbsp;
+                    <g:message code="map.maplayercontrols.tr01td01.label" />:&nbsp;
                 </label>
 
                 <div class="layerControls">
                     <select name="colourBySelect" id="colourBySelect" onchange="occMap.changeFacetColours();return true;">
                         <option value="">
-                            <g:message code="map.maplayercontrols.tr01td01.option01"/>
+                            <g:message code="map.maplayercontrols.tr01td01.option01" />
                         </option>
 
                         <option value="grid" ${(defaultColourBy == 'grid')?'selected=\"selected\"':''}>
-                            <g:message code="map.maplayercontrols.tr01td01.option02"/>
+                            <g:message code="map.maplayercontrols.tr01td01.option02" />
                         </option>
 
                         <option value="gridVariable" ${(defaultColourBy == 'gridVariable')?'selected=\"selected\"':''}>
-                            <g:message code="map.maplayercontrols.tr01td01.option03"/>
+                            <g:message code="map.maplayercontrols.tr01td01.option03" />
                         </option>
 
                         <option value="taimeatlasGrid" ${(defaultColourBy == 'taimeatlasGrid')? 'selected=\"selected\"' : ''}>
@@ -239,7 +239,7 @@ a.colour-by-legend-toggle {
 
                             <g:if test="${facetResult.fieldResult.size() > 1 || defaultselected}">
                                 <option value="${facetResult.fieldName}" ${defaultselected}>
-                                    <alatag:formatDynamicFacetName fieldName="${facetResult.fieldName}"/>
+                                    <alatag:formatDynamicFacetName fieldName="${facetResult.fieldName}" />
                                 </option>
                             </g:if>
                         </g:each>
@@ -263,7 +263,7 @@ a.colour-by-legend-toggle {
 
             <td>
                 <label for="sizeslider">
-                    <g:message code="map.maplayercontrols.tr01td02.label"/>:
+                    <g:message code="map.maplayercontrols.tr01td02.label" />:
                 </label>
 
                 <div class="layerControls">
@@ -275,7 +275,7 @@ a.colour-by-legend-toggle {
 
             <td>
                 <label for="opacityslider">
-                    <g:message code="map.maplayercontrols.tr01td03.label"/>:
+                    <g:message code="map.maplayercontrols.tr01td03.label" />:
                 </label>
 
                 <div class="layerControls">
@@ -287,7 +287,7 @@ a.colour-by-legend-toggle {
 
             <td>
                 <label for="outlineDots">
-                    <g:message code="map.maplayercontrols.tr01td04.label"/>:
+                    <g:message code="map.maplayercontrols.tr01td04.label" />:
                 </label>
 
                 <input type="checkbox" name="outlineDots" value="false" class="layerControls" id="outlineDots">
@@ -315,7 +315,7 @@ a.colour-by-legend-toggle {
                         <table class="legendTable"></table>
 
                         <button id="legendLoadMore" class="erk-button erk-button--light hidden-node">
-                            <g:message code="generic.button.loadMore"/>
+                            <g:message code="generic.button.loadMore" />
                         </button>
                     </div>
                 </div>
@@ -326,7 +326,7 @@ a.colour-by-legend-toggle {
 
 <div id="recordPopup" style="display:none;">
     <a href="#">
-        <g:message code="map.recordpopup"/>
+        <g:message code="map.recordpopup" />
     </a>
 </div>
 
@@ -405,16 +405,16 @@ a.colour-by-legend-toggle {
 <div style="display: none;">
     <div class="popupRecordTemplate">
         <div class="multiRecordHeader hide">
-            <g:message code="search.map.viewing"/>
+            <g:message code="search.map.viewing" />
             <span class="currentRecord"></span>
-            <g:message code="search.map.of"/>
+            <g:message code="search.map.of" />
             <span class="totalrecords"></span>
-            <g:message code="search.map.occurrences"/>
+            <g:message code="search.map.occurrences" />
             &nbsp;&nbsp;
             <i class="icon-share-alt"></i>
             <a href="#" class="viewAllRecords">
                 <button class="erk-button erk-button--light">
-                    <g:message code="search.map.viewAllRecords"/>
+                    <g:message code="search.map.viewAllRecords" />
                 </button>
             </a>
         </div>
@@ -425,13 +425,13 @@ a.colour-by-legend-toggle {
             <div class="hide multiRecordFooter">
                 <span class="previousRecord ">
                     <button class="erk-button erk-button--light btn-mini disabled">
-                        <g:message code="search.map.popup.prev"/>
+                        <g:message code="search.map.popup.prev" />
                     </button>
                 </span>
 
                 <span class="nextRecord ">
                     <button class="erk-button erk-button--light btn-mini disabled">
-                        <g:message code="search.map.popup.next"/>
+                        <g:message code="search.map.popup.next" />
                     </button>
                 </span>
             </div>
@@ -440,7 +440,7 @@ a.colour-by-legend-toggle {
         <div class="recordLink">
             <a href="#">
                 <button class="erk-button erk-button--light">
-                    <g:message code="search.map.popup.viewRecord"/>
+                    <g:message code="search.map.popup.viewRecord" />
                 </button>
             </a>
         </div>
@@ -455,33 +455,33 @@ a.colour-by-legend-toggle {
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                     <h3 id="downloadsMapLabel">
-                        <g:message code="map.downloadmap.title"/>
+                        <g:message code="map.downloadmap.title" />
                     </h3>
                 </div>
 
                 <div class="modal-body">
-                    <input id="mapDownloadUrl" type="hidden" value="${alatag.getBiocacheAjaxUrl()}/webportal/wms/image"/>
+                    <input id="mapDownloadUrl" type="hidden" value="${alatag.getBiocacheAjaxUrl()}/webportal/wms/image" />
 
                     <fieldset>
                         <p>
                             <label for="format">
-                                <g:message code="map.downloadmap.field01.label"/>
+                                <g:message code="map.downloadmap.field01.label" />
                             </label>
 
                             <select name="format" id="format">
                                 <option value="jpg">
-                                    <g:message code="map.downloadmap.field01.option01"/>
+                                    <g:message code="map.downloadmap.field01.option01" />
                                 </option>
 
                                 <option value="png">
-                                    <g:message code="map.downloadmap.field01.option02"/>
+                                    <g:message code="map.downloadmap.field01.option02" />
                                 </option>
                             </select>
                         </p>
 
                         <p>
                             <label for="dpi">
-                                <g:message code="map.downloadmap.field02.label"/>
+                                <g:message code="map.downloadmap.field02.label" />
                             </label>
 
                             <select name="dpi" id="dpi">
@@ -493,7 +493,7 @@ a.colour-by-legend-toggle {
 
                         <p>
                             <label for="pradiusmm">
-                                <g:message code="map.downloadmap.field03.label"/>
+                                <g:message code="map.downloadmap.field03.label" />
                             </label>
 
                             <select name="pradiusmm" id="pradiusmm">
@@ -521,7 +521,7 @@ a.colour-by-legend-toggle {
 
                         <p>
                             <label for="popacity">
-                                <g:message code="map.maplayercontrols.tr01td03.label"/>
+                                <g:message code="map.maplayercontrols.tr01td03.label" />
                             </label>
 
                             <select name="popacity" id="popacity">
@@ -540,7 +540,7 @@ a.colour-by-legend-toggle {
 
                         <p id="colourPickerWrapper">
                             <label for="pcolour">
-                                <g:message code="map.downloadmap.field05.label"/>
+                                <g:message code="map.downloadmap.field05.label" />
                             </label>
 
                             <input type="color" name="pcolour" id="pcolour" value="#0D00FB">
@@ -548,7 +548,7 @@ a.colour-by-legend-toggle {
 
                         <p>
                             <label for="widthmm">
-                                <g:message code="map.downloadmap.field06.label"/>
+                                <g:message code="map.downloadmap.field06.label" />
                             </label>
 
                             <input type="text" name="widthmm" id="widthmm" value="150" />
@@ -556,74 +556,74 @@ a.colour-by-legend-toggle {
 
                         <p>
                             <label for="scale_on">
-                                <g:message code="map.downloadmap.field07.label"/>
+                                <g:message code="map.downloadmap.field07.label" />
                             </label>
 
-                            <input type="radio" name="scale" value="on" id="scale_on" checked="checked"/>
-                            <g:message code="generic.button.yes"/> &nbsp;
+                            <input type="radio" name="scale" value="on" id="scale_on" checked="checked" />
+                            <g:message code="generic.button.yes" /> &nbsp;
 
                             <input type="radio" name="scale" value="off" />
-                            <g:message code="generic.button.no"/>
+                            <g:message code="generic.button.no" />
                         </p>
 
                         <p>
                             <label for="outline">
-                                <g:message code="map.downloadmap.field08.label"/>
+                                <g:message code="map.downloadmap.field08.label" />
                             </label>
 
-                            <input type="radio" name="outline" value="true" id="outline" checked="checked"/>
-                            <g:message code="generic.button.yes"/> &nbsp;
+                            <input type="radio" name="outline" value="true" id="outline" checked="checked" />
+                            <g:message code="generic.button.yes" /> &nbsp;
 
                             <input type="radio" name="outline" value="false" />
-                            <g:message code="generic.button.no"/>
+                            <g:message code="generic.button.no" />
                         </p>
 
                         <p>
-                            <label for="baselayer"><g:message code="map.downloadmap.field09.label"/></label>
+                            <label for="baselayer"><g:message code="map.downloadmap.field09.label" /></label>
                             <select name="baselayer" id="baselayer">
                                 <option value="world">
-                                    <g:message code="map.downloadmap.field09.option01"/>
+                                    <g:message code="map.downloadmap.field09.option01" />
                                 </option>
 
                                 <option value="aus1" selected="true">
-                                    <g:message code="map.downloadmap.field09.option02"/>
+                                    <g:message code="map.downloadmap.field09.option02" />
                                 </option>
 
                                 <option value="aus2">
-                                    <g:message code="map.downloadmap.field09.option03"/>
+                                    <g:message code="map.downloadmap.field09.option03" />
                                 </option>
 
                                 <option value="ibra_merged">
-                                    <g:message code="map.downloadmap.field09.option04"/>
+                                    <g:message code="map.downloadmap.field09.option04" />
                                 </option>
 
                                 <option value="ibra_sub_merged">
-                                    <g:message code="map.downloadmap.field09.option05"/>
+                                    <g:message code="map.downloadmap.field09.option05" />
                                 </option>
 
                                 <option value="imcra4_pb">
-                                    <g:message code="map.downloadmap.field09.option06"/>
+                                    <g:message code="map.downloadmap.field09.option06" />
                                 </option>
                             </select>
                         </p>
 
                         <p>
                             <label for="fileName">
-                                <g:message code="map.downloadmap.field10.label"/>
+                                <g:message code="map.downloadmap.field10.label" />
                             </label>
 
-                            <input type="text" name="fileName" id="fileName" value="MyMap"/>
+                            <input type="text" name="fileName" id="fileName" value="MyMap" />
                         </p>
                     </fieldset>
                 </div>
 
                 <div class="modal-footer">
                     <button id="submitDownloadMap" class="erk-button erk-button--light" style="float:left;">
-                        <g:message code="download.download.label"/>
+                        <g:message code="download.download.label" />
                     </button>
 
                     <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
-                        <g:message code="generic.button.close"/>
+                        <g:message code="generic.button.close" />
                     </button>
                 </div>
             </form>
@@ -631,7 +631,7 @@ a.colour-by-legend-toggle {
     </div>
 </div>
 
-%{--<r:require module="colourPicker"/>--}%
+%{--<r:require module="colourPicker" />--}%
 <script type="text/javascript">
     $(document).ready(function(){
         %{--$('#pcolour').colourPicker({--}%

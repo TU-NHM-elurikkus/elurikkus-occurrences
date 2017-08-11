@@ -51,9 +51,9 @@
                                 role="button"
                                 data-toggle="modal"
                                 data-displayname="${fieldDisplayName}"
-                                title="<g:message code='facets.button.chooseMore.title'/>"
+                                title="<g:message code='facets.button.chooseMore.title' />"
                             >
-                                <g:message code="facets.button.chooseMore.label"/>...
+                                <g:message code="facets.button.chooseMore.label" />...
                             </a>
                         </div>
                     </g:if>
@@ -73,7 +73,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                 <h3 id="multipleFacetsLabel">
-                    <g:message code="facets.multiplefacets.title"/>
+                    <g:message code="facets.multiplefacets.title" />
                 </h3>
             </div>
 
@@ -103,7 +103,7 @@
                                             data-foffset="0"
                                             title="<g:message code='facets.multiplefacets.tableth01.sort' />"
                                         >
-                                            <g:message code="facets.multiplefacets.tableth01"/>
+                                            <g:message code="facets.multiplefacets.tableth01" />
                                         </a>
                                     </th>
                                 </tr>
@@ -123,7 +123,7 @@
                                 </tr>
                                 <tr id="spinnerRow">
                                     <td colspan="3" style="text-align: center;">
-                                        <g:message code="facets.multiplefacets.tabletr01td01"/>...
+                                        <g:message code="facets.multiplefacets.tabletr01td01" />...
                                         <g:img plugin="biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon" />
                                     </td>
                                 </tr>
@@ -148,7 +148,7 @@
                         <!-- dropdown menu links -->
                         <li>
                             <a href="#" class="dropdown-item wildcard" id="includeAll">
-                                <g:message code="facets.submitfacets.li01"/>
+                                <g:message code="facets.submitfacets.li01" />
                             </a>
                         </li>
                     </ul>
@@ -158,7 +158,7 @@
 
                 <div class="btn-group">
                     <button type="submit" class="submit erk-button erk-button--light" id="exclude">
-                        <g:message code="facets.excludeSelected.button"/>
+                        <g:message code="facets.excludeSelected.button" />
                     </button>
 
                     <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown">
@@ -169,7 +169,7 @@
                         <!-- dropdown menu links -->
                         <li>
                             <a href="#" class="dropdown-item wildcard" id="excludeAll">
-                                <g:message code="facets.submitfacets.li02"/>
+                                <g:message code="facets.submitfacets.li02" />
                             </a>
                         </li>
                     </ul>
@@ -182,7 +182,7 @@
                     <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button')}"></i>
 
                     <span class="hide">
-                        <g:message code="facets.downloadfacets.button"/>
+                        <g:message code="facets.downloadfacets.button" />
                     </span>
                 </button>
 

@@ -25,7 +25,7 @@
 
         &nbsp;&nbsp;
 
-        <g:set var="resetTitle" value="Restore default settings"/>
+        <g:set var="resetTitle" value="Restore default settings" />
 
         <button id="resetFacetOptions" class="erk-button erk-button--light" title="${resetTitle}">
             <g:message code="list.facetcheckboxes.button.resetfacetoptions" />
@@ -34,7 +34,7 @@
 
     <div class="search-filter-menu--facets">
         <%-- iterate over the groupedFacets, checking the default facets for each entry --%>
-        <g:set var="count" value="0"/>
+        <g:set var="count" value="0" />
 
         <g:each var="group" in="${groupedFacets}">
             <g:if test="${defaultFacets.find { key, value -> group.value.any { it == key} }}">
@@ -45,7 +45,7 @@
 
                     <g:each in="${group.value}" var="fieldValue">
                         <g:if test="${defaultFacets.containsKey(fieldValue)}">
-                            <g:set var="count" value="${count + 1}"/>
+                            <g:set var="count" value="${count + 1}" />
 
                             <div class="search-filter-checkbox">
                                 <label class="search-filter-checkbox__label">

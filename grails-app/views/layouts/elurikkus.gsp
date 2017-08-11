@@ -1,5 +1,5 @@
-<g:set var="orgNameLong" value="${grailsApplication.config.skin.orgNameLong}"/>
-<g:set var="orgNameShort" value="${grailsApplication.config.skin.orgNameShort}"/>
+<g:set var="orgNameLong" value="${grailsApplication.config.skin.orgNameLong}" />
+<g:set var="orgNameShort" value="${grailsApplication.config.skin.orgNameShort}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,7 +67,7 @@
     </head>
 
 <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
-    <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}"/>
+    <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}" />
 
     <g:render template="/menu" plugin="elurikkus-commons" />
 

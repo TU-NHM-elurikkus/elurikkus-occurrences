@@ -812,7 +812,7 @@ class OccurrenceTagLib {
     /**
      * Output the meta tags (HTML head section) for the build meta data in application.properties
      * E.g.
-     * <meta name="svn.revision" content="${g.meta(name:'svn.revision')}"/>
+     * <meta name="svn.revision" content="${g.meta(name:'svn.revision')}" />
      * etc.
      *
      * Updated to use properties provided by build-info plugin

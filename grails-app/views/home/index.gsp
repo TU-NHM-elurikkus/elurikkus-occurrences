@@ -384,7 +384,7 @@
                             <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                             <input type="hidden" name="field" value="catalogue_number" />
                             %{-- XXX --}%
-                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit"/>  class="erk-button erk-button--light" />
+                            <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit" />  class="erk-button erk-button--light" />
                         </div>
                     </form>
                 </div><%-- end #catalogUploadDiv div --%>
