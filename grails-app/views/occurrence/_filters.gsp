@@ -1,5 +1,5 @@
 <div class="dropdown-menu search-filter-menu" id="customiseFilters" aria-labelledby="customiseFiltersButton">
-    %{-- XXX dropdown-item class --}%
+    <%-- XXX dropdown-item class --%>
     <h4 class="dropdown-item search-filter-menu--title">
         <g:message code="list.customisefacetsbutton.div01.title" />
     </h4>

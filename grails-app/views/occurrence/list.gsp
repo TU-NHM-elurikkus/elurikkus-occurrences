@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="startPageTime" value="${System.currentTimeMillis()}" />
 <g:set var="queryDisplay" value="${sr?.queryTitle?:searchRequestParams?.displayString?:''}" />
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}" />
-<g:set var="authService" bean="authService"></g:set>
+<g:set var="authService" bean="authService" />
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +11,11 @@
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
         <title>
-            <g:message code="list.title" />: ${sr?.queryTitle?.replaceAll("<(.|\n)*?>", '')} | <g:message code="search.heading.list" /> | ${grailsApplication.config.skin.orgNameLong}
+            <g:message code="list.title" />: ${sr?.queryTitle?.replaceAll("<(.|\n)*?>", '')}
+            |
+            <g:message code="search.heading.list" />
+            |
+            ${grailsApplication.config.skin.orgNameLong}
         </title>
 
         <g:if test="${grailsApplication.config.google.apikey}">
@@ -23,6 +26,7 @@
         <script type="text/javascript">
             // single global var for app conf settings
             <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />
+
             <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
             <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}" />
             var BC_CONF = {
@@ -44,7 +48,7 @@
                 facetLimit: "${grailsApplication.config.facets.limit?:50}",
                 queryContext: "${grailsApplication.config.biocache.queryContext}",
                 selectedDataResource: "${selectedDataResource}",
-                autocompleteHints: ${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'},
+                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
                 zoomOutsideScopedRegion: Boolean("${grailsApplication.config.map.zoomOutsideScopedRegion}"),
                 hasMultimedia: ${hasImages?:'false'}, // will be either true or false
                 locale: "${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}",
@@ -52,9 +56,9 @@
                 likeUrl: "${createLink(controller: 'imageClient', action: 'likeImage')}",
                 dislikeUrl: "${createLink(controller: 'imageClient', action: 'dislikeImage')}",
                 userRatingUrl: "${createLink(controller: 'imageClient', action: 'userRating')}",
-                disableLikeDislikeButton: ${authService.getUserId() ? false : true},
-                addLikeDislikeButton: ${(grailsApplication.config.addLikeDislikeButton == false) ? false : true},
-                addPreferenceButton: ${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains("ROLE_ADMIN") ? true : false) : false},
+                disableLikeDislikeButton: "${authService.getUserId() ? false : true}",
+                addLikeDislikeButton: "${(grailsApplication.config.addLikeDislikeButton == false) ? false : true}",
+                addPreferenceButton: "${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains('ROLE_ADMIN') ? true : false) : false}",
                 // whatever this is
                 userRatingHelpText: `
                     <div>
@@ -135,7 +139,11 @@
                 </h4>
 
                 <p>
-                    Please contact <a href="mailto:support@ala.org.au?subject=biocache error" style="text-decoration: underline;">support</a> if this error continues
+                    Please contact
+                    <a href="mailto:support@ala.org.au?subject=biocache error" style="text-decoration: underline;">
+                        support
+                    </a>
+                    if this error continues
                 </p>
             </div>
         </g:if>
@@ -150,7 +158,11 @@
                     ${errors}
                 </h4>
 
-                Please contact <a href="mailto:support@ala.org.au?subject=biocache error">support</a> if this error continues
+                Please contact
+                    <a href="mailto:support@ala.org.au?subject=biocache error">
+                        support
+                    </a>
+                if this error continues
             </div>
         </g:if>
 
@@ -239,9 +251,10 @@
                     </g:if>
 
                     <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                        <a href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
-                                class="tooltips newDownload"
-                                title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"
+                        <a
+                            href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
+                            class="tooltips newDownload"
+                            title="Download all ${g.formatNumber(number: sr.totalRecords, format: "#,###,###")} records"
                         >
                             <%-- XXX BUTTON INSIDE LINK --%>
                             <button id="downloads" class="erk-button erk-button--light">
@@ -266,12 +279,16 @@
 
                         <p>
                             <span id="returnedText">
-                                <strong><g:formatNumber number="${sr.totalRecords}" format="#,###,###" /></strong>
+                                <strong>
+                                    <g:formatNumber number="${sr.totalRecords}" format="#,###,###" />
+                                </strong>
                                 <g:message code="list.resultsretuened.returnedtext" />
                             </span>
 
                             <span class="queryDisplay">
-                                <strong>${raw(queryDisplay)}</strong>
+                                <strong>
+                                    ${raw(queryDisplay)}
+                                </strong>
                             </span>
                         </p>
 
@@ -297,7 +314,12 @@
                             <div class="dropdown-menu" aria-labelledby="taxa_">
                                 <div class="taxaMenuContent">
                                     <g:message code="list.resultsretuened.des01" />
-                                    <b class="nameString"><g:message code="list.resultsretuened.navigator01" /></b> (<span class="speciesPageLink"><g:message code="list.resultsretuened.des03" /></span>).
+                                    <b class="nameString">
+                                        <g:message code="list.resultsretuened.navigator01" />
+                                    </b>
+                                    (<span class="speciesPageLink">
+                                        <g:message code="list.resultsretuened.des03" />
+                                    </span>).
 
                                     <form name="raw_taxon_search" class="rawTaxonSearch" action="${request.contextPath}/occurrences/search/taxa" method="POST">
                                         <div class="refineTaxaSearch">
@@ -382,7 +404,7 @@
                                             </a>
                                         </div>
 
-                                        <br/>
+                                        <br />
 
                                         <div class="">
                                             <a
@@ -425,8 +447,7 @@
                     <g:render template="download" />
 
                     <%--- XXX ---%>
-                    <div style="display:none">
-                    </div>
+                    <div style="display:none"></div>
 
                     <div class="tabbable">
                         <ul class="nav nav-tabs">
@@ -602,7 +623,8 @@
                             <div id="charts" role="tabpanel" class="tab-pane">
                                 <g:render template="charts"
                                     model="[searchString: searchString]"
-                                    plugin="biocache-hubs" />
+                                    plugin="biocache-hubs"
+                                />
 
                                 <script>
                                     var searchString = '${searchString}';
@@ -712,12 +734,10 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <div id="viewerContainerId">
-                        </div>
+                        <div id="viewerContainerId"></div>
                     </div>
                 </div>
             </div>
         </div>
-
     </body>
 </html>

@@ -123,18 +123,18 @@
             ${fieldsMap.put("occurrenceID", true)}
             <g:if test="${record.processed.occurrence.occurrenceID && record.raw.occurrence.occurrenceID}">
                 <%-- links removed as per issue #6 (github)  --%>
-                %{--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"><a href="${record.processed.occurrence.occurrenceID}" target="_blank"></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"><a href="${record.processed.occurrence.occurrenceID}" target="_blank"></g:if>--%>
                 ${record.processed.occurrence.occurrenceID}
-                %{--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"></a></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"></a></g:if>--%>
                 <br />
                 <span class="originalValue">
                     <g:message code="recordcore.label.suppliedas" /> "${record.raw.occurrence.occurrenceID}"
                 </span>
             </g:if>
             <g:else>
-                %{--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"><a href="${record.raw.occurrence.occurrenceID}" target="_blank"></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"><a href="${record.raw.occurrence.occurrenceID}" target="_blank"></g:if>--%>
                 ${record.raw.occurrence.occurrenceID}
-                %{--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"></a></g:if>--}%
+                <%--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"></a></g:if>--%>
             </g:else>
         </alatag:occurrenceTableRow>
 
@@ -770,11 +770,15 @@
             </g:if>
 
             <g:if test="${record.processed.classification.genus}">
-                <i>${record.processed.classification.genus}</i>
+                <i>
+                    ${record.processed.classification.genus}
+                </i>
             </g:if>
 
             <g:if test="${!record.processed.classification.genus && record.raw.classification.genus}">
-                <i>${record.raw.classification.genus}</i>
+                <i>
+                    ${record.raw.classification.genus}
+                </i>
             </g:if>
 
             <g:if test="${taxaLinks.baseUrl && record.processed.classification.genusID}">
@@ -784,7 +788,8 @@
             <g:if test="${record.processed.classification.genus && record.raw.classification.genus && (record.processed.classification.genus.toLowerCase() != record.raw.classification.genus.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.genus.01" /> "<i>${record.raw.classification.genus}</i>"
+                    <g:message code="recordcore.genus.01" />
+                    "<i>${record.raw.classification.genus}</i>"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -808,7 +813,9 @@
                 <i>${record.raw.classification.species}</i>
             </g:elseif>
             <g:elseif test="${record.raw.classification.specificEpithet && record.raw.classification.genus}">
-                <i>${record.raw.classification.genus}&nbsp;${record.raw.classification.specificEpithet}</i>
+                <i>
+                    ${record.raw.classification.genus}&nbsp;${record.raw.classification.specificEpithet}
+                </i>
             </g:elseif>
 
             <g:if test="${taxaLinks.baseUrl && record.processed.classification.speciesID}">
@@ -818,7 +825,8 @@
             <g:if test="${record.processed.classification.species && record.raw.classification.species && (record.processed.classification.species.toLowerCase() != record.raw.classification.species.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "<i>${record.raw.classification.species}</i>"
+                    <g:message code="recordcore.label.suppliedas" />
+                    "<i>${record.raw.classification.species}</i>"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -830,10 +838,15 @@
                 <g:set var="colon" value=":" />
                 <g:if test="${taxaLinks.baseUrl && StringUtils.contains(record.raw.occurrence.associatedTaxa,colon)}">
                     <g:set var="associatedName" value="${StringUtils.substringAfter(record.raw.occurrence.associatedTaxa,colon)}" />
-                    ${StringUtils.substringBefore(record.raw.occurrence.associatedTaxa,colon) }: <a href="${taxaLinks.baseUrl}${StringUtils.replace(associatedName, '  ', ' ')}">${associatedName}</a>
+                    ${StringUtils.substringBefore(record.raw.occurrence.associatedTaxa,colon) }:
+                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(associatedName, '  ', ' ')}">
+                        ${associatedName}
+                    </a>
                 </g:if>
                 <g:elseif test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(record.raw.occurrence.associatedTaxa, '  ', ' ')}">${record.raw.occurrence.associatedTaxa}</a>
+                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(record.raw.occurrence.associatedTaxa, '  ', ' ')}">
+                        ${record.raw.occurrence.associatedTaxa}
+                    </a>
                 </g:elseif>
             </alatag:occurrenceTableRow>
         </g:if>
@@ -841,7 +854,7 @@
         <g:if test="${record.processed.classification.taxonomicIssue}">
             <!-- Taxonomic issues -->
             <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="taxonomicIssue" fieldName="${message(code: 'recordcore.taxonomy.taxonomicIssue')}">
-                %{--<alatag:formatJsonArray text="${record.processed.classification.taxonomicIssue}" />--}%
+                <%--<alatag:formatJsonArray text="${record.processed.classification.taxonomicIssue}" />--%>
                 <g:each var="issue" in="${record.processed.classification.taxonomicIssue}">
                     <g:message code="${issue}" />
                 </g:each>
@@ -1124,7 +1137,9 @@
             <alatag:occurrenceTableRow annotate="false" section="geospatial" fieldCode="informationWithheld" fieldName="${message(code: 'recordcore.geospatial.informationWithheld')}">
                 ${fieldsMap.put("informationWithheld", true)}
                 <g:if test="${record.processed.occurrence.informationWithheld}">
-                    <span class="dataGeneralizations">${record.processed.occurrence.informationWithheld}</span>
+                    <span class="dataGeneralizations">
+                        ${record.processed.occurrence.informationWithheld}
+                    </span>
                 </g:if>
             </alatag:occurrenceTableRow>
 
@@ -1192,23 +1207,28 @@
         </h2>
         <table class="layerIntersections table table-sm table-striped table-bordered ">
             <tbody>
-            <g:each in="${contextualSampleInfo}" var="sample" status="vs">
-                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
-                    <tr class="sectionName"><td colspan="2">${sample.classification1}</td></tr>
-                </g:if>
-                <g:set var="fn">
-                    <a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title="${message(code: 'show.outlierinformation.02.label')}">
-                        ${sample.layerDisplayName}
-                    </a>
-                </g:set>
-                <alatag:occurrenceTableRow
+                <g:each in="${contextualSampleInfo}" var="sample" status="vs">
+                    <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
+                        <tr class="sectionName">
+                            <td colspan="2">
+                                ${sample.classification1}
+                            </td>
+                        </tr>
+                    </g:if>
+                    <g:set var="fn">
+                        <a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title="${message(code: 'show.outlierinformation.02.label')}">
+                            ${sample.layerDisplayName}
+                        </a>
+                    </g:set>
+                    <alatag:occurrenceTableRow
                         annotate="false"
                         section="contextual"
                         fieldCode="${sample.layerName}"
-                        fieldName="${fn}">
-                    ${sample.value}
-                </alatag:occurrenceTableRow>
-            </g:each>
+                        fieldName="${fn}"
+                    >
+                        ${sample.value}
+                    </alatag:occurrenceTableRow>
+                </g:each>
             </tbody>
         </table>
     </g:if>
@@ -1219,27 +1239,28 @@
         </h2>
         <table class="layerIntersections table table-sm table-striped table-bordered " >
             <tbody>
-            <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
-                <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
-                    <tr class="sectionName">
-                        <td colspan="2">
-                            ${sample.classification1}
-                        </td>
-                    </tr>
-                </g:if>
-                <g:set var="fn">
-                    <a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title="${message(code: 'show.outlierinformation.02.label')}">
-                        ${sample.layerDisplayName}
-                    </a>
-                </g:set>
-                <alatag:occurrenceTableRow
+                <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
+                    <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
+                        <tr class="sectionName">
+                            <td colspan="2">
+                                ${sample.classification1}
+                            </td>
+                        </tr>
+                    </g:if>
+                    <g:set var="fn">
+                        <a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title="${message(code: 'show.outlierinformation.02.label')}">
+                            ${sample.layerDisplayName}
+                        </a>
+                    </g:set>
+                    <alatag:occurrenceTableRow
                         annotate="false"
                         section="contextual"
                         fieldCode="${sample.layerName}"
-                        fieldName="${fn}">
-                    ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
-                </alatag:occurrenceTableRow>
-            </g:each>
+                        fieldName="${fn}"
+                    >
+                        ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
+                    </alatag:occurrenceTableRow>
+                </g:each>
             </tbody>
         </table>
     </g:if>

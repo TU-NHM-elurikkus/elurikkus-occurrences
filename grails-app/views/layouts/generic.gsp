@@ -1,5 +1,4 @@
 <g:set var="orgNameLong" value="${grailsApplication.config.skin.orgNameLong}" />
-<g:set var="orgNameShort" value="${grailsApplication.config.skin.orgNameShort}" />
 
 <!DOCTYPE html>
 <html>
@@ -72,7 +71,7 @@
                 });
 
                 // Mobile/desktop toggle
-                // TODO: set a cookie so user's choice is remembered across pages
+                // TODO: set a cookie so users choice is remembered across pages
                 var responsiveCssFile = $("#responsiveCss").attr("href"); // remember set href
                 $(".toggleResponsive").click(function(e) {
                     e.preventDefault();
@@ -96,6 +95,7 @@
 
     <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
         <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}" />
+
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-inner ">
                 <div class="${fluidLayout?'container-fluid':'container'}">
@@ -109,12 +109,21 @@
                     </a>
                     <div class="nav-collapse collapse">
                         <p class="hide navbar-text pull-right">
-                            Logged in as <a href="#" class="navbar-link">${username}</a>
+                            Logged in as
+                            <a href="#" class="navbar-link">
+                                ${username}
+                            </a>
                         </p>
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li class="active">
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#about">About</a>
+                            </li>
+                            <li>
+                                <a href="#contact">Contact</a>
+                            </li>
                         </ul>
                     </div> <%--/.nav-collapse --%>
                 </div> <%--/.container-fluid --%>
@@ -130,7 +139,7 @@
             <div class="container-fluid">
                 <div class="row-fluid">
                     <a href="http://creativecommons.org/licenses/by/3.0/au/" title="External link to Creative Commons">
-                        <img src="http://i.creativecommons.org/l/by/3.0/88x31.png" width="88" height="31" alt="">
+                        <img src="http://i.creativecommons.org/l/by/3.0/88x31.png" width="88" height="31" alt="" />
                     </a>
                     This site is licensed under a
                     <a href="http://creativecommons.org/licenses/by/3.0/au/" title="External link to Creative Commons" class="external">

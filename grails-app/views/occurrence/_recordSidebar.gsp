@@ -42,7 +42,7 @@
 
                         <g:else>
                             <div>
-                                %{-- XXX --}%
+                                <%-- XXX --%>
                                 <g:message code="show.loginorflag.label.02" />
                                 <strong>
                                     ${userDisplayName} (${alatag.loggedInUserEmail()})
@@ -358,6 +358,7 @@
         </button>
     </div>
 </g:if>
+
 <g:if test="${record.processed.location.decimalLatitude && record.processed.location.decimalLongitude}">
     <g:set var="latLngStr">
         <g:if test="${clubView && record.raw.location.decimalLatitude && record.raw.location.decimalLatitude != record.processed.location.decimalLatitude}">
@@ -492,6 +493,7 @@
         </div>
     </div>
 </g:if>
+
 <g:if test="${record.sounds}">
     <div class="sidebar">
         <h3 id="soundsHeader" style="margin: 20px 0 0 0;">
@@ -524,12 +526,12 @@
 </g:if>
 
 <g:if test="${record.raw.lastModifiedTime && record.processed.lastModifiedTime}">
-    %{-- XXX --}%
+    <%-- XXX --%>
     <div class="sidebar" style="margin-top: 10px;font-size: 12px; color: #555;">
         <g:set var="rawLastModifiedString" value="${record.raw.lastModifiedTime.substring(0,10)}" />
         <g:set var="processedLastModifiedString" value="${record.processed.lastModifiedTime.substring(0,10)}" />
 
-        %{-- XXX --}%
+        <%-- XXX --%>
         <p style="margin-bottom:20px;">
             <g:message code="show.sidebar05.p01" />: ${rawLastModifiedString}
             <br />
@@ -633,7 +635,9 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showPassedTests">
-                            <g:message code="show.tabledataqualityresults.showhide" /> ${record.systemAssertions.passed.length()} <g:message code="show.tabledataqualityresults.tr03td01" />
+                            <g:message code="show.tabledataqualityresults.showhide" />
+                            ${record.systemAssertions.passed.length()}
+                            <g:message code="show.tabledataqualityresults.tr03td01" />
                         </a>
                     </td>
                 </tr>
@@ -658,7 +662,9 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showMissingPropResult">
-                            <g:message code="show.tabledataqualityresults.showhide" /> ${record.systemAssertions.missing.length()} <g:message code="show.tabledataqualityresults.tr04td01" />
+                            <g:message code="show.tabledataqualityresults.showhide" />
+                            ${record.systemAssertions.missing.length()}
+                            <g:message code="show.tabledataqualityresults.tr04td01" />
                         </a>
                     </td>
                 </tr>
@@ -666,23 +672,25 @@
 
             <g:set var="testSet" value="${record.systemAssertions.missing}" />
             <g:each in="${testSet}" var="test">
-            <tr class="missingPropResult" style="display:none;">
-                <td>
-                    <g:message code="${test.name}" default="${test.name}" />
-                    <alatag:dataQualityHelp code="${test.code}" />
-                </td>
-                <td>
-                    <i class="fa fa-question-circle" />
-                    <g:message code="show.tabledataqualityresults.tr05td02" />
-                </td>
-            </tr>
+                <tr class="missingPropResult" style="display:none;">
+                    <td>
+                        <g:message code="${test.name}" default="${test.name}" />
+                        <alatag:dataQualityHelp code="${test.code}" />
+                    </td>
+                    <td>
+                        <i class="fa fa-question-circle" />
+                        <g:message code="show.tabledataqualityresults.tr05td02" />
+                    </td>
+                </tr>
             </g:each>
 
             <g:if test="${record.systemAssertions.unchecked}">
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showUncheckedTests">
-                            <g:message code="show.tabledataqualityresults.showhide" /> ${record.systemAssertions.unchecked.length()} <g:message code="show.tabledataqualityresults.tr06td01" />
+                            <g:message code="show.tabledataqualityresults.showhide" />
+                            ${record.systemAssertions.unchecked.length()}
+                            <g:message code="show.tabledataqualityresults.tr06td01" />
                         </a>
                     </td>
                 </tr>
@@ -690,15 +698,15 @@
 
             <g:set var="testSet" value="${record.systemAssertions.unchecked}" />
             <g:each in="${testSet}" var="test">
-            <tr class="uncheckTestResult" style="display:none;">
-                <td>
-                    <g:message code="${test.name}" default="${test.name}" /><alatag:dataQualityHelp code="${test.code}" />
-                </td>
-                <td>
-                    <i class="fa fa-ban" />
-                    <g:message code="show.tabledataqualityresults.tr07td02" />
-                </td>
-            </tr>
+                <tr class="uncheckTestResult" style="display:none;">
+                    <td>
+                        <g:message code="${test.name}" default="${test.name}" /><alatag:dataQualityHelp code="${test.code}" />
+                    </td>
+                    <td>
+                        <i class="fa fa-ban" />
+                        <g:message code="show.tabledataqualityresults.tr07td02" />
+                    </td>
+                </tr>
             </g:each>
         </tbody>
     </table>
