@@ -20,7 +20,9 @@
         <a href="${alatag.getQueryStringForWktRemove()}">
             <button class="erk-button erk-button--light erk-button--inline">
                 Spatial filter: ${spatialType[0]}
-                <span class="closeX">×</span>
+                <span class="closeX">
+                    ×
+                </span>
             </button>
         </a>
     </g:if>
@@ -30,7 +32,9 @@
         <a href="${alatag.getQueryStringForRadiusRemove()}">
             <button class="erk-button erk-button--light erk-button--inline tooltips" title="Click to remove this filter">
                 Spatial filter: CIRCLE
-                <span class="closeX">×</span>
+                <span class="closeX">
+                    ×
+                </span>
             </button>
         </a>
     </g:elseif>

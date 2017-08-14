@@ -1,11 +1,9 @@
-<g:set var="orgNameLong" value="${grailsApplication.config.skin.orgNameLong}" />
-<g:set var="orgNameShort" value="${grailsApplication.config.skin.orgNameShort}" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <alatag:addApplicationMetaTags />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <g:render template="/manifest" plugin="elurikkus-commons" />
 
         <title>
@@ -44,7 +42,7 @@
                 });
 
                 // Mobile/desktop toggle
-                // TODO: set a cookie so user's choice is remembered across pages
+                // TODO: set a cookie so users choice is remembered across pages
                 var responsiveCssFile = $("#responsiveCss").attr("href"); // remember set href
                 $(".toggleResponsive").click(function(e) {
                     e.preventDefault();
@@ -66,18 +64,18 @@
         <g:layoutHead />
     </head>
 
-<body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
-    <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}" />
+    <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
+        <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}" />
 
-    <g:render template="/menu" plugin="elurikkus-commons" />
+        <g:render template="/menu" plugin="elurikkus-commons" />
 
-    <div id="main-content">
-        <g:layoutBody />
-    </div>
+        <div id="main-content">
+            <g:layoutBody />
+        </div>
 
-    <g:render template="/footer" plugin="elurikkus-commons" />
+        <g:render template="/footer" plugin="elurikkus-commons" />
 
-    <r:layoutResources />
+        <r:layoutResources />
 
-</body>
+    </body>
 </html>

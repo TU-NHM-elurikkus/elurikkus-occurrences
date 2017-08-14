@@ -174,7 +174,8 @@
 #downloadForm .form-control {
     font-size: 12px;
     height: 30px !important;
-} 
+}
+
 #downloadForm input[type="radio"] {
     height: initial;
 }

@@ -1,4 +1,6 @@
-<%@ page import="au.org.ala.biocache.hubs.FacetsName; org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <g:render template="/layouts/global" plugin="biocache-hubs" />
 <form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST" class="container-fluid">
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}" />
@@ -18,7 +20,7 @@
         </div>
     </div>
 
-    %{-- XXX row classes --}%
+    <%-- XXX row classes --%>
     <fieldset class="form-group">
         <legend class="col-form-legend row">
             <g:message code="advancedsearch.title02" />
@@ -33,7 +35,7 @@
                 </label>
 
                 <div class="col-10">
-                    <input type="text" value="" id="taxa_${i}" name="taxonText" class="name_autocomplete form-control" size="60">
+                    <input type="text" value="" id="taxa_${i}" name="taxonText" class="name_autocomplete form-control" size="60" />
                     <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}" value="" />
                 </div>
             </div>
@@ -66,7 +68,9 @@
         <%-- TODO: Classes. --%>
         <div class="col-10">
             <select class="species_group" name="species_group" id="species_group">
-                <option value=""><g:message code="advancedsearch.table04col01.option.label" /></option>
+                <option value="">
+                    <g:message code="advancedsearch.table04col01.option.label" />
+                </option>
                 <g:each var="group" in="${request.getAttribute("species_group")}">
                     <option value="${group.key}">
                         <g:message code="${group.value}" />
@@ -124,7 +128,6 @@
                                         ${coll.value}
                                     </option>
                                 </g:elseif>
-
                             </g:each>
                         </optgroup>
                     </g:if>
@@ -226,7 +229,9 @@
                 <select class="lga form-control" name="lga" id="lga">
                     <option value=""><g:message code="advancedsearch.table06col05.option.label" /></option>
                     <g:each var="region" in="${request.getAttribute("cl959").sort()}">
-                        <option value="${region.key}">${region.value}</option>
+                        <option value="${region.key}">
+                            ${region.value}
+                        </option>
                     </g:each>
                 </select>
             </div>
@@ -297,7 +302,9 @@
                 <select class="dataset bscombobox" name="dataset" id="dataset">
                     <option value=""></option>
                     <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
-                        <option value="${region.key}">${region.value}</option>
+                        <option value="${region.key}">
+                            ${region.value}
+                        </option>
                     </g:each>
                 </select>
             </div>
@@ -358,7 +365,8 @@
         <input
             type="submit"
             value="<g:message code="advancedsearch.button.submit" />"
-            class="erk-button erk-button--light" />
+            class="erk-button erk-button--light"
+        />
         &nbsp;&nbsp;
         <input
             type="reset"

@@ -1,16 +1,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="org.apache.commons.lang.StringUtils" contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
 <g:set var="recordId" value="${alatag.getRecordId(record: record, skin: skin)}" />
-<g:set var="bieWebappContext" value="${grailsApplication.config.bie.baseUrl}" />
 <g:set var="collectionsWebappContext" value="${grailsApplication.config.collections.baseUrl}" />
-<g:set var="useAla" value="${grailsApplication.config.skin.useAlaBie?.toBoolean() ? 'true' : 'false'}" />
-<g:set var="taxaLinks" value="${grailsApplication.config.skin.taxaLinks}" />
-<g:set var="dwcExcludeFields" value="${grailsApplication.config.dwc.exclude}" />
 <g:set var="hubDisplayName" value="${grailsApplication.config.skin.orgNameLong}" />
 <g:set var="biocacheService" value="${alatag.getBiocacheAjaxUrl()}" />
 <g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.baseUrl}" />
-<g:set var="serverName" value="${grailsApplication.config.serverName}" />
-<g:set var="scientificName" value="${alatag.getScientificName(record: record)}" />
 <g:set var="sensitiveDatasetRaw" value="${grailsApplication.config.sensitiveDataset?.list?:''}" />
 <g:set var="sensitiveDatasets" value="${sensitiveDatasetRaw?.split(',')}" />
 <g:set var="userDisplayName" value="${alatag.loggedInUserDisplayname()}" />
@@ -24,7 +19,10 @@
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
         <title>
-            <g:message code="show.title" />: ${recordId} | <g:message code="show.occurrenceRecord" /> | ${hubDisplayName}
+            <g:message code="show.title" />:
+            ${recordId} |
+            <g:message code="show.occurrenceRecord" />
+            | ${hubDisplayName}
         </title>
 
         <g:if test="${grailsApplication.config.google.apikey}">
@@ -172,7 +170,8 @@
                                     title="${message(code: 'show.showcontactcurator.title')}"
                                 >
                                     <span id="contactCuratorSpan" href="#contactCuratorView" title="">
-                                        <i class="fa fa-envelope-o"></i> <g:message code="show.showcontactcurator.label" />
+                                        <i class="fa fa-envelope-o"></i>
+                                        <g:message code="show.showcontactcurator.label" />
                                     </span>
                                 </button>
                             </g:if>
@@ -186,7 +185,8 @@
                                 title="<g:message code='show.sidebar02.showrawprocessed.title' />"
                             >
                                 <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                                    <i class="fa fa-balance-scale"></i> <g:message code="show.sidebar02.showrawprocessed.label" />
+                                    <i class="fa fa-balance-scale"></i>
+                                    <g:message code="show.sidebar02.showrawprocessed.label" />
                                 </span>
                             </button>
                         </div>
@@ -294,7 +294,6 @@
                             </h4>
                             <ul id="userAnnotationsList" style="list-style: none; margin:0;"></ul>
                         </div>
-
                     </div>
                 </div>
 
@@ -428,7 +427,9 @@
                                     </g:if>
                                     <g:if test="${duplicateRecordDetails.rowKey}">
                                         <alatag:occurrenceTableRow annotate="false" section="duplicate" fieldName="Data Resource">
-                                            <g:set var="dr">${duplicateRecordDetails.rowKey?.substring(0, duplicateRecordDetails.rowKey?.indexOf("|"))}</g:set>
+                                            <g:set var="dr">
+                                                ${duplicateRecordDetails.rowKey?.substring(0, duplicateRecordDetails.rowKey?.indexOf("|"))}
+                                            </g:set>
                                             <a href="${collectionsWebappContext}/public/show/${dr}">
                                                 ${dataResourceCodes?.get(dr)}
                                             </a>
@@ -480,7 +481,9 @@
                                         </g:if>
                                         <g:if test="${dup.rowKey}">
                                             <alatag:occurrenceTableRow annotate="false" section="duplicate" fieldName="Data Resource">
-                                                <g:set var="dr">${dup.rowKey.substring(0, dup.rowKey.indexOf("|"))}</g:set>
+                                                <g:set var="dr">
+                                                    ${dup.rowKey.substring(0, dup.rowKey.indexOf("|"))}
+                                                </g:set>
                                                 <a href="${collectionsWebappContext}/public/show/${dr}">
                                                     ${dataResourceCodes?.get(dr)}
                                                 </a>
@@ -532,10 +535,8 @@
                                     </g:each>
                                 </table>
                             </g:if>
-                            </p>
                         </g:if>
                     </div>
-
                 </div>
 
                 <div id="processedVsRawView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="processedVsRawViewLabel" aria-hidden="true">
@@ -723,7 +724,7 @@
                         </div>
                     </div>
 
-                    <br/>
+                    <br />
 
                     <g:if test="${isCollectionAdmin}">
                         <p class="verifyAnnotation" style="display:none;">
@@ -748,15 +749,21 @@
                             <div id="verifyAsk">
                                 <g:set var="markedAssertions" />
                                 <g:if test="!record.processed.geospatiallyKosher">
-                                    <g:set var="markedAssertions"><g:message code="show.verifyask.set01" /></g:set>
+                                    <g:set var="markedAssertions">
+                                        <g:message code="show.verifyask.set01" />
+                                    </g:set>
                                 </g:if>
 
                                 <g:if test="!record.processed.taxonomicallyKosher">
-                                    <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="show.verifyask.set02" /></g:set>
+                                    <g:set var="markedAssertions">
+                                        ${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="show.verifyask.set02" />
+                                    </g:set>
                                 </g:if>
 
                                 <g:each var="sysAss" in="${record.systemAssertions.failed}">
-                                    <g:set var="markedAssertions">${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="${sysAss.name}" /></g:set>
+                                    <g:set var="markedAssertions">
+                                        ${markedAssertions}${markedAssertions ? ", " : ""}<g:message code="${sysAss.name}" />
+                                    </g:set>
                                 </g:each>
 
                                 <p>

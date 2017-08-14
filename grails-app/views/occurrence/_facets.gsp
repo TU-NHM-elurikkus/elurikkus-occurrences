@@ -36,12 +36,12 @@
                         ${fieldDisplayName}
                     </div>
 
-                    %{-- WIP Removed nano class. --}%
+                    <%-- WIP Removed nano class. --%>
                     <div class="subnavlist" style="clear:left">
                         <alatag:facetLinkList facetResult="${facetResult}" queryParam="${queryParam}" fieldDisplayName="${fieldDisplayName}" />
                     </div>
 
-                    %{--<div class="fadeout"></div>--}%
+                    <%--<div class="fadeout"></div>--%>
 
                     <g:if test="${facetResult.fieldResult.length() > 0}">
                         <div class="showHide">
@@ -65,12 +65,14 @@
 </div>
 
 <!-- modal popup for "choose more" link -->
-%{-- XXX Hide doesn't work with Bootstrap 4.--}%
+<%-- XXX Hide doesn't work with Bootstrap 4.--%>
 <div id="multipleFacets" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="multipleFacetsLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
 
                 <h3 id="multipleFacetsLabel">
                     <g:message code="facets.multiplefacets.title" />
@@ -110,16 +112,15 @@
                             </thead>
 
                             <tbody class="scrollContent">
-                                %{-- What is this hiden row for? Though seems like a hack - somewhere it is popped or is it? --}%
+                                <%-- What is this hiden row for? Though seems like a hack - somewhere it is popped or is it? --%>
                                 <tr style="display: none;">
                                     <td>
-                                        <input type="checkbox" name="fqs" class="fqs" value="">
+                                        <input type="checkbox" name="fqs" class="fqs" value="" />
                                     </td>
                                     <td>
                                         <a href=""></a>
                                     </td>
-                                    <td style="text-align: right; border-right-style: none;">
-                                    </td>
+                                    <td style="text-align: right; border-right-style: none;"></td>
                                 </tr>
                                 <tr id="spinnerRow">
                                     <td colspan="3" style="text-align: center;">
@@ -128,7 +129,6 @@
                                     </td>
                                 </tr>
                             </tbody>
-
                         </table>
                     </form>
                 </div>
@@ -177,7 +177,7 @@
 
                 &nbsp;
 
-                %{-- XXX Hide doesn't work with Bootstrap 4.--}%
+                <%-- XXX Hide doesn't work with Bootstrap 4.--%>
                 <button id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button')}">
                     <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button')}"></i>
 
