@@ -71,7 +71,7 @@ function OccurrenceMap(query, props) {
 
     this.uiOptions = {
         pointSize: $('#sizeslider-val').html(),
-        opacity: $('#opacityslider-var').html(),
+        opacity: $('#opacityslider-val').html(),
         outline: $('#outlineDots').is(':checked'),
         colorModeCode: $('#ta-grid-color-mode').val()
     };
