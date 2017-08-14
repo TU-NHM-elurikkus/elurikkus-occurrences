@@ -3,6 +3,8 @@
 
 <g:set var="recordId" value="${alatag.getRecordId(record: record, skin: skin)}" />
 <g:set var="collectionsWebappContext" value="${grailsApplication.config.collections.baseUrl}" />
+<g:set var="taxaLinks" value="${grailsApplication.config.skin.taxaLinks}" />
+<g:set var="dwcExcludeFields" value="${grailsApplication.config.dwc.exclude}" />
 <g:set var="hubDisplayName" value="${grailsApplication.config.skin.orgNameLong}" />
 <g:set var="biocacheService" value="${alatag.getBiocacheAjaxUrl()}" />
 <g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.baseUrl}" />

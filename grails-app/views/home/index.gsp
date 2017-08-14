@@ -286,158 +286,155 @@
             </div>
         </g:if>
 
-        <div class="row" id="content">
-            <div class="col-md-12 col-xl-10">
-                <div class="page-header">
-                    <h1 class="page-header__title">
-                        <g:message code="home.index.title" />
-                    </h1>
 
-                    <div class="page-header__subtitle">
-                        <%-- TODO --%>
-                        <g:message code="home.index.subtitle" args="${[raw(hubDisplayName)]}" />
+        <div class="page-header">
+            <h1 class="page-header__title">
+                <g:message code="home.index.title" />
+            </h1>
+
+            <div class="page-header__subtitle">
+                <%-- TODO --%>
+                <g:message code="home.index.subtitle" args="${[raw(hubDisplayName)]}" />
+            </div>
+        </div>
+
+        <div class="tabbable">
+            <ul class="nav nav-tabs" id="searchTabs">
+                <li class="nav-item">
+                    <a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active">
+                        <g:message code="home.index.navigator01" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link">
+                        <g:message code="home.index.navigator02" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link">
+                        <g:message code="home.index.navigator03" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link">
+                        <g:message code="home.index.navigator04" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link">
+                        <g:message code="home.index.navigator05" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content searchPage">
+            <div id="simple-search" class="tab-pane active">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-6">
+                        <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
+                            <div class="input-plus">
+                                <input type="text" name="taxa" id="taxa" class="input-plus__field" />
+
+                                <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
+                                    <g:message code="advancedsearch.button.submit" />
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
-                <div class="tabbable">
-                    <ul class="nav nav-tabs" id="searchTabs">
-                        <li class="nav-item">
-                            <a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active">
-                                <g:message code="home.index.navigator01" />
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link">
-                                <g:message code="home.index.navigator02" />
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link">
-                                <g:message code="home.index.navigator03" />
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link">
-                                <g:message code="home.index.navigator04" />
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link">
-                                <g:message code="home.index.navigator05" />
-                            </a>
-                        </li>
-                    </ul>
+                <div class="row">
+                    <div class="col">
+                        <small>
+                            <g:message code="home.index.simsplesearch.help" />
+                        </small>
+                    </div>
                 </div>
+            </div>
 
-                <div class="tab-content searchPage">
-                    <div id="simple-search" class="tab-pane active">
-                        <div class="row">
-                            <div class="col-xs-12 col-lg-6">
-                                <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
-                                    <div class="input-plus">
-                                        <input type="text" name="taxa" id="taxa" class="input-plus__field" />
+            <div id="advanced-search" class="tab-pane">
+                <g:render template="advanced" />
+            </div> <%-- end #advancedSearch div --%>
 
-                                        <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
-                                            <g:message code="advancedsearch.button.submit" />
+            <div id="taxa-upload" class="tab-pane">
+                <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
+                    <p>
+                        <g:message code="home.index.taxaupload.des01" />
+                    </p>
+                    <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
+                    <p>
+                        <textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea>
+                    </p>
+                    <div>
+                        <%-- <input type="submit" name="action" value="Download" /> --%>
+                        <%-- &nbsp;OR&nbsp; --%>
+                        <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
+                        <input type="hidden" name="field" value="raw_name" />
+                        <input type="submit" name="action" value=<g:message code="advancedsearch.button.submit" /> class="erk-button erk-button--light" />
+                    </div>
+                </form>
+            </div> <!-- end #uploadDiv div -->
+
+            <div id="catalog-upload" class="tab-pane">
+                <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
+                    <p>
+                        <g:message code="home.index.catalogupload.des01" />
+                    </p>
+
+                    <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
+
+                    <p>
+                        <textarea id="catalogueSearchQueries" name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
+                    </p>
+
+                    <div>
+                        <%-- <input type="submit" name="action" value="Download" /> --%>
+                        <%-- &nbsp;OR&nbsp; --%>
+                        <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
+                        <input type="hidden" name="field" value="catalogue_number" />
+                        <%-- XXX --%>
+                        <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit" />  class="erk-button erk-button--light" />
+                    </div>
+                </form>
+            </div><%-- end #catalogUploadDiv div --%>
+
+            <div id="spatial-search" class="tab-pane">
+                <div class="row">
+                    <div class="col-3">
+                        <p>
+                            <g:message code="search.map.helpText" />
+                        </p>
+
+                        <div class="accordion accordion-caret" id="accordion2">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                        <g:message code="search.map.importToggle" />
+                                    </a>
+                                </div>
+
+                                <div id="collapseOne" class="accordion-body collapse show">
+                                    <div class="accordion-inner">
+                                        <p>
+                                            <g:message code="search.map.importText" />
+                                        </p>
+
+                                        <p>
+                                            <textarea type="text" id="wktInput"></textarea>
+                                        </p>
+
+                                        <button class="erk-button erk-button--light" id="addWkt">
+                                            <g:message code="search.map.wktButtonText" />
                                         </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <small>
-                                    <g:message code="home.index.simsplesearch.help" />
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="advanced-search" class="tab-pane">
-                        <g:render template="advanced" />
-                    </div> <%-- end #advancedSearch div --%>
-
-                    <div id="taxa-upload" class="tab-pane">
-                        <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
-                            <p>
-                                <g:message code="home.index.taxaupload.des01" />
-                            </p>
-                            <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
-                            <p>
-                                <textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea>
-                            </p>
-                            <div>
-                                <%-- <input type="submit" name="action" value="Download" /> --%>
-                                <%-- &nbsp;OR&nbsp; --%>
-                                <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
-                                <input type="hidden" name="field" value="raw_name" />
-                                <input type="submit" name="action" value=<g:message code="advancedsearch.button.submit" /> class="erk-button erk-button--light" />
-                            </div>
-                        </form>
-                    </div> <!-- end #uploadDiv div -->
-
-                    <div id="catalog-upload" class="tab-pane">
-                        <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
-                            <p>
-                                <g:message code="home.index.catalogupload.des01" />
-                            </p>
-
-                            <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
-
-                            <p>
-                                <textarea id="catalogueSearchQueries" name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
-                            </p>
-
-                            <div>
-                                <%-- <input type="submit" name="action" value="Download" /> --%>
-                                <%-- &nbsp;OR&nbsp; --%>
-                                <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
-                                <input type="hidden" name="field" value="catalogue_number" />
-                                <%-- XXX --%>
-                                <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit" />  class="erk-button erk-button--light" />
-                            </div>
-                        </form>
-                    </div><%-- end #catalogUploadDiv div --%>
-
-                    <div id="spatial-search" class="tab-pane">
-                        <div class="row">
-                            <div class="col-3">
-                                <p>
-                                    <g:message code="search.map.helpText" />
-                                </p>
-
-                                <div class="accordion accordion-caret" id="accordion2">
-                                    <div class="accordion-group">
-                                        <div class="accordion-heading">
-                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                                <g:message code="search.map.importToggle" />
-                                            </a>
-                                        </div>
-
-                                        <div id="collapseOne" class="accordion-body collapse show">
-                                            <div class="accordion-inner">
-                                                <p>
-                                                    <g:message code="search.map.importText" />
-                                                </p>
-
-                                                <p>
-                                                    <textarea type="text" id="wktInput"></textarea>
-                                                </p>
-
-                                                <button class="erk-button erk-button--light" id="addWkt">
-                                                    <g:message code="search.map.wktButtonText" />
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-9">
-                                <div id="leafletMap" style="height:600px;"></div>
-                            </div>
                         </div>
+                    </div>
+
+                    <div class="col-9">
+                        <div id="leafletMap" style="height:600px;"></div>
                     </div>
                 </div>
             </div>
