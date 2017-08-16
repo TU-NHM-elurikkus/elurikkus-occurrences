@@ -1,8 +1,3 @@
-<%--
-    Document   : downloadDiv
-    Created on : Feb 25, 2011, 4:20:32 PM
-    Author     : "Nick dos Remedios <Nick.dosRemedios@csiro.au>"
---%>
 <g:set var="biocacheServiceUrl" value="${alatag.getBiocacheAjaxUrl()}" />
 <div id="download" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="downloadsLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -19,7 +14,7 @@
             <div class="modal-body">
                 <p id="termsOfUseDownload">
                     <g:message code="download.termsofusedownload.01" />
-                    <a href="https://plutof.ut.ee/#/privacy-policy">
+                    <a href="https://plutof.ut.ee/#/privacy-policy" target="_blank">
                         <g:message code="download.termsofusedownload.02" />
                     </a>
                     <g:message code="download.termsofusedownload.03" />
@@ -140,16 +135,6 @@
                             </div>
                         </div>
 
-                        <div style="clear: both; text-align: center;">
-                            <br />
-                            <input
-                                type="submit"
-                                value="<g:message code="download.downloadform.button.submit" />"
-                                id="downloadStart"
-                                class="erk-button erk-button--light tooltips"
-                            />
-                        </div>
-
                         <div style="margin-top:10px;">
                             <strong>
                                 <g:message code="download.note.01" />:
@@ -157,12 +142,13 @@
                             <g:message code="download.note.02" />.
                         </div>
 
-                        <div id="statusMsg" style="text-align: center; font-weight: bold; "></div>
                     </fieldset>
                 </form>
 
                 <style type="text/css">
-                    /* style outside of HEAD is not valid HTML but is 100% compatible with all modern browsers */
+                    /* style outside of HEAD is not valid HTML but is 100% compatible with all modern browsers
+                       Why did you put it here then?
+                    */
                     #downloadForm fieldset > div {
                         padding: 5px 0;
                     }
@@ -177,6 +163,10 @@
                         $(":input#downloadStart").unbind("click").bind("click", function(e) {
                             e.preventDefault();
                             var downloadType = $('input:radio[name=downloadType]:checked').val();
+                            var fileName = $("#filename").val();
+                            if (!fileName) {
+                                fileName = "${message(code: 'download.downloadform.fileName')}";
+                            }
 
                             if (validateForm()) {
                                 if (downloadType == "fast") {
@@ -184,7 +174,7 @@
                                         "&email=" + $("#email").val() +
                                         "&sourceTypeId=" + $("#sourceTypeId").val() +
                                         "&reasonTypeId=" + $("#reasonTypeId").val() +
-                                        "&file=" + $("#filename").val() +
+                                        "&file=" + fileName +
                                         "&extra=" + $(":input#extraFields").val();
                                     window.location.href = downloadUrl;
                                     notifyDownloadStarted();
@@ -193,7 +183,7 @@
                                         "&email=" + $("#email").val() +
                                         "&sourceTypeId=" + $("#sourceTypeId").val() +
                                         "&reasonTypeId=" + $("#reasonTypeId").val() +
-                                        "&file=" + $("#filename").val() +
+                                        "&file=" + fileName +
                                         "&extra=" + $(":input#extraFields").val();
                                     window.location.href = downloadUrl;
                                     notifyDownloadStarted();
@@ -201,7 +191,7 @@
                                     var downloadUrl = generateDownloadPrefix($("input#downloadChecklistUrl").val()) +
                                         "&facets=species_guid" +
                                         "&lookup=true" +
-                                        "&file=" + $("#filename").val() +
+                                        "&file=" + fileName +
                                         "&sourceTypeId=" + $("#sourceTypeId").val() +
                                         "&reasonTypeId=" + $("#reasonTypeId").val();
                                     window.location.href = downloadUrl;
@@ -241,23 +231,19 @@
                     }
 
                     function notifyDownloadStarted() {
-                        $("#statusMsg").html("Download has commenced");
                         window.setTimeout(function() {
-                            $("#statusMsg").html("");
                             $('#download').modal('hide');
                         }, 2000);
                     }
 
                     function validateForm() {
-                        var isValid = false;
+                        var isValid = true;
                         var reasonId = $("#reasonTypeId option:selected").val();
 
-                        if (reasonId) {
-                            isValid = true;
-                        } else {
+                        if (!reasonId) {
+                            isValid = false;
                             $("#reasonTypeId").focus();
-                            $("label[for='reasonTypeId']").css("color","red");
-                            alert("${message(code:'download.downloadform.reason.notSelected')}");
+                            $("label[for='reasonTypeId']").css("color", "red");
                         }
 
                         return isValid;
@@ -267,6 +253,13 @@
             </div>
 
             <div class="modal-footer">
+                <input
+                    type="submit"
+                    value="${message(code: 'download.downloadform.button.submit')}"
+                    id="downloadStart"
+                    class="erk-button erk-button--light tooltips"
+                />
+
                 <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
                     <g:message code="generic.button.close" />
                 </button>
