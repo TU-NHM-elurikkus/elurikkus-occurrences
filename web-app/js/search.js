@@ -16,25 +16,25 @@
 // Jquery Document.onLoad equivalent
 $(document).ready(function() {
     // listeners for sort & paging widgets
-    $("select#sort").change(function() {
-        var val = $("option:selected", this).val();
-        reloadWithParam('sort',val);
+    $('select#sort').change(function() {
+        var val = $('option:selected', this).val();
+        reloadWithParam('sort', val);
     });
-    $("select#dir").change(function() {
-        var val = $("option:selected", this).val();
-        reloadWithParam('dir',val);
+    $('select#dir').change(function() {
+        var val = $('option:selected', this).val();
+        reloadWithParam('dir', val);
     });
-    $("select#sort").change(function() {
-        var val = $("option:selected", this).val();
-        reloadWithParam('sort',val);
+    $('select#sort').change(function() {
+        var val = $('option:selected', this).val();
+        reloadWithParam('sort', val);
     });
-    $("select#dir").change(function() {
-        var val = $("option:selected", this).val();
-        reloadWithParam('dir',val);
+    $('select#dir').change(function() {
+        var val = $('option:selected', this).val();
+        reloadWithParam('dir', val);
     });
-    $("select#per-page").change(function() {
-        var val = $("option:selected", this).val();
-        reloadWithParam('pageSize',val);
+    $('select#per-page').change(function() {
+        var val = $('option:selected', this).val();
+        reloadWithParam('pageSize', val);
     });
 
     // Jquery Tools Tabs setup
@@ -48,30 +48,27 @@ $(document).ready(function() {
 
     // initialise BS tabs
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-        // console.log("this", $(this).attr('id'));
         var id = $(this).attr('id');
-        // var tab = e.currentTarget.hash.substring(1);
         var tab = $(e.target).attr('href').substr(1);
 
         amplify.store('search-tab-state', tab);
-        location.hash = 'tab-'+ tab;
+        location.hash = 'tab-' + tab;
 
-        if (id == "t2" && !tabsInit.map) {
-            //console.log("tab2 FIRST");
+        if(id === 't2' && !tabsInit.map) {
             initialiseMap();
             tabsInit.map = true; // only initialise once!
-        } else if (id == "t3" && !tabsInit.charts) {
+        } else if(id === 't3' && !tabsInit.charts) {
             // trigger charts load
             loadDefaultCharts();
             tabsInit.charts = true; // only initialise once!
-        } else if (id == "t6" && !tabsInit.userCharts) {
+        } else if(id === 't6' && !tabsInit.userCharts) {
             // trigger charts load
             loadUserCharts();
             tabsInit.userCharts = true; // only initialise once!
-        } else if (id == "t4" && !tabsInit.species) {
-            loadSpeciesInTab(0, "common");
+        } else if(id === 't4' && !tabsInit.species) {
+            loadSpeciesInTab(0, 'common');
             tabsInit.species = true;
-        } else if (id == "t5" && !tabsInit.images && BC_CONF.hasMultimedia) {
+        } else if(id === 't5' && !tabsInit.images && BC_CONF.hasMultimedia) {
             loadImagesInTab();
             tabsInit.images = true;
         }
@@ -80,52 +77,51 @@ $(document).ready(function() {
     var storedSearchTab = amplify.store('search-tab-state');
 
     // work-around for intitialIndex & history being mutually exclusive
-    if (!storedSearchTab && BC_CONF.defaultListView && !window.location.hash) {
+    if(!storedSearchTab && BC_CONF.defaultListView && !window.location.hash) {
         window.location.hash = BC_CONF.defaultListView; // used for avh, etc
     }
 
     // catch hash URIs and trigger tabs
-    if (location.hash !== '') {
-        $('.nav-tabs a[href="' + location.hash.replace('tab-','') + '"]').tab('show');
-    } else if (storedSearchTab) {
-        //console.log("stored value", storedSearchTab);
-        $('.nav-tabs a[href="#' + storedSearchTab+ '"]').tab('show');
+    if(location.hash !== '') {
+        $('.nav-tabs a[href="' + location.hash.replace('tab-', '') + '"]').tab('show');
+    } else if(storedSearchTab) {
+        $('.nav-tabs a[href="#' + storedSearchTab + '"]').tab('show');
     } else {
         $('.nav-tabs a:first').tab('show');
     }
 
     // Substitute LSID strings for tacon names in facet values for species
     var guidList = [];
-    $("li.species_guid, li.genus_guid").each(function(i, el) {
-        guidList[i] = $(el).attr("id");
+    $('li.species_guid, li.genus_guid').each(function(i, el) {
+        guidList[i] = $(el).attr('id');
     });
 
-    if (guidList.length > 0) {
+    if(guidList.length > 0) {
         // AJAX call to get names for LSIDs
         // IE7< has limit of 2000 chars on URL so split into 2 requests
-        var guidListA = guidList.slice(0, 15) // first 15 elements
-        var jsonUrlA = BC_CONF.bieWebappUrl + "/species/namesFromGuids.json?guid=" + guidListA.join("&guid=") + "&callback=?";
+        var guidListA = guidList.slice(0, 15); // first 15 elements
+        var jsonUrlA = BC_CONF.bieWebappUrl + '/species/namesFromGuids.json?guid=' + guidListA.join('&guid=') + '&callback=?';
         $.getJSON(jsonUrlA, function(data) {
             // set the name in place of LSID
-            $("li.species_guid, li.genus_guid").each(function(i, el) {
-                if (i < 15) {
-                    $(el).find("a").html("<i>"+data[i]+"</i>");
+            $('li.species_guid, li.genus_guid').each(function(i, el) {
+                if(i < 15) {
+                    $(el).find('a').html('<i>' + data[i] + '</i>');
                 } else {
                     return false; // breaks each loop
                 }
             });
         });
 
-        if (guidList.length > 15) {
-            var guidListB = guidList.slice(15)
-            var jsonUrlB = BC_CONF.bieWebappUrl + "/species/namesFromGuids.json?guid=" + guidListB.join("&guid=") + "&callback=?";
+        if(guidList.length > 15) {
+            var guidListB = guidList.slice(15);
+            var jsonUrlB = BC_CONF.bieWebappUrl + '/species/namesFromGuids.json?guid=' + guidListB.join('&guid=') + '&callback=?';
             $.getJSON(jsonUrlB, function(data) {
                 // set the name in place of LSID
-                $("li.species_guid, li.genus_guid").each(function(i, el) {
+                $('li.species_guid, li.genus_guid').each(function(i, el) {
                     // skip forst 15 elements
-                    if (i > 14) {
+                    if(i > 14) {
                         var k = i - 15;
-                        $(el).find("a").html("<i>"+data[k]+"</i>");
+                        $(el).find('a').html('<i>' + data[k] + '</i>');
                     }
                 });
             });
@@ -133,19 +129,19 @@ $(document).ready(function() {
     }
 
     // do the same for the selected facet
-    var selectedLsid = $("b.species_guid").attr("id");
-    if (selectedLsid) {
-        var jsonUrl2 = BC_CONF.bieWebappUrl + "/species/namesFromGuids.json?guid=" + selectedLsid + "&callback=?";
+    var selectedLsid = $('b.species_guid').attr('id');
+    if(selectedLsid) {
+        var jsonUrl2 = BC_CONF.bieWebappUrl + '/species/namesFromGuids.json?guid=' + selectedLsid + '&callback=?';
         $.getJSON(jsonUrl2, function(data) {
             // set the name in place of LSID
-            $("b.species_guid").html("<i>"+data[0]+"</i>");
+            $('b.species_guid').html('<i>' + data[0] + '</i>');
         });
     }
 
     // remove *:* query from search bar
-    var q =  $.url().param('q');
-    if (q && q[0] == "*:*") {
-        $(":input#solrQuery").val("");
+    var q = $.url().param('q');
+    if(q && q[0] === '*:*') {
+        $(':input#solrQuery').val('');
     }
 
     // active facets/filters
@@ -162,29 +158,25 @@ $(document).ready(function() {
 
     // TODO: Remove or rewrite.
     // in mobile view toggle display of facets
-    $("#toggleFacetDisplay").click(function() {
-        $(this).find("i").toggleClass("icon-chevron-down icon-chevron-right");
-        if ($(".sidebar").is(":visible")) {
-            $(".sidebar").removeClass("overrideHide");
+    $('#toggleFacetDisplay').click(function() {
+        $(this).find('i').toggleClass('icon-chevron-down icon-chevron-right');
+        if($('.sidebar').is(':visible')) {
+            $('.sidebar').removeClass('overrideHide');
         } else {
-            $(".sidebar").addClass("overrideHide");
+            $('.sidebar').addClass('overrideHide');
         }
     });
 
     // user selectable facets...
-    $("#updateFacetOptions").click(function(e) {
+    $('#updateFacetOptions').click(function(e) {
         e.preventDefault();
 
-        // For later use.
-        //e.stopPropagation();
-
-        //alert("about to reload with new facets...");
         var selectedFacets = [];
 
         // console.debug('suck it');
 
         // iterate over seleted facet options
-        $(":input.search-filter-checkbox__label__input:checked").each(function(i, el) {
+        $(':input.search-filter-checkbox__label__input:checked').each(function(i, el) {
             // console.debug($(el).val());
             selectedFacets.push($(el).val());
         });
