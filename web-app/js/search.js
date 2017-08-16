@@ -46,7 +46,6 @@ $(document).ready(function() {
         species: false
     };
 
-
     // initialise BS tabs
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
         // console.log("this", $(this).attr('id'));
@@ -916,78 +915,83 @@ function loadImagesInTab() {
 }
 
 function loadImages(start) {
-        start = (start) ? start : 0;
-        var imagesJsonUri = BC_CONF.biocacheServiceUrl + "/occurrences/search.json" + BC_CONF.searchString +
-            "&fq=multimedia:Image&facet=false&pageSize=20&start=" + start + "&sort=identification_qualifier_s&dir=asc&callback=?";
+    start = (start) ? start : 0;
+    var imagesJsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' + BC_CONF.searchString +
+        '&fq=multimedia:Image&facet=false&pageSize=20&start=' + start + '&sort=identification_qualifier_s&dir=asc&callback=?';
 
-        $.getJSON(imagesJsonUri, function (data) {
-            //console.log("data",data);
-            if (data.occurrences) {
-                //var htmlUl = "";
-                if (start == 0) {
-                    $("#imagesGrid").html("");
-                }
-
-                var count = 0;
-
-                $.each(data.occurrences, function (i, el) {
-                    //console.log("el", el.image);
-                    count++;
-                    // clone template div & populate with metadata
-                    var $ImgConTmpl = $('.imgConTmpl').clone();
-
-                    $ImgConTmpl.removeClass('imgConTmpl').removeClass('invisible');
-
-                    var link = $ImgConTmpl.find('a.cbLink');
-                    //link.attr('id','thumb_' + category + i);
-                    link.addClass('thumbImage tooltips');
-                    //link.attr('href', BC_CONF.contextPath + "/occurrences/" + el.uuid);
-                    link.attr('title', 'click to enlarge');
-                    link.attr('data-occurrenceuid', el.uuid);
-                    link.attr('data-image-id', el.image);
-                    link.attr('data-scientific-name', el.raw_scientificName);
-                    link.attr('data-gallery', 'main-gallery');
-                    link.attr('data-remote', BC_CONF.hostName+ el.image.replace('/data', '/'));
-                    link.attr('data-title', '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">Open</a>');
-
-                    $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
-                    // brief metadata
-                    var briefHtml = el.raw_scientificName;
-                    var br = "<br />";
-                    if (el.typeStatus) briefHtml += br + el.typeStatus;
-                    if (el.institutionName) briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName;
-                    $ImgConTmpl.find('.brief').html(briefHtml);
-                    // detail metadata
-                    var detailHtml = el.raw_scientificName;
-                    if (el.typeStatus) detailHtml += br + 'Type: ' + el.typeStatus;
-                    if (el.collector) detailHtml += br + 'By: ' + el.collector;
-                    if (el.eventDate) detailHtml += br + 'Date: ' + moment(el.eventDate).format('YYYY-MM-DD');
-                    if (el.institutionName) {
-                        detailHtml += br + el.institutionName;
-                    } else {
-                        detailHtml += br + el.dataResourceName;
-                    }
-                    $ImgConTmpl.find('.detail').html(detailHtml);
-
-                    link.attr('data-footer', detailHtml);
-
-                    // write to DOM
-                    $("#imagesGrid").append($ImgConTmpl.html());
-                });
-
-                if (count + start < data.totalRecords) {
-                    //console.log("load more", count, start, count + start, data.totalRecords);
-                    $('#imagesGrid').data('count', count + start);
-                    $("#loadMoreImages").show();
-                    $("#loadMoreImages .erk-button").removeClass('disabled');
-                } else {
-                    $("#loadMoreImages").hide();
-                }
-
+    $.getJSON(imagesJsonUri, function(data) {
+        if(data.occurrences) {
+            if(start === 0) {
+                $('#imagesGrid').html('');
             }
-        }).always(function () {
-            $("#loadMoreImages img").hide();
-        });
+
+            var count = 0;
+
+            $.each(data.occurrences, function(i, el) {
+                count++;
+                // clone template div & populate with metadata
+                var $ImgConTmpl = $('.imgConTmpl').clone();
+
+                $ImgConTmpl.removeClass('imgConTmpl').removeClass('invisible');
+
+                var link = $ImgConTmpl.find('a.cbLink');
+                link.addClass('thumbImage tooltips');
+                link.attr('title', 'click to enlarge');
+                link.attr('data-occurrenceuid', el.uuid);
+                link.attr('data-image-id', el.image);
+                link.attr('data-scientific-name', el.raw_scientificName);
+                link.attr('data-gallery', 'main-gallery');
+                link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
+                // link.attr('data-title', '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">Open</a>');
+
+                $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
+                // brief metadata
+                var briefHtml = el.raw_scientificName;
+                var br = '<br />';
+                if(el.typeStatus) {
+                    briefHtml += br + el.typeStatus;
+                }
+                if(el.institutionName) { briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName; }
+                $ImgConTmpl.find('.brief').html(briefHtml);
+
+                // detail metadata
+                var leftDetail = '<div class="col-sm-10"><b>Taxon:</b> ' + el.raw_scientificName;
+                if(el.typeStatus) { leftDetail += br + '<b>Type:</b> ' + el.typeStatus; }
+                if(el.collector) { leftDetail += br + '<b>By:</b> ' + el.collector; }
+                if(el.eventDate) { leftDetail += br + '<b>Date:</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
+
+                leftDetail += br + '<b>Source:</b> ';
+                if(el.institutionName) {
+                    leftDetail += el.institutionName;
+                } else {
+                    leftDetail += el.dataResourceName;
+                }
+                leftDetail += '</div>';
+
+                var rightDetail = '<div class="col-sm-2" style="text-align:right;"><a href="' + BC_CONF.contextPath +
+                    '/occurrences/' + el.uuid + '">Open</a></div>';
+
+                var detailHtml = '<div class="row">' + leftDetail + rightDetail + '</div>';
+
+                $ImgConTmpl.find('.detail').html(detailHtml);
+                link.attr('data-footer', detailHtml);
+
+                // write to DOM
+                $('#imagesGrid').append($ImgConTmpl.html());
+            });
+
+            if(count + start < data.totalRecords) {
+                $('#imagesGrid').data('count', count + start);
+                $('#loadMoreImages').show();
+                $('#loadMoreImages .erk-button').removeClass('disabled');
+            } else {
+                $('#loadMoreImages').hide();
+            }
+
+        }
+    }).always(function() {
+        $('#loadMoreImages img').hide();
+    });
 }
 
 /**

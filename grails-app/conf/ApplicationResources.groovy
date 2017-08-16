@@ -2,6 +2,7 @@ modules = {
     elurikkusCoreHub {
         dependsOn 'jquery_i18n'
         defaultBundle 'main-core'
+
         /**
          * New CSS with overrides. Should replace overrides with legimate CSS
          * and the file should replace search.css completely.
@@ -26,6 +27,7 @@ modules = {
 
     recordView {
         dependsOn 'jquery, fontawesome, jquery_i18n'
+
         resource url: [dir: 'css', file: 'record-view.css']
         resource url: [dir: 'css', file: 'print-record.css', plugin: 'biocache-hubs'], attrs: [ media: 'print' ]
         resource url: [dir: 'js', file: 'audiojs/audio.min.js', plugin: 'biocache-hubs'], disposition: 'head', exclude: '*'
@@ -37,16 +39,19 @@ modules = {
 
     occurrenceMap {
         dependsOn 'jquery'
+
         resource url: [dir: 'js', file: 'occurrenceMap.js']
     }
 
     mapCommonOverride {
         dependsOn 'jquery', 'purl'
+
         resource url:[dir:'js', file:'map.common.js']
     }
 
     exploreArea {
         dependsOn 'jquery, fontawesome'
+
         resource url: [dir: 'js', file: 'exploreArea.js'], disposition: 'head'
         resource url: [dir: 'js', file: 'magellan.js', plugin: 'biocache-hubs'], disposition: 'head'
         resource url: [dir: 'css', file: 'exploreYourArea.css'], attrs: [media: 'all']
@@ -61,6 +66,7 @@ modules = {
     leafletOverride {
         //defaultBundle 'leaflet'
         dependsOn 'jquery_i18n'
+
         resource url:[dir:'js/leaflet-0.7.2', file:'leaflet.css', plugin:'biocache-hubs'], attrs: [ media: 'all' ]
         resource url:[dir:'js/leaflet-0.7.2', file:'leaflet.js', plugin:'biocache-hubs']
 
@@ -69,6 +75,7 @@ modules = {
     leafletPluginsOverride {
         dependsOn 'leafletOverride'
         defaultBundle 'leafletPlugins'
+
         resource url: [plugin: "biocache-hubs", dir: 'js/leaflet-plugins/fullscreen', file: 'Control.FullScreen.css']
         resource url: [plugin: "biocache-hubs", dir: 'js/leaflet-plugins/fullscreen', file: 'Control.FullScreen.js']
         resource url:[dir:'js/leaflet-plugins/layer/tile', file:'Google.js', plugin:'biocache-hubs']
@@ -93,6 +100,7 @@ modules = {
 
     chartsOverride {
         dependsOn 'bootstrapToggle', 'bootstrapMultiselect'
+
         resource url: [dir: 'css', file: 'ALAChart.css'], attrs: [media: 'all']
         resource url: [dir: 'js', file: 'ALAChart.js']
         resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
