@@ -87,7 +87,7 @@ grails {
         }
     }
 }
- 
+
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
@@ -171,8 +171,8 @@ log4j = {
            'grails.app.services',
            //'grails.app.taglib',
            'grails.web.pages',
-            //'grails.app',
-            'au.org.ala.cas',
-            'au.org.ala.biocache.hubs',
-            'au.org.ala.biocache.hubs.OccurrenceTagLib'
+           //'grails.app',
+           'au.org.ala.cas',
+           'au.org.ala.biocache.hubs',
+           'au.org.ala.biocache.hubs.OccurrenceTagLib'
 }

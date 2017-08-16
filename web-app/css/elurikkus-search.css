@@ -134,7 +134,6 @@
 #imageDialog.modal {
     width: 90%; /* desired relative width */
     min-height:80%;
-    left: 5%; /* (100%-width)/2 */
     margin: auto auto auto auto; /* place center */
 }
 
@@ -154,6 +153,14 @@
     bottom: 0;
     right: 0;
     left: 0;
+}
+
+.modal-footer {
+    display: block;
+}
+
+.modal-footer > :not(:first-child) {
+    margin-left: 0;
 }
 
 .slider-handle.hide {

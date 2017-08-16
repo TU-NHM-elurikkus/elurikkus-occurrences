@@ -50,26 +50,13 @@ grails.project.dependency.resolution = {
         build ":tomcat:7.0.54"
         compile ':cache:1.1.8'
         compile ":cache-headers:1.1.6"
-        runtime ":resources:1.2.8"
+        runtime ":resources:1.2.14"
         runtime ":cached-resources:1.0"
         runtime ":biocache-hubs:1.4.2"
         compile ":jquery:1.11.1"
         runtime ":elurikkus-commons:0.2-SNAPSHOT"
         compile "org.grails.plugins:message-reports:0.1"
     }
-}
-
-reportMessages {
-	// put all keys here, that should not show as unused, even if no code reference could be found
-	// note that it is sufficient to provide an appropriate prefix to match a group of keys
-	exclude = ["default", "typeMismatch"]
-
-	// put all variable names here, that are used in dynamic keys and have a defined set of values
-	// e.g. if you have a call like <c:message code="show.${prod}" /> and "prod" is used in many
-	// pages to distinguish between "orange" and "apple" add a map to the list below:
-	//     prod: ["orange", "apple"]
-	dynamicKeys = [
-	]
 }
 
 reportMessages {
