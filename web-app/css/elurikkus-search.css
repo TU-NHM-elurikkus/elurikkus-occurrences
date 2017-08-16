@@ -159,10 +159,6 @@
     display: block;
 }
 
-.modal-footer > :not(:first-child) {
-    margin-left: 0;
-}
-
 .slider-handle.hide {
     display: none;
 }

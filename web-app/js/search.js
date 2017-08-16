@@ -942,7 +942,6 @@ function loadImages(start) {
                 link.attr('data-scientific-name', el.raw_scientificName);
                 link.attr('data-gallery', 'main-gallery');
                 link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
-                // link.attr('data-title', '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">Open</a>');
 
                 $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
                 // brief metadata
@@ -968,8 +967,12 @@ function loadImages(start) {
                 }
                 leftDetail += '</div>';
 
-                var rightDetail = '<div class="col-sm-2" style="text-align:right;"><a href="' + BC_CONF.contextPath +
-                    '/occurrences/' + el.uuid + '">Open</a></div>';
+                var rightDetail =
+                    '<div class="col-sm-2" style="text-align:right;">' +
+                    '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
+                        'Open' +
+                    '</a>' +
+                    '</div>';
 
                 var detailHtml = '<div class="row">' + leftDetail + rightDetail + '</div>';
 
