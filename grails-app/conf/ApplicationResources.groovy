@@ -1,6 +1,6 @@
 modules = {
     elurikkusCoreHub {
-        dependsOn 'jquery_i18n'
+        dependsOn 'bootstrap, jquery_i18n'
         defaultBundle 'main-core'
 
         /**
@@ -59,6 +59,8 @@ modules = {
     }
 
     lightbox {
+        defaultBundle 'main-core'
+
         resource url: [dir: 'js', file: 'ekko-lightbox.min.js'], disposition: 'head'
         resource url: [dir: 'css', file: 'ekko-lightbox.min.css'], disposition: 'head'
     }
