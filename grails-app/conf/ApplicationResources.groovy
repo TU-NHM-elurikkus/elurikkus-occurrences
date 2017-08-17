@@ -30,7 +30,6 @@ modules = {
 
         resource url: [dir: 'css', file: 'record-view.css']
         resource url: [dir: 'css', file: 'print-record.css', plugin: 'biocache-hubs'], attrs: [ media: 'print' ]
-        resource url: [dir: 'js', file: 'audiojs/audio.min.js', plugin: 'biocache-hubs'], disposition: 'head', exclude: '*'
         resource url: [dir: 'js', file: 'jquery.i18n.properties-1.0.9.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'record-view.js']
         resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
