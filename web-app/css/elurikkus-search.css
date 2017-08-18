@@ -131,14 +131,14 @@
     opacity: 0.7;
 }
 
-/* XXX bs ightbox doesn't give a damn about css-ing like this */
+/* XXX bs lightbox doesn't give a damn about css-ing like this */
 #imageDialog.modal {
     width: 90%; /* desired relative width */
     min-height:80%;
     margin: auto auto auto auto; /* place center */
 }
 
-/* XXX bs ightbox doesn't give a damn about css-ing like this */
+/* XXX bs lightbox doesn't give a damn about css-ing like this */
 #imageDialog .modal-body {
     overflow-y: hidden;
     position: static;
@@ -149,7 +149,7 @@
     max-height: 90%;
 }
 
-/* XXX bs ightbox doesn't give a damn about css-ing like this */
+/* XXX bs lightbox doesn't give a damn about css-ing like this */
 #imageDialog .modal-footer {
     bottom: 0;
     right: 0;

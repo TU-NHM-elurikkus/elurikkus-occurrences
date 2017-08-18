@@ -637,7 +637,6 @@
                         <span class="fa fa-download"></span>
                         <g:message code="download.download.label" />
                     </button>
-
                 </div>
             </form>
         </div>
