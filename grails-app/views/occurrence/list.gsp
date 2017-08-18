@@ -724,7 +724,7 @@
 
                     <form name="raw_taxon_search" class="rawTaxonSearch" id="rawTaxonSearchForm" action="${request.contextPath}/occurrences/search/taxa" method="POST">
                         <%-- taxon concept search drop-down div are put in here via Jquery --%>
-                        <div style="display:none;" ></div>
+                        <div style="display:none;"></div>
                     </form>
                 </div>
             </div>

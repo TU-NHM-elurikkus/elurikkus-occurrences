@@ -253,15 +253,13 @@
             </div>
 
             <div class="modal-footer">
-                <input
-                    type="submit"
-                    value="${message(code: 'download.downloadform.button.submit')}"
-                    id="downloadStart"
-                    class="erk-button erk-button--light tooltips"
-                />
-
                 <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
                     <g:message code="generic.button.close" />
+                </button>
+
+                <button id="downloadStart" class="erk-button erk-button--light tooltips">
+                    <span class="fa fa-download"></span>
+                    <g:message code="download.download.label" />
                 </button>
             </div>
         </div>

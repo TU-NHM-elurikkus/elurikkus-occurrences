@@ -18,7 +18,7 @@ modules = {
         // Modified search plugin JS.
         resource url: [dir: 'js', file: 'search.js']
         // Maybe keep it, maybe ditch it.
-        resource url: [dir: 'css', file: 'print-search.css', plugin: 'biocache-hubs'], attrs: [ media: 'print' ]
+        resource url: [dir: 'css', file: 'print-search.css', plugin: 'biocache-hubs'], attrs: [media: 'print']
         // Carried over from search-core module.
         resource url: [dir: 'js', file: 'jquery.cookie.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'jquery.inview.min.js', plugin: 'biocache-hubs']
@@ -29,7 +29,7 @@ modules = {
         dependsOn 'jquery, fontawesome, jquery_i18n'
 
         resource url: [dir: 'css', file: 'record-view.css']
-        resource url: [dir: 'css', file: 'print-record.css', plugin: 'biocache-hubs'], attrs: [ media: 'print' ]
+        resource url: [dir: 'css', file: 'print-record.css', plugin: 'biocache-hubs'], attrs: [media: 'print']
         resource url: [dir: 'js', file: 'jquery.i18n.properties-1.0.9.js', plugin: 'biocache-hubs']
         resource url: [dir: 'js', file: 'record-view.js']
         resource url: [dir: 'js', file: 'charts2.js'], disposition: 'head'
@@ -45,7 +45,7 @@ modules = {
     mapCommonOverride {
         dependsOn 'jquery', 'purl'
 
-        resource url:[dir:'js', file:'map.common.js']
+        resource url: [dir: 'js', file: 'map.common.js']
     }
 
     exploreArea {
@@ -68,8 +68,8 @@ modules = {
         //defaultBundle 'leaflet'
         dependsOn 'jquery_i18n'
 
-        resource url:[dir:'js/leaflet-0.7.2', file:'leaflet.css', plugin:'biocache-hubs'], attrs: [ media: 'all' ]
-        resource url:[dir:'js/leaflet-0.7.2', file:'leaflet.js', plugin:'biocache-hubs']
+        resource url: [dir: 'js/leaflet-0.7.2', file: 'leaflet.css', plugin: 'biocache-hubs'], attrs: [media: 'all']
+        resource url: [dir: 'js/leaflet-0.7.2', file: 'leaflet.js', plugin: 'biocache-hubs']
 
     }
 
@@ -79,24 +79,24 @@ modules = {
 
         resource url: [plugin: "biocache-hubs", dir: 'js/leaflet-plugins/fullscreen', file: 'Control.FullScreen.css']
         resource url: [plugin: "biocache-hubs", dir: 'js/leaflet-plugins/fullscreen', file: 'Control.FullScreen.js']
-        resource url:[dir:'js/leaflet-plugins/layer/tile', file:'Google.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/coordinates', file:'Leaflet.Coordinates-0.1.4.css', plugin:'biocache-hubs'], attrs: [ media: 'all' ]
-        resource url:[dir:'js/leaflet-plugins/coordinates', file:'Leaflet.Coordinates-0.1.4.ie.css', plugin:'biocache-hubs'], attrs: [ media: 'all' ], wrapper: { s -> "<!--[if lt IE 8]>$s<![endif]-->" }
-        resource url:[dir:'js/leaflet-plugins/layer/tile', file:'Google.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/spin', file:'spin.min.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/spin', file:'leaflet.spin.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/coordinates', file:'Leaflet.Coordinates-0.1.4.min.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/draw', file:'leaflet.draw.css', plugin:'biocache-hubs'], attrs: [ media: 'all' ]
-        resource url:[dir:'js/leaflet-plugins/draw', file:'leaflet.draw-src.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/wicket', file:'wicket.js', plugin:'biocache-hubs']
-        resource url:[dir:'js/leaflet-plugins/wicket', file:'wicket-leaflet.js', plugin:'biocache-hubs']
-        resource url:[dir:'js', file:'LeafletToWKT.js', plugin:'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/layer/tile', file: 'Google.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/coordinates', file: 'Leaflet.Coordinates-0.1.4.css', plugin: 'biocache-hubs'], attrs: [media: 'all']
+        resource url: [dir: 'js/leaflet-plugins/coordinates', file: 'Leaflet.Coordinates-0.1.4.ie.css', plugin: 'biocache-hubs'], attrs: [media: 'all'], wrapper: { s -> "<!--[if lt IE 8]>$s<![endif]-->" }
+        resource url: [dir: 'js/leaflet-plugins/layer/tile', file: 'Google.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/spin', file: 'spin.min.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/spin', file: 'leaflet.spin.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/coordinates', file: 'Leaflet.Coordinates-0.1.4.min.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/draw', file: 'leaflet.draw.css', plugin: 'biocache-hubs'], attrs: [media: 'all']
+        resource url: [dir: 'js/leaflet-plugins/draw', file: 'leaflet.draw-src.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/wicket', file: 'wicket.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js/leaflet-plugins/wicket', file: 'wicket-leaflet.js', plugin: 'biocache-hubs']
+        resource url: [dir: 'js', file: 'LeafletToWKT.js', plugin: 'biocache-hubs']
     }
 
 
     // Override biocache-hubs plugin style.
     searchMapOverride {
-        resource url: [dir:'css', file:'searchMap.css'], attrs: [media: 'all']
+        resource url: [dir: 'css', file: 'searchMap.css'], attrs: [media: 'all']
     }
 
     chartsOverride {
