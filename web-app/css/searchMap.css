@@ -12,14 +12,14 @@
     max-width: 350px;
     white-space: nowrap;
     /* If max-width does not work, try using width instead */
-    /*width: 150px;*/
+    /* width: 150px; */
 }
 
 .leaflet-control-layers-base  {
     font-size: 12px;
 }
 
-.leaflet-control-layers-base label,  .leaflet-control-layers-base input, .leaflet-control-layers-base button, .leaflet-control-layers-base select, .leaflet-control-layers-base textarea {
+.leaflet-control-layers-base label, .leaflet-control-layers-base input, .leaflet-control-layers-base button, .leaflet-control-layers-base select, .leaflet-control-layers-base textarea {
     margin: 0px;
     height: 20px;
     font-size: 12px;
@@ -45,7 +45,6 @@
 
 #spatialSearch .accordion-group {
     border: none;
-
 }
 
 #spatialSearch .accordion-heading .accordion-toggle {
@@ -57,7 +56,7 @@
 }
 
 .accordion-inner {
-    /*padding: 10px 10px;*/
+    /* padding: 10px 10px; */
     margin-top: 5px;
     padding: 0;
     border: none;

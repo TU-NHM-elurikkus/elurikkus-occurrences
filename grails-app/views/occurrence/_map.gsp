@@ -629,13 +629,15 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button id="submitDownloadMap" class="erk-button erk-button--light" style="float:left;">
-                        <g:message code="download.download.label" />
-                    </button>
-
                     <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
                         <g:message code="generic.button.close" />
                     </button>
+
+                    <button id="submitDownloadMap" class="erk-button erk-button--light">
+                        <span class="fa fa-download"></span>
+                        <g:message code="download.download.label" />
+                    </button>
+
                 </div>
             </form>
         </div>
