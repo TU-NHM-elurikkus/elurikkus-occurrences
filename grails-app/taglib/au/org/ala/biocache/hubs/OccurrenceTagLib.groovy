@@ -137,31 +137,34 @@ class OccurrenceTagLib {
         def fqLabel = preFix + filterLabel
 
         def mb = new MarkupBuilder(out)
-        mb.button (
-                class: "${attrs.cssClass} tooltips activeFilter",
-                    "data-facet": item.key,
-                    // "data-facet": "${item.key}:${item.value.value.encodeAsURL()}",
-                    "onClick": "removeFacet(this); return false;"
+
+        mb.span (class: "${attrs.cssClass} tooltips active-filters__filter") {
+            span(class: "active-filters__label") {
+                if (item.key.contains("occurrence_year")) {
+                    fqLabel = fqLabel
+                        .replaceAll(':',': ')
+                        .replaceAll(
+                            'occurrence_year',
+                            alatag.message(code: 'facet.occurrence_year', default:'occurrence_year')
+                        )
+
+                    mkp.yieldUnescaped(fqLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
+                        def year10 = year?.toInteger() + 10
+
+                        "${year} - ${year10}"
+                    })
+                } else {
+                    mkp.yieldUnescaped(alatag.message(code: fqLabel, default: fqLabel).replaceFirst(':',': '))
+                }
+            }
+
+            span(
+                class: "fa fa-close active-filters__close-button",
+                "data-facet": item.key,
+                "onClick": "removeFacet(this); return false;"
             ) {
-            if (attrs.addCheckBox) {
-                span(class:'fa fa-check-square-o') {
-                    mkp.yieldUnescaped("&nbsp;")
-                }
-            }
-            if (item.key.contains("occurrence_year")) {
-                fqLabel = fqLabel.replaceAll(':',': ').replaceAll('occurrence_year', alatag.message(code: 'facet.occurrence_year', default:'occurrence_year'))
-                mkp.yieldUnescaped( fqLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
-                    def year10 = year?.toInteger() + 10
-                    "${year} - ${year10}"
-                })
-            } else {
-                mkp.yieldUnescaped(alatag.message(code: fqLabel, default: fqLabel).replaceFirst(':',': '))
-            }
-            if (attrs.addCloseBtn) {
-                mkp.yieldUnescaped("&nbsp;")
-                span(class:'closeX') {
-                    mkp.yieldUnescaped("&times;")
-                }
+                // MarkupBuilder doesn't close tags if content is empty
+                mkp.yield('')
             }
         }
     }
