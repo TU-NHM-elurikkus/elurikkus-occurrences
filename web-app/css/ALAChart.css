@@ -59,15 +59,26 @@
     margin-bottom: .5rem;
 }
 
+/* TODO: DRY with bie-hub. Will probably need to fork charts plugin */
 #charts .chart-legend {
-    max-height: 250px;
-    overflow-y: scroll;
+    position: absolute;
+    top: 1rem;
+    right: 0;
+
+    width: 250px;
+
+    font-size: 12px;
 }
 
 .chart {
-    width: 50%;
-    display: inline-block;
-    padding: 1rem;
+    display: block;
+    position: relative;
+
+    width: 100%;
+    max-width: 1200px;
+
+    margin-bottom: 1rem;
+    padding-right: 250px;
 }
 
 /* 1200 is Bootstrap's large screen breakpoint. */
