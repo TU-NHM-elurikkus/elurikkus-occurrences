@@ -362,16 +362,21 @@
                     <p>
                         <g:message code="home.index.taxaupload.des01" />
                     </p>
-                    <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
+
                     <p>
                         <textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea>
                     </p>
+
                     <div>
-                        <%-- <input type="submit" name="action" value="Download" /> --%>
-                        <%-- &nbsp;OR&nbsp; --%>
                         <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                         <input type="hidden" name="field" value="raw_name" />
-                        <input type="submit" name="action" value=<g:message code="advancedsearch.button.submit" /> class="erk-button erk-button--light" />
+
+                        <input
+                            type="submit"
+                            name="action"
+                            value="${message(code: 'advancedsearch.button.submit')}"
+                            class="erk-button erk-button--dark"
+                        />
                     </div>
                 </form>
             </div> <!-- end #uploadDiv div -->
@@ -382,19 +387,23 @@
                         <g:message code="home.index.catalogupload.des01" />
                     </p>
 
-                    <%-- <p><input type="hidden" name="MAX_FILE_SIZE" value="2048" /><input type="file" /></p> --%>
-
                     <p>
                         <textarea id="catalogueSearchQueries" name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
                     </p>
 
                     <div>
-                        <%-- <input type="submit" name="action" value="Download" /> --%>
-                        <%-- &nbsp;OR&nbsp; --%>
                         <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                         <input type="hidden" name="field" value="catalogue_number" />
+
                         <%-- XXX --%>
-                        <input id="catalogueSearchButton" disabled type="submit" name="action" value=<g:message code="advancedsearch.button.submit" />  class="erk-button erk-button--light" />
+                        <input
+                            id="catalogueSearchButton"
+                            disabled
+                            type="submit"
+                            name="action"
+                            value="${message(code: 'advancedsearch.button.submit')}"
+                            class="erk-button erk-button--dark"
+                        />
                     </div>
                 </form>
             </div><%-- end #catalogUploadDiv div --%>

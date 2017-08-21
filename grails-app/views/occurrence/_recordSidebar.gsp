@@ -430,54 +430,69 @@
             <g:message code="show.sidebar.image.title" />
         </h2>
 
-        <div id="occurrenceImages" style="margin-top:5px;">
+        <div id="occurrenceImages" class="occurrence-images">
             <g:each in="${record.images}" var="image">
-                <div style="margin-bottom:10px;">
+                <div class="occurrence-images__image-container">
                     <g:if test="${grailsApplication.config.skin.useAlaImageService.toBoolean()}">
                         <a href="${grailsApplication.config.images.viewerUrl}${image.filePath}" target="_blank">
                             <img
                                 src="${image.alternativeFormats.smallImageUrl}"
-                                style="max-width: 100%;"
+                                class="occurrence-images__image"
                                 alt="Click to view this image in a large viewer"
                             />
                         </a>
                     </g:if>
                     <g:else>
                         <a href="${image.alternativeFormats.largeImageUrl}" target="_blank">
-                            <img src="${image.alternativeFormats.smallImageUrl}" style="max-width: 100%;" />
+                            <img
+                                src="${image.alternativeFormats.smallImageUrl}"
+                                class="occurrence-images__image"
+                            />
                         </a>
                     </g:else>
+
                     <br />
+
                     <g:if test="${record.raw.occurrence.photographer || image.metadata?.creator}">
                         <cite>
                             <g:message code="show.sidebar.image.creator" />: ${record.raw.occurrence.photographer ?: image.metadata?.creator}
                         </cite>
+
                         <br />
                     </g:if>
+
                     <g:if test="${record.raw.occurrence.rights || image.metadata?.rights}">
                         <cite>
                             <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights ?: image.metadata?.rights}
                         </cite>
+
                         <br />
                     </g:if>
+
                     <g:if test="${record.raw.occurrence.rightsholder || image.metadata?.rightsholder}">
                         <cite>
                             <g:message code="recordcore.dynamic.rightsholder" />: ${record.raw.occurrence.rightsholder ?: image.metadata?.rightsholder}
                         </cite>
+
                         <br />
                     </g:if>
+
                     <g:if test="${record.raw.miscProperties.rightsHolder}">
                         <cite>
                             <g:message code="recordcore.dynamic.rightsholder" />: ${record.raw.miscProperties.rightsHolder}
                         </cite>
+
                         <br />
                     </g:if>
+
                     <g:if test="${image.metadata?.license}">
                         <cite>
                             <g:message code="recordcore.dynamic.license" />: ${image.metadata?.license}
                         </cite>
+
                         <br />
                     </g:if>
+
                     <g:if test="${grailsApplication.config.skin.useAlaImageService.toBoolean()}">
                         <a href="${grailsApplication.config.images.metadataUrl}${image.filePath}" target="_blank">
                             <g:message code="show.sidebar.occurrenceimages.navigator01" />

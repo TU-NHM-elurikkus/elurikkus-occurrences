@@ -365,7 +365,7 @@
         <input
             type="submit"
             value="<g:message code="advancedsearch.button.submit" />"
-            class="erk-button erk-button--light"
+            class="erk-button erk-button--dark"
         />
         &nbsp;&nbsp;
         <input
