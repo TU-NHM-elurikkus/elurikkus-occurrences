@@ -43,9 +43,8 @@
 
         <div class="row">
             <div class="col-12">
-                <%-- RESULTS --%>
-                <div class="float-left">
-                    <%-- SEARCH INPUT --%>
+                <%-- SEARCH INPUT --%>
+                <div>
                     <form name="searchForm" id="searchForm" action="" method="GET" class="form-group">
                         <div class="input-plus">
                             <input
@@ -64,22 +63,22 @@
                         <input type="hidden" name="latitude" id="latitude" value="${latitude}" />
                         <input type="hidden" name="longitude" id="longitude" value="${longitude}" />
                         <input type="hidden" name="location" id="location" value="${location}" />
-
-                        <g:if test="${location}">
-                            <g:message code="eya.searchform.label02" />:
-
-                            <span id="markerAddress">
-                                ${location}
-                            </span>
-                            &nbsp;&nbsp;
-
-                            <a href="#" id="addressHelp" style="text-decoration: none">
-                                <span class="help-container">
-                                    &nbsp;
-                                </span>
-                            </a>
-                        </g:if>
                     </form>
+
+                    <g:if test="${location}">
+                        <g:message code="eya.searchform.label02" />:
+
+                        <span id="markerAddress">
+                            ${location}
+                        </span>
+                        &nbsp;&nbsp;
+
+                        <a href="#" id="addressHelp" style="text-decoration: none">
+                            <span class="help-container">
+                                &nbsp;
+                            </span>
+                        </a>
+                    </g:if>
                 </div>
 
                 <div class="form-linline float-right">
