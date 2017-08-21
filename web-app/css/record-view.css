@@ -43,3 +43,15 @@ td.noStripe {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+
+.occurrence-images {
+    margin-top: 5px;
+}
+
+.occurrence-images__image-container {
+    margin-bottom: 10px;
+}
+
+.occurrence-images__image {
+    width: 100%;
+}
