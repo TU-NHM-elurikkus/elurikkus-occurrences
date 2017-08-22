@@ -125,7 +125,7 @@
                                 <tr id="spinnerRow">
                                     <td colspan="3" style="text-align: center;">
                                         <g:message code="facets.multiplefacets.tabletr01td01" />...
-                                        <g:img plugin="biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon" />
+                                        <g:img plugin="elurikkus-biocache-hubs" dir="images" file="spinner.gif" id="spinner2" class="spinner" alt="spinner icon" />
                                     </td>
                                 </tr>
                             </tbody>

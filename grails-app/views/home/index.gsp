@@ -18,19 +18,16 @@
 
         <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
 
-        <r:require modules="jquery, leafletOverride, leafletPluginsOverride, mapCommonOverride, searchMapOverride, bootstrapCombobox, menu" />
+        <asset:stylesheet src="occurrences.css"/>
+        <asset:javascript src="occurrences.js"/>
 
-        <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
-            <r:require module="bieAutocomplete" />
-        </g:if>
-
-        <r:script>
+        <g:javascript>
             // global var for GSP tags/vars to be passed into JS functions
             var BC_CONF = {
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
                 bieWebappUrl: "${grailsApplication.config.bie.baseUrl}",
                 bieWebServiceUrl: "${grailsApplication.config.bieService.baseUrl}",
-                autocompleteHints: ${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'},
+                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
                 contextPath: "${request.contextPath}",
                 locale: "${RequestContextUtils.getLocale(request)}",
                 queryContext: "${grailsApplication.config.biocache.queryContext}"
@@ -270,7 +267,7 @@
             //         once = false;
             //     }
             // }
-        </r:script>
+        </g:javascript>
     </head>
 
     <body>

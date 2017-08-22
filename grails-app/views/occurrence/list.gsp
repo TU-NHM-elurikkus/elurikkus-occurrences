@@ -75,14 +75,6 @@
             };
         </script>
 
-        <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, image-viewer, lightbox, chartsOverride" />
-
-        <r:require modules="filters" plugin="elurikkus-commons" />
-
-        <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
-            <r:require module="bieAutocomplete" />
-        </g:if>
-
         <script type="text/javascript">
             <g:if test="${!grailsApplication.config.google.apikey}">
                 google.load('maps','3.5',{ other_params: "sensor=false" });
@@ -267,7 +259,7 @@
                     </g:if>
 
                     <section id="resultsReturned" class="search-section">
-                        <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="biocache-hubs" />
+                        <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="elurikkus-biocache-hubs" />
 
                         <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm">
                             <div class="input-plus">
@@ -625,7 +617,7 @@
                             <div id="charts" role="tabpanel" class="tab-pane">
                                 <g:render template="charts"
                                     model="[searchString: searchString]"
-                                    plugin="biocache-hubs"
+                                    plugin="elurikkus-biocache-hubs"
                                 />
 
                                 <script>
@@ -645,7 +637,7 @@
                                 <div id="userChartsView" role="tabpanel" class="tab-pane">
                                     <g:render template="userCharts"
                                         model="[searchString: searchString]"
-                                        plugin="biocache-hubs" />
+                                        plugin="elurikkus-biocache-hubs" />
                                 </div>
                             </g:if>
                         </plugin:isAvailable>
@@ -686,7 +678,7 @@
                                     <button class="erk-button erk-button--light">
                                         <g:message code="list.speciesgallerycontrols.loadmorespecies.button" />
                                     </button>
-                                    <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                    <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
                                 </div>
                             </div> <%-- end #speciesWrapper --%>
                         </g:if>
@@ -705,7 +697,7 @@
                                     <p>
                                         <button class="erk-button erk-button--light">
                                             <g:message code="list.speciesgallerycontrols.loadmoreimages.button" />
-                                            <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
                                          </button>
                                      </p>
                                  </div>

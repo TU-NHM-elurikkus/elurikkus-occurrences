@@ -61,8 +61,7 @@
 
         <g:render template="/layouts/global" />
 
-        <r:require modules="recordView, amplify, moment" />
-        <r:script disposition="head">
+        <g:javascript>
             $(document).ready(function() {
                 <g:if test="${record.processed.attribution.provenance == 'Draft'}">
                     // draft view button
@@ -71,7 +70,7 @@
                     });
                 </g:if>
             }); // end $(document).ready()
-        </r:script>
+        </g:javascript>
     </head>
 
     <body class="occurrence-record">
@@ -697,7 +696,7 @@
                         </a>
 
                         <span class="deleteAssertionSubmitProgress" style="display:none;">
-                            <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" alt="indicator icon" />
+                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" alt="indicator icon" />
                         </span>
                     </p>
 

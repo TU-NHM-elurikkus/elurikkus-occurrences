@@ -10,8 +10,7 @@
             <g:layoutTitle />
         </title>
 
-        <r:require modules="elurikkusCoreHub, menu" />
-        <r:script disposition='head'>
+        <g:javascript>
             // initialise plugins
             jQuery(function(){
                 // autocomplete on navbar search input
@@ -59,8 +58,8 @@
 
                 $('.helphover').popover({animation: true, trigger:'hover'});
             });
-        </r:script>
-        <r:layoutResources />
+        </g:javascript>
+
         <g:layoutHead />
     </head>
 
@@ -74,8 +73,6 @@
         </div>
 
         <g:render template="/footer" plugin="elurikkus-commons" />
-
-        <r:layoutResources />
 
     </body>
 </html>
