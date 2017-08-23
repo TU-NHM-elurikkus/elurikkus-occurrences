@@ -23,6 +23,9 @@
         </g:if>
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <asset:javascript src="search.js" />
+
         <script type="text/javascript">
             // single global var for app conf settings
             <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />

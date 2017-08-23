@@ -333,7 +333,7 @@
 </div>
 
 
-<asset:javascript>
+<script>
     var defaultBaseLayer = L.tileLayer("${grailsApplication.config.map.minimal.url}", {
         attribution: "${raw(grailsApplication.config.map.minimal.attr)}",
         subdomains: "${grailsApplication.config.map.minimal.subdomains}",
@@ -401,7 +401,7 @@
       delete link;
       return false;
     }
-</asset:javascript>
+</script>
 
 <div style="display: none;">
     <div class="popupRecordTemplate">
