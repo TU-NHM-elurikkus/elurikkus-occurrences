@@ -457,7 +457,7 @@
                                 </a>
                             </li>
 
-                            <plugin:isAvailable name="alaChartsPlugin">
+                            <plugin:isAvailable name="elurikkus-charts">
                                 <li class="nav-item">
                                     <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
                                         <g:message code="list.link.t3" />
@@ -613,7 +613,7 @@
                             <div id='envLegend'></div>
                         </div>
 
-                        <plugin:isAvailable name="alaChartsPlugin">
+                        <plugin:isAvailable name="elurikkus-charts">
                             <div id="charts" role="tabpanel" class="tab-pane">
                                 <g:render template="charts"
                                     model="[searchString: searchString]"
@@ -633,13 +633,13 @@
                                 </script>
                             </div>
 
-                            <g:if test="${grailsApplication.config.userCharts && grailsApplication.config.userCharts?.toBoolean()}">
+
                                 <div id="userChartsView" role="tabpanel" class="tab-pane">
                                     <g:render template="userCharts"
                                         model="[searchString: searchString]"
                                         plugin="elurikkus-biocache-hubs" />
                                 </div>
-                            </g:if>
+
                         </plugin:isAvailable>
 
                         <g:if test="${showSpeciesImages}">

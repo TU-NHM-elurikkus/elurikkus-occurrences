@@ -802,7 +802,7 @@ function loadDefaultCharts() {
         var chartsConfigUri = BC_CONF.biocacheServiceUrl + "/upload/charts/" + BC_CONF.selectedDataResource + ".json";
         $.getJSON(chartsConfigUri, function (chartsConfig) {
 
-            //console.log("Number of dynamic charts to render: " + chartsConfig.length, dynamicFacets);
+            console.log("Number of dynamic charts to render: " + chartsConfig.length, dynamicFacets);
 
             var conf = {}
 

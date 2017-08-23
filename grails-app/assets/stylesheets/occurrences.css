@@ -6,6 +6,7 @@
 *= require exploreYourArea
 *= require record-view
 *= require elurikkus-search
+*= require ala-charts
 *= require map
 *= require searchMap
 */

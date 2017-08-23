@@ -48,12 +48,12 @@ grails.project.dependency.resolution = {
         build ":release:3.1.1"
         build ":tomcat:7.0.70"
 
+        compile ":asset-pipeline:2.14.1"
         compile ":cache:1.1.8"
         compile ":cache-headers:1.1.6"
-
-        compile ":asset-pipeline:2.14.1"
-        compile ":jquery:1.11.1"
+        compile ":elurikkus-charts:1.3"
         compile ":elurikkus-commons:0.2-SNAPSHOT"
         compile ":elurikkus-biocache-hubs:1.5.1-SNAPSHOT"
+        compile ":jquery:1.11.1"
     }
 }

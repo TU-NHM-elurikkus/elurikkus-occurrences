@@ -13,9 +13,9 @@
 //= require purl
 //= require nanoscroller
 //= require common
+//= require ala-charts
 //= require bootstrap-combobox
 //= require bootstrap-slider
-//= require bieAutocomplete
 //= require exploreArea
 //= require map.common
 //= require occurrenceMap
