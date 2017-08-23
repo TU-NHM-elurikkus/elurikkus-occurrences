@@ -8,12 +8,13 @@
 //= require jquery.qtip.min
 //= require charts2
 //= require ekko-lightbox.min
-//= require leaflet
+//= require leafletPlugins
 //= require amplify
 //= require purl
 //= require nanoscroller
 //= require common
 //= require bootstrap-combobox
+//= require bootstrap-slider
 //= require bieAutocomplete
 //= require exploreArea
 //= require map.common
