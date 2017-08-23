@@ -339,7 +339,7 @@
             <%--  Second row - facet column and results column --%>
             <div class="row" id="content">
                 <div class="col-sm-5 col-md-3">
-                    <div class="card card-block filters-container">
+                    <div class="card card-body filters-container">
                         <div id="filters-selection" class="dropdown">
                             <h2 class="card-title">
                                 <alatag:message code="search.filter.customise.title" />
