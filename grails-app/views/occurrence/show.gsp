@@ -805,7 +805,7 @@
                                 <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal">
                                     <g:message code="show.btn.cancel" />
                                 </button>
-                                <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon" />
+                                <img src="${request.contextPath}/assets/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon" />
                             </div>
                         </div>
 

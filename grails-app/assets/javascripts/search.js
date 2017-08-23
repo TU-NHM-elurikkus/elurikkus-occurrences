@@ -1038,7 +1038,7 @@ function loadSpeciesInTab(start, sortField, group) {
     }
 
     if (start == 0) {
-        $("#speciesGallery").empty().before("<div id='loadingSpecies'>Loading... <img src='" + BC_CONF.contextPath + "/images/spinner.gif'/></div>");
+        $("#speciesGallery").empty().before("<div id='loadingSpecies'>Loading... <img src='" + BC_CONF.contextPath + "/assets/spinner.gif'/></div>");
         $("#loadMoreSpecies").hide();
     } else {
         $("#loadMoreSpecies img").show();

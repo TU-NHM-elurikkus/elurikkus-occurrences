@@ -19,4 +19,3 @@
 //= require map.common
 //= require occurrenceMap
 //= require search
-//= require advancedSearch

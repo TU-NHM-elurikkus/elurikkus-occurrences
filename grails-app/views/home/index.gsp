@@ -20,6 +20,7 @@
 
         <asset:stylesheet src="occurrences.css"/>
         <asset:javascript src="occurrences.js"/>
+        <asset:javascript src="advancedSearch.js"/>
 
         <asset:script type="text/javascript">
             // global var for GSP tags/vars to be passed into JS functions
