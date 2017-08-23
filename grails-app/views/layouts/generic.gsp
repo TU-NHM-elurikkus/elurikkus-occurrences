@@ -12,6 +12,9 @@
             <g:layoutTitle />
         </title>
 
+        <asset:stylesheet src="occurrences.css"/>
+        <asset:javascript src="occurrences.js"/>
+
         <style type="text/css">
             body {
                 background-color: #ffffff !important;

@@ -21,7 +21,7 @@
         <asset:stylesheet src="occurrences.css"/>
         <asset:javascript src="occurrences.js"/>
 
-        <g:javascript>
+        <asset:script type="text/javascript">
             // global var for GSP tags/vars to be passed into JS functions
             var BC_CONF = {
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
@@ -267,7 +267,7 @@
             //         once = false;
             //     }
             // }
-        </g:javascript>
+        </asset:script>
     </head>
 
     <body>

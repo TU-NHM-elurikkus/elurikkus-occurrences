@@ -34,7 +34,7 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
-        <script type="text/javascript">
+        <g:javascript>
             // Global var OCC_REC to pass GSP data to external JS file
             var OCC_REC = {
                 userId: "${userId}",
@@ -57,7 +57,7 @@
             if(!OCC_REC.hasGoogleKey) {
                 google.load('maps', '3.3', {other_params: "sensor=false"});
             }
-        </script>
+        </g:javascript>
 
         <g:render template="/layouts/global" />
 

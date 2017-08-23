@@ -2,13 +2,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <alatag:addApplicationMetaTags />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <alatag:addApplicationMetaTags />
+
         <g:render template="/manifest" plugin="elurikkus-commons" />
 
         <title>
             <g:layoutTitle />
         </title>
+
+        <asset:stylesheet src="occurrences.css"/>
+        <asset:javascript src="occurrences.js"/>
 
         <g:javascript>
             // initialise plugins
