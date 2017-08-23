@@ -18,7 +18,7 @@
 
         <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
 
-        <asset:script type="text/javascript">
+        <script type="text/javascript">
             // global var for GSP tags/vars to be passed into JS functions
             var BC_CONF = {
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
@@ -264,13 +264,9 @@
             //         once = false;
             //     }
             // }
-        </asset:script>
+        </script>
 
-        <asset:stylesheet src="occurrences.css" />
-        <asset:javascript src="occurrences.js" />
-        <asset:javascript src="search.js"/>
         <asset:javascript src="advancedSearch.js"/>
-
     </head>
 
     <body>
