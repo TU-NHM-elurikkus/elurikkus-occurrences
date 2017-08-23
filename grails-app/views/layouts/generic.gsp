@@ -158,4 +158,6 @@
         <br />
 
     </body>
+
+    <asset:deferredScripts />
 </html>

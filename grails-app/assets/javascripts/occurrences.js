@@ -19,4 +19,3 @@
 //= require exploreArea
 //= require map.common
 //= require occurrenceMap
-//= require search
