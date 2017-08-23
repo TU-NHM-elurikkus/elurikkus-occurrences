@@ -55,10 +55,7 @@ function OccurrenceMap(query, props) {
     this.props = props;
 
     this.baseLayers = {
-        'Minimal' : props.baseLayer,
-        'Road' :  new L.Google('ROADMAP'),
-        'Terrain' : new L.Google('TERRAIN'),
-        'Satellite' : new L.Google('HYBRID')
+        'Minimal': props.baseLayer,
     };
 
     this.layerControl = null;
@@ -80,11 +77,11 @@ function OccurrenceMap(query, props) {
 OccurrenceMap.prototype.initialize = function() {
     var self = this;
 
-    if(self.map != null){
+    if(self.map !== null) {
         return;
     }
 
-    //initialise map
+    // initialise map
     self.map = L.map('leafletMap', {
         center: self.props.center,
 

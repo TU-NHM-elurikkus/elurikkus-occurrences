@@ -561,7 +561,6 @@ $(document).ready(function() {
             // console.log('showHideFacetGroup', name);
 
             if ($('#group_' + name).is(":visible") ) {
-                // debugger;
                 // $('#group_' + name).find(".nano").nanoScroller({ preventPageScrolling: true });
                 amplify.store('search-facets-state-' + name, true);
                 //console.log("storing facet state", name, amplify.store('search-facets-state-' + name));

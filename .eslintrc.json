@@ -11,6 +11,7 @@
     "globals": {
         "$": true,
         "amplify": true,
+        "L": true,
         "moment": true
     },
     "extends": "eslint:recommended",

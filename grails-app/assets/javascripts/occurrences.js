@@ -10,7 +10,11 @@
 //= require ekko-lightbox.min
 //= require leaflet
 //= require amplify
+//= require purl
+//= require nanoscroller
 //= require common
+//= require bootstrap-combobox
+//= require bieAutocomplete
 //= require exploreArea
 //= require map.common
 //= require occurrenceMap
