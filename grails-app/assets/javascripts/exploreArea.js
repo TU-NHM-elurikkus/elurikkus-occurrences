@@ -116,7 +116,7 @@ function loadExploreArea(EYA_CONF) {
         //$('#taxa-level-0 tbody td:first').click();
 
         // register click event on "Search" button"
-        $('input#locationSearch').click(
+        $('#locationSearch').click(
             function(e) {
                 e.preventDefault(); // ignore the href text - used for data
                 geocodeAddress();
