@@ -415,6 +415,7 @@
             <i class="icon-share-alt"></i>
             <a href="#" class="viewAllRecords">
                 <button class="erk-button erk-button--light">
+                    <span class="fa fa-list"></span>
                     <g:message code="search.map.viewAllRecords" />
                 </button>
             </a>

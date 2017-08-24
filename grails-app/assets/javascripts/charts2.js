@@ -1181,7 +1181,7 @@ var taxonomyChart = {
             $recordsLink.html('View records for ' + this.rank + ' ' + this.name);
         }
         else {
-            $recordsLink.html('View all records');
+            $recordsLink.html('<span class="fa fa-list"></span>\nView records');
         }
 
         // setup a click handler - if requested
