@@ -21,6 +21,8 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
+        <asset:javascript src="exploreArea.js" />
+        <asset:stylesheet src="exploreYourArea.css" />
     </head>
 
     <body class="nav-locations explore-your-area">

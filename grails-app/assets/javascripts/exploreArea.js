@@ -136,16 +136,7 @@ function loadExploreArea(EYA_CONF) {
             }
         );
 
-        // QTip tooltips
-        $(".tooltips").qtip({
-            style: {
-                classes: 'ui-tooltip-rounded ui-tooltip-shadow'
-            },
-            position: {
-                target: 'mouse',
-                adjust: { x: 6, y: 14 }
-            }
-        });
+        $(".tooltips").tooltip();
 
         // catch the link for "View all records"
         $('#viewAllRecords').live("click", function(e) {
@@ -168,54 +159,7 @@ function loadExploreArea(EYA_CONF) {
     }
 
     function addTooltips() {
-        // Tooltip for matched location
-        $('#addressHelp').qtip({
-            content: {
-                title: {
-                    text: "About the matched address",
-                    button: "Close"
-                },
-                text: "<img src=\"" + EYA_CONF.imagesUrlPrefix + "/spinner.gif\" alt=\"\" class=\"no-rounding\"/>",
-                ajax: {
-                    url: EYA_CONF.contextPath + "/proxy/wordpress", // TODO fix proxy
-                    data: {
-                        page_id: 27726,
-                        "content-only": 1
-                    },
-                    type: "get"
-                }
-            },
-            position: {
-                at: "bottom right",
-                my: "top left"
-            },
-            style: {
-                width: 450,
-                tip: "topLeft",
-                classes: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-shadow'
-            },
-            show: {
-                effect: function(api) { $(this).slideDown(300, function(){ $(this).dequeue(); }); }
-            },
-            hide: {
-                fixed: true,
-                effect: function(api) { $(this).slideUp(300, function(){ $(this).dequeue(); }); },
-                event: "unfocus"
-            }
-        }).bind('click', function(event){ event.preventDefault(); return false;});
-
-        $("#left-col a").qtip({
-            style: {
-                classes: 'ui-tooltip-rounded ui-tooltip-shadow'
-            },
-            position: {
-                target: 'mouse',
-                adjust: {
-                    x: 10,
-                    y: 12
-                }
-            }
-        });
+        $("#left-col a").tooltip();
     }
 
     /**
