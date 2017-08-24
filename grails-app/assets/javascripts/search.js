@@ -451,19 +451,7 @@ $(document).ready(function() {
         window.location.href = window.location.pathname + BC_CONF.searchString + fqString
     });
 
-    // QTip generated tooltips
-    //if($.fn.qtip.plugins.iOS) { return false; }
-
-    // TODO: ID/Classes.
-    $("a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, div#customiseFacets > a, a.removeLink, .erk-button, .rawTaxonSumbit").qtip({
-        style: {
-            classes: 'ui-tooltip-rounded ui-tooltip-shadow'
-        },
-        position: {
-            target: 'mouse',
-            adjust: { x: 6, y: 14 }
-        }
-    });
+    $("a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, div#customiseFacets > a, a.removeLink, .erk-button, .rawTaxonSumbit").tooltip();
 
     // maultiple facets popup - sortable column heading links
     $("a.fsort").live("click", function(e) {
@@ -1204,17 +1192,8 @@ function loadMoreFacets(facetName, displayName, fsort, foffset) {
     $('#indexCol a').html(displayName); // table heading
     // $('#indexCol a').attr('oldtitle', 'sort by ' + displayName); // table heading
 
-    $("a.fsort").qtip({
-        style: {
-            classes: 'ui-tooltip-rounded ui-tooltip-shadow'
-        },
-        position: {
-            target: 'mouse',
-            adjust: {
-                x: 8, y: 12
-            }
-        }
-    });
+    $("a.fsort").tooltip();
+
     // perform ajax
     loadFacetsContent(facetName, fsort, foffset, facetLimit);
 

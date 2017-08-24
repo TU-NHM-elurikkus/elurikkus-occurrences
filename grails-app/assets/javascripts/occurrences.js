@@ -4,7 +4,6 @@
 //= require jquery.jsonp-2.4.0.min
 //= require jquery_migration
 //= require jquery.autocomplete
-//= require jquery.qtip.min
 //= require charts2
 //= require ekko-lightbox.min
 //= require leafletPlugins
@@ -15,6 +14,5 @@
 //= require ala-charts
 //= require bootstrap-combobox
 //= require bootstrap-slider
-//= require exploreArea
 //= require map.common
 //= require occurrenceMap
