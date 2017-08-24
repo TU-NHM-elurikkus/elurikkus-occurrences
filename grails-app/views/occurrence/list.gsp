@@ -32,7 +32,7 @@
 
             <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
             <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}" />
-            var BC_CONF = {
+            var BC_CONF_FIELDS = {
                 contextPath: "${request.contextPath}",
                 hostName: "${grailsApplication.config.serverName}",
                 serverName: "${grailsApplication.config.serverName}${request.contextPath}",
@@ -76,6 +76,12 @@
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
                 getPreferredSpeciesListUrl:  "${grailsApplication.config.speciesList.baseURL}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
             };
+
+            for(var field in BC_CONF_FIELDS) {
+                if(BC_CONF_FIELDS.hasOwnProperty(field)) {
+                    BC_CONF[field] = BC_CONF_FIELDS[field];
+                }
+            }
         </script>
 
         <script type="text/javascript">

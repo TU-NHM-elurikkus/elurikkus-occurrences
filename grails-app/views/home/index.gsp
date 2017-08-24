@@ -19,23 +19,6 @@
         <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
 
         <script type="text/javascript">
-            // global var for GSP tags/vars to be passed into JS functions
-            var BC_CONF = {
-                biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
-                bieWebappUrl: "${grailsApplication.config.bie.baseUrl}",
-                bieWebServiceUrl: "${grailsApplication.config.bieService.baseUrl}",
-                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
-                contextPath: "${request.contextPath}",
-                locale: "${RequestContextUtils.getLocale(request)}",
-                queryContext: "${grailsApplication.config.biocache.queryContext}"
-            }
-            /*
-             Leaflet, a JavaScript library for mobile-friendly interactive maps. http://leafletjs.com
-             (c) 2010-2013, Vladimir Agafonkin
-             (c) 2010-2011, CloudMade
-             */
-            /* Load Spring i18n messages into JS
-             */
             jQuery.i18n.properties({
                 name: 'messages',
                 path: BC_CONF.contextPath + '/messages/i18n/',
@@ -256,17 +239,9 @@
                 //     }
                 // });
             }
-
-            // var once = true;
-            // function destroyHelpTooltip() {
-            //     if ($('.leaflet-draw-toolbar').length && once) {
-            //         $('.leaflet-draw-toolbar').tooltip('destroy');
-            //         once = false;
-            //     }
-            // }
         </script>
 
-        <asset:javascript src="advancedSearch.js"/>
+        <asset:javascript src="advancedSearch.js" />
     </head>
 
     <body>
