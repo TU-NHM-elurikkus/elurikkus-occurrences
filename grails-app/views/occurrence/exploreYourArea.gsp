@@ -12,7 +12,7 @@
             <g:message code="eya.title" /> | eElurikkus
         </title>
 
-        <g:render template="/layouts/global" plugin="biocache-hubs" />
+        <g:render template="/layouts/global" plugin="elurikkus-biocache-hubs" />
 
         <g:if test="${grailsApplication.config.google.apikey}">
             <script src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
@@ -21,7 +21,6 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
-        <r:require modules="exploreArea, qtip" />
     </head>
 
     <body class="nav-locations explore-your-area">
@@ -221,7 +220,7 @@
             var EYA_CONF = {
                 contextPath: "${request.contextPath}",
                 biocacheServiceUrl: "${biocacheServiceUrl.encodeAsHTML()?:''}",
-                imagesUrlPrefix: "${request.contextPath}/static/js/eya-images",
+                imagesUrlPrefix: "${request.contextPath}/assets/eya-images",
                 zoom: ${zoom},
                 radius: ${radius},
                 speciesPageUrl: "${speciesPageUrl}",

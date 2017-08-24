@@ -332,9 +332,8 @@
     </a>
 </div>
 
-<r:require module="occurrenceMap" />
 
-<r:script>
+<script>
     var defaultBaseLayer = L.tileLayer("${grailsApplication.config.map.minimal.url}", {
         attribution: "${raw(grailsApplication.config.map.minimal.attr)}",
         subdomains: "${grailsApplication.config.map.minimal.subdomains}",
@@ -402,7 +401,7 @@
       delete link;
       return false;
     }
-</r:script>
+</script>
 
 <div style="display: none;">
     <div class="popupRecordTemplate">
@@ -643,14 +642,8 @@
     </div>
 </div>
 
-<%--<r:require module="colourPicker" />--%>
 <script type="text/javascript">
     $(document).ready(function(){
-        %{--$('#pcolour').colourPicker({--}%
-            %{--ico:    '${r.resource(dir:'images',file:'jquery.colourPicker.gif', plugin:'biocache-hubs')}',--}%
-            %{--title:    false--}%
-        %{--});--}%
-
         // restrict search to current map bounds/view
         $('#wktFromMapBounds').click(function(e) {
             e.preventDefault();

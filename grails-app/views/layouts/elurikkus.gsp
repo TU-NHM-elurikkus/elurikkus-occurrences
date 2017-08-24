@@ -1,66 +1,34 @@
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <alatag:addApplicationMetaTags />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <alatag:addApplicationMetaTags />
+
         <g:render template="/manifest" plugin="elurikkus-commons" />
 
         <title>
             <g:layoutTitle />
         </title>
 
-        <r:require modules="elurikkusCoreHub, menu" />
-        <r:script disposition='head'>
-            // initialise plugins
-            jQuery(function(){
-                // autocomplete on navbar search input
-                jQuery("form#search-form-2011 input#search-2011, form#search-inpage input#search, input#search-2013").autocomplete('http://bie.ala.org.au/search/auto.jsonp', {
-                    extraParams: {limit: 100},
-                    dataType: 'jsonp',
-                    parse: function(data) {
-                        var rows = new Array();
-                        data = data.autoCompleteList;
-                        for(var i=0; i<data.length; i++) {
-                            rows[i] = {
-                                data:data[i],
-                                value: data[i].matchedNames[0],
-                                result: data[i].matchedNames[0]
-                            };
-                        }
-                        return rows;
-                    },
-                    matchSubset: false,
-                    formatItem: function(row, i, n) {
-                        return row.matchedNames[0];
-                    },
-                    cacheLength: 10,
-                    minChars: 3,
-                    scroll: false,
-                    max: 10,
-                    selectFirst: false
-                });
+        <g:javascript>
+            var BC_CONF = {
+                biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
+                bieWebappUrl: "${grailsApplication.config.bie.baseUrl}",
+                bieWebServiceUrl: "${grailsApplication.config.bieService.baseUrl}",
+                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
+                contextPath: "${request.contextPath}",
+                locale: "${RequestContextUtils.getLocale(request)}",
+                queryContext: "${grailsApplication.config.biocache.queryContext}"
+            };
+        </g:javascript>
 
-                // Mobile/desktop toggle
-                // TODO: set a cookie so users choice is remembered across pages
-                var responsiveCssFile = $("#responsiveCss").attr("href"); // remember set href
-                $(".toggleResponsive").click(function(e) {
-                    e.preventDefault();
-                    $(this).find("i").toggleClass("icon-resize-small icon-resize-full");
-                    var currentHref = $("#responsiveCss").attr("href");
-                    if (currentHref) {
-                        $("#responsiveCss").attr("href", ""); // set to desktop (fixed)
-                        $(this).find("span").html("Mobile");
-                    } else {
-                        $("#responsiveCss").attr("href", responsiveCssFile); // set to mobile (responsive)
-                        $(this).find("span").html("Desktop");
-                    }
-                });
+        <asset:stylesheet src="occurrences.css"/>
+        <asset:javascript src="occurrences.js"/>
 
-                $('.helphover').popover({animation: true, trigger:'hover'});
-            });
-        </r:script>
-        <r:layoutResources />
         <g:layoutHead />
     </head>
 
@@ -74,8 +42,6 @@
         </div>
 
         <g:render template="/footer" plugin="elurikkus-commons" />
-
-        <r:layoutResources />
 
     </body>
 </html>

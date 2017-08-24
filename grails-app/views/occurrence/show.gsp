@@ -34,7 +34,9 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
-        <script type="text/javascript">
+        <asset:javascript src="record-view.js" />
+
+        <g:javascript>
             // Global var OCC_REC to pass GSP data to external JS file
             var OCC_REC = {
                 userId: "${userId}",
@@ -57,12 +59,11 @@
             if(!OCC_REC.hasGoogleKey) {
                 google.load('maps', '3.3', {other_params: "sensor=false"});
             }
-        </script>
+        </g:javascript>
 
         <g:render template="/layouts/global" />
 
-        <r:require modules="recordView, amplify, moment" />
-        <r:script disposition="head">
+        <g:javascript>
             $(document).ready(function() {
                 <g:if test="${record.processed.attribution.provenance == 'Draft'}">
                     // draft view button
@@ -71,7 +72,7 @@
                     });
                 </g:if>
             }); // end $(document).ready()
-        </r:script>
+        </g:javascript>
     </head>
 
     <body class="occurrence-record">
@@ -697,7 +698,7 @@
                         </a>
 
                         <span class="deleteAssertionSubmitProgress" style="display:none;">
-                            <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" alt="indicator icon" />
+                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" alt="indicator icon" />
                         </span>
                     </p>
 
@@ -806,7 +807,7 @@
                                 <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal">
                                     <g:message code="show.btn.cancel" />
                                 </button>
-                                <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon" />
+                                <img src="${request.contextPath}/assets/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon" />
                             </div>
                         </div>
 

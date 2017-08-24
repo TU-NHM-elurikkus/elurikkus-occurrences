@@ -11,7 +11,9 @@
         <title>
             <g:layoutTitle />
         </title>
-        <r:require modules="bootstrap, hubCore" />
+
+        <asset:stylesheet src="occurrences.css"/>
+        <asset:javascript src="occurrences.js"/>
 
         <style type="text/css">
             body {
@@ -40,7 +42,7 @@
             }
         </style>
 
-        <r:script disposition='head'>
+        <g:javascript>
             // initialise plugins
             jQuery(function(){
                 // autocomplete on navbar search input
@@ -88,8 +90,8 @@
 
                 $('.helphover').popover({animation: true, trigger:'hover'});
             });
-        </r:script>
-        <r:layoutResources />
+        </g:javascript>
+
         <g:layoutHead />
     </head>
 
@@ -155,7 +157,7 @@
 
         <br />
 
-        <%-- JS resources--%>
-        <r:layoutResources />
     </body>
+
+    <asset:deferredScripts />
 </html>

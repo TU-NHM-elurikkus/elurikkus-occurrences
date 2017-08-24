@@ -23,13 +23,16 @@
         </g:if>
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <asset:javascript src="search.js" />
+
         <script type="text/javascript">
             // single global var for app conf settings
             <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />
 
             <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
             <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}" />
-            var BC_CONF = {
+            var BC_CONF_FIELDS = {
                 contextPath: "${request.contextPath}",
                 hostName: "${grailsApplication.config.serverName}",
                 serverName: "${grailsApplication.config.serverName}${request.contextPath}",
@@ -73,15 +76,13 @@
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
                 getPreferredSpeciesListUrl:  "${grailsApplication.config.speciesList.baseURL}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
             };
+
+            for(var field in BC_CONF_FIELDS) {
+                if(BC_CONF_FIELDS.hasOwnProperty(field)) {
+                    BC_CONF[field] = BC_CONF_FIELDS[field];
+                }
+            }
         </script>
-
-        <r:require modules="elurikkusSearch, leafletOverride, leafletPluginsOverride, slider, qtip, nanoscroller, amplify, moment, mapCommonOverride, image-viewer, lightbox, chartsOverride" />
-
-        <r:require modules="filters" plugin="elurikkus-commons" />
-
-        <g:if test="${grailsApplication.config.skin.useAlaBie?.toBoolean()}">
-            <r:require module="bieAutocomplete" />
-        </g:if>
 
         <script type="text/javascript">
             <g:if test="${!grailsApplication.config.google.apikey}">
@@ -267,7 +268,7 @@
                     </g:if>
 
                     <section id="resultsReturned" class="search-section">
-                        <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="biocache-hubs" />
+                        <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="elurikkus-biocache-hubs" />
 
                         <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm">
                             <div class="input-plus">
@@ -347,7 +348,7 @@
             <%--  Second row - facet column and results column --%>
             <div class="row" id="content">
                 <div class="col-sm-5 col-md-3">
-                    <div class="card card-block filters-container">
+                    <div class="card card-body filters-container">
                         <div id="filters-selection" class="dropdown">
                             <h2 class="card-title">
                                 <alatag:message code="search.filter.customise.title" />
@@ -465,7 +466,7 @@
                                 </a>
                             </li>
 
-                            <plugin:isAvailable name="alaChartsPlugin">
+                            <plugin:isAvailable name="elurikkus-charts">
                                 <li class="nav-item">
                                     <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
                                         <g:message code="list.link.t3" />
@@ -621,11 +622,11 @@
                             <div id='envLegend'></div>
                         </div>
 
-                        <plugin:isAvailable name="alaChartsPlugin">
+                        <plugin:isAvailable name="elurikkus-charts">
                             <div id="charts" role="tabpanel" class="tab-pane">
                                 <g:render template="charts"
                                     model="[searchString: searchString]"
-                                    plugin="biocache-hubs"
+                                    plugin="elurikkus-biocache-hubs"
                                 />
 
                                 <script>
@@ -641,13 +642,13 @@
                                 </script>
                             </div>
 
-                            <g:if test="${grailsApplication.config.userCharts && grailsApplication.config.userCharts?.toBoolean()}">
+
                                 <div id="userChartsView" role="tabpanel" class="tab-pane">
                                     <g:render template="userCharts"
                                         model="[searchString: searchString]"
-                                        plugin="biocache-hubs" />
+                                        plugin="elurikkus-biocache-hubs" />
                                 </div>
-                            </g:if>
+
                         </plugin:isAvailable>
 
                         <g:if test="${showSpeciesImages}">
@@ -686,7 +687,7 @@
                                     <button class="erk-button erk-button--light">
                                         <g:message code="list.speciesgallerycontrols.loadmorespecies.button" />
                                     </button>
-                                    <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                    <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
                                 </div>
                             </div> <%-- end #speciesWrapper --%>
                         </g:if>
@@ -705,7 +706,7 @@
                                     <p>
                                         <button class="erk-button erk-button--light">
                                             <g:message code="list.speciesgallerycontrols.loadmoreimages.button" />
-                                            <g:img plugin="biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
                                          </button>
                                      </p>
                                  </div>

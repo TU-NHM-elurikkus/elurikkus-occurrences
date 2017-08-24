@@ -561,7 +561,6 @@ $(document).ready(function() {
             // console.log('showHideFacetGroup', name);
 
             if ($('#group_' + name).is(":visible") ) {
-                // debugger;
                 // $('#group_' + name).find(".nano").nanoScroller({ preventPageScrolling: true });
                 amplify.store('search-facets-state-' + name, true);
                 //console.log("storing facet state", name, amplify.store('search-facets-state-' + name));
@@ -803,7 +802,7 @@ function loadDefaultCharts() {
         var chartsConfigUri = BC_CONF.biocacheServiceUrl + "/upload/charts/" + BC_CONF.selectedDataResource + ".json";
         $.getJSON(chartsConfigUri, function (chartsConfig) {
 
-            //console.log("Number of dynamic charts to render: " + chartsConfig.length, dynamicFacets);
+            console.log("Number of dynamic charts to render: " + chartsConfig.length, dynamicFacets);
 
             var conf = {}
 
@@ -1039,7 +1038,7 @@ function loadSpeciesInTab(start, sortField, group) {
     }
 
     if (start == 0) {
-        $("#speciesGallery").empty().before("<div id='loadingSpecies'>Loading... <img src='" + BC_CONF.contextPath + "/images/spinner.gif'/></div>");
+        $("#speciesGallery").empty().before("<div id='loadingSpecies'>Loading... <img src='" + BC_CONF.contextPath + "/assets/spinner.gif'/></div>");
         $("#loadMoreSpecies").hide();
     } else {
         $("#loadMoreSpecies img").show();
