@@ -377,9 +377,3 @@
         />
     </div>
 </form>
-
-<g:javascript>
-    $(document).ready(function() {
-        $('.bscombobox').combobox({bsVersion: '2'});
-    });
-</g:javascript>

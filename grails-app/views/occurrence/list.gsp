@@ -24,7 +24,7 @@
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-        <asset:javascript src="search.js" />
+        <asset:javascript src="list.js" />
 
         <script type="text/javascript">
             // single global var for app conf settings

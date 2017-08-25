@@ -859,7 +859,7 @@ var GRID_COLOR_MODES = (function() {
 
         var quantileSize = Math.floor(sortedCounts.length / quantileNum);
 
-        for(let i = 0; i < quantileNum - 1; i++) {
+        for(var i = 0; i < quantileNum - 1; i++) {
             breakpoints[i] = sortedCounts[(i + 1) * quantileSize];
         }
 
@@ -868,10 +868,10 @@ var GRID_COLOR_MODES = (function() {
         // Assign a color to each quantile
         var colors = [];
 
-        for(let i = 0; i < quantileNum; i++) {
-            var intensity = Math.round(MIN_INTENSITY + (1 - i / (quantileNum - 1)) * (MAX_INTENSITY - MIN_INTENSITY));
+        for(var j = 0; j < quantileNum; j++) {
+            var intensity = Math.round(MIN_INTENSITY + (1 - j / (quantileNum - 1)) * (MAX_INTENSITY - MIN_INTENSITY));
 
-            colors[i] = rgbToCSS(255, intensity, 0);
+            colors[j] = rgbToCSS(255, intensity, 0);
         }
 
         return function(count) {

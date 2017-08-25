@@ -264,6 +264,7 @@ $(document).ready(function() {
         });
     });
 
+    $('.bscombobox').combobox({ bsVersion: '2' });
 
 }); // end document ready
 

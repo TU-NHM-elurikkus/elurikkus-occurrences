@@ -34,7 +34,7 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
-        <asset:javascript src="record-view.js" />
+        <asset:javascript src="show.js" />
 
         <g:javascript>
             // Global var OCC_REC to pass GSP data to external JS file

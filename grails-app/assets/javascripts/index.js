@@ -16,3 +16,4 @@
 //= require bootstrap-slider
 //= require map.common
 //= require occurrenceMap
+//= require advancedSearch

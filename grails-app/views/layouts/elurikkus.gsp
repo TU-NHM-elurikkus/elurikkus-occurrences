@@ -27,7 +27,6 @@
         </g:javascript>
 
         <asset:stylesheet src="occurrences.css"/>
-        <asset:javascript src="occurrences.js"/>
 
         <g:layoutHead />
     </head>
