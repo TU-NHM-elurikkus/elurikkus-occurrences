@@ -694,10 +694,6 @@
 
                         <g:if test="${hasImages}">
                             <div id="images" role="tabpanel" class="tab-pane">
-                                <%-- <p>
-                                    (see also <a href="#tab_speciesImages">representative species images</a>)
-                                </p> --%>
-
                                 <div id="imagesGrid">
                                     <g:message code="list.speciesgallerycontrols.imagesgrid" />...
                                 </div>
@@ -714,10 +710,9 @@
                                 <%-- HTML template used by AJAX code --%>
                                 <div class="imgConTmpl" style="display: none;">
                                     <div class="imgCon">
-                                        <a class="cbLink" rel="thumbs" href="" id="thumb">
+                                        <a class="cbLink" rel="thumbs" href="" data-toggle="lightbox">
                                             <img src="" alt="${tc?.taxonConcept?.nameString} image thumbnail" />
-                                            <div class="meta brief"></div>
-                                            <div class="meta detail invisible"></div>
+                                            <div class="brief"></div>
                                         </a>
                                     </div>
                                 </div>

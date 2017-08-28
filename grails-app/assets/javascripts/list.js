@@ -5,12 +5,12 @@
 //= require jquery_migration
 //= require jquery.autocomplete
 //= require charts2
-//= require ekko-lightbox.min
 //= require leafletPlugins
 //= require amplify
 //= require purl
 //= require nanoscroller
 //= require common
+//= require ekko-lightbox-5.2.0
 //= require ala-charts
 //= require bootstrap-combobox
 //= require bootstrap-slider

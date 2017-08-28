@@ -53,7 +53,7 @@
                                 data-displayname="${fieldDisplayName}"
                                 title="<g:message code='facets.button.chooseMore.title' />"
                             >
-                                <g:message code="facets.button.chooseMore.label" />...
+                                <g:message code="facets.button.chooseMore.label" />&hellip;
                             </a>
                         </div>
                     </g:if>

@@ -5,7 +5,7 @@
 //= require jquery_migration
 //= require jquery.autocomplete
 //= require charts2
-//= require ekko-lightbox.min
+//= require ekko-lightbox-5.2.0
 //= require leafletPlugins
 //= require amplify
 //= require purl
