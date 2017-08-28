@@ -21,7 +21,7 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
-        <asset:javascript src="exploreArea.js" />
+        <asset:javascript src="eya.js" />
         <asset:stylesheet src="exploreYourArea.css" />
     </head>
 
