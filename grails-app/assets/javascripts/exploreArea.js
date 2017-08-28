@@ -421,10 +421,10 @@ function loadExploreArea(EYA_CONF) {
         var latLng = null;
 
         // Check if input contains a comma and try and patch coordinates
-        if(address && address.indexOf(',') > -1 && magellan) {
+        if(address && address.indexOf(',') > -1 && window.magellan) {
             var parts = address.split(',');
-            var lat = magellan(parts[0].trim()).latitude(); // .toDD();
-            var lng = magellan(parts[1].trim()).longitude(); // .toDD();
+            var lat = window.magellan(parts[0].trim()).latitude(); // .toDD();
+            var lng = window.magellan(parts[1].trim()).longitude(); // .toDD();
 
             if(lat && lng) {
                 latLng = new google.maps.LatLng(lat.toDD(), lng.toDD());
