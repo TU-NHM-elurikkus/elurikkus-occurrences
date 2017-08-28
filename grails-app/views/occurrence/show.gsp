@@ -61,8 +61,6 @@
             }
         </g:javascript>
 
-        <g:render template="/layouts/global" />
-
         <g:javascript>
             $(document).ready(function() {
                 <g:if test="${record.processed.attribution.provenance == 'Draft'}">

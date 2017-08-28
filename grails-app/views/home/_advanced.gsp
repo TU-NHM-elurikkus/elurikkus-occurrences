@@ -1,7 +1,6 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:render template="/layouts/global" />
 <form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST" class="container-fluid">
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}" />
     <input type="hidden" name="nameType" value="${grailsApplication.config.advancedTaxaField?:'matched_name_children'}" />
