@@ -22,7 +22,7 @@ $(document).ready(function() {
             toggle: '#showUncheckedTests',
             rows: ['.uncheckTestResult']
         }
-    ]
+    ];
 
     assertionSections.forEach(function(section) {
         $(section.toggle).on('click', function() {
