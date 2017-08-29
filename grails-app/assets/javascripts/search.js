@@ -533,8 +533,7 @@ $(document).ready(function() {
         $('#group_' + name).slideToggle(600, function() {
             // console.log('showHideFacetGroup', name);
 
-            if($('#group_' + name).is(":visible") ) {
-                // $('#group_' + name).find(".nano").nanoScroller({ preventPageScrolling: true });
+            if($('#group_' + name).is(":visible")) {
                 amplify.store('search-facets-state-' + name, true);
             } else {
                 amplify.store('search-facets-state-' + name, null);
@@ -546,8 +545,6 @@ $(document).ready(function() {
     $('.facetsGroup').each(function(i, el) {
         var name = $(el).attr('id').replace(/^group_/, '');
         var wasShown = amplify.store('search-facets-state-' + name);
-
-        // console.log('facetsGroup','search-facets-state-', name, '=', wasShown);
 
         if($.trim($(el).html()) === '') {
             $('#heading_' + name).hide();
@@ -872,8 +869,10 @@ function loadImagesInTab() {
 
 function loadImages(start) {
     start = (start) ? start : 0;
-    var imagesJsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' + BC_CONF.searchString +
-        '&fq=multimedia:Image&facet=false&pageSize=20&start=' + start + '&sort=identification_qualifier_s&dir=asc&callback=?';
+    var imagesJsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' +
+        BC_CONF.searchString +
+        '&fq=multimedia:Image&facet=false&pageSize=20&start=' + start +
+        '&sort=identification_qualifier_s&dir=asc&callback=?';
 
     $.getJSON(imagesJsonUri, function(data) {
         if(data.occurrences) {
@@ -886,9 +885,9 @@ function loadImages(start) {
             $.each(data.occurrences, function(i, el) {
                 count++;
                 // clone template div & populate with metadata
-                var $ImgConTmpl = $('.imgConTmpl').clone();
+                var $ImgConTmpl = $('.gallery-thumb-template').clone();
 
-                $ImgConTmpl.removeClass('imgConTmpl').removeClass('invisible');
+                $ImgConTmpl.removeClass('gallery-thumb-template').removeClass('invisible');
 
                 var link = $ImgConTmpl.find('a.cbLink');
                 link.addClass('thumbImage tooltips');
@@ -907,7 +906,7 @@ function loadImages(start) {
                     briefHtml += br + el.typeStatus;
                 }
                 if(el.institutionName) { briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName; }
-                $ImgConTmpl.find('.brief').html(briefHtml);
+                $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
 
                 // detail metadata
                 var leftDetail = '<div class="col-sm-10"><b>Taxon:</b> ' + el.raw_scientificName;

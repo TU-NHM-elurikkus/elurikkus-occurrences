@@ -708,11 +708,15 @@
                                  </div>
 
                                 <%-- HTML template used by AJAX code --%>
-                                <div class="imgConTmpl" style="display: none;">
-                                    <div class="imgCon">
+                                <div class="gallery-thumb-template" style="display: none;">
+                                    <div class="gallery-thumb">
                                         <a class="cbLink" rel="thumbs" href="" data-toggle="lightbox">
-                                            <img src="" alt="${tc?.taxonConcept?.nameString} image thumbnail" />
-                                            <div class="brief"></div>
+                                            <img
+                                                class="gallery-thumb__img"
+                                                src=""
+                                                alt="${tc?.taxonConcept?.nameString} image thumbnail"
+                                            />
+                                            <div class="gallery-thumb__footer"></div>
                                         </a>
                                     </div>
                                 </div>
