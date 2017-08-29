@@ -1,18 +1,3 @@
-/*
- *  Copyright (C) 2011 Atlas of Living Australia
- *  All Rights Reserved.
- *
- *  The contents of this file are subject to the Mozilla Public
- *  License Version 1.1 (the "License"); you may not use this file
- *  except in compliance with the License. You may obtain a copy of
- *  the License at http://www.mozilla.org/MPL/
- *
- *  Software distributed under the License is distributed on an "AS
- *  IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- *  implied. See the License for the specific language governing
- *  rights and limitations under the License.
- */
-
 // Jquery Document.onLoad equivalent
 $(document).ready(function() {
     // listeners for sort & paging widgets
@@ -548,13 +533,10 @@ $(document).ready(function() {
         $('#group_' + name).slideToggle(600, function() {
             // console.log('showHideFacetGroup', name);
 
-            if ($('#group_' + name).is(":visible") ) {
-                // $('#group_' + name).find(".nano").nanoScroller({ preventPageScrolling: true });
+            if($('#group_' + name).is(":visible")) {
                 amplify.store('search-facets-state-' + name, true);
-                //console.log("storing facet state", name, amplify.store('search-facets-state-' + name));
             } else {
                 amplify.store('search-facets-state-' + name, null);
-                //console.log("un-storing facet state", name, amplify.store('search-facets-state-' + name));
             }
         });
     });
@@ -564,31 +546,23 @@ $(document).ready(function() {
         var name = $(el).attr('id').replace(/^group_/, '');
         var wasShown = amplify.store('search-facets-state-' + name);
 
-        // console.log('facetsGroup','search-facets-state-', name, '=', wasShown);
-
-        if($.trim($(el).html()) == '') {
+        if($.trim($(el).html()) === '') {
             $('#heading_' + name).hide();
-        } else if (wasShown) {
+        } else if(wasShown) {
             // console.log("wasShown", $(el).prev());
             $(el).prev().find('a').click();
         }
     });
 
     // scroll bars on facet values
-    $(".nano").nanoScroller({ preventPageScrolling: true });
+    $('.nano').nanoScroller({ preventPageScrolling: true });
 
     // store last search in local storage for a "back button" on record pages
     amplify.store('lastSearch', $.url().attr('relative'));
 
-    // mouse over affect on thumbnail images
-    $('#recordImages').on('hover', '.imgCon', function() {
-        $(this).find('.brief, .detail').toggleClass('invisible');
-    });
-
     // Lightbox
-    $(document).delegate('.thumbImage', 'click', function(event) {
+    $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
         event.preventDefault();
-
         $(this).ekkoLightbox();
     });
 
@@ -950,14 +924,13 @@ function loadImages(start) {
 
                 var rightDetail =
                     '<div class="col-sm-2" style="text-align:right;">' +
-                    '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
-                        'Open' +
-                    '</a>' +
+                        '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
+                            'Open' +
+                        '</a>' +
                     '</div>';
 
                 var detailHtml = '<div class="row">' + leftDetail + rightDetail + '</div>';
 
-                $ImgConTmpl.find('.detail').html(detailHtml);
                 link.attr('data-footer', detailHtml);
 
                 // write to DOM
