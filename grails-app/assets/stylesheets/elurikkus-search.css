@@ -92,36 +92,6 @@
     margin-bottom: 0;
 }
 
-/* Gallery styling */
-.imgCon {
-    display: inline-block;
-    text-align: center;
-    line-height: 1.3em;
-    background-color: #DDD;
-    color: #DDD;
-    font-size: 12px;
-    margin: 2px 4px 2px 0;
-    position: relative;
-}
-
-.imgCon img {
-    height: 170px;
-    min-width: 150px;
-}
-
-.imgCon .brief {
-    opacity: 0.8;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    text-align: left;
-    padding: 4px 5px 2px 5px;
-    color: black;
-    background-color: white;
-}
-
 .ekko-lightbox .modal-footer {
     display: block;
 }
