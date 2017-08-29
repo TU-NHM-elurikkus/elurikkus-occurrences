@@ -562,8 +562,16 @@ function loadExploreArea(EYA_CONF) {
                 // add load more link
                 var newStart = $('#rightList tbody tr').length;
                 var sortOrder = $('div#rightList').data('sort') ? $('div#rightList').data('sort') : 'index';
-                $('#rightList tbody').append('<tr id="loadMoreSpecies"><td>&nbsp;</td><td colspan="2"><a href="' + newStart +
-                    '" data-sort="' + sortOrder + '">Show more species</a></td></tr>');
+                var loadMore =
+                    '<tr id="loadMoreSpecies">' +
+                        '<td>&nbsp;</td>' +
+                        '<td colspan="2"> ' +
+                            '<a href="' + newStart + '" data-sort="' + sortOrder + '">' +
+                                'Load more&hellip;' +
+                            '</a>' +
+                        '</td>' +
+                    '</tr>';
+                $('#rightList tbody').append(loadMore);
             }
 
         } else if(appendResults) {
