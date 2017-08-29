@@ -84,6 +84,7 @@ $(document).ready(function() {
     });
 });
 
+// TODO: DRY with occurrenceMap:OccurrenceMap.initialize
 function initialiseMap() {
     if(MAP_VAR.map !== null) {
         return;
@@ -92,10 +93,13 @@ function initialiseMap() {
     // initialise map
     MAP_VAR.map = L.map('leafletMap', {
         center: [MAP_VAR.defaultLatitude, MAP_VAR.defaultLongitude],
+        zoomControl: false,
         zoom: MAP_VAR.defaultZoom,
         minZoom: 1,
         scrollWheelZoom: false
     });
+
+    addZoomControl(MAP_VAR.map);
 
     // add edit drawing toolbar
     // Initialise the FeatureGroup to store editable layers
