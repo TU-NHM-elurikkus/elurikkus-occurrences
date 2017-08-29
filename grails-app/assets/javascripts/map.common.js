@@ -7,6 +7,7 @@ function addClickEventForVector(layer, query, map) {
 
 function generatePopup(layer, latlng, query, map) {
     var params = '';
+
     if($.isFunction(layer.getRadius)) {
         // circle
         params = getParamsForCircle(layer, query);
@@ -16,16 +17,18 @@ function generatePopup(layer, latlng, query, map) {
         params = getParamsforWKT(wkt.write(), query);
     }
 
-    if(latlng === null) {
+    if(!latlng) {
         latlng = layer.getBounds().getCenter();
     }
+
+    var recordsLink = BC_CONF.contextPath + '/occurrences/search' + params + '#tab-map';
 
     L.popup()
         .setLatLng([latlng.lat, latlng.lng])
         .setContent(
             'species count: <b id=\'speciesCountDiv\'>calculating...</b><br>' +
             'occurrence count: <b id=\'occurrenceCountDiv\'>calculating...</b><br>' +
-            '<a id=\'showOnlyTheseRecords\' href=\'' + BC_CONF.contextPath + '/occurrences/search' + params + '#tab-map>' +
+            '<a id="showOnlyTheseRecords" href="' + recordsLink + '">' +
                 $.i18n.prop('search.map.popup.linkText') +
             '</a>'
         )
