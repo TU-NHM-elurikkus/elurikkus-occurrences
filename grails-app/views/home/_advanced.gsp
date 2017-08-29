@@ -361,11 +361,13 @@
     </div>
 
     <div class="row">
-        <input
+        <button
             type="submit"
-            value="<g:message code="advancedsearch.button.submit" />"
             class="erk-button erk-button--dark"
-        />
+        >
+            <g:message code="advancedsearch.button.submit" />
+        </button>
+
         &nbsp;&nbsp;
         <input
             type="reset"

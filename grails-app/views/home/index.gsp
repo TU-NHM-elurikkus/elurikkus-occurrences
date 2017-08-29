@@ -120,12 +120,14 @@
                         <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                         <input type="hidden" name="field" value="raw_name" />
 
-                        <input
+                        <input type="hidden" name="action" value="Search" />
+
+                        <button
                             type="submit"
-                            name="action"
-                            value="${message(code: 'advancedsearch.button.submit')}"
                             class="erk-button erk-button--dark"
-                        />
+                        >
+                            <g:message code="advancedsearch.button.submit" />
+                        </button>
                     </div>
                 </form>
             </div> <!-- end #uploadDiv div -->
@@ -144,15 +146,16 @@
                         <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                         <input type="hidden" name="field" value="catalogue_number" />
 
-                        <%-- XXX --%>
-                        <input
+                        <input type="hidden" name="action" value="Search" />
+
+                        <button
+                            type="submit"
                             id="catalogueSearchButton"
                             disabled
-                            type="submit"
-                            name="action"
-                            value="${message(code: 'advancedsearch.button.submit')}"
                             class="erk-button erk-button--dark"
-                        />
+                        >
+                            <g:message code="advancedsearch.button.submit" />
+                        </button>
                     </div>
                 </form>
             </div><%-- end #catalogUploadDiv div --%>
