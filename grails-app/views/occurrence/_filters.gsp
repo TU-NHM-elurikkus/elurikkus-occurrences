@@ -5,27 +5,27 @@
     </h4>
 
     <div class="search-filter-menu--buttons">
-        <a href="#" id="selectAll">
+        <button id="selectAll" class="erk-link-button">
             <g:message code="list.facetcheckboxes.navigator01" />
-        </a>
+        </button>
 
         &nbsp;|&nbsp;
 
-        <a href="#" id="selectNone">
+        <button id="selectNone" class="erk-link-button">
             <g:message code="list.facetcheckboxes.navigator02" />
-        </a>
+        </button>
 
         &nbsp;|&nbsp;
 
-        <a href="#" id="updateFacetOptions">
+        <button id="updateFacetOptions" class="erk-link-button">
             <g:message code="list.facetcheckboxes.button.updatefacetoptions" />
-        </a>
+        </button>
 
         &nbsp;|&nbsp;
 
-        <a href="#" id="resetFacetOptions">
+        <button id="resetFacetOptions" class="erk-link-button">
             <g:message code="list.facetcheckboxes.button.resetfacetoptions" />
-        </a>
+        </button>
     </div>
 
     <div class="search-filter-menu--facets">
