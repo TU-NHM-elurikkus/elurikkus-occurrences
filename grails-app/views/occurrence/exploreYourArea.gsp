@@ -37,6 +37,7 @@
 
             <div class="page-header-links">
                 <span id="viewAllRecords" class="erk-link page-header-links__link">
+                    <i class="fa fa-list"></i>
                     <g:message code="eya.searchform.a.viewallrecords.label" />
                 </span>
             </div>

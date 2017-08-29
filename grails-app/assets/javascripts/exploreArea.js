@@ -54,16 +54,16 @@ function loadExploreArea(EYA_CONF) {
         if(defaultParam) {
             initialize();
         } else if(hash2) {
-            var hashParts = hash2.split("%7C"); // note escaped version of |
-            if (hashParts.length == 3) {
+            var hashParts = hash2.split('%7C'); // note escaped version of |
+            if(hashParts.length === 3) {
                 bookmarkedSearch(hashParts[0], hashParts[1], hashParts[2], null);
-            } else if (hashParts.length == 4) {
+            } else if(hashParts.length === 4) {
                 bookmarkedSearch(hashParts[0], hashParts[1], hashParts[2], hashParts[3]);
             } else {
                 attemptGeolocation();
             }
         } else if(query) {
-            $("#address").val(query);
+            $('#address').val(query);
             geocodeAddress();
         } else {
             attemptGeolocation();
@@ -73,8 +73,8 @@ function loadExploreArea(EYA_CONF) {
 
     }); // end onLoad event
 
-    //var proj900913 = new OpenLayers.Projection("EPSG:900913");
-    //var proj4326 = new OpenLayers.Projection("EPSG:4326");
+    // var proj900913 = new OpenLayers.Projection("EPSG:900913");
+    // var proj4326 = new OpenLayers.Projection("EPSG:4326");
 
     // pointer fn
     function initialize() {
@@ -84,21 +84,21 @@ function loadExploreArea(EYA_CONF) {
 
     function registerEventHandlers() {
         // Register events for the species_group column
-        $('#taxa-level-0 tbody tr').live("mouseover mouseout", function() {
+        $('#taxa-level-0 tbody tr').live('mouseover mouseout', function() {
             // mouse hover on groups
-            if ( event.type == "mouseover" ) {
+            if(event.type === 'mouseover') {
                 $(this).addClass('hoverRow');
             } else {
                 $(this).removeClass('hoverRow');
             }
-        }).live("click", function(e) {
+        }).live('click', function(e) {
             // catch the link on the taxon groups table
             e.preventDefault(); // ignore the href text - used for data
             groupClicked(this);
         });
 
         // By default action on page load - show the all species group (simulate a click)
-        //$('#taxa-level-0 tbody td:first').click();
+        // $('#taxa-level-0 tbody td:first').click();
 
         // register click event on "Search" button"
         $('#locationSearch').click(
@@ -115,28 +115,28 @@ function loadExploreArea(EYA_CONF) {
                 var radiusInMetres = EYA_CONF.radius * 1000;
                 circle.setRadius(radiusInMetres);
                 EYA_CONF.zoom = zoomForRadius[radiusInMetres];
-                map.setZoom((EYA_CONF.zoom)?EYA_CONF.zoom:12);
+                map.setZoom((EYA_CONF.zoom) ? EYA_CONF.zoom : 12);
                 updateMarkerPosition(marker.getPosition()); // so bookmarks is updated
                 loadGroups();
             }
         );
 
-        $(".tooltips").tooltip();
+        $('.tooltips').tooltip();
 
         // catch the link for "View all records"
-        $('#viewAllRecords').live("click", function(e) {
+        $('#viewAllRecords').live('click', function(e) {
             e.preventDefault();
-            var params = "q=*:*&lat=" + $('#latitude').val() + "&lon=" + $('#longitude').val() + "&radius=" + $('#radius').val();
-            if (state.speciesGroup != "ALL_SPECIES") {
-                params += "&fq=species_group:" + state.speciesGroup;
+            var params = 'q=*:*&lat=' + $('#latitude').val() + '&lon=' + $('#longitude').val() + '&radius=' + $('#radius').val();
+            if(state.speciesGroup !== 'ALL_SPECIES') {
+                params += '&fq=species_group:' + state.speciesGroup;
             }
 
             document.location.href = EYA_CONF.contextPath + '/occurrences/search?' + params;
         });
 
         // Catch enter key press on form
-        $("#searchForm").bind("keypress", function(e) {
-            if (e.keyCode == 13) {
+        $('#searchForm').bind('keypress', function(e) {
+            if(e.keyCode === 13) {
                 e.preventDefault();
                 geocodeAddress();
             }
@@ -144,7 +144,7 @@ function loadExploreArea(EYA_CONF) {
     }
 
     function addTooltips() {
-        $("#left-col a").tooltip();
+        $('#left-col a').tooltip();
     }
 
     /**
@@ -179,7 +179,9 @@ function loadExploreArea(EYA_CONF) {
         });
 
         google.maps.event.addListener(marker, 'click', function(event) {
-            if(lastInfoWindow) lastInfoWindow.close();
+            if(lastInfoWindow) {
+                lastInfoWindow.close();
+            }
             markerInfowindow.setPosition(event.latLng);
             markerInfowindow.open(map, marker);
             lastInfoWindow = markerInfowindow;
@@ -236,7 +238,7 @@ function loadExploreArea(EYA_CONF) {
         geocoder.geocode({
             latLng: pos
         }, function(responses) {
-            if  (responses && responses.length > 0) {
+            if(responses && responses.length > 0) {
                 var address = responses[0].formatted_address;
                 updateMarkerAddress(address);
                 // update the info window for marker icon
@@ -402,7 +404,7 @@ function loadExploreArea(EYA_CONF) {
             $('#mapCanvas').html(msg).css('color', 'red').css('font-size', '14px');
             navigator.geolocation.getCurrentPosition(getMyPostion, positionWasDeclined);
             // Neither functions gets called for some reason, so I've added a delay to initalize map anyway
-            setTimeout(function() { if(!map) positionWasDeclined(); }, 9000);
+            setTimeout(function() { if(!map) { positionWasDeclined(); } }, 9000);
         } else if(google.loader && google.loader.ClientLocation) {
             // Google AJAX API fallback GeoLocation
             updateMarkerPosition(new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude));
@@ -537,14 +539,18 @@ function loadExploreArea(EYA_CONF) {
                 // add links to species page and ocurrence search (inside hidden div)
                 var speciesInfo = '<div class="speciesInfo">';
                 if(data[i].guid) {
-                    speciesInfo = speciesInfo + '<a title="' + infoTitle + '" href="' + EYA_CONF.speciesPageUrl + data[i].guid +
-                        '"><img src="' + EYA_CONF.imagesUrlPrefix + '/page_white_go.png" alt="species page icon" style="margin-bottom:-3px;" class="no-rounding"/>' +
-                        ' species profile</a> | ';
+                    speciesInfo +=
+                        '<a title="' + infoTitle + '" href="' + EYA_CONF.speciesPageUrl + data[i].guid + '">' +
+                            '<i class="fa fa-tag"></i> Species page' +
+                        '</a> | ';
                 }
-                speciesInfo = speciesInfo + '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + data[i].name +
+                speciesInfo +=
+                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + data[i].name +
                         '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
-                        recsTitle + '"><img src="' + EYA_CONF.imagesUrlPrefix + '/database_go.png" ' +
-                        'alt="search list icon" style="margin-bottom:-3px;" class="no-rounding"/> list of records</a></div>';
+                        recsTitle +
+                    '>' +
+                        '<i class="fa fa-list"></i> View records' +
+                    '</a></div>';
                 tr += speciesInfo;
                 // add number of records
                 tr += '</td><td class="rightCounts">' + data[i].count + ' </td></tr>';
