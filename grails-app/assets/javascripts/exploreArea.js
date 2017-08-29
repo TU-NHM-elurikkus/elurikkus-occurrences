@@ -547,7 +547,7 @@ function loadExploreArea(EYA_CONF) {
                 speciesInfo +=
                     '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + data[i].name +
                         '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
-                        recsTitle +
+                        recsTitle + '"' +
                     '>' +
                         '<i class="fa fa-list"></i> View records' +
                     '</a></div>';
