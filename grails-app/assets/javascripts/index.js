@@ -15,7 +15,6 @@
 //= require bootstrap-combobox
 //= require bootstrap-slider
 //= require map.common
-//= require occurrenceMap
 //= require advancedSearch
 
 $.i18n.properties({
@@ -138,14 +137,18 @@ function initialiseMap() {
     MAP_VAR.map.on('draw:created', function(e) {
         // setup onclick event for this object
         var layer = e.layer;
-        generatePopup(layer, layer._latlng, MAP_VAR.query, MAP_VAR.map);
+        var center = layer.getBounds().getCenter();
+
+        generatePopup(layer, center, MAP_VAR.query, MAP_VAR.map);
         addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
+
         MAP_VAR.drawnItems.addLayer(layer);
     });
 
     MAP_VAR.map.on('draw:edited', function(e) {
         // setup onclick event for this object
         var layers = e.layers;
+
         layers.eachLayer(function(layer) {
             generatePopup(layer, layer._latlng, MAP_VAR.query, MAP_VAR.map);
             addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
