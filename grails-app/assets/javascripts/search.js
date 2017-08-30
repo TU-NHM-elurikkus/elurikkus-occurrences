@@ -893,7 +893,7 @@ function loadImages(start) {
                 link.addClass('thumbImage tooltips');
                 link.attr('title', 'click to enlarge');
                 link.attr('data-occurrenceuid', el.uuid);
-                link.attr('data-image-id', el.image);
+                link.attr('data-image-id', el.largeImageUrl);
                 link.attr('data-scientific-name', el.raw_scientificName);
                 link.attr('data-gallery', 'main-gallery');
                 link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
@@ -925,7 +925,7 @@ function loadImages(start) {
                 var rightDetail =
                     '<div class="col-sm-2" style="text-align:right;">' +
                         '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
-                            'Open' +
+                            'View record' +
                         '</a>' +
                     '</div>';
 

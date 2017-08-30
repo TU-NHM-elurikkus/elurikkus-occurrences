@@ -443,12 +443,10 @@
                         </a>
                     </g:if>
                     <g:else>
-                        <a href="${image.alternativeFormats.largeImageUrl}" target="_blank">
-                            <img
-                                src="${image.alternativeFormats.smallImageUrl}"
-                                class="occurrence-images__image"
-                            />
-                        </a>
+                        <img
+                            src="${image.alternativeFormats.largeImageUrl}"
+                            class="occurrence-images__image"
+                        />
                     </g:else>
 
                     <br />
