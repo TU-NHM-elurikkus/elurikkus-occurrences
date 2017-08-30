@@ -586,7 +586,7 @@
         </div>
     </div>
 
-    <table class="table table-sm table-striped table-bordered">
+    <table class="table table-sm table-bordered">
         <thead>
             <tr class="sectionName">
                 <td class="dataQualityTestName">
