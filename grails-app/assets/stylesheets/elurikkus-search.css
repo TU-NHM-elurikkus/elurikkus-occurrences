@@ -142,3 +142,8 @@
 #filters-selection {
     margin-bottom: 1rem;
 }
+
+.filter-panel-header {
+    font-size: 15px;
+    margin-bottom: 1em;
+}

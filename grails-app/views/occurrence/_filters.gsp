@@ -5,29 +5,25 @@
     </h4>
 
     <div class="search-filter-menu--buttons">
-        <g:message code="list.facetcheckboxes.label01" />:
-
-        <a href="#" id="selectAll">
+        <button id="selectAll" class="erk-link-button">
             <g:message code="list.facetcheckboxes.navigator01" />
-        </a>
+        </button>
 
         &nbsp;|&nbsp;
 
-        <a href="#" id="selectNone">
+        <button id="selectNone" class="erk-link-button">
             <g:message code="list.facetcheckboxes.navigator02" />
-        </a>
+        </button>
 
-        &nbsp;&nbsp;
+        &nbsp;|&nbsp;
 
-        <button id="updateFacetOptions" class="erk-button erk-button--light">
+        <button id="updateFacetOptions" class="erk-link-button">
             <g:message code="list.facetcheckboxes.button.updatefacetoptions" />
         </button>
 
-        &nbsp;&nbsp;
+        &nbsp;|&nbsp;
 
-        <g:set var="resetTitle" value="Restore default settings" />
-
-        <button id="resetFacetOptions" class="erk-button erk-button--light" title="${resetTitle}">
+        <button id="resetFacetOptions" class="erk-link-button">
             <g:message code="list.facetcheckboxes.button.resetfacetoptions" />
         </button>
     </div>

@@ -38,50 +38,54 @@
     margin-bottom: 0px;
 }
 
-#wktInput {
-    height: 280px;
-    width: 100%;
+/* Spatial search WKT section */
+.wkt-section, .wkt-panel, .wkt-panel__content {
+    display: flex;
+    flex-direction: column;
 }
 
-#spatialSearch .accordion-group {
-    border: none;
+.wkt-section__wkt {
+    flex: 1;
 }
 
-#spatialSearch .accordion-heading .accordion-toggle {
-    padding: 0;
+.wkt-panel__body {
+    flex: 1
 }
 
-.accordion-heading .accordion-toggle {
-    padding: 8px 10px;
-}
-
-.accordion-inner {
-    /* padding: 10px 10px; */
-    margin-top: 5px;
-    padding: 0;
-    border: none;
-}
-
-.accordion-caret .accordion-toggle:hover {
+.wkt-panel__toggle:hover {
     text-decoration: none;
 }
 
-.accordion-caret .accordion-toggle:hover span,
-.accordion-caret .accordion-toggle:hover strong {
+.wkt-panel__toggle:hover span,
+.wkt-panel__toggle:hover strong {
     text-decoration: underline;
 }
 
-.accordion-caret .accordion-toggle:before {
+.wkt-panel__toggle:before {
     font-size: 18px;
     vertical-align: -1px;
 }
 
-.accordion-caret .accordion-toggle:not(.collapsed):before {
+.wkt-panel__toggle:not(.collapsed):after {
     content: "▾";
     margin-right: 0px;
 }
 
-.accordion-caret .accordion-toggle.collapsed:before {
+.wkt-panel__toggle.collapsed:after {
     content: "▸";
     margin-right: 0px;
+}
+
+.wkt-panel {
+    padding-top: 5px;
+}
+
+.wkt-panel__content {
+    height: 100%;
+}
+
+.wkt-panel__input {
+    flex: 1;
+    width: 100%;
+    margin-bottom: 1em;
 }

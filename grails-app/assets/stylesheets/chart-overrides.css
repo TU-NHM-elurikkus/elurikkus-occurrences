@@ -1,3 +1,8 @@
+#charts {
+    margin-top: 0;
+    padding-top: 0;
+}
+
 #charts .chart-legend {
     position: absolute;
     top: 1rem;
@@ -17,7 +22,7 @@
     width: 100%;
     max-width: 1200px;
 
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     padding-right: 250px;
 }
 
@@ -26,4 +31,12 @@
     .chart {
         width: 100%;
     }
+}
+
+#charts #taxa {
+    margin-bottom: 2rem;
+}
+
+.chart-title {
+    margin-bottom: 1rem;
 }

@@ -89,6 +89,8 @@ OccurrenceMap.prototype.initialize = function() {
         minZoom: 1,
         scrollWheelZoom: false,
 
+        zoomControl: false,
+
         fullscreenControl: true,
         fullscreenControlOptions: {
             position: 'topleft'
@@ -96,6 +98,8 @@ OccurrenceMap.prototype.initialize = function() {
 
         worldCopyJump: true
     });
+
+    addZoomControl(self.map);
 
     // add edit drawing toolbar
     // Initialise the FeatureGroup to store editable layers

@@ -120,12 +120,14 @@
                         <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                         <input type="hidden" name="field" value="raw_name" />
 
-                        <input
+                        <input type="hidden" name="action" value="Search" />
+
+                        <button
                             type="submit"
-                            name="action"
-                            value="${message(code: 'advancedsearch.button.submit')}"
                             class="erk-button erk-button--dark"
-                        />
+                        >
+                            <g:message code="advancedsearch.button.submit" />
+                        </button>
                     </div>
                 </form>
             </div> <!-- end #uploadDiv div -->
@@ -144,48 +146,45 @@
                         <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
                         <input type="hidden" name="field" value="catalogue_number" />
 
-                        <%-- XXX --%>
-                        <input
+                        <input type="hidden" name="action" value="Search" />
+
+                        <button
+                            type="submit"
                             id="catalogueSearchButton"
                             disabled
-                            type="submit"
-                            name="action"
-                            value="${message(code: 'advancedsearch.button.submit')}"
                             class="erk-button erk-button--dark"
-                        />
+                        >
+                            <g:message code="advancedsearch.button.submit" />
+                        </button>
                     </div>
                 </form>
             </div><%-- end #catalogUploadDiv div --%>
 
             <div id="spatial-search" class="tab-pane">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-3 wkt-section">
                         <p>
                             <g:message code="search.map.helpText" />
                         </p>
 
-                        <div class="accordion accordion-caret" id="accordion2">
-                            <div class="accordion-group">
-                                <div class="accordion-heading">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                        <g:message code="search.map.importToggle" />
-                                    </a>
-                                </div>
+                        <div id="wktPanel" class="wkt-panel wkt-section__wkt">
+                            <div class="wkt-panel__header">
+                                <a class="wkt-panel__toggle collapsed" data-toggle="collapse" data-parent="#wktPanel" href="#wktBody">
+                                    <g:message code="search.map.importToggle" />
+                                </a>
+                            </div>
 
-                                <div id="collapseOne" class="accordion-body collapse show">
-                                    <div class="accordion-inner">
-                                        <p>
-                                            <g:message code="search.map.importText" />
-                                        </p>
+                            <div id="wktBody" class="wkt-panel__body collapse">
+                                <div class="wkt-panel__content">
+                                    <p>
+                                        <g:message code="search.map.importText" />
+                                    </p>
 
-                                        <p>
-                                            <textarea type="text" id="wktInput"></textarea>
-                                        </p>
+                                    <textarea type="text" id="wktInput" class="wkt-panel__input"></textarea>
 
-                                        <button class="erk-button erk-button--light" id="addWkt">
-                                            <g:message code="search.map.wktButtonText" />
-                                        </button>
-                                    </div>
+                                    <button class="erk-button erk-button--light" id="addWkt">
+                                        <g:message code="search.map.wktButtonText" />
+                                    </button>
                                 </div>
                             </div>
                         </div>

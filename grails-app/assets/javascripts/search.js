@@ -208,13 +208,13 @@ $(document).ready(function() {
     } //  note removed else that did page refresh by triggering cookie update code.
 
     // select all and none buttons
-    $("a#selectNone").click(function(e) {
+    $("#selectNone").click(function(e) {
         e.preventDefault();
         $(":input.search-filter-checkbox__label__input").removeAttr("checked");
     });
 
     // XXX BLOODY HELL
-    $("a#selectAll").click(function(e) {
+    $("#selectAll").click(function(e) {
         e.preventDefault();
         $(":input.search-filter-checkbox__label__input").attr("checked","checked");
     });
