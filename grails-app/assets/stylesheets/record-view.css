@@ -25,6 +25,13 @@ td.noStripe {
 
 .occurrenceTable td {
     word-wrap: break-word;
+    border-left: 0;
+    border-right: 0;
+}
+
+.data-quality-table td {
+    border-left: 0;
+    border-right: 0;
 }
 
 .recordHeader__right {
