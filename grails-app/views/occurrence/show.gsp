@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="recordId" value="${alatag.getRecordId(record: record, skin: skin)}" />
+<g:set var="recordId" value="${alatag.getRecordId(record: record)}" />
 <g:set var="collectionsWebappContext" value="${grailsApplication.config.collections.baseUrl}" />
 <g:set var="taxaLinks" value="${grailsApplication.config.skin.taxaLinks}" />
 <g:set var="dwcExcludeFields" value="${grailsApplication.config.dwc.exclude}" />
@@ -144,12 +144,12 @@
                     </div>
 
                     <div class="page-header-links">
-                        <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">
-                            <g:message code="home.index.title" />
-                        </a>
-
                         <a href="#" id="backBtn" title="Return to search results" class="page-header-links__link">
                             <g:message code="show.backbtn.navigator" />
+                        </a>
+                        <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">
+                            <i class="fa fa-search"></i>
+                            <g:message code="home.index.title" />
                         </a>
                     </div>
                 </div>
@@ -159,12 +159,12 @@
                         <g:render template="recordSidebar" />
                     </div>
 
-                    <div id="content2Z" class="col-sm-7 col-lg-9">
+                    <div class="col-sm-7 col-lg-9 occurrence-table-container">
                         <div class="float-right">
                             <g:if test="${contacts && contacts.size()}">
                                 <button
                                     href="#contactCuratorView"
-                                    class="erk-button erk-button--light erk-button--inline"
+                                    class="erk-button erk-button--light"
                                     id="showCurator"
                                     role="button"
                                     data-toggle="modal"
@@ -181,12 +181,11 @@
                                 id="showRawProcessed"
                                 data-toggle="modal"
                                 href="#processedVsRawView"
-                                class="erk-button erk-button--light erk-button--inline"
+                                class="erk-button erk-button--light"
                                 role="button"
                                 title="<g:message code='show.sidebar02.showrawprocessed.title' />"
                             >
                                 <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                                    <i class="fa fa-balance-scale"></i>
                                     <g:message code="show.sidebar02.showrawprocessed.label" />
                                 </span>
                             </button>

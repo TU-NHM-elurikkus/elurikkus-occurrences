@@ -6,6 +6,11 @@ td.noStripe {
     background-color: #ffffff;
 }
 
+/* Container for all the sub tables */
+.occurrence-table-container h3 {
+    margin-bottom: 3px;
+}
+
 .occurrenceTable {
     table-layout: fixed;
 }
@@ -20,6 +25,13 @@ td.noStripe {
 
 .occurrenceTable td {
     word-wrap: break-word;
+    border-left: 0;
+    border-right: 0;
+}
+
+.data-quality-table td {
+    border-left: 0;
+    border-right: 0;
 }
 
 .recordHeader__right {

@@ -5,11 +5,11 @@
 <div>
     <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: record?.raw?.attribution?.dataResourceUid]" />
 
-    <h2>
+    <h3>
         <g:message code="recordcore.occurencedataset.title" />
-    </h2>
+    </h3>
 
-    <table class="occurrenceTable table table-sm table-bordered table-striped " id="datasetTable">
+    <table class="occurrenceTable table table-sm table-bordered" id="datasetTable">
         <!-- Data Provider -->
         <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="dataProvider" fieldName="${message(code: 'recordcore.dataset.dataProvider')}">
             <g:if test="${record.processed.attribution.dataProviderUid && collectionsWebappContext}">
@@ -395,11 +395,11 @@
 </div>
 
 <div>
-    <h2>
+    <h3>
         <g:message code="recordcore.occurenceevent.title" />
-    </h2>
+    </h3>
 
-    <table class="occurrenceTable table table-sm table-bordered table-striped " id="eventTable">
+    <table class="occurrenceTable table table-sm table-bordered" id="eventTable">
         <!-- Field Number -->
         <alatag:occurrenceTableRow annotate="true" section="event" fieldCode="fieldNumber" fieldName="${message(code: 'recordcore.event.fieldNumber')}">
             ${fieldsMap.put("fieldNumber", true)}
@@ -481,11 +481,11 @@
 </div>
 
 <div>
-    <h2>
+    <h3>
         <g:message code="recordcore.occurencetaxonomy.title" />
-    </h2>
+    </h3>
 
-    <table class="occurrenceTable table table-sm table-bordered table-striped " id="taxonomyTable">
+    <table class="occurrenceTable table table-sm table-bordered" id="taxonomyTable">
         <!-- Higher classification -->
         <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="higherClassification" fieldName="${message(code: 'recordcore.taxonomy.higherClassification')}">
             ${fieldsMap.put("higherClassification", true)}
@@ -877,11 +877,11 @@
 
 <g:if test="${compareRecord?.Location}">
     <div>
-        <h2>
+        <h3>
             <g:message code="recordcore.occurencegeospatial.title" />
-        </h2>
+        </h3>
 
-        <table class="occurrenceTable table table-sm table-bordered table-striped " id="geospatialTable">
+        <table class="occurrenceTable table table-sm table-bordered" id="geospatialTable">
             <!-- Higher Geography -->
             <alatag:occurrenceTableRow annotate="true" section="geospatial" fieldCode="higherGeography" fieldName="${message(code: 'recordcore.geospatial.higherGeography')}">
                 ${fieldsMap.put("higherGeography", true)}
@@ -1175,11 +1175,11 @@
 
 <g:if test="${record.raw.miscProperties}">
     <div>
-        <h2>
+        <h3>
             <g:message code="recordcore.addtionalproperties.title" />
-        </h2>
+        </h3>
 
-        <table class="occurrenceTable table table-sm table-bordered table-striped " id="miscellaneousPropertiesTable">
+        <table class="occurrenceTable table table-sm table-bordered" id="miscellaneousPropertiesTable">
             <!-- Misc properties -->
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
                 <g:set var="label">
@@ -1202,10 +1202,10 @@
 
 <div id="outlierInformation" class="additionalData">
     <g:if test="${contextualSampleInfo}">
-        <h2 id="contextualSampleInfo">
+        <h3 id="contextualSampleInfo">
             <g:message code="show.outlierinformation.02.title01" />
-        </h2>
-        <table class="layerIntersections table table-sm table-striped table-bordered ">
+        </h3>
+        <table class="layerIntersections table table-sm table-bordered ">
             <tbody>
                 <g:each in="${contextualSampleInfo}" var="sample" status="vs">
                     <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
@@ -1234,10 +1234,10 @@
     </g:if>
 
     <g:if test="${environmentalSampleInfo}">
-        <h2 id="environmentalSampleInfo">
+        <h3 id="environmentalSampleInfo">
             <g:message code="show.outlierinformation.02.title02" />
-        </h2>
-        <table class="layerIntersections table table-sm table-striped table-bordered " >
+        </h3>
+        <table class="layerIntersections table table-sm table-bordered" >
             <tbody>
                 <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
                     <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">

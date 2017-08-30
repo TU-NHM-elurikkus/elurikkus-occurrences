@@ -309,20 +309,13 @@ class OccurrenceTagLib {
      */
     def getRecordId = { attrs ->
         def record = attrs.record ?: null
-        def skin = attrs.skin ?: "ala"
-        def recordId = record.raw.uuid
+        def catalogNumber = record.raw.occurrence.catalogNumber
 
-        if (skin == 'avh') {
-            recordId = record.raw.occurrence.catalogNumber
-        } else if (record.raw.occurrence.collectionCode && record.raw.occurrence.catalogNumber) {
-            recordId = record.raw.occurrence.collectionCode + ":" + record.raw.occurrence.catalogNumber
-        } else if (record.processed.attribution.dataResourceName && record.raw.occurrence.catalogNumber) {
-            recordId = record.processed.attribution.dataResourceName + " - " + record.raw.occurrence.catalogNumber
-        } else if (record.raw.occurrence.occurrenceID) {
-            recordId = record.raw.occurrence.occurrenceID
+        if (catalogNumber) {
+            out << catalogNumber
+        } else {
+            out << record.raw.occurrence.occurrenceID
         }
-
-        out << recordId
     }
 
     /**
