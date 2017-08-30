@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="recordId" value="${alatag.getRecordId(record: record, skin: skin)}" />
+<g:set var="recordId" value="${alatag.getRecordId(record: record)}" />
 <g:set var="collectionsWebappContext" value="${grailsApplication.config.collections.baseUrl}" />
 <g:set var="taxaLinks" value="${grailsApplication.config.skin.taxaLinks}" />
 <g:set var="dwcExcludeFields" value="${grailsApplication.config.dwc.exclude}" />
@@ -145,6 +145,7 @@
 
                     <div class="page-header-links">
                         <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">
+                            <i class="fa fa-search"></i>
                             <g:message code="home.index.title" />
                         </a>
 
@@ -159,7 +160,7 @@
                         <g:render template="recordSidebar" />
                     </div>
 
-                    <div id="content2Z" class="col-sm-7 col-lg-9">
+                    <div class="col-sm-7 col-lg-9 occurrence-table-container">
                         <div class="float-right">
                             <g:if test="${contacts && contacts.size()}">
                                 <button

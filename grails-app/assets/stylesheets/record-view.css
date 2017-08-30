@@ -6,6 +6,11 @@ td.noStripe {
     background-color: #ffffff;
 }
 
+/* Container for all the sub tables */
+.occurrence-table-container h3 {
+    margin-bottom: 3px;
+}
+
 .occurrenceTable {
     table-layout: fixed;
 }
