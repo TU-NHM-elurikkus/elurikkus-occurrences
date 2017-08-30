@@ -34,13 +34,6 @@
             <div class="page-header__subtitle">
                 <g:message code="home.index.subtitle" args="${['eElurikkus']}" />
             </div>
-
-            <div class="page-header-links">
-                <span id="viewAllRecords" class="erk-link page-header-links__link">
-                    <i class="fa fa-list"></i>
-                    <g:message code="eya.searchform.a.viewallrecords.label" />
-                </span>
-            </div>
         </div>
 
         <div class="row">
@@ -83,22 +76,30 @@
                     </g:if>
                 </div>
 
-                <div class="form-linline float-right">
-                    <p>
-                        <g:message code="eya.searchformradius.label" />
+                <form class="form-inline float-right search-controls">
+                    <div class="form-group">
+                        <label for="radius">
+                            <g:message code="eya.searchformradius.label" />
+                        </label>
+                        <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
 
-                        <select id="radius" name="radius" class="">
-                            <option value="1" <g:if test="${radius == 1}">selected</g:if>>1</option>
-                            <option value="5" <g:if test="${radius == 5}">selected</g:if>>5</option>
-                            <option value="10" <g:if test="${radius == 10}">selected</g:if>>10</option>
-                        </select>
 
-                        <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                    </div>
+
+                    <div class="form-group">
+                        <button id="viewAllRecords" class="erk-button erk-button--dark">
+                            <i class="fa fa-list"></i>
+                            <g:message code="eya.searchform.a.viewallrecords.label" />
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                             <span class="fa fa-download"></span>
                             <g:message code="download.download.label" />
                         </button>
-                    </p>
-                </div>
+                    </div>
+                </form>
 
                 <%-- TODO XXX --%>
                 <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
