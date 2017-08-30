@@ -165,7 +165,7 @@
                             <g:if test="${contacts && contacts.size()}">
                                 <button
                                     href="#contactCuratorView"
-                                    class="erk-button erk-button--light erk-button--inline"
+                                    class="erk-button erk-button--light"
                                     id="showCurator"
                                     role="button"
                                     data-toggle="modal"
@@ -182,12 +182,11 @@
                                 id="showRawProcessed"
                                 data-toggle="modal"
                                 href="#processedVsRawView"
-                                class="erk-button erk-button--light erk-button--inline"
+                                class="erk-button erk-button--light"
                                 role="button"
                                 title="<g:message code='show.sidebar02.showrawprocessed.title' />"
                             >
                                 <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                                    <i class="fa fa-balance-scale"></i>
                                     <g:message code="show.sidebar02.showrawprocessed.label" />
                                 </span>
                             </button>
