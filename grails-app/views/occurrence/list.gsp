@@ -103,21 +103,24 @@
                 <g:message code="home.index.subtitle" args="${['eElurikkus']}" />
             </div>
 
-            <%-- TODO MAYBE KEEP IT MAYBE NOT --%>
             <div class="page-header-links">
                 <a href="${g.createLink(uri: '/search')}#tab-advanced-search" class="page-header-links__link">
+                    <i class="fa fa-search"></i>
                     <g:message code="home.index.navigator02" />
                 </a>
 
                 <a href="${g.createLink(uri: '/search')}#tab-taxa-upload" class="page-header-links__link">
+                    <i class="fa fa-search"></i>
                     <g:message code="home.index.navigator03" />
                 </a>
 
                 <a href="${g.createLink(uri: '/search')}#tab-catalog-upload" class="page-header-links__link">
+                    <i class="fa fa-search"></i>
                     <g:message code="home.index.navigator04" />
                 </a>
 
                 <a href="${g.createLink(uri: '/search')}#tab-spatial-search" class="page-header-links__link">
+                    <i class="fa fa-search"></i>
                     <g:message code="home.index.navigator05" />
                 </a>
             </div>
@@ -275,6 +278,7 @@
                                 <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
 
                                 <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
+                                    <i class="fa fa-search"></i>
                                     <g:message code="advancedsearch.button.submit" />
                                 </button>
                             </div>
@@ -364,8 +368,7 @@
                                 class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
                                 title="${message(code: 'search.filter.title')}"
                             >
-                                <span class="fa fa-cog"></span>
-
+                                <i class="fa fa-filter"></i>
                                 <g:message code="search.filter.customise.label" />
 
                                 <span class="caret"></span>
@@ -457,12 +460,14 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item active">
                                 <a id="t1" href="#records" data-toggle="tab" class="nav-link">
+                                    <i class="fa fa-list"></i>
                                     <g:message code="list.records.label" />
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a id="t2" href="#map" data-toggle="tab" class="nav-link">
+                                    <i class="fa fa-map-marker"></i>
                                     <g:message code="map.map.label" />
                                 </a>
                             </li>
@@ -470,6 +475,7 @@
                             <plugin:isAvailable name="elurikkus-charts">
                                 <li class="nav-item">
                                     <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
+                                        <i class="fa fa-pie-chart"></i>
                                         <g:message code="list.link.t3" />
                                     </a>
                                 </li>

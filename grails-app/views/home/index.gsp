@@ -42,7 +42,6 @@
             </h1>
 
             <div class="page-header__subtitle">
-                <%-- TODO --%>
                 <g:message code="home.index.subtitle" args="${[raw(hubDisplayName)]}" />
             </div>
         </div>
@@ -86,6 +85,7 @@
                                 <input type="text" name="taxa" id="taxa" class="input-plus__field" />
 
                                 <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
+                                    <i class="fa fa-search"></i>
                                     <g:message code="advancedsearch.button.submit" />
                                 </button>
                             </div>
@@ -126,6 +126,7 @@
                             type="submit"
                             class="erk-button erk-button--dark"
                         >
+                            <i class="fa fa-search"></i>
                             <g:message code="advancedsearch.button.submit" />
                         </button>
                     </div>
@@ -154,6 +155,7 @@
                             disabled
                             class="erk-button erk-button--dark"
                         >
+                            <i class="fa fa-search"></i>
                             <g:message code="advancedsearch.button.submit" />
                         </button>
                     </div>

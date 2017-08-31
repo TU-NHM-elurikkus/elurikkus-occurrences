@@ -627,3 +627,13 @@ function sendEmail(strEncoded) {
     }
     return false;
 }
+
+function toggleTests(btn) {
+    if($(btn).children('i.fa-caret-square-o-up').length !== 0) {
+        $(btn).children('i.fa-caret-square-o-up').remove();
+        $(btn).prepend('<i class="fa fa-caret-square-o-down"></i>')
+    } else if($(btn).children('i.fa-caret-square-o-down').length !== 0) {
+        $(btn).children('i.fa-caret-square-o-down').remove();
+        $(btn).prepend('<i class="fa fa-caret-square-o-up"></i>')
+    }
+}

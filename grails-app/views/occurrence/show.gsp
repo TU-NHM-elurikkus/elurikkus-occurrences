@@ -145,6 +145,7 @@
 
                     <div class="page-header-links">
                         <a href="#" id="backBtn" title="Return to search results" class="page-header-links__link">
+                            <i class="fa fa-arrow-left"></i>
                             <g:message code="show.backbtn.navigator" />
                         </a>
                         <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">

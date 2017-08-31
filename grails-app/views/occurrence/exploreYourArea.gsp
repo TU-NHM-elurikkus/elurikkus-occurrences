@@ -51,6 +51,7 @@
                             />
 
                             <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
+                                <i class="fa fa-search"></i>
                                 <g:message code="advancedsearch.button.submit" />
                             </button>
                         </div>
@@ -95,7 +96,7 @@
 
                     <div class="form-group">
                         <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                            <span class="fa fa-download"></span>
+                            <i class="fa fa-download"></i>
                             <g:message code="download.download.label" />
                         </button>
                     </div>

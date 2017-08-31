@@ -604,8 +604,8 @@
             <g:if test="${failedTestSet || warningTestSet}">
                 <tr>
                     <td colspan="2">
-                        <a href="javascript:void(0)" id="showErrorAndWarningTests">
-                            <g:message code="show.tabledataqualityresults.showhide" />
+                        <a href="javascript:void(0)" id="showErrorAndWarningTests" onclick="toggleTests(this)">
+                            <i class="fa fa-caret-square-o-up"></i>
                             ${failedTestSet ? failedTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.fail" />
                             ${warningTestSet ? warningTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.warning" />
                         </a>
@@ -620,7 +620,7 @@
                         </td>
 
                         <td>
-                            <span class="fa fa-times-circle" style="color:red;"></span>
+                            <i class="fa fa-times-circle" style="color:red;"></i>
                             <g:message code="show.tabledataqualityresults.tr01td02" />
                         </td>
                     </tr>
@@ -634,7 +634,7 @@
                         </td>
 
                         <td>
-                            <span class="fa fa-exclamation-circle" style="color:orange;"></span>
+                            <i class="fa fa-exclamation-circle" style="color:orange;"></i>
                             <g:message code="show.tabledataqualityresults.tr02td02" />
                         </td>
                     </tr>
@@ -647,8 +647,8 @@
             <g:if test="${passedTestSet}">
                 <tr>
                     <td colspan="2">
-                        <a href="javascript:void(0)" id="showPassedTests">
-                            <g:message code="show.tabledataqualityresults.showhide" />
+                        <a href="javascript:void(0)" id="showPassedTests" onclick="toggleTests(this)">
+                            <i class="fa fa-caret-square-o-down"></i>
                             ${record.systemAssertions.passed.length()}
                             <g:message code="show.tabledataqualityresults.tr03td01" />
                         </a>
@@ -663,7 +663,7 @@
                         </td>
 
                         <td>
-                            <span class="fa fa-check-circle" style="color:green;"></span>
+                            <i class="fa fa-check-circle" style="color:green;"></i>
                             <g:message code="show.tabledataqualityresults.tr03td02" />
                         </td>
                     </tr>
@@ -674,8 +674,8 @@
             <g:if test="${record.systemAssertions.missing}">
                 <tr>
                     <td colspan="2">
-                        <a href="javascript:void(0)" id="showMissingPropResult">
-                            <g:message code="show.tabledataqualityresults.showhide" />
+                        <a href="javascript:void(0)" id="showMissingPropResult" onclick="toggleTests(this)">
+                            <i class="fa fa-caret-square-o-down"></i>
                             ${record.systemAssertions.missing.length()}
                             <g:message code="show.tabledataqualityresults.tr04td01" />
                         </a>
@@ -691,7 +691,7 @@
                         <alatag:dataQualityHelp code="${test.code}" />
                     </td>
                     <td>
-                        <i class="fa fa-question-circle" />
+                        <i class="fa fa-question-circle"></i>
                         <g:message code="show.tabledataqualityresults.tr05td02" />
                     </td>
                 </tr>
@@ -700,8 +700,8 @@
             <g:if test="${record.systemAssertions.unchecked}">
                 <tr>
                     <td colspan="2">
-                        <a href="javascript:void(0)" id="showUncheckedTests">
-                            <g:message code="show.tabledataqualityresults.showhide" />
+                        <a href="javascript:void(0)" id="showUncheckedTests" onclick="toggleTests(this)">
+                            <i class="fa fa-caret-square-o-down"></i>
                             ${record.systemAssertions.unchecked.length()}
                             <g:message code="show.tabledataqualityresults.tr06td01" />
                         </a>
@@ -716,7 +716,7 @@
                         <g:message code="${test.name}" default="${test.name}" /><alatag:dataQualityHelp code="${test.code}" />
                     </td>
                     <td>
-                        <i class="fa fa-ban" />
+                        <i class="fa fa-ban"></i>
                         <g:message code="show.tabledataqualityresults.tr07td02" />
                     </td>
                 </tr>

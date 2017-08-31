@@ -242,7 +242,12 @@ function loadExploreArea(EYA_CONF) {
                 var address = responses[0].formatted_address;
                 updateMarkerAddress(address);
                 // update the info window for marker icon
-                var content = '<div class="infoWindow"><b>Your Location:</b><br/>' + address + '</div>';
+                var content =
+                    '<div class="infoWindow">' +
+                        '<b>Your Location:</b>' +
+                        '<br />' +
+                        address +
+                    '</div>';
                 markerInfowindow.setContent(content);
             } else {
                 updateMarkerAddress('Cannot determine address at this location.');
@@ -345,7 +350,7 @@ function loadExploreArea(EYA_CONF) {
             if($.inArray('|', taxa) > 0) {
                 var parts = taxa.split('|');
                 var newParts = [];
-                for(j in parts) {
+                for(var j in parts) {
                     newParts.push(rank + ':' + parts[j]);
                 }
                 solrQuery = newParts.join(' OR ');
@@ -359,9 +364,14 @@ function loadExploreArea(EYA_CONF) {
                 fqParam = '&fq=species_group:' + state.speciesGroup;
             }
 
-            var content = '<div class="infoWindow">Number of records: ' + n.properties.count + '<br/>' +
-                '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam +
-                '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.05">View list of records</a></div>';
+            var content =
+                '<div class="infoWindow">' +
+                    'Number of records: ' + n.properties.count +
+                    '<br />' +
+                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.05">' +
+                        '<i class="fa fa-list"></i> View records' +
+                    '</a>' +
+                '</div>';
 
             infoWindows[i] = new google.maps.InfoWindow({
                 content: content,
@@ -399,8 +409,12 @@ function loadExploreArea(EYA_CONF) {
                 initialize();
             }
             // Add message to browser - FF needs this as it is not easy to see
-            var msg = 'Waiting for confirmation to use your current location (see browser message at top of window)' +
-                '<br/><a href="#" onClick="loadMap(); return false;">Click here to load map</a>';
+            var msg =
+                'Waiting for confirmation to use your current location (see browser message at top of window)' +
+                '<br />' +
+                '<a href="#" onClick="loadMap(); return false;">' +
+                    'Click here to load map' +
+                '</a>';
             $('#mapCanvas').html(msg).css('color', 'red').css('font-size', '14px');
             navigator.geolocation.getCurrentPosition(getMyPostion, positionWasDeclined);
             // Neither functions gets called for some reason, so I've added a delay to initalize map anyway
@@ -454,22 +468,6 @@ function loadExploreArea(EYA_CONF) {
             });
         } else {
             initialize();
-        }
-    }
-
-    /**
-     * Geocode location via Google Maps API
-     */
-    function addAddressToPage(response) {
-        if(!response || response.Status.code !== 200) {
-            alert('Sorry, we were unable to geocode that address');
-        } else {
-            var location = response.Placemark[0];
-            var lat = location.Point.coordinates[1];
-            var lon = location.Point.coordinates[0];
-            var locationStr = response.Placemark[0].address;
-            updateMarkerAddress(locationStr);
-            updateMarkerPosition(new google.maps.LatLng(lat, lon));
         }
     }
 
