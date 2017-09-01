@@ -460,14 +460,12 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item active">
                                 <a id="t1" href="#records" data-toggle="tab" class="nav-link">
-                                    <i class="fa fa-list"></i>
                                     <g:message code="list.records.label" />
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a id="t2" href="#map" data-toggle="tab" class="nav-link">
-                                    <i class="fa fa-map-marker"></i>
                                     <g:message code="map.map.label" />
                                 </a>
                             </li>
@@ -475,7 +473,6 @@
                             <plugin:isAvailable name="elurikkus-charts">
                                 <li class="nav-item">
                                     <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
-                                        <i class="fa fa-pie-chart"></i>
                                         <g:message code="list.link.t3" />
                                     </a>
                                 </li>
