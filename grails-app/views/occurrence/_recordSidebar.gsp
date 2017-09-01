@@ -398,7 +398,7 @@
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
-                    title:"${message(code: 'show.occurrencemap.marker')}"
+                    title: "${message(code: 'show.occurrencemap.marker')}"
                 });
 
                 <g:if test="${record.processed.location.coordinateUncertaintyInMeters}">

@@ -401,13 +401,13 @@ class OccurrenceTagLib {
                 group.value.eachWithIndex() { field, i ->
                     mb.tr() {
                         if (i == 0) {
-                            td(class:"noStripe", rowspan:"${group.value.length()}") {
+                            td(class: "noStripe", rowspan: "${group.value.length()}") {
                                 b(group.key)
                             }
                         }
                         td(alatag.camelCaseToHuman(text: field.name))
-                        td(field.raw)
-                        td(field.processed)
+                        td(field.raw, class: "compare-table__cell--break")
+                        td(field.processed, class: "compare-table__cell--break")
                     }
                 }
             }
