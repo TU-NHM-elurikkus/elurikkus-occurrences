@@ -229,7 +229,7 @@
                                 var marker1 = new google.maps.Marker({
                                     position: latlng1,
                                     map: distroMap,
-                                    title:"Occurrence Location"
+                                    title: "${message(code: 'show.occurrencemap.marker')}"
                                 });
 
                                 // Attempt to display expert distribution layer on map
@@ -541,7 +541,7 @@
                 </div>
 
                 <div id="processedVsRawView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="processedVsRawViewLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-lg modal-dialog--wide">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -555,7 +555,7 @@
 
                             <div class="modal-body">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-bordered table-striped">
+                                    <table class="table table-sm table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>

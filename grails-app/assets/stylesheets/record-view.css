@@ -67,3 +67,11 @@ td.noStripe {
 .occurrence-images__image {
     width: 100%;
 }
+
+.modal-dialog--wide {
+    max-width: 90%;
+}
+
+.compare-table__cell--break {
+    word-break: break-all;
+}
