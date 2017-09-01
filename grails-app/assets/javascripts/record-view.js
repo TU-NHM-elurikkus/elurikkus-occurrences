@@ -634,11 +634,13 @@ function sendEmail(strEncoded) {
 }
 
 function toggleTests(btn) {
-    if($(btn).children('span.fa-caret-square-o-up').length !== 0) {
-        $(btn).children('span.fa-caret-square-o-up').remove();
-        $(btn).prepend('<span class="fa fa-caret-square-o-down"></span>');
-    } else if($(btn).children('i.fa-caret-square-o-down').length !== 0) {
-        $(btn).children('span.fa-caret-square-o-down').remove();
-        $(btn).prepend('<span class="fa fa-caret-square-o-up"></span>');
+    var iSpan = $(btn).find("span.fa-caret-square-o-up");
+    if(iSpan.length) {
+        iSpan.removeClass("fa-caret-square-o-up");
+        iSpan.addClass("fa-caret-square-o-down");
+    } else {
+        iSpan = $(btn).find("span.fa-caret-square-o-down");
+        iSpan.removeClass("fa-caret-square-o-down");
+        iSpan.addClass("fa-caret-square-o-up");
     }
 }

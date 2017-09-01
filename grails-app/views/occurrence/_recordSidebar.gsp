@@ -610,9 +610,11 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showErrorAndWarningTests" onclick="toggleTests(this)">
+                            ${failedTestSet ? failedTestSet.length() : 0}
+                            <g:message code="show.tabledataqualityresults.tr01td01.fail" />
+                            ${warningTestSet ? warningTestSet.length() : 0}
+                            <g:message code="show.tabledataqualityresults.tr01td01.warning" />
                             <span class="fa fa-caret-square-o-up"></span>
-                            ${failedTestSet ? failedTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.fail" />
-                            ${warningTestSet ? warningTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.warning" />
                         </a>
                     </td>
                 </tr>
@@ -653,9 +655,9 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showPassedTests" onclick="toggleTests(this)">
-                            <span class="fa fa-caret-square-o-down"></span>
                             ${record.systemAssertions.passed.length()}
                             <g:message code="show.tabledataqualityresults.tr03td01" />
+                            <span class="fa fa-caret-square-o-down"></span>
                         </a>
                     </td>
                 </tr>
@@ -680,9 +682,9 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showMissingPropResult" onclick="toggleTests(this)">
-                            <span class="fa fa-caret-square-o-down"></span>
                             ${record.systemAssertions.missing.length()}
                             <g:message code="show.tabledataqualityresults.tr04td01" />
+                            <span class="fa fa-caret-square-o-down"></span>
                         </a>
                     </td>
                 </tr>
@@ -706,9 +708,9 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showUncheckedTests" onclick="toggleTests(this)">
-                            <span class="fa fa-caret-square-o-down"></span>
                             ${record.systemAssertions.unchecked.length()}
                             <g:message code="show.tabledataqualityresults.tr06td01" />
+                            <span class="fa fa-caret-square-o-down"></span>
                         </a>
                     </td>
                 </tr>
