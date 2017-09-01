@@ -703,12 +703,10 @@
                                 </div>
 
                                 <div id="loadMoreImages" style="display:none;">
-                                    <p>
-                                        <button class="erk-button erk-button--light">
-                                            <g:message code="list.speciesgallerycontrols.loadmoreimages.button" />
-                                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
-                                         </button>
-                                     </p>
+                                    <button class="erk-button erk-button--light">
+                                        <g:message code="generic.button.loadMore" />&hellip;
+                                        <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                     </button>
                                  </div>
 
                                 <%-- HTML template used by AJAX code --%>

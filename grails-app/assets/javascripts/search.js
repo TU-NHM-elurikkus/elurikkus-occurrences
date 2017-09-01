@@ -1,3 +1,5 @@
+var BC_CONF;  // Populated by elurikkus.gsp inline script
+
 // Jquery Document.onLoad equivalent
 $(document).ready(function() {
     // listeners for sort & paging widgets
@@ -317,111 +319,105 @@ $(document).ready(function() {
             var form  = this.form
             $(form).submit();
         } else {
-            alert("Please check at least one \"verbatim scientific name\" checkbox.");
+            alert('Please check at least one \"verbatim scientific name\" checkbox.');
         }
     });
 
     // load more images button
-    $("#loadMoreImages .erk-button").live("click", function(e) {
+    $('#loadMoreImages .erk-button').live('click', function(e) {
         e.preventDefault();
         $(this).addClass('disabled');
         $(this).find('img').show(); // turn on spinner
-        var start = $("#imagesGrid").data('count');
+        var start = $('#imagesGrid').data('count');
         loadImages(start);
     });
 
     // load more species images button
-    $("#loadMoreSpecies").live("click", function(e) {
+    $('#loadMoreSpecies').live('click', function(e) {
         e.preventDefault();
-        var start = $("#speciesGallery").data('count');
-        var group = $("#speciesGroup :selected").val();
-        var sort = $("#speciesGallery").data('sort');
+        var start = $('#speciesGallery').data('count');
+        var group = $('#speciesGroup :selected').val();
+        var sort = $('#speciesGallery').data('sort');
         loadSpeciesInTab(start, sort, group);
     });
 
     // species tab -> species group drop down
-    $("#speciesGroup, #speciesGallerySort").live("change", function(e) {
-        var group = $("#speciesGroup :selected").val();
-        var sort = $("#speciesGallerySort :selected").val();
+    $('#speciesGroup, #speciesGallerySort').live('change', function(e) {
+        var group = $('#speciesGroup :selected').val();
+        var sort = $('#speciesGallerySort :selected').val();
         loadSpeciesInTab(0, sort, group);
     });
 
     // add click even on each record row in results list
-    $(".recordRow").click(function(e) {
+    $('.recordRow').click(function(e) {
         e.preventDefault();
-        window.location.href = BC_CONF.contextPath + "/occurrences/" + $(this).attr("id");
-    }).hover(function(){
-            // mouse in
-            $(this).css('cursor','pointer');
-            $(this).css('background-color','#FFF');
-        }, function() {
-            // mouse out
-            $(this).css('cursor','default');
-            $(this).css('background-color','transparent');
+        window.location.href = BC_CONF.contextPath + '/occurrences/' + $(this).attr('id');
+    }).hover(function() {
+        // mouse in
+        $(this).css('cursor', 'pointer');
+        $(this).css('background-color', '#FFF');
+    }, function() {
+        // mouse out
+        $(this).css('cursor', 'default');
+        $(this).css('background-color', 'transparent');
     });
 
     $('.multipleFacetsLink').click(function() {
         var link = this;
-        var facetName = link.id.
-            replace("multi-", "").
-            replace("_guid", "").
-            replace("_uid", "_name").
-            replace("data_resource_name", "data_resource_uid").
-            replace("data_provider_name", "data_provider_uid").
-            replace("species_list_name", "species_list_uid").
-            //replace(/(_[id])$/, "$1_RNG").
-            replace("occurrence_year", "decade");
+        var facetName = link.id
+            .replace('multi-', '')
+            .replace('_guid', '')
+            .replace('_uid', '_name')
+            .replace('data_resource_name', 'data_resource_uid')
+            .replace('data_provider_name', 'data_provider_uid')
+            .replace('species_list_name', 'species_list_uid')
+            .replace('occurrence_year', 'decade');
 
-        var displayName = $(link).data("displayname");
-        //console.log(facetName, displayName);
+        var displayName = $(link).data('displayname');
         loadMoreFacets(facetName, displayName, null);
     });
 
-    $('#multipleFacets').on('hidden.bs.modal', function () {
+    $('#multipleFacets').on('hidden.bs.modal', function() {
         // clear the tbody content
-        $("tbody.scrollContent tr").not("#spinnerRow").remove();
+        $('tbody.scrollContent tr').not('#spinnerRow').remove();
     });
 
-    $("#downloadFacet").live("click", function(e) {
-        var facetName = $("table#fullFacets").data("facet");
+    $('#downloadFacet').live('click', function(e) {
+        var facetName = $('table#fullFacets').data('facet');
         // console.log('clicked ' + window.location.href );
-        window.location.href = BC_CONF.biocacheServiceUrl + "/occurrences/facets/download" + BC_CONF.facetDownloadQuery + '&facets=' + facetName + '&count=true';
+        window.location.href = BC_CONF.biocacheServiceUrl + '/occurrences/facets/download' + BC_CONF.facetDownloadQuery + '&facets=' + facetName + '&count=true';
     });
 
     // form validation for form#facetRefineForm
-    $("#submitFacets :input.submit").live("click", function(e) {
+    $('#submitFacets :input.submit').live('click', function(e) {
         e.preventDefault();
-        var inverseModifier = ($(this).attr('id') == 'exclude') ? "-" : "";
-        var fq = ""; // build up OR'ed fq query
-        var facetName = $("table#fullFacets").data("facet");
+        var inverseModifier = ($(this).attr('id') === 'exclude') ? '-' : '';
+        var fq = ''; // build up OR'ed fq query
         var checkedFound = false;
         var selectedCount = 0;
         var maxSelected = 15;
-        $("form#facetRefineForm").find(":input.fqs").each(function(i, el) {
-            //console.log("checking ", el);
-            if ($(el).is(':checked')) {
+        $('form#facetRefineForm').find(':input.fqs').each(function(i, el) {
+            if($(el).is(':checked')) {
                 checkedFound = true;
                 selectedCount++;
-                fq += $(el).val() + " OR ";
-                //return false; // break loop
+                fq += $(el).val() + ' OR ';
             }
         });
-        fq = fq.replace(/ OR $/, ""); // remove trailing OR
+        fq = fq.replace(/ OR $/, ''); // remove trailing OR
 
-        if (fq.indexOf(' OR ') != -1) {
-            fq = "(" + fq + ")"; // so that exclude (inverse) searches work
+        if(fq.indexOf(' OR ') !== -1) {
+            fq = '(' + fq + ')'; // so that exclude (inverse) searches work
         }
 
-        if (checkedFound && selectedCount > maxSelected) {
-            alert("Too many options selected - maximum is " + maxSelected + ", you have selected " + selectedCount + ", please de-select " +
-                (selectedCount - maxSelected) + " options. \n\nNote: if you want to include/exclude all possible values (wildcard filter), use the drop-down option on the buttons below.");
-        } else if (checkedFound) {
-            //$("form#facetRefineForm").submit();
+        if(checkedFound && selectedCount > maxSelected) {
+            alert('Too many options selected - maximum is ' + maxSelected + ', you have selected ' + selectedCount + ', please de-select ' +
+                (selectedCount - maxSelected) + ' options. \n\nNote: if you want to include/exclude all possible values (wildcard filter), use the drop-down option on the buttons below.');
+        } else if(checkedFound) {
             var hash = window.location.hash;
-            var fqString = "&fq=" + inverseModifier + fq;
+            var fqString = '&fq=' + inverseModifier + fq;
             window.location.href = window.location.pathname + BC_CONF.searchString + fqString + hash;
         } else {
-            alert("Please select at least one checkbox.");
+            alert('Please select at least one checkbox.');
         }
     });
 
@@ -429,81 +425,68 @@ $(document).ready(function() {
     $('#submitFacets a.wildcard').live('click', function(e) {
         e.preventDefault();
         var link = this;
-        var inverseModifier = ($(link).attr('id').indexOf('exclude') != -1) ? "-" : "";
-        var facetName = $("table#fullFacets").data("facet");
-        var fqString = "&fq=" + inverseModifier + facetName + ":*";
-        //console.log("fqString",fqString);
-        window.location.href = window.location.pathname + BC_CONF.searchString + fqString
+        var inverseModifier = ($(link).attr('id').indexOf('exclude') !== -1) ? '-' : '';
+        var facetName = $('table#fullFacets').data('facet');
+        var fqString = '&fq=' + inverseModifier + facetName + ':*';
+        window.location.href = window.location.pathname + BC_CONF.searchString + fqString;
     });
 
-    $("a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, div#customiseFacets > a, a.removeLink, .erk-button, .rawTaxonSumbit").tooltip();
+    $('a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, div#customiseFacets > a, a.removeLink, .erk-button, .rawTaxonSumbit').tooltip();
 
     // maultiple facets popup - sortable column heading links
-    $("a.fsort").live("click", function(e) {
+    $('a.fsort').live('click', function(e) {
         e.preventDefault();
         var fsort = $(this).data('sort');
         var foffset = $(this).data('foffset');
         var table = $(this).closest('table');
-        if (table.length == 0) {
-            //console.log("table 1", table);
+        if(table.length === 0) {
             table = $(this).parent().siblings('table#fullFacets');
         }
-        //console.log("table 2", table);
         var facetName = $(table).data('facet');
-        var displayName = $(table).data('label');
-        //loadMultiFacets(facetName, displayName, criteria, foffset);
         loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, true);
     });
 
     // loadMoreValues (legacy - now handled by inview)
-    $("a.loadMoreValues").live("click", function(e) {
+    $('a.loadMoreValues').live('click', function(e) {
         e.preventDefault();
         var link = $(this);
         var fsort = link.data('sort');
         var foffset = link.data('foffset');
-        var table = $("table#fullFacets");
-        //console.log("table 2", table);
+        var table = $('table#fullFacets');
         var facetName = $(table).data('facet');
-        var displayName = $(table).data('label');
-        //loadMultiFacets(facetName, displayName, criteria, foffset);
         loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, false);
     });
 
     // Inview trigger to load more values when tr comes into view
-    $("tr#loadMore").live("inview", function() {
-        var link = $(this).find("a.loadMoreValues");
-        //console.log("inview", link);
+    $('tr#loadMore').live('inview', function() {
+        var link = $(this).find('a.loadMoreValues');
         var fsort = link.data('sort');
         var foffset = link.data('foffset');
-        var table = $("table#fullFacets");
-        //console.log("table 2", table);
+        var table = $('table#fullFacets');
         var facetName = $(table).data('facet');
-        var displayName = $(table).data('label');
-        //loadMultiFacets(facetName, displayName, criteria, foffset);
         loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, false);
     });
 
     // Email alert buttons
-    var alertsUrlPrefix = BC_CONF.alertsUrl || "http://alerts.ala.org.au";
-    $("a#alertNewRecords, a#alertNewAnnotations").click(function(e) {
+    var alertsUrlPrefix = BC_CONF.alertsUrl || 'http://alerts.ala.org.au';
+    $('a#alertNewRecords, a#alertNewAnnotations').click(function(e) {
         e.preventDefault();
-        var query = $("<p>"+BC_CONF.queryString+"</p>").text(); // strips <span> from string
-        var fqArray = decodeURIComponent(BC_CONF.facetQueries).split('&fq=').filter(function(e){ return e === 0 || e }); // remove empty elements
-        if (fqArray) {
-            var fqueryString = fqArray.join("; ");
-            if(fqueryString.length > 0){
-                query += " (" + fqueryString + ")"; // append the fq queries to queryString
+        var query = $('<p>' + BC_CONF.queryString + '</p>').text(); // strips <span> from string
+        var fqArray = decodeURIComponent(BC_CONF.facetQueries).split('&fq=').filter(function(e) { return e === 0 || e; }); // remove empty elements
+        if(fqArray) {
+            var fqueryString = fqArray.join('; ');
+            if(fqueryString.length > 0) {
+                query += ' (' + fqueryString + ')'; // append the fq queries to queryString
             }
         }
-        var methodName = $(this).data("method");
-        var url = alertsUrlPrefix + "/ws/" + methodName + "?";
-        url += "queryDisplayName="+encodeURIComponent(query);
-        url += "&baseUrlForWS=" + encodeURIComponent(BC_CONF.biocacheServiceUrl.replace(/\/ws$/,""));
-        url += "&baseUrlForUI=" + encodeURIComponent(BC_CONF.serverName);
-        url += "&webserviceQuery=%2Fws%2Foccurrences%2Fsearch" + BC_CONF.searchString;
-        url += "&uiQuery=%2Foccurrences%2Fsearch%3Fq%3D*%3A*";
-        url += "&resourceName=" + encodeURIComponent(BC_CONF.resourceName);
-        //console.log("url", query, methodName, url);
+        var methodName = $(this).data('method');
+        var url = alertsUrlPrefix + '/ws/' + methodName + '?';
+        url += 'queryDisplayName=' + encodeURIComponent(query);
+        url += '&baseUrlForWS=' + encodeURIComponent(BC_CONF.biocacheServiceUrl.replace(/\/ws$/, ''));
+        url += '&baseUrlForUI=' + encodeURIComponent(BC_CONF.serverName);
+        url += '&webserviceQuery=%2Fws%2Foccurrences%2Fsearch' + BC_CONF.searchString;
+        url += '&uiQuery=%2Foccurrences%2Fsearch%3Fq%3D*%3A*';
+        url += '&resourceName=' + encodeURIComponent(BC_CONF.resourceName);
         window.location.href = url;
     });
 
