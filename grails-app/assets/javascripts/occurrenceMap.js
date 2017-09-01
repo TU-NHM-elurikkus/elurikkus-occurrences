@@ -435,57 +435,56 @@ function rgbToHex(redD, greenD, blueD){
 OccurrenceMap.prototype.formatPopupHtml = function(record) {
     var ts = this.props.translations;
 
-    var displayHtml = "";
-
+    var displayHtml = '';
     // catalogNumber
-    if(record.raw.occurrence.catalogNumber != null){
-        displayHtml += ts['record.catalogNumber.label'] + ': ' + record.raw.occurrence.catalogNumber + '<br />';
-    } else if(record.processed.occurrence.catalogNumber != null){
-        displayHtml += ts['record.catalogNumber.label'] + ': ' + record.processed.occurrence.catalogNumber + '<br />';
+    if(record.raw.occurrence.catalogNumber) {
+        displayHtml += '<b>' + ts['record.catalogNumber.label'] + ':</b> ' + record.raw.occurrence.catalogNumber + '<br />';
+    } else if(record.processed.occurrence.catalogNumber) {
+        displayHtml += '<b>' + ts['record.catalogNumber.label'] + ':</b> ' + record.processed.occurrence.catalogNumber + '<br />';
     }
 
     // record or field number
-    if(record.raw.occurrence.recordNumber != null){
-        displayHtml += ts['record.recordNumber.label'] + ': ' + record.raw.occurrence.recordNumber + '<br />';
-    } else if(record.raw.occurrence.fieldNumber != null){
-        displayHtml += ts['record.fieldNumber.label'] + ': ' + record.raw.occurrence.fieldNumber + '<br />';
+    if(record.raw.occurrence.recordNumber) {
+        displayHtml += '<b>' + ts['record.recordNumber.label'] + ':</b> ' + record.raw.occurrence.recordNumber + '<br />';
+    } else if(record.raw.occurrence.fieldNumber) {
+        displayHtml += '<b>' + ts['record.fieldNumber.label'] + ':</b> ' + record.raw.occurrence.fieldNumber + '<br />';
     }
 
-    if(record.raw.classification.vernacularName!=null ){
+    if(record.raw.classification.vernacularName) {
         displayHtml += record.raw.classification.vernacularName + '<br />';
-    } else if(record.processed.classification.vernacularName!=null){
+    } else if(record.processed.classification.vernacularName) {
         displayHtml += record.processed.classification.vernacularName + '<br />';
     }
 
-    if (record.processed.classification.scientificName) {
-        displayHtml += formatSciName(record.processed.classification.scientificName, record.processed.classification.taxonRankID)  + '<br />';
+    if(record.processed.classification.scientificName) {
+        displayHtml += formatSciName(record.processed.classification.scientificName, record.processed.classification.taxonRankID) + '<br />';
     } else {
-        displayHtml += record.raw.classification.scientificName  + '<br />';
+        displayHtml += record.raw.classification.scientificName + '<br />';
     }
 
-    if(record.processed.attribution.institutionName != null){
-        displayHtml += ts['record.institutionName.label'] + ': ' + record.processed.attribution.institutionName + '<br />';
-    } else if(record.processed.attribution.dataResourceName != null){
-        displayHtml += ts['record.dataResourceName.label'] + ': ' + record.processed.attribution.dataResourceName + '<br />';
+    if(record.processed.attribution.institutionName) {
+        displayHtml += '<b>' + ts['record.institutionName.label'] + ':</b> ' + record.processed.attribution.institutionName + '<br />';
+    } else if(record.processed.attribution.dataResourceName) {
+        displayHtml += '<b>' + ts['record.dataResourceName.label'] + ':</b> ' + record.processed.attribution.dataResourceName + '<br />';
     }
 
-    if(record.processed.attribution.collectionName != null){
-        displayHtml += ts['record.collectionName.label'] + ': ' + record.processed.attribution.collectionName  + '<br />';
+    if(record.processed.attribution.collectionName) {
+        displayHtml += '<b>' + ts['record.collectionName.label'] + ':</b> ' + record.processed.attribution.collectionName + '<br />';
     }
 
-    if(record.raw.occurrence.recordedBy != null){
-        displayHtml += ts['record.recordedBy.label']  + ': ' + record.raw.occurrence.recordedBy + '<br />';
-    } else if(record.processed.occurrence.recordedBy != null){
-        displayHtml += ts['record.recordedBy.label'] + ': ' + record.processed.occurrence.recordedBy + '<br />';
+    if(record.raw.occurrence.recordedBy) {
+        displayHtml += '<b>' + ts['record.recordedBy.label'] + ':</b> ' + record.raw.occurrence.recordedBy + '<br />';
+    } else if(record.processed.occurrence.recordedBy) {
+        displayHtml += '<b>' + ts['record.recordedBy.label'] + ':</b> ' + record.processed.occurrence.recordedBy + '<br />';
     }
 
-    if(record.processed.event.eventDate != null){
-        var label = ts['record.eventDate.label'] + ': ';
+    if(record.processed.event.eventDate) {
+        var label = '<b>' + ts['record.eventDate.label'] + ':</b> ';
         displayHtml += label + record.processed.event.eventDate;
     }
 
     return displayHtml;
-}
+};
 
 OccurrenceMap.prototype.getRecordInfo = function() {
     // http://biocache.ala.org.au/ws/occurrences/c00c2f6a-3ae8-4e82-ade4-fc0220529032
@@ -945,7 +944,7 @@ TaimeatlasMode.prototype.initialize = function() {
                         self.showPopup(e, feature);
                     });
                 }
-            })
+            });
 
             self.layer = layer;
 
@@ -956,15 +955,15 @@ TaimeatlasMode.prototype.initialize = function() {
             $('#ta-grid-color-mode').removeClass('hidden-node');
         });
     });
-}
+};
 
 TaimeatlasMode.prototype.showPopup = function(e, feature) {
     var popup = new TaimeatlasMapPopup(this.map, e, feature);
     popup.initialise();
-}
+};
 
 TaimeatlasMode.prototype.click = function(e) {
-}
+};
 
 TaimeatlasMode.prototype.createStyle = function(opacity, outline, colorModeCode) {
     var colorMode = GRID_COLOR_MODES[colorModeCode](this.counts);
@@ -977,11 +976,11 @@ TaimeatlasMode.prototype.createStyle = function(opacity, outline, colorModeCode)
             weight: outline ? 1 : 0
         };
     };
-}
+};
 
 TaimeatlasMode.prototype.setOpacity = function(opacity) {
     this.updateStyle();
-}
+};
 
 TaimeatlasMode.prototype.updateStyle = function() {
     // Layer is initialised async, so need to guard
@@ -992,11 +991,11 @@ TaimeatlasMode.prototype.updateStyle = function() {
 
         this.layer.setStyle(this.createStyle(opacity, outline, colorModeCode));
     }
-}
+};
 
 TaimeatlasMode.prototype.destroy = function() {
     $('#ta-grid-color-mode').addClass('hidden-node');
-}
+};
 
 function MapPopup(map) {
     this.map = map;
@@ -1007,28 +1006,28 @@ function MapPopup(map) {
 
 // Do the initial load, create popup
 MapPopup.prototype.initialise = function() {
-}
+};
 
 MapPopup.prototype.next = function() {
     if(this.currentIdx < this.total - 1) {
         this.switchOccurrence(this.currentIdx + 1);
     }
-}
+};
 
 MapPopup.prototype.previous = function() {
     if(this.currentIdx > 0) {
         this.switchOccurrence(this.currentIdx - 1);
     }
-}
+};
 
 MapPopup.prototype.changeIndex = function(idx) {
     this.currentIdx = idx;
 
-    this.$popupClone.find('.nextRecord button').toggleClass('disabled', idx >= this.total - 1);
-    this.$popupClone.find('.previousRecord button').toggleClass('disabled', idx <= 0);
+    this.$popupClone.find('.nextRecord a').toggleClass('disabled', idx >= this.total - 1);
+    this.$popupClone.find('.previousRecord a').toggleClass('disabled', idx <= 0);
 
     this.$popupClone.find('.currentRecord').html(idx + 1);
-}
+};
 
 // Create popup and insert it into DOM
 MapPopup.prototype.createElement = function() {
@@ -1044,11 +1043,11 @@ MapPopup.prototype.createElement = function() {
     // footer
     $popupClone.find('.multiRecordFooter').show();
 
-    $popupClone.find('.nextRecord button').on('click', function() {
+    $popupClone.find('.nextRecord a').on('click', function() {
         this.next();
     }.bind(this));
 
-    $popupClone.find('.previousRecord button').on('click', function() {
+    $popupClone.find('.previousRecord a').on('click', function() {
         this.previous();
     }.bind(this));
 
@@ -1058,11 +1057,11 @@ MapPopup.prototype.createElement = function() {
 
     this.map.popup.setContent(this.$popupClone[0]);
     this.map.popup.openOn(this.map.map);
-}
+};
 
 MapPopup.prototype.getViewAllLink = function() {
     return 'http://example.com';
-}
+};
 
 // Takes full occurrence info and shows in the popup
 MapPopup.prototype.showOccurrence = function(record) {
@@ -1070,19 +1069,19 @@ MapPopup.prototype.showOccurrence = function(record) {
 
     this.$popupClone.find('.recordSummary').html(html);
 
-    if (record.raw) {
-        var html = this.map.formatPopupHtml(record);
+    if(record.raw) {
+        html = this.map.formatPopupHtml(record);
         this.$popupClone.find('.recordSummary').html(html);
 
-        this.$popupClone.find('.recordLink a').attr('href', this.map.props.contextPath + "/occurrences/" + record.raw.uuid);
+        this.$popupClone.find('.recordLink a').attr('href', this.map.props.contextPath + '/occurrences/' + record.raw.uuid);
         this.$popupClone.find('.recordLink a').attr('disabled', false);
     } else {
         // missing record - disable "view record" button and display message
-        this.$popupClone.find('.recordLink a').attr('disabled', true).attr('href','javascript: void(0)');
+        this.$popupClone.find('.recordLink a').attr('disabled', true).attr('href', 'javascript: void(0)');
         // insert into clone
-        this.$popupClone.find('.recordSummary').html('<br>' + this.map.props.translations['search.recordNotFoundForId'] + ": <span style='white-space:nowrap;'>" + recordUuid + '</span><br><br>' );
+        this.$popupClone.find('.recordSummary').html('<br>' + this.map.props.translations['search.recordNotFoundForId'] + ': <span style="white-space:nowrap;">' + recordUuid + '</span><br><br>');
     }
-}
+};
 
 // Switches to occurrence # idx
 MapPopup.prototype.switchOccurrence = function(idx) {

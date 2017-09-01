@@ -179,7 +179,7 @@
 
                 <%-- XXX Hide doesn't work with Bootstrap 4.--%>
                 <button id="downloadFacet" class="erk-button erk-button--light" title="${g.message(code:'facets.downloadfacets.button')}">
-                    <i class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button')}"></i>
+                    <span class="fa fa-download" title="${g.message(code:'facets.downloadfacets.button')}"></span>
 
                     <span class="hide">
                         <g:message code="facets.downloadfacets.button" />

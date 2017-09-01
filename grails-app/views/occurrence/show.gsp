@@ -145,10 +145,11 @@
 
                     <div class="page-header-links">
                         <a href="#" id="backBtn" title="Return to search results" class="page-header-links__link">
+                            <span class="fa fa-arrow-left"></span>
                             <g:message code="show.backbtn.navigator" />
                         </a>
                         <a href="${g.createLink(uri: '/search')}" class="page-header-links__link">
-                            <i class="fa fa-search"></i>
+                            <span class="fa fa-search"></span>
                             <g:message code="home.index.title" />
                         </a>
                     </div>
@@ -171,7 +172,7 @@
                                     title="${message(code: 'show.showcontactcurator.title')}"
                                 >
                                     <span id="contactCuratorSpan" href="#contactCuratorView" title="">
-                                        <i class="fa fa-envelope-o"></i>
+                                        <span class="fa fa-envelope-o"></span>
                                         <g:message code="show.showcontactcurator.label" />
                                     </span>
                                 </button>

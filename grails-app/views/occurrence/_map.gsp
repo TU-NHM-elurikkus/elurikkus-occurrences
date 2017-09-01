@@ -166,7 +166,7 @@
                 href="${grailsApplication.config.spatial.baseUrl}${spatialPortalLink}${spatialPortalUrlParams}"
                 title="Continue analysis in ALA Spatial Portal"
             >
-                <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
+                <span class="fa fa-map-marker"></span>&nbsp;&nbsp;
                 <g:message code="map.spatialportal.btn.label" />
             </a>
         </div>
@@ -303,14 +303,14 @@
 <div id="template" style="display:none">
     <div class="colourbyTemplate">
         <a class="colour-by-legend-toggle colour-by-control tooltips" href="#" title="${message(code: 'map.legend.title')}">
-            <i class="fa fa-list-ul fa-lg"></i>
+            <span class="fa fa-list-ul fa-lg"></span>
         </a>
 
         <form class="leaflet-control-layers-list">
             <div class="leaflet-control-layers-overlays">
                 <div style="overflow:auto; max-height:400px;">
                     <a href="#" class="hideColourControl pull-right" style="padding-left:10px;">
-                        <i class="fa fa-remove"></i>
+                        <span class="fa fa-remove"></span>
                     </a>
 
                     <div class="legend-container">
@@ -411,39 +411,26 @@
             <g:message code="search.map.of" />
             <span class="totalrecords"></span>
             <g:message code="search.map.occurrences" />
-            &nbsp;&nbsp;
-            <i class="icon-share-alt"></i>
-            <a href="#" class="viewAllRecords">
-                <button class="erk-button erk-button--light">
-                    <span class="fa fa-list"></span>
-                    <g:message code="search.map.viewAllRecords" />
-                </button>
-            </a>
         </div>
+
+        <a href="#" class="viewAllRecords">
+            <span class="fa fa-list"></span>
+            <g:message code="search.map.viewAllRecords" />
+        </a>
 
         <div class="recordSummary"></div>
 
-        <p>
-            <div class="hide multiRecordFooter">
-                <span class="previousRecord ">
-                    <button class="erk-button erk-button--light btn-mini disabled">
-                        <g:message code="search.map.popup.prev" />
-                    </button>
-                </span>
+        <div class="hide multiRecordFooter">
+            <a href="#" class="erk-link disabled previousRecord">
+                <g:message code="search.map.popup.prev" />
+            </a>
 
-                <span class="nextRecord ">
-                    <button class="erk-button erk-button--light btn-mini disabled">
-                        <g:message code="search.map.popup.next" />
-                    </button>
-                </span>
-            </div>
-        </p>
+            <a href="#" class="erk-link recordLink">
+                <g:message code="search.map.popup.viewRecord" />
+            </a>
 
-        <div class="recordLink">
-            <a href="#">
-                <button class="erk-button erk-button--light">
-                    <g:message code="search.map.popup.viewRecord" />
-                </button>
+            <a href="#" class="erk-link disabled nextRecord">
+                <g:message code="search.map.popup.next" />
             </a>
         </div>
     </div>

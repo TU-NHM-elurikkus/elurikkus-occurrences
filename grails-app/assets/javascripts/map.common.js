@@ -26,9 +26,12 @@ function generatePopup(layer, latlng, query, map) {
     L.popup()
         .setLatLng([latlng.lat, latlng.lng])
         .setContent(
-            'species count: <b id=\'speciesCountDiv\'>calculating...</b><br>' +
-            'occurrence count: <b id=\'occurrenceCountDiv\'>calculating...</b><br>' +
+            'species count: <b id="speciesCountDiv">calculating...</b>' +
+            '<br />' +
+            'occurrence count: <b id="occurrenceCountDiv">calculating...</b>' +
+            '<br />' +
             '<a id="showOnlyTheseRecords" href="' + recordsLink + '">' +
+                '<span class="fa fa-search"></span>' +
                 $.i18n.prop('search.map.popup.linkText') +
             '</a>'
         )
@@ -98,7 +101,7 @@ function drawWktObj(wktString) {
 
 function addZoomControl(map) {
     L.control.zoom({
-        zoomInTitle: jQuery.i18n.prop('advancedsearch.js.map.zoomin'),
-        zoomOutTitle: jQuery.i18n.prop('advancedsearch.js.map.zoomout'),
+        zoomInTitle: $.i18n.prop('advancedsearch.js.map.zoomin'),
+        zoomOutTitle: $.i18n.prop('advancedsearch.js.map.zoomout'),
     }).addTo(map);
 }

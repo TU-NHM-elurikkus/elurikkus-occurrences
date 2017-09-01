@@ -51,6 +51,7 @@
                             />
 
                             <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
+                                <span class="fa fa-search"></span>
                                 <g:message code="advancedsearch.button.submit" />
                             </button>
                         </div>
@@ -88,7 +89,7 @@
 
                     <div class="form-group">
                         <button id="viewAllRecords" class="erk-button erk-button--dark">
-                            <i class="fa fa-list"></i>
+                            <span class="fa fa-list"></span>
                             <g:message code="eya.searchform.a.viewallrecords.label" />
                         </button>
                     </div>
