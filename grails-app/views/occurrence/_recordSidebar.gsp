@@ -131,15 +131,15 @@
             <a href="#dataQuality">
                 <g:message code="show.dataquality.title" />
                 (${record.systemAssertions.failed?.size()?:0}
-                <span class="fa fa-times-circle tooltips" style="color:red;" title="<g:message code='assertions.failed' />"></span>,
+                <span class="fa fa-times-circle tooltips" style="color:red;" title="${message(code: 'assertions.failed')}"></span>,
                 ${record.systemAssertions.warning?.size()?:0}
-                <span class="fa fa-exclamation-circle tooltips" style="color:orange;" title="<g:message code='assertions.warnings' />"></span>,
+                <span class="fa fa-exclamation-circle tooltips" style="color:orange;" title="${message(code: 'assertions.warnings')}"></span>,
                 ${record.systemAssertions.passed?.size()?:0}
-                <span class="fa fa-check-circle tooltips" style="color:green;" title="<g:message code='assertions.passed' />"></span>,
+                <span class="fa fa-check-circle tooltips" style="color:green;" title="${message(code: 'assertions.passed')}"></span>,
                 ${record.systemAssertions.missing?.size()?:0}
-                <span class="fa fa-question-circle tooltips" style="color:gray;" title="<g:message code='assertions.missing' />"></span>,
+                <span class="fa fa-question-circle tooltips" style="color:gray;" title="${message(code: 'assertions.missing')}"></span>,
                 ${record.systemAssertions.unchecked?.size()?:0}
-                <span class="fa fa-ban tooltips" style="color:gray;" title="<g:message code='assertions.unchecked' />"></span>)
+                <span class="fa fa-ban tooltips" style="color:gray;" title="${message(code: 'assertions.unchecked')}"></span>)
             </a>
         </div>
     </g:if>
@@ -398,7 +398,7 @@
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
-                    title:"Occurrence Location"
+                    title:"${message(code: 'show.occurrencemap.marker')}"
                 });
 
                 <g:if test="${record.processed.location.coordinateUncertaintyInMeters}">
@@ -421,9 +421,9 @@
             });
         </script>
 
-        <h2>
+        <h3>
             <g:message code="show.occurrencemap.title" />
-        </h2>
+        </h3>
 
         <div id="occurrenceMap" class="google-maps"></div>
     </div>
@@ -431,9 +431,9 @@
 
 <g:if test="${record.images}">
     <div class="sidebar">
-        <h2 id="images">
+        <h3 id="images">
             <g:message code="show.sidebar.image.title" />
-        </h2>
+        </h3>
 
         <div id="occurrenceImages" class="occurrence-images">
             <g:each in="${record.images}" var="image">
@@ -514,7 +514,7 @@
 
 <g:if test="${record.sounds}">
     <div class="sidebar">
-        <h3 id="soundsHeader" style="margin: 20px 0 0 0;">
+        <h3 id="soundsHeader">
             <g:message code="show.soundsheader.title" />
         </h3>
         <div>
@@ -561,9 +561,9 @@
 
 <div id="dataQuality" class="additionalData">
     <a name="dataQualityReport"></a>
-    <h2>
+    <h3>
         <g:message code="show.dataquality.title" />
-    </h2>
+    </h3>
 
     <div id="dataQualityModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-header">
