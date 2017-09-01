@@ -365,7 +365,7 @@
             type="submit"
             class="erk-button erk-button--dark"
         >
-            <i class="fa fa-search"></i>
+            <span class="fa fa-search"></span>
             <g:message code="advancedsearch.button.submit" />
         </button>
 

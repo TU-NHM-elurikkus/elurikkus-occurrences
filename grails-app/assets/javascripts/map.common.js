@@ -31,7 +31,7 @@ function generatePopup(layer, latlng, query, map) {
             'occurrence count: <b id="occurrenceCountDiv">calculating...</b>' +
             '<br />' +
             '<a id="showOnlyTheseRecords" href="' + recordsLink + '">' +
-                '<i class="fa fa-search"></i>' +
+                '<span class="fa fa-search"></span>' +
                 $.i18n.prop('search.map.popup.linkText') +
             '</a>'
         )

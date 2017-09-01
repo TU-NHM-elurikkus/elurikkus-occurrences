@@ -130,11 +130,16 @@
         <div class="sidebar-general-info__item">
             <a href="#dataQuality">
                 <g:message code="show.dataquality.title" />
-                (${record.systemAssertions.failed?.size()?:0} <i class="fa fa-times-circle tooltips" style="color:red;" title="<g:message code='assertions.failed' />"></i>,
-                ${record.systemAssertions.warning?.size()?:0} <i class="fa fa-exclamation-circle tooltips" style="color:orange;" title="<g:message code='assertions.warnings' />"></i>,
-                ${record.systemAssertions.passed?.size()?:0} <i class="fa fa-check-circle tooltips" style="color:green;" title="<g:message code='assertions.passed' />"></i>,
-                ${record.systemAssertions.missing?.size()?:0} <i class="fa fa-question-circle tooltips" style="color:gray;" title="<g:message code='assertions.missing' />"></i>,
-                ${record.systemAssertions.unchecked?.size()?:0} <i class="fa fa-ban tooltips" style="color:gray;" title="<g:message code='assertions.unchecked' />"></i>)
+                (${record.systemAssertions.failed?.size()?:0}
+                <span class="fa fa-times-circle tooltips" style="color:red;" title="<g:message code='assertions.failed' />"></span>,
+                ${record.systemAssertions.warning?.size()?:0}
+                <span class="fa fa-exclamation-circle tooltips" style="color:orange;" title="<g:message code='assertions.warnings' />"></span>,
+                ${record.systemAssertions.passed?.size()?:0}
+                <span class="fa fa-check-circle tooltips" style="color:green;" title="<g:message code='assertions.passed' />"></span>,
+                ${record.systemAssertions.missing?.size()?:0}
+                <span class="fa fa-question-circle tooltips" style="color:gray;" title="<g:message code='assertions.missing' />"></span>,
+                ${record.systemAssertions.unchecked?.size()?:0}
+                <span class="fa fa-ban tooltips" style="color:gray;" title="<g:message code='assertions.unchecked' />"></span>)
             </a>
         </div>
     </g:if>
@@ -605,7 +610,7 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showErrorAndWarningTests" onclick="toggleTests(this)">
-                            <i class="fa fa-caret-square-o-up"></i>
+                            <span class="fa fa-caret-square-o-up"></span>
                             ${failedTestSet ? failedTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.fail" />
                             ${warningTestSet ? warningTestSet.length() : 0} <g:message code="show.tabledataqualityresults.tr01td01.warning" />
                         </a>
@@ -620,7 +625,7 @@
                         </td>
 
                         <td>
-                            <i class="fa fa-times-circle" style="color:red;"></i>
+                            <span class="fa fa-times-circle" style="color:red;"></span>
                             <g:message code="show.tabledataqualityresults.tr01td02" />
                         </td>
                     </tr>
@@ -634,7 +639,7 @@
                         </td>
 
                         <td>
-                            <i class="fa fa-exclamation-circle" style="color:orange;"></i>
+                            <span class="fa fa-exclamation-circle" style="color:orange;"></span>
                             <g:message code="show.tabledataqualityresults.tr02td02" />
                         </td>
                     </tr>
@@ -648,7 +653,7 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showPassedTests" onclick="toggleTests(this)">
-                            <i class="fa fa-caret-square-o-down"></i>
+                            <span class="fa fa-caret-square-o-down"></span>
                             ${record.systemAssertions.passed.length()}
                             <g:message code="show.tabledataqualityresults.tr03td01" />
                         </a>
@@ -663,7 +668,7 @@
                         </td>
 
                         <td>
-                            <i class="fa fa-check-circle" style="color:green;"></i>
+                            <span class="fa fa-check-circle" style="color:green;"></span>
                             <g:message code="show.tabledataqualityresults.tr03td02" />
                         </td>
                     </tr>
@@ -675,7 +680,7 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showMissingPropResult" onclick="toggleTests(this)">
-                            <i class="fa fa-caret-square-o-down"></i>
+                            <span class="fa fa-caret-square-o-down"></span>
                             ${record.systemAssertions.missing.length()}
                             <g:message code="show.tabledataqualityresults.tr04td01" />
                         </a>
@@ -691,7 +696,7 @@
                         <alatag:dataQualityHelp code="${test.code}" />
                     </td>
                     <td>
-                        <i class="fa fa-question-circle"></i>
+                        <span class="fa fa-question-circle"></span>
                         <g:message code="show.tabledataqualityresults.tr05td02" />
                     </td>
                 </tr>
@@ -701,7 +706,7 @@
                 <tr>
                     <td colspan="2">
                         <a href="javascript:void(0)" id="showUncheckedTests" onclick="toggleTests(this)">
-                            <i class="fa fa-caret-square-o-down"></i>
+                            <span class="fa fa-caret-square-o-down"></span>
                             ${record.systemAssertions.unchecked.length()}
                             <g:message code="show.tabledataqualityresults.tr06td01" />
                         </a>
@@ -716,7 +721,7 @@
                         <g:message code="${test.name}" default="${test.name}" /><alatag:dataQualityHelp code="${test.code}" />
                     </td>
                     <td>
-                        <i class="fa fa-ban"></i>
+                        <span class="fa fa-ban"></span>
                         <g:message code="show.tabledataqualityresults.tr07td02" />
                     </td>
                 </tr>

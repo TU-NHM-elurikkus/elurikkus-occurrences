@@ -1147,7 +1147,7 @@ var taxonomyChart = {
         if(this.hasState()) {
             $recordsLink.html('View records for ' + this.rank + ' ' + this.name);
         } else {
-            $recordsLink.html('<i class="fa fa-list"></i> View records');
+            $recordsLink.html('<span class="fa fa-list"></span> View records');
         }
 
         // setup a click handler - if requested

@@ -65,10 +65,10 @@
                 // whatever this is
                 userRatingHelpText: `
                     <div>
-                        <b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>
+                        <b>Up vote (<span class="fa fa-thumbs-o-up" aria-hidden="true"></span>) an image:</b>
                         Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.
                         <br /><br />
-                        <b>Down vote (<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>) an image:</b>
+                        <b>Down vote (<span class="fa fa-thumbs-o-down" aria-hidden="true"></span>) an image:</b>
                         Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.
                         <br />
                     </div>
@@ -105,22 +105,22 @@
 
             <div class="page-header-links">
                 <a href="${g.createLink(uri: '/search')}#tab-advanced-search" class="page-header-links__link">
-                    <i class="fa fa-search"></i>
+                    <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator02" />
                 </a>
 
                 <a href="${g.createLink(uri: '/search')}#tab-taxa-upload" class="page-header-links__link">
-                    <i class="fa fa-search"></i>
+                    <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator03" />
                 </a>
 
                 <a href="${g.createLink(uri: '/search')}#tab-catalog-upload" class="page-header-links__link">
-                    <i class="fa fa-search"></i>
+                    <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator04" />
                 </a>
 
                 <a href="${g.createLink(uri: '/search')}#tab-spatial-search" class="page-header-links__link">
-                    <i class="fa fa-search"></i>
+                    <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator05" />
                 </a>
             </div>
@@ -278,7 +278,7 @@
                                 <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
 
                                 <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
-                                    <i class="fa fa-search"></i>
+                                    <span class="fa fa-search"></span>
                                     <g:message code="advancedsearch.button.submit" />
                                 </button>
                             </div>
@@ -368,7 +368,7 @@
                                 class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
                                 title="${message(code: 'search.filter.title')}"
                             >
-                                <i class="fa fa-filter"></i>
+                                <span class="fa fa-filter"></span>
                                 <g:message code="search.filter.customise.label" />
 
                                 <span class="caret"></span>

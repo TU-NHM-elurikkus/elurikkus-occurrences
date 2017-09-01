@@ -166,7 +166,7 @@
                 href="${grailsApplication.config.spatial.baseUrl}${spatialPortalLink}${spatialPortalUrlParams}"
                 title="Continue analysis in ALA Spatial Portal"
             >
-                <i class="fa fa-map-marker"></i>&nbsp;&nbsp;
+                <span class="fa fa-map-marker"></span>&nbsp;&nbsp;
                 <g:message code="map.spatialportal.btn.label" />
             </a>
         </div>
@@ -303,14 +303,14 @@
 <div id="template" style="display:none">
     <div class="colourbyTemplate">
         <a class="colour-by-legend-toggle colour-by-control tooltips" href="#" title="${message(code: 'map.legend.title')}">
-            <i class="fa fa-list-ul fa-lg"></i>
+            <span class="fa fa-list-ul fa-lg"></span>
         </a>
 
         <form class="leaflet-control-layers-list">
             <div class="leaflet-control-layers-overlays">
                 <div style="overflow:auto; max-height:400px;">
                     <a href="#" class="hideColourControl pull-right" style="padding-left:10px;">
-                        <i class="fa fa-remove"></i>
+                        <span class="fa fa-remove"></span>
                     </a>
 
                     <div class="legend-container">

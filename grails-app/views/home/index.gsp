@@ -85,7 +85,7 @@
                                 <input type="text" name="taxa" id="taxa" class="input-plus__field" />
 
                                 <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
-                                    <i class="fa fa-search"></i>
+                                    <span class="fa fa-search"></span>
                                     <g:message code="advancedsearch.button.submit" />
                                 </button>
                             </div>
@@ -126,7 +126,7 @@
                             type="submit"
                             class="erk-button erk-button--dark"
                         >
-                            <i class="fa fa-search"></i>
+                            <span class="fa fa-search"></span>
                             <g:message code="advancedsearch.button.submit" />
                         </button>
                     </div>
@@ -155,7 +155,7 @@
                             disabled
                             class="erk-button erk-button--dark"
                         >
-                            <i class="fa fa-search"></i>
+                            <span class="fa fa-search"></span>
                             <g:message code="advancedsearch.button.submit" />
                         </button>
                     </div>

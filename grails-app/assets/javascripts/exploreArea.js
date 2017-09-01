@@ -369,7 +369,7 @@ function loadExploreArea(EYA_CONF) {
                     'Number of records: ' + n.properties.count +
                     '<br />' +
                     '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.05">' +
-                        '<i class="fa fa-list"></i> View records' +
+                        '<span class="fa fa-list"></span> View records' +
                     '</a>' +
                 '</div>';
 
@@ -539,7 +539,7 @@ function loadExploreArea(EYA_CONF) {
                 if(data[i].guid) {
                     speciesInfo +=
                         '<a title="' + infoTitle + '" href="' + EYA_CONF.speciesPageUrl + data[i].guid + '">' +
-                            '<i class="fa fa-tag"></i> Species page' +
+                            '<span class="fa fa-tag"></span> Species page' +
                         '</a> | ';
                 }
                 speciesInfo +=
@@ -547,7 +547,7 @@ function loadExploreArea(EYA_CONF) {
                         '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
                         recsTitle + '"' +
                     '>' +
-                        '<i class="fa fa-list"></i> View records' +
+                        '<span class="fa fa-list"></span> View records' +
                     '</a></div>';
                 tr += speciesInfo;
                 // add number of records

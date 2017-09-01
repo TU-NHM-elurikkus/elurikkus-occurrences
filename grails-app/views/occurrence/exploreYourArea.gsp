@@ -51,7 +51,7 @@
                             />
 
                             <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
-                                <i class="fa fa-search"></i>
+                                <span class="fa fa-search"></span>
                                 <g:message code="advancedsearch.button.submit" />
                             </button>
                         </div>
@@ -89,14 +89,14 @@
 
                     <div class="form-group">
                         <button id="viewAllRecords" class="erk-button erk-button--dark">
-                            <i class="fa fa-list"></i>
+                            <span class="fa fa-list"></span>
                             <g:message code="eya.searchform.a.viewallrecords.label" />
                         </button>
                     </div>
 
                     <div class="form-group">
                         <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                            <i class="fa fa-download"></i>
+                            <span class="fa fa-download"></span>
                             <g:message code="download.download.label" />
                         </button>
                     </div>

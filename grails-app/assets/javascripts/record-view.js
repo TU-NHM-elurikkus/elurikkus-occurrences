@@ -634,11 +634,11 @@ function sendEmail(strEncoded) {
 }
 
 function toggleTests(btn) {
-    if($(btn).children('i.fa-caret-square-o-up').length !== 0) {
-        $(btn).children('i.fa-caret-square-o-up').remove();
-        $(btn).prepend('<i class="fa fa-caret-square-o-down"></i>');
+    if($(btn).children('span.fa-caret-square-o-up').length !== 0) {
+        $(btn).children('span.fa-caret-square-o-up').remove();
+        $(btn).prepend('<span class="fa fa-caret-square-o-down"></span>');
     } else if($(btn).children('i.fa-caret-square-o-down').length !== 0) {
-        $(btn).children('i.fa-caret-square-o-down').remove();
-        $(btn).prepend('<i class="fa fa-caret-square-o-up"></i>');
+        $(btn).children('span.fa-caret-square-o-down').remove();
+        $(btn).prepend('<span class="fa fa-caret-square-o-up"></span>');
     }
 }
