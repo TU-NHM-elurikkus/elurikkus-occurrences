@@ -689,7 +689,7 @@
                                     <button class="erk-button erk-button--light">
                                         <g:message code="generic.button.loadMore" />
                                     </button>
-                                    <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                    <g:img plugin="elurikkus-biocache-hubs" dir="images" file="spinner.gif" style="display:none;" alt="indicator icon" />
                                 </div>
                             </div> <%-- end #speciesWrapper --%>
                         </g:if>
@@ -703,7 +703,7 @@
                                 <div id="loadMoreImages" style="display:none;">
                                     <button class="erk-button erk-button--light">
                                         <g:message code="generic.button.loadMore" />
-                                        <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
+                                        <g:img plugin="elurikkus-biocache-hubs" dir="images" file="spinner.gif" style="display:none;" alt="indicator icon" />
                                      </button>
                                  </div>
 

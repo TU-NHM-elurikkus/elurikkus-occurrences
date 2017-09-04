@@ -696,7 +696,7 @@
                         </a>
 
                         <span class="deleteAssertionSubmitProgress" style="display:none;">
-                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" alt="indicator icon" />
+                            <g:img plugin="elurikkus-biocache-hubs" dir="images" file="spinner.gif" alt="indicator icon" />
                         </span>
                     </p>
 

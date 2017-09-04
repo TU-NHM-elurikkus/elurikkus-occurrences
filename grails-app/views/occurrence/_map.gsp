@@ -421,17 +421,17 @@
         <div class="recordSummary"></div>
 
         <div class="hide multiRecordFooter">
-            <a href="#" class="erk-link disabled previousRecord">
+            <button class="erk-link-button disabled previousRecord">
                 <g:message code="search.map.popup.prev" />
-            </a>
+            </button>
 
-            <a href="#" class="erk-link recordLink">
+            <button class="erk-link-button recordLink">
                 <g:message code="search.map.popup.viewRecord" />
-            </a>
+            </button>
 
-            <a href="#" class="erk-link disabled nextRecord">
+            <button type="button" class="erk-link-button disabled nextRecord">
                 <g:message code="search.map.popup.next" />
-            </a>
+            </button>
         </div>
     </div>
 </div>
