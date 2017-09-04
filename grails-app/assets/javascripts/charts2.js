@@ -1025,12 +1025,11 @@ var taxonomyChart = {
 
         // add url params to set state
         if(this.rank) {
-            var hasName = this.name && this.name != jQuery.i18n.prop('recordcore.record.value.unspecified');
+            var hasName = this.name && this.name != $.i18n.prop('recordcore.record.value.unspecified');
             url += '&rank=' + this.rank + (hasName ? '&name=' + this.name : '');
         } else {
             url += '&max=' + (this.threshold ? this.threshold : '55');
         }
-        console.log(url);
 
         $.ajax({
             url: url,
@@ -1065,7 +1064,7 @@ var taxonomyChart = {
         dataTable.addColumn('string', chartLabels[name] ? chartLabels[name] : name);
         dataTable.addColumn('number', 'records');
         $.each(data.taxa, function(i, obj) {
-            label = obj.label ? obj.label : jQuery.i18n.prop('recordcore.record.value.unspecified');
+            label = obj.label ? obj.label : $.i18n.prop('recordcore.record.value.unspecified');
             dataTable.addRow([label, obj.count]);
         });
 
@@ -1104,7 +1103,7 @@ var taxonomyChart = {
         // draw the back button / instructions
         var $backLink = $('#backLink');
         if($backLink.length === 0) {
-            $backLink = $('<div class="erk-button erk-button--inline" id="backLink">&laquo; ' + jQuery.i18n.prop('charts2.taxonPie.previousRank') + '</div>').appendTo($outerContainer);  // create it
+            $backLink = $('<div class="erk-button erk-button--inline" id="backLink">&laquo; ' + $.i18n.prop('charts2.taxonPie.previousRank') + '</div>').appendTo($outerContainer);  // create it
             $backLink.click(function() {
                 // only act if link was real
                 if(!$backLink.hasClass('erk-button')) { return; }
@@ -1126,16 +1125,16 @@ var taxonomyChart = {
         }
         if(this.hasState()) {
             // show the prev link
-            $backLink.html('&laquo; ' + jQuery.i18n.prop('charts2.taxonPie.previousRank')).addClass('erk-button');
+            $backLink.html('&laquo; ' + $.i18n.prop('charts2.taxonPie.previousRank')).addClass('erk-button');
         } else {
             // show the instruction
-            $backLink.html(jQuery.i18n.prop('charts2.taxonPie.des')).removeClass('erk-button');
+            $backLink.html($.i18n.prop('charts2.taxonPie.des')).removeClass('erk-button');
         }
 
         // draw records link
         var $recordsLink = $('#recordsLink');
         if($recordsLink.length === 0) {
-            var linkDiv = '<div class="erk-link" id="recordsLink">' + jQuery.i18n.prop('charts2.taxonPie.viewRecords') + '</div>'
+            var linkDiv = '<div class="erk-link" id="recordsLink">' + $.i18n.prop('charts2.taxonPie.viewRecords') + '</div>'
             $recordsLink = $(linkDiv).appendTo($outerContainer);  // create it
             $recordsLink.click(function() {
                 thisChart.showRecords();  // called explicitly so we have the correct 'this' context
@@ -1144,9 +1143,9 @@ var taxonomyChart = {
 
         // set link text
         if(this.hasState()) {
-            $recordsLink.html(jQuery.i18n.prop('charts2.taxonPie.label') + ' ' + this.rank + ' ' + this.name);
+            $recordsLink.html($.i18n.prop('charts2.taxonPie.label') + ' ' + this.rank + ' ' + this.name);
         } else {
-            $recordsLink.html('<span class="fa fa-list"></span> ' + jQuery.i18n.prop('charts2.taxonPie.viewRecords'));
+            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts2.taxonPie.viewRecords'));
         }
 
         // setup a click handler - if requested
