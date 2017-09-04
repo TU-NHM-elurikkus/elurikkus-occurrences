@@ -485,11 +485,14 @@
         <g:message code="recordcore.occurencetaxonomy.title" />
     </h3>
 
+    <g:set var="classification" value="${record.processed.classification}" />
+    <g:set var="rawClassification" value="${record.raw.classification}" />
+
     <table class="occurrenceTable table table-sm table-bordered" id="taxonomyTable">
         <!-- Higher classification -->
         <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="higherClassification" fieldName="${message(code: 'recordcore.taxonomy.higherClassification')}">
             ${fieldsMap.put("higherClassification", true)}
-            ${record.raw.classification.higherClassification}
+            ${rawClassification.higherClassification}
         </alatag:occurrenceTableRow>
 
         <!-- Scientific name -->
@@ -497,31 +500,32 @@
             ${fieldsMap.put("taxonConceptID", true)}
             ${fieldsMap.put("scientificName", true)}
 
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.taxonConceptID}">
-                <a href="${taxaLinks.baseUrl}${record.processed.classification.taxonConceptID}">
+            <g:if test="${taxaLinks.baseUrl && classification.taxonConceptID}">
+                <a href="${taxaLinks.baseUrl + classification.taxonConceptID}">
+                    <span class="fa fa-tag"></span>
             </g:if>
 
-            <g:if test="${record.processed.classification.taxonRankID?.toInteger() > 5000}">
+            <g:if test="${classification.taxonRankID?.toInteger() > 5000}">
                 <i>
             </g:if>
-            ${record.processed.classification.scientificName?:''}
-            <g:if test="${record.processed.classification.taxonRankID?.toInteger() > 5000}">
+            ${classification.scientificName ?: ''}
+            <g:if test="${classification.taxonRankID?.toInteger() > 5000}">
                 </i>
             </g:if>
 
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.taxonConceptID}">
+            <g:if test="${taxaLinks.baseUrl && classification.taxonConceptID}">
                 </a>
             </g:if>
 
-            <g:if test="${record.processed.classification.scientificName && record.raw.classification.scientificName && (record.processed.classification.scientificName.toLowerCase() != record.raw.classification.scientificName.toLowerCase())}">
+            <g:if test="${classification.scientificName && rawClassification.scientificName && (classification.scientificName.toLowerCase() != rawClassification.scientificName.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.scientificName}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.scientificName}"
                 </span>
             </g:if>
 
-            <g:if test="${!record.processed.classification.scientificName && record.raw.classification.scientificName}">
-                ${record.raw.classification.scientificName}
+            <g:if test="${!classification.scientificName && rawClassification.scientificName}">
+                ${rawClassification.scientificName}
             </g:if>
         </alatag:occurrenceTableRow>
 
@@ -530,28 +534,29 @@
             ${fieldsMap.put("originalNameUsage", true)}
             ${fieldsMap.put("originalNameUsageID", true)}
 
-            <g:if test="${record.processed.classification.originalNameUsageID}">
+            <g:if test="${classification.originalNameUsageID}">
                 <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.originalNameUsageID}">
+                    <a href="${taxaLinks.baseUrl + classification.originalNameUsageID}">
+                        <span class="fa fa-tag"></span>
                 </g:if>
             </g:if>
 
-            <g:if test="${record.processed.classification.originalNameUsage}">
-                ${record.processed.classification.originalNameUsage}
+            <g:if test="${classification.originalNameUsage}">
+                ${classification.originalNameUsage}
             </g:if>
 
-            <g:if test="${!record.processed.classification.originalNameUsage && record.raw.classification.originalNameUsage}">
-                ${record.raw.classification.originalNameUsage}
+            <g:if test="${!classification.originalNameUsage && rawClassification.originalNameUsage}">
+                ${rawClassification.originalNameUsage}
             </g:if>
 
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.originalNameUsageID}">
+            <g:if test="${taxaLinks.baseUrl && classification.originalNameUsageID}">
                 </a>
             </g:if>
 
-            <g:if test="${record.processed.classification.originalNameUsage && record.raw.classification.originalNameUsage && (record.processed.classification.originalNameUsage.toLowerCase() != record.raw.classification.originalNameUsage.toLowerCase())}">
+            <g:if test="${classification.originalNameUsage && rawClassification.originalNameUsage && (classification.originalNameUsage.toLowerCase() != rawClassification.originalNameUsage.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.originalNameUsage}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.originalNameUsage}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -561,24 +566,24 @@
             ${fieldsMap.put("taxonRank", true)}
             ${fieldsMap.put("taxonRankID", true)}
 
-            <g:if test="${record.processed.classification.taxonRank}">
+            <g:if test="${classification.taxonRank}">
                 <span style="text-transform: capitalize;">
-                    ${record.processed.classification.taxonRank}
+                    ${classification.taxonRank}
                 </span>
             </g:if>
-            <g:elseif test="${!record.processed.classification.taxonRank && record.raw.classification.taxonRank}">
+            <g:elseif test="${!classification.taxonRank && rawClassification.taxonRank}">
                 <span style="text-transform: capitalize;">
-                    ${record.raw.classification.taxonRank}
+                    ${rawClassification.taxonRank}
                 </span>
             </g:elseif>
             <g:else>
                 [<g:message code="recordcore.tr01" />]
             </g:else>
 
-            <g:if test="${record.processed.classification.taxonRank && record.raw.classification.taxonRank  && (record.processed.classification.taxonRank.toLowerCase() != record.raw.classification.taxonRank.toLowerCase())}">
+            <g:if test="${classification.taxonRank && rawClassification.taxonRank  && (classification.taxonRank.toLowerCase() != rawClassification.taxonRank.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.taxonRank}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.taxonRank}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -587,18 +592,18 @@
         <alatag:occurrenceTableRow annotate="false" section="taxonomy" fieldCode="commonName" fieldName="${message(code: 'recordcore.taxonomy.commonName')}">
             ${fieldsMap.put("vernacularName", true)}
 
-            <g:if test="${record.processed.classification.vernacularName}">
-                ${record.processed.classification.vernacularName}
+            <g:if test="${classification.vernacularName}">
+                ${classification.vernacularName}
             </g:if>
 
-            <g:if test="${!record.processed.classification.vernacularName && record.raw.classification.vernacularName}">
-                ${record.raw.classification.vernacularName}
+            <g:if test="${!classification.vernacularName && rawClassification.vernacularName}">
+                ${rawClassification.vernacularName}
             </g:if>
 
-            <g:if test="${record.processed.classification.vernacularName && record.raw.classification.vernacularName && (record.processed.classification.vernacularName.toLowerCase() != record.raw.classification.vernacularName.toLowerCase())}">
+            <g:if test="${classification.vernacularName && rawClassification.vernacularName && (classification.vernacularName.toLowerCase() != rawClassification.vernacularName.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.vernacularName}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.vernacularName}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -608,28 +613,21 @@
             ${fieldsMap.put("kingdom", true)}
             ${fieldsMap.put("kingdomID", true)}
 
-            <g:if test="${record.processed.classification.kingdomID}">
-                <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.kingdomID}">
-                </g:if>
-            </g:if>
-
-            <g:if test="${record.processed.classification.kingdom}">
-                ${record.processed.classification.kingdom}
-            </g:if>
-
-            <g:if test="${!record.processed.classification.kingdom && record.raw.classification.kingdom}">
-                ${record.raw.classification.kingdom}
-            </g:if>
-
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.kingdomID}">
+            <g:set var="kingdomName" value="${classification.kingdom ? classification.kingdom : rawClassification.kingdom}" />
+            <g:if test="${classification.kingdomID && taxaLinks.baseUrl}">
+                <a href="${taxaLinks.baseUrl + classification.kingdomID}">
+                    <span class="fa fa-tag"></span>
+                    ${kingdomName}
                 </a>
             </g:if>
+            <g:else>
+                ${kingdomName}
+            </g:else>
 
-            <g:if test="${record.processed.classification.kingdom && record.raw.classification.kingdom && (record.processed.classification.kingdom.toLowerCase() != record.raw.classification.kingdom.toLowerCase())}">
+            <g:if test="${classification.kingdom && rawClassification.kingdom && (classification.kingdom.toLowerCase() != rawClassification.kingdom.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.kingdom}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.kingdom}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -639,28 +637,21 @@
             ${fieldsMap.put("phylum", true)}
             ${fieldsMap.put("phylumID", true)}
 
-            <g:if test="${record.processed.classification.phylumID}">
-                <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.phylumID}">
-                </g:if>
-            </g:if>
-
-            <g:if test="${record.processed.classification.phylum}">
-                ${record.processed.classification.phylum}
-            </g:if>
-
-            <g:if test="${!record.processed.classification.phylum && record.raw.classification.phylum}">
-                ${record.raw.classification.phylum}
-            </g:if>
-
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.phylumID}">
+            <g:set var="phylumName" value="${classification.phylum ? classification.phylum : rawClassification.phylum}" />
+            <g:if test="${classification.phylumID && taxaLinks.baseUrl}">
+                <a href="${taxaLinks.baseUrl + classification.phylumID}">
+                    <span class="fa fa-tag"></span>
+                    ${phylumName}
                 </a>
             </g:if>
+            <g:else>
+                ${phylumName}
+            </g:else>
 
-            <g:if test="${record.processed.classification.phylum && record.raw.classification.phylum && (record.processed.classification.phylum.toLowerCase() != record.raw.classification.phylum.toLowerCase())}">
+            <g:if test="${classification.phylum && rawClassification.phylum && (classification.phylum.toLowerCase() != rawClassification.phylum.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.phylum}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.phylum}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -670,28 +661,21 @@
             ${fieldsMap.put("classs", true)}
             ${fieldsMap.put("classID", true)}
 
-            <g:if test="${record.processed.classification.classID}">
-                <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.classID}">
-                </g:if>
-            </g:if>
-
-            <g:if test="${record.processed.classification.classs}">
-                ${record.processed.classification.classs}
-            </g:if>
-
-            <g:if test="${!record.processed.classification.classs && record.raw.classification.classs}">
-                ${record.raw.classification.classs}
-            </g:if>
-
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.classID}">
+            <g:set var="className" value="${classification.classs ? classification.classs : rawClassification.classs}" />
+            <g:if test="${classification.classID && taxaLinks.baseUrl}">
+                <a href="${taxaLinks.baseUrl + classification.classID}">
+                    <span class="fa fa-tag"></span>
+                    ${className}
                 </a>
             </g:if>
+            <g:else>
+                ${className}
+            </g:else>
 
-            <g:if test="${record.processed.classification.classs && record.raw.classification.classs && (record.processed.classification.classs.toLowerCase() != record.raw.classification.classs.toLowerCase())}">
+            <g:if test="${classification.classs && rawClassification.classs && (classification.classs.toLowerCase() != rawClassification.classs.toLowerCase())}">
                 <br />
-                <span classs="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.classs}"
+                <span class="originalValue">
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.classs}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -701,28 +685,21 @@
             ${fieldsMap.put("order", true)}
             ${fieldsMap.put("orderID", true)}
 
-            <g:if test="${record.processed.classification.orderID}">
-                <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.orderID}">
-                </g:if>
-            </g:if>
-
-            <g:if test="${record.processed.classification.order}">
-                ${record.processed.classification.order}
-            </g:if>
-
-            <g:if test="${!record.processed.classification.order && record.raw.classification.order}">
-                ${record.raw.classification.order}
-            </g:if>
-
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.orderID}">
+            <g:set var="orderName" value="${classification.order ? classification.order : rawClassification.order}" />
+            <g:if test="${classification.orderID && taxaLinks.baseUrl}">
+                <a href="${taxaLinks.baseUrl + classification.orderID}">
+                    <span class="fa fa-tag"></span>
+                    ${orderName}
                 </a>
             </g:if>
+            <g:else>
+                ${orderName}
+            </g:else>
 
-            <g:if test="${record.processed.classification.order && record.raw.classification.order && (record.processed.classification.order.toLowerCase() != record.raw.classification.order.toLowerCase())}">
+            <g:if test="${classification.order && rawClassification.order && (classification.order.toLowerCase() != rawClassification.order.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.order}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.order}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -732,28 +709,21 @@
             ${fieldsMap.put("family", true)}
             ${fieldsMap.put("familyID", true)}
 
-            <g:if test="${record.processed.classification.familyID}">
-                <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.familyID}">
-                </g:if>
-            </g:if>
-
-            <g:if test="${record.processed.classification.family}">
-                ${record.processed.classification.family}
-            </g:if>
-
-            <g:if test="${!record.processed.classification.family && record.raw.classification.family}">
-                ${record.raw.classification.family}
-            </g:if>
-
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.familyID}">
+            <g:set var="familyName" value="${classification.family ? classification.family : rawClassification.family}" />
+            <g:if test="${classification.familyID && taxaLinks.baseUrl}">
+                <a href="${taxaLinks.baseUrl + classification.familyID}">
+                    <span class="fa fa-tag"></span>
+                    ${familyName}
                 </a>
             </g:if>
+            <g:else>
+                ${familyName}
+            </g:else>
 
-            <g:if test="${record.processed.classification.family && record.raw.classification.family && (record.processed.classification.family.toLowerCase() != record.raw.classification.family.toLowerCase())}">
+            <g:if test="${classification.family && rawClassification.family && (classification.family.toLowerCase() != rawClassification.family.toLowerCase())}">
                 <br />
                 <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.classification.family}"
+                    <g:message code="recordcore.label.suppliedas" /> "${rawClassification.family}"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -763,33 +733,22 @@
             ${fieldsMap.put("genus", true)}
             ${fieldsMap.put("genusID", true)}
 
-            <g:if test="${record.processed.classification.genusID}">
-                <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.genusID}">
-                </g:if>
-            </g:if>
-
-            <g:if test="${record.processed.classification.genus}">
-                <i>
-                    ${record.processed.classification.genus}
-                </i>
-            </g:if>
-
-            <g:if test="${!record.processed.classification.genus && record.raw.classification.genus}">
-                <i>
-                    ${record.raw.classification.genus}
-                </i>
-            </g:if>
-
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.genusID}">
+            <g:set var="genusName" value="${classification.genus ? classification.genus : rawClassification.genus}" />
+            <g:if test="${classification.genusID && taxaLinks.baseUrl}">
+                <a href="${taxaLinks.baseUrl + classification.genusID}">
+                    <span class="fa fa-tag"></span>
+                    <i>${genusName}</i>
                 </a>
             </g:if>
+            <g:else>
+                <i>${genusName}</i>
+            </g:else>
 
-            <g:if test="${record.processed.classification.genus && record.raw.classification.genus && (record.processed.classification.genus.toLowerCase() != record.raw.classification.genus.toLowerCase())}">
+            <g:if test="${classification.genus && rawClassification.genus && (classification.genus.toLowerCase() != rawClassification.genus.toLowerCase())}">
                 <br />
                 <span class="originalValue">
                     <g:message code="recordcore.genus.01" />
-                    "<i>${record.raw.classification.genus}</i>"
+                    "<i>${rawClassification.genus}</i>"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -800,33 +759,34 @@
             ${fieldsMap.put("speciesID", true)}
             ${fieldsMap.put("specificEpithet", true)}
 
-            <g:if test="${record.processed.classification.speciesID}">
+            <g:if test="${classification.speciesID}">
                 <g:if test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${record.processed.classification.speciesID}">
+                    <a href="${taxaLinks.baseUrl + classification.speciesID}">
+                        <span class="fa fa-tag"></span>
                 </g:if>
             </g:if>
 
-            <g:if test="${record.processed.classification.species}">
-                <i>${record.processed.classification.species}</i>
+            <g:if test="${classification.species}">
+                <i>${classification.species}</i>
             </g:if>
-            <g:elseif test="${record.raw.classification.species}">
-                <i>${record.raw.classification.species}</i>
+            <g:elseif test="${rawClassification.species}">
+                <i>${rawClassification.species}</i>
             </g:elseif>
-            <g:elseif test="${record.raw.classification.specificEpithet && record.raw.classification.genus}">
+            <g:elseif test="${rawClassification.specificEpithet && rawClassification.genus}">
                 <i>
-                    ${record.raw.classification.genus}&nbsp;${record.raw.classification.specificEpithet}
+                    ${rawClassification.genus}&nbsp;${rawClassification.specificEpithet}
                 </i>
             </g:elseif>
 
-            <g:if test="${taxaLinks.baseUrl && record.processed.classification.speciesID}">
+            <g:if test="${taxaLinks.baseUrl && classification.speciesID}">
                 </a>
             </g:if>
 
-            <g:if test="${record.processed.classification.species && record.raw.classification.species && (record.processed.classification.species.toLowerCase() != record.raw.classification.species.toLowerCase())}">
+            <g:if test="${classification.species && rawClassification.species && (classification.species.toLowerCase() != rawClassification.species.toLowerCase())}">
                 <br />
                 <span class="originalValue">
                     <g:message code="recordcore.label.suppliedas" />
-                    "<i>${record.raw.classification.species}</i>"
+                    "<i>${rawClassification.species}</i>"
                 </span>
             </g:if>
         </alatag:occurrenceTableRow>
@@ -839,34 +799,35 @@
                 <g:if test="${taxaLinks.baseUrl && StringUtils.contains(record.raw.occurrence.associatedTaxa,colon)}">
                     <g:set var="associatedName" value="${StringUtils.substringAfter(record.raw.occurrence.associatedTaxa,colon)}" />
                     ${StringUtils.substringBefore(record.raw.occurrence.associatedTaxa,colon) }:
-                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(associatedName, '  ', ' ')}">
+                    <a href="${taxaLinks.baseUrl + StringUtils.replace(associatedName, '  ', ' ')}">
+                        <span class="fa fa-tag"></span>
                         ${associatedName}
                     </a>
                 </g:if>
                 <g:elseif test="${taxaLinks.baseUrl}">
-                    <a href="${taxaLinks.baseUrl}${StringUtils.replace(record.raw.occurrence.associatedTaxa, '  ', ' ')}">
+                    <a href="${taxaLinks.baseUrl + StringUtils.replace(record.raw.occurrence.associatedTaxa, '  ', ' ')}">
+                        <span class="fa fa-tag"></span>
                         ${record.raw.occurrence.associatedTaxa}
                     </a>
                 </g:elseif>
             </alatag:occurrenceTableRow>
         </g:if>
 
-        <g:if test="${record.processed.classification.taxonomicIssue}">
+        <g:if test="${classification.taxonomicIssue}">
             <!-- Taxonomic issues -->
             <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="taxonomicIssue" fieldName="${message(code: 'recordcore.taxonomy.taxonomicIssue')}">
-                <%--<alatag:formatJsonArray text="${record.processed.classification.taxonomicIssue}" />--%>
-                <g:each var="issue" in="${record.processed.classification.taxonomicIssue}">
+                <g:each var="issue" in="${classification.taxonomicIssue}">
                     <g:message code="${issue}" />
                 </g:each>
             </alatag:occurrenceTableRow>
         </g:if>
 
-        <g:if test="${record.processed.classification.nameMatchMetric}">
+        <g:if test="${classification.nameMatchMetric}">
             <!-- Name match metric -->
             <alatag:occurrenceTableRow annotate="true" section="taxonomy" fieldCode="nameMatchMetric" fieldName="${message(code: 'recordcore.taxonomy.nameMatchMetric')}">
-                <g:message code="${record.processed.classification.nameMatchMetric}" default="${record.processed.classification.nameMatchMetric}" />
+                <g:message code="${classification.nameMatchMetric}" default="${classification.nameMatchMetric}" />
                 <br />
-                <g:message code="nameMatch.${record.processed.classification.nameMatchMetric}" default="" />
+                <g:message code="nameMatch.${classification.nameMatchMetric}" default="" />
             </alatag:occurrenceTableRow>
         </g:if>
 
