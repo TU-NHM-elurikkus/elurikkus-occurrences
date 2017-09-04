@@ -31,6 +31,7 @@
                 ${fieldsMap.put("dataResourceUid", true)}
                 ${fieldsMap.put("dataResourceName", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.raw.attribution.dataResourceUid}">
+                    <span class="fa fa-database"></span>
                     <g:if test="${record.processed.attribution.dataResourceName}">
                         ${record.processed.attribution.dataResourceName}
                     </g:if>
@@ -51,6 +52,7 @@
                 ${fieldsMap.put("institutionUid", true)}
                 ${fieldsMap.put("institutionName", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.institutionUid}">
+                    <span class="fa fa-university"></span>
                     ${record.processed.attribution.institutionName}
                 </a>
             </g:if>
@@ -74,6 +76,7 @@
             <g:if test="${record.processed.attribution.collectionUid && collectionsWebappContext}">
                 ${fieldsMap.put("collectionUid", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.collectionUid}">
+                    <span class="fa fa-archive"></span>
             </g:if>
             <g:if test="${record.processed.attribution.collectionName}">
                 ${fieldsMap.put("collectionName", true)}
