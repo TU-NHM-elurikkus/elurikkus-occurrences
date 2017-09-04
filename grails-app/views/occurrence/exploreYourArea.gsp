@@ -39,8 +39,8 @@
         <div class="row">
             <div class="col-12">
                 <%-- SEARCH INPUT --%>
-                <div>
-                    <form name="searchForm" id="searchForm" action="" method="GET" class="form-group">
+                <div class="search-section">
+                    <form name="searchForm" id="searchForm" action="" method="GET">
                         <div class="input-plus">
                             <input
                                 type="text"
@@ -62,18 +62,13 @@
                     </form>
 
                     <g:if test="${location}">
-                        <g:message code="eya.searchform.label02" />:
+                        <p>
+                            <g:message code="eya.searchform.label02" />:
 
-                        <span id="markerAddress">
-                            ${location}
-                        </span>
-                        &nbsp;&nbsp;
-
-                        <a href="#" id="addressHelp" style="text-decoration: none">
-                            <span class="help-container">
-                                &nbsp;
+                            <span id="markerAddress">
+                                ${location}
                             </span>
-                        </a>
+                        </p>
                     </g:if>
                 </div>
 

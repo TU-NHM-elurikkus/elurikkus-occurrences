@@ -179,8 +179,7 @@
 
     <g:if test="${params.wkt}">
         <button id="downloadWKT" class="erk-button erk-button--light" style="margin-bottom: 2px;" class="tooltip" onclick="downloadPolygon(); return false;">
-            <span class="fa fa-stop"></span>
-            &nbsp;&nbsp;
+            <span class="fa fa-download"></span>
             <g:message code="map.downloadwkt.btn.label" />
         </button>
     </g:if>
