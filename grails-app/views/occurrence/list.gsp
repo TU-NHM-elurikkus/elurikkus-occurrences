@@ -368,9 +368,7 @@
                                 class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
                                 title="${message(code: 'search.filter.title')}"
                             >
-                                <span class="fa fa-filter"></span>
                                 <g:message code="search.filter.customise.label" />
-
                                 <span class="caret"></span>
                             </button>
 
@@ -689,7 +687,7 @@
                                 <%-- XXX --%>
                                 <div id="loadMoreSpecies" style="display:none;">
                                     <button class="erk-button erk-button--light">
-                                        <g:message code="list.speciesgallerycontrols.loadmorespecies.button" />
+                                        <g:message code="generic.button.loadMore" />
                                     </button>
                                     <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
                                 </div>
@@ -704,7 +702,7 @@
 
                                 <div id="loadMoreImages" style="display:none;">
                                     <button class="erk-button erk-button--light">
-                                        <g:message code="generic.button.loadMore" />&hellip;
+                                        <g:message code="generic.button.loadMore" />
                                         <g:img plugin="elurikkus-biocache-hubs" dir="images" file="indicator.gif" style="display:none;" alt="indicator icon" />
                                      </button>
                                  </div>
