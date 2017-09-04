@@ -722,9 +722,6 @@ function loadFacetCharts(chartOptions) {
     var chartsDiv = $('#' + (chartOptions.targetDivId ? chartOptions.targetDivId : 'charts'));
     chartsDiv.append($('<span>Loading charts...</span>'));
 
-    console.log('loadFacetCharts');
-    console.log(chartOptions);
-
     var query = chartOptions.query ? chartOptions.query : buildQueryString(chartOptions.instanceUid);
     $.ajax({
         url: urlConcat(biocacheServicesUrl, '/occurrences/search.json?pageSize=0&q=') + query + '&fsort=index',
@@ -831,9 +828,6 @@ function buildGenericFacetChart(name, data, query, chartsDiv, chartOptions) {
 
     // specify the type (for css tweaking)
     $container.addClass('chart-' + opts.chartType);
-
-    console.log('Loading chart');
-    console.log(opts);
 
     // create the chart
     var chart;
@@ -1031,7 +1025,8 @@ var taxonomyChart = {
 
         // add url params to set state
         if(this.rank) {
-            url += '&rank=' + this.rank + (this.name ? '&name=' + this.name : '');
+            var hasName = this.name && this.name != $.i18n.prop('recordcore.record.value.unspecified');
+            url += '&rank=' + this.rank + (hasName ? '&name=' + this.name : '');
         } else {
             url += '&max=' + (this.threshold ? this.threshold : '55');
         }
@@ -1065,10 +1060,12 @@ var taxonomyChart = {
 
         // create the data table
         var dataTable = new google.visualization.DataTable();
+        var label;
         dataTable.addColumn('string', chartLabels[name] ? chartLabels[name] : name);
         dataTable.addColumn('number', 'records');
         $.each(data.taxa, function(i, obj) {
-            dataTable.addRow([obj.label, obj.count]);
+            label = obj.label ? obj.label : $.i18n.prop('recordcore.record.value.unspecified');
+            dataTable.addRow([label, obj.count]);
         });
 
         // resolve the chart options
@@ -1088,7 +1085,7 @@ var taxonomyChart = {
         // create the chart container if not already there
         var $container = $('#taxaChart');
         if($container.length === 0) {
-            $container = $('<div id=\'taxaChart\' class=\'chart-pie\'></div>');
+            $container = $('<div id="taxaChart" class="chart-pie"></div>');
             $outerContainer.append($container);
         }
 
@@ -1106,7 +1103,7 @@ var taxonomyChart = {
         // draw the back button / instructions
         var $backLink = $('#backLink');
         if($backLink.length === 0) {
-            $backLink = $('<div class="erk-button erk-button--inline" id="backLink">&laquo; Previous rank</div>').appendTo($outerContainer);  // create it
+            $backLink = $('<div class="erk-button erk-button--inline" id="backLink">&laquo; ' + $.i18n.prop('charts2.taxonPie.previousRank') + '</div>').appendTo($outerContainer);  // create it
             $backLink.click(function() {
                 // only act if link was real
                 if(!$backLink.hasClass('erk-button')) { return; }
@@ -1128,16 +1125,17 @@ var taxonomyChart = {
         }
         if(this.hasState()) {
             // show the prev link
-            $backLink.html('&laquo; Previous rank').addClass('erk-button');
+            $backLink.html('&laquo; ' + $.i18n.prop('charts2.taxonPie.previousRank')).addClass('erk-button');
         } else {
             // show the instruction
-            $backLink.html('Click a slice to drill into the next taxonomic level.').removeClass('erk-button');
+            $backLink.html($.i18n.prop('charts2.taxonPie.des')).removeClass('erk-button');
         }
 
         // draw records link
         var $recordsLink = $('#recordsLink');
         if($recordsLink.length === 0) {
-            $recordsLink = $('<div class="erk-link" id="recordsLink">View records</div>').appendTo($outerContainer);  // create it
+            var linkDiv = '<div class="erk-link" id="recordsLink">' + $.i18n.prop('charts2.taxonPie.viewRecords') + '</div>'
+            $recordsLink = $(linkDiv).appendTo($outerContainer);  // create it
             $recordsLink.click(function() {
                 thisChart.showRecords();  // called explicitly so we have the correct 'this' context
             });
@@ -1145,9 +1143,9 @@ var taxonomyChart = {
 
         // set link text
         if(this.hasState()) {
-            $recordsLink.html('View records for ' + this.rank + ' ' + this.name);
+            $recordsLink.html($.i18n.prop('charts2.taxonPie.label') + ' ' + this.rank + ' ' + this.name);
         } else {
-            $recordsLink.html('<span class="fa fa-list"></span> View records');
+            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts2.taxonPie.viewRecords'));
         }
 
         // setup a click handler - if requested
@@ -1157,7 +1155,12 @@ var taxonomyChart = {
             google.visualization.events.addListener(chart, 'select', function() {
 
                 // find out what they clicked
-                var name = dataTable.getValue(chart.getSelection()[0].row, 0);
+                var name = chart.getSelection();
+                if(!name.length) {
+                    // chart is already rendering; return so as console wouldn't throw errors
+                    return;
+                }
+                name = dataTable.getValue(name[0].row, 0);
 
                 /* DRILL DOWN */
                 if(drillDown && data.rank !== 'species') {
