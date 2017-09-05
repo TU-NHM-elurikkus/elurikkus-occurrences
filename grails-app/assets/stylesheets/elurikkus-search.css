@@ -19,6 +19,7 @@
 
 .search-filter-menu {
     font-size: 12px; /* XXX */
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
 
     /**
      * Bootstrap v4 dropdown-menu is at the z-index of 1000, and so area leaflet map's controls.
@@ -35,6 +36,9 @@
 
 .search-filter-menu--title {
     padding: 4px 8px;
+}
+.search-filter-menu--title:hover {
+    background-color: inherit;
 }
 
 .search-filter-menu--buttons {

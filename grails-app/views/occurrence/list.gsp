@@ -357,6 +357,7 @@
             <%--  Second row - facet column and results column --%>
             <div class="row" id="content">
                 <div class="col-sm-5 col-md-3">
+
                     <div class="card card-body filters-container">
                         <div id="filters-selection" class="dropdown">
                             <button
@@ -379,9 +380,6 @@
                     </div>
                 </div>
 
-                <g:set var="postFacets" value="${System.currentTimeMillis()}" />
-
-                <!-- removed id of content 2 -->
                 <div class="col-sm-7 col-md-9">
                     <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                         <div id="alert" class="modal fade invisible" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
