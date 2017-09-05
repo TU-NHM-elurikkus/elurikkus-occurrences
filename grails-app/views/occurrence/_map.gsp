@@ -412,7 +412,7 @@
             <g:message code="search.map.occurrences" />
         </div>
 
-        <a href="#" class="viewAllRecords">
+        <a href="#" class="erk-link viewAllRecords">
             <span class="fa fa-list"></span>
             <g:message code="search.map.viewAllRecords" />
         </a>
@@ -424,9 +424,9 @@
                 <g:message code="search.map.popup.prev" />
             </button>
 
-            <button class="erk-link-button recordLink">
+            <a href="#" class="erk-link recordLink">
                 <g:message code="search.map.popup.viewRecord" />
-            </button>
+            </a>
 
             <button type="button" class="erk-link-button disabled nextRecord">
                 <g:message code="search.map.popup.next" />
