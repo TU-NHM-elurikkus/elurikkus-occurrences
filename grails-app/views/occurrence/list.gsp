@@ -349,10 +349,10 @@
                 </div>
             </div><!-- /#searchInfoRow -->
 
-            <div class="filter-panel-header">
+            <p>
                 <span class="fa fa-info-circle"></span>
                 <alatag:message code="search.filter.customise.title" />
-            </div>
+            </p>
 
             <%--  Second row - facet column and results column --%>
             <div class="row" id="content">
