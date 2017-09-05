@@ -169,7 +169,7 @@
                             </div>
 
                             <div class="inline-controls__group">
-                                <a id="viewAllRecords" class="erk-button erk-button--dark">
+                                <button id="viewAllRecords" class="erk-button erk-button--dark">
                                     <span class="fa fa-list"></span>
                                     <g:message code="eya.searchform.a.viewallrecords.label" />
                                 </button>
