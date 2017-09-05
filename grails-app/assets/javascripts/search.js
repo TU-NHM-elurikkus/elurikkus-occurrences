@@ -160,26 +160,15 @@ $(document).ready(function() {
 
         var selectedFacets = [];
 
-        // console.debug('suck it');
-
         // iterate over seleted facet options
         $(':input.search-filter-checkbox__label__input:checked').each(function(i, el) {
-            // console.debug($(el).val());
             selectedFacets.push($(el).val());
         });
 
-        // var selectedFacets = $(":input.search-filter-checkbox__label__input:checked").map(function(i, el) {
-        //     console.debug('i', i, 'el', el);
-        //     return $(el).val();
-        // });
-
-        // console.debug('selectedFacets', selectedFacets);
-
-        //Check user has selected at least 1 facet
+        // Check user has selected at least 1 facet
         if (selectedFacets.length > 0) {
             // save facets to the user_facets cookie
             $.cookie("user_facets", selectedFacets, { expires: 7 });
-            // console.debug('selectedFacets', selectedFacets);
             // reload page
             document.location.reload(true);
         } else {
@@ -218,7 +207,7 @@ $(document).ready(function() {
     // XXX BLOODY HELL
     $("#selectAll").click(function(e) {
         e.preventDefault();
-        $(":input.search-filter-checkbox__label__input").attr("checked","checked");
+        $(":input.search-filter-checkbox__label__input").attr("checked", "checked");
     });
 
     // taxa search - show included synonyms with popup to allow user to refine to a single name
@@ -232,11 +221,11 @@ $(document).ready(function() {
             "&facets=raw_taxon_name&pageSize=0&flimit=" + maxFacets + queryContextParam + "&callback=?";
 
         var $clone = $('#resultsReturned #template').clone();
-        $clone.attr("id",""); // remove the ID
+        $clone.attr("id", ""); // remove the ID
         $clone.find(".taxaMenuContent").addClass("stopProp");
         // add unique IDs to some elements
-        $clone.find("form.raw_taxon_search").attr("id","rawTaxonSearch_" + i);
-        $clone.find(":input.rawTaxonSumbit").attr("id","rawTaxonSumbit_" + i);
+        $clone.find("form.raw_taxon_search").attr("id", "rawTaxonSearch_" + i);
+        $clone.find(":input.rawTaxonSumbit").attr("id", "rawTaxonSumbit_" + i);
         $clone.find('.refineTaxaSearch').attr("id", "refineTaxaSearch_" + i);
 
         $.getJSON(jsonUri, function(data) {
@@ -693,13 +682,11 @@ function removeFilter(el) {
     if (q != null) {
         paramList.push("q=" + q);
     }
-    // console.log("0. fqList", fqList);
+
     // add filter query param
     if (fqList && typeof fqList === "string") {
         fqList = [ fqList ];
     }
-
-    //console.log("1. fqList", fqList);
 
     if (lat && lon && rad) {
         paramList.push("lat=" + lat);
@@ -717,11 +704,9 @@ function removeFilter(el) {
 
     for (var i in fqList) {
         var fqParts = fqList[i].split(':');
-        var fqField = fqParts[0].replace(/[\(\)\-]/g,"");
-        //alert("fqField = " + fqField + " vs " + facet);
+        var fqField = fqParts[0].replace(/[\(\)\-]/g, "");
 
         if (fqField.indexOf(facet) != -1) {  // if(str1.indexOf(str2) != -1){
-            //alert("removing fq: "+fqList[i]);
             fqList.splice($.inArray(fqList[i], fqList), 1);
         }
     }
@@ -733,8 +718,6 @@ function removeFilter(el) {
     if (fqList != null) {
         paramList.push("fq=" + fqList.join("&fq="));
     }
-
-    //alert("paramList = " + paramList.join('&'));
 
     window.location.href = window.location.pathname + '?' + paramList.join('&') + window.location.hash +"";
 }
@@ -1042,7 +1025,7 @@ function loadSpeciesInTab(start, sortField, group) {
 
 /**
  * iBox Jquery plugin for Google Images hover effect.
- * Origina by roxon http://stackoverflow.com/users/383904/roxon
+ * Origin by roxon http://stackoverflow.com/users/383904/roxon
  * Posted to stack overflow:
  *   http://stackoverflow.com/questions/7411393/pop-images-like-google-images/7412302#7412302
  */
@@ -1122,9 +1105,6 @@ function loadSpeciesInTab(start, sortField, group) {
         });
     };
 })(jQuery);
-
-// vars for hiding drop-dpwn divs on click outside tem
-var hoverDropDownDiv = false;
 
 /**
  * draws the div for selecting multiple facets (popup div)

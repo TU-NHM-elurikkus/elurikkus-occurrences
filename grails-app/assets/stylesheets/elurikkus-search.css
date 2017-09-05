@@ -17,24 +17,34 @@
     margin: 0;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .search-filter-menu {
     font-size: 12px; /* XXX */
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
 
     /**
      * Bootstrap v4 dropdown-menu is at the z-index of 1000, and so area leaflet map's controls.
      * Rise search's dropdwon-menu above map controls.
      */
-    z-index: 1001;
+    /*z-index: 1001;*/
 
     /**
      * Bootstrap v4's rocking ~2px top-margin on dropdown menus.
      * Override it with something that's more sensible in our use case.
      */
-    margin: .5rem 0 0;
+    /*margin: .5rem 0 0;*/
 }
 
 .search-filter-menu--title {
     padding: 4px 8px;
+}
+.search-filter-menu--title:hover {
+    background-color: inherit;
 }
 
 .search-filter-menu--buttons {

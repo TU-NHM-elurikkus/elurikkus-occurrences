@@ -356,16 +356,18 @@
 
             <%--  Second row - facet column and results column --%>
             <div class="row" id="content">
+                <%-- Siderbar --%>
                 <div class="col-sm-5 col-md-3">
+
                     <div class="card card-body filters-container">
                         <div id="filters-selection" class="dropdown">
                             <button
                                 type="button"
                                 id="customiseFiltersButton"
                                 data-toggle="dropdown"
+                                class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
                                 aria-haspopup="true"
                                 aria-expanded="false"
-                                class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
                                 title="${message(code: 'search.filter.title')}"
                             >
                                 <g:message code="search.filter.customise.label" />
@@ -379,9 +381,7 @@
                     </div>
                 </div>
 
-                <g:set var="postFacets" value="${System.currentTimeMillis()}" />
-
-                <!-- removed id of content 2 -->
+                <%-- Right content area --%>
                 <div class="col-sm-7 col-md-9">
                     <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                         <div id="alert" class="modal fade invisible" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
@@ -731,6 +731,8 @@
                 </div>
             </div>
         </g:else>
+
+        <%-- <g:render template="filters" /> --%>
 
         <div id="imageDialog" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg">
