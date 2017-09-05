@@ -70,53 +70,33 @@
                             </span>
                         </p>
                     </g:if>
-                </div>
 
-                <form class="form-inline float-right search-controls">
-                    <div class="form-group">
-                        <label for="radius">
-                            <g:message code="eya.searchformradius.label" />
-                        </label>
-                        <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
-
-
+                    <%-- TODO XXX --%>
+                    <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
+                        <p>
+                            <%-- TODO XXX --%>
+                            <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                            <g:message code="eya.dialogconfirm01" />
+                            <span id="rad"></span>
+                            <g:message code="eya.dialogconfirm02" />
+                            <code>
+                                ${location}
+                            </code>.
+                            <br />
+                            <g:message code="eya.dialogconfirm03" />
+                        </p>
                     </div>
-
-                    <div class="form-group">
-                        <button id="viewAllRecords" class="erk-button erk-button--dark">
-                            <span class="fa fa-list"></span>
-                            <g:message code="eya.searchform.a.viewallrecords.label" />
-                        </button>
-                    </div>
-
-                    <div class="form-group">
-                        <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                            <span class="fa fa-download"></span>
-                            <g:message code="download.download.label" />
-                        </button>
-                    </div>
-                </form>
-
-                <%-- TODO XXX --%>
-                <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
-                    <p>
-                        <%-- TODO XXX --%>
-                        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-                        <g:message code="eya.dialogconfirm01" />
-                        <span id="rad"></span>
-                        <g:message code="eya.dialogconfirm02" />
-                        <code>
-                            ${location}
-                        </code>.
-                        <br />
-                        <g:message code="eya.dialogconfirm03" />
-                    </p>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12 col-md-7 col-lg-5">
+                <p>
+                    <span class="fa fa-info-circle"></span>
+                    <g:message code="eya.groupTable.help" />
+                </p>
+
                 <div id="taxaBox">
                     <div id="leftList">
                         <table id="taxa-level-0">
@@ -169,7 +149,42 @@
                 </div>
             </div>
 
+            <%-- MAP CONTROL --%>
             <div class="col">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p>
+                            <span class="fa fa-info-circle"></span>
+                            <g:message code="eya.maptips" />
+                        </p>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <form class="inline-controls inline-controls--right">
+                            <div class="inline-controls__group">
+                                <label for="radius">
+                                    <g:message code="eya.searchformradius.label" />
+                                </label>
+                                <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
+                            </div>
+
+                            <div class="inline-controls__group">
+                                <button id="viewAllRecords" class="erk-button erk-button--dark">
+                                    <span class="fa fa-list"></span>
+                                    <g:message code="eya.searchform.a.viewallrecords.label" />
+                                </button>
+                            </div>
+
+                            <div class="inline-controls__group">
+                                <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                    <span class="fa fa-download"></span>
+                                    <g:message code="download.download.label" />
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <%-- TODO XXX --%>
                 <div id="mapCanvas" style="width: 100%; height: 490px;"></div>
 
@@ -201,14 +216,6 @@
                             </td>
                         </tr>
                     </table>
-                </div>
-
-                <div id="mapTips">
-                    <b>
-                        <g:message code="eya.maptips.01" />
-                    </b>
-                    :&nbsp;
-                    <g:message code="eya.maptips.02" />
                 </div>
             </div>
         </div>
