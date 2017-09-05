@@ -20,6 +20,8 @@
 .search-filter-menu {
     font-size: 12px; /* XXX */
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    width: 100vw;
+    max-width: 44rem;
 
     /**
      * Bootstrap v4 dropdown-menu is at the z-index of 1000, and so area leaflet map's controls.
@@ -36,6 +38,7 @@
 
 .search-filter-menu--title {
     padding: 4px 8px;
+    white-space: initial;
 }
 .search-filter-menu--title:hover {
     background-color: inherit;
@@ -48,6 +51,7 @@
 .search-filter-menu--facets {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .search-filter-menu--facets--facet {
@@ -104,12 +108,6 @@
     display: none;
 }
 
-/* More XXX */
-/* Dropdown items use bootstrap's 16px default font, while buttons that make them appear - 12px */
-#submitFacets .dropdown-item {
-    font-size: 12px;
-}
-
 #searchNavBar > .step, .currentStep {
     padding-right: 0.5em;
 }
@@ -145,11 +143,6 @@
 
 #filters-selection {
     margin-bottom: 1rem;
-}
-
-.filter-panel-header {
-    font-size: 15px;
-    margin-bottom: 1em;
 }
 
 #loadMoreImages {
