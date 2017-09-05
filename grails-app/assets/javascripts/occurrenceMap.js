@@ -1038,7 +1038,7 @@ MapPopup.prototype.createElement = function() {
     $popupClone.find('.currentRecord').html(this.currentIdx + 1);
     $popupClone.find('.totalrecords').html(this.total.toString());
 
-    $popupClone.find('button.viewAllRecords').attr('href', this.getViewAllLink());
+    $popupClone.find('a.viewAllRecords').attr('href', this.getViewAllLink());
 
     // footer
     $popupClone.find('.multiRecordFooter').show();
@@ -1073,11 +1073,11 @@ MapPopup.prototype.showOccurrence = function(record) {
         html = this.map.formatPopupHtml(record);
         this.$popupClone.find('.recordSummary').html(html);
 
-        this.$popupClone.find('.recordLink a').attr('href', this.map.props.contextPath + '/occurrences/' + record.raw.uuid);
-        this.$popupClone.find('.recordLink a').attr('disabled', false);
+        this.$popupClone.find('a.recordLink').attr('href', this.map.props.contextPath + '/occurrences/' + record.raw.uuid);
+        this.$popupClone.find('a.recordLink').attr('disabled', false);
     } else {
         // missing record - disable "view record" button and display message
-        this.$popupClone.find('.recordLink a').attr('disabled', true).attr('href', 'javascript: void(0)');
+        this.$popupClone.find('a.recordLink').attr('disabled', true).attr('href', 'javascript: void(0)');
         // insert into clone
         this.$popupClone.find('.recordSummary').html('<br>' + this.map.props.translations['search.recordNotFoundForId'] + ': <span style="white-space:nowrap;">' + recordUuid + '</span><br><br>');
     }
