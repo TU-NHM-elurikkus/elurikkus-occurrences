@@ -39,58 +39,53 @@
         <div class="row">
             <div class="col-12">
                 <%-- SEARCH INPUT --%>
-                <form name="searchForm" id="searchForm" action="" method="GET">
-                    <div class="input-plus">
-                        <input
-                            type="text"
-                            name="address"
-                            id="address"
-                            placeholder="<g:message code='eya.searchform.des01' />"
-                            class="input-plus__field"
-                        />
+                <div class="search-section">
+                    <form name="searchForm" id="searchForm" action="" method="GET">
+                        <div class="input-plus">
+                            <input
+                                type="text"
+                                name="address"
+                                id="address"
+                                placeholder="<g:message code='eya.searchform.des01' />"
+                                class="input-plus__field"
+                            />
 
-                        <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
-                            <span class="fa fa-search"></span>
-                            <g:message code="advancedsearch.button.submit" />
-                        </button>
-                    </div>
+                            <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
+                                <span class="fa fa-search"></span>
+                                <g:message code="advancedsearch.button.submit" />
+                            </button>
+                        </div>
 
-                    <input type="hidden" name="latitude" id="latitude" value="${latitude}" />
-                    <input type="hidden" name="longitude" id="longitude" value="${longitude}" />
-                    <input type="hidden" name="location" id="location" value="${location}" />
-                </form>
+                        <input type="hidden" name="latitude" id="latitude" value="${latitude}" />
+                        <input type="hidden" name="longitude" id="longitude" value="${longitude}" />
+                        <input type="hidden" name="location" id="location" value="${location}" />
+                    </form>
 
-                <g:if test="${location}">
-                    <p>
-                        <g:message code="eya.searchform.label02" />:
+                    <g:if test="${location}">
+                        <p>
+                            <g:message code="eya.searchform.label02" />:
 
-                        <span id="markerAddress">
-                            ${location}
-                        </span>
-                        &nbsp;&nbsp;
-
-                        <a href="#" id="addressHelp" style="text-decoration: none">
-                            <span class="help-container">
-                                &nbsp;
+                            <span id="markerAddress">
+                                ${location}
                             </span>
-                        </a>
-                    </p>
-                </g:if>
+                        </p>
+                    </g:if>
 
-                <%-- TODO XXX --%>
-                <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
-                    <p>
-                        <%-- TODO XXX --%>
-                        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-                        <g:message code="eya.dialogconfirm01" />
-                        <span id="rad"></span>
-                        <g:message code="eya.dialogconfirm02" />
-                        <code>
-                            ${location}
-                        </code>.
-                        <br />
-                        <g:message code="eya.dialogconfirm03" />
-                    </p>
+                    <%-- TODO XXX --%>
+                    <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
+                        <p>
+                            <%-- TODO XXX --%>
+                            <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                            <g:message code="eya.dialogconfirm01" />
+                            <span id="rad"></span>
+                            <g:message code="eya.dialogconfirm02" />
+                            <code>
+                                ${location}
+                            </code>.
+                            <br />
+                            <g:message code="eya.dialogconfirm03" />
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,7 +95,7 @@
                 <p>
                     <span class="fa fa-info-circle"></span>
                     <g:message code="eya.groupTable.help" />
-                </>
+                </p>
 
                 <div id="taxaBox">
                     <div id="leftList">

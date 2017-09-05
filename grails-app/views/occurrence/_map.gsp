@@ -179,8 +179,7 @@
 
     <g:if test="${params.wkt}">
         <button id="downloadWKT" class="erk-button erk-button--light" style="margin-bottom: 2px;" class="tooltip" onclick="downloadPolygon(); return false;">
-            <span class="fa fa-stop"></span>
-            &nbsp;&nbsp;
+            <span class="fa fa-download"></span>
             <g:message code="map.downloadwkt.btn.label" />
         </button>
     </g:if>
@@ -421,17 +420,17 @@
         <div class="recordSummary"></div>
 
         <div class="hide multiRecordFooter">
-            <a href="#" class="erk-link disabled previousRecord">
+            <button class="erk-link-button disabled previousRecord">
                 <g:message code="search.map.popup.prev" />
-            </a>
+            </button>
 
-            <a href="#" class="erk-link recordLink">
+            <button class="erk-link-button recordLink">
                 <g:message code="search.map.popup.viewRecord" />
-            </a>
+            </button>
 
-            <a href="#" class="erk-link disabled nextRecord">
+            <button type="button" class="erk-link-button disabled nextRecord">
                 <g:message code="search.map.popup.next" />
-            </a>
+            </button>
         </div>
     </div>
 </div>

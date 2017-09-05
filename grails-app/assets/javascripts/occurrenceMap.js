@@ -1023,8 +1023,8 @@ MapPopup.prototype.previous = function() {
 MapPopup.prototype.changeIndex = function(idx) {
     this.currentIdx = idx;
 
-    this.$popupClone.find('.nextRecord a').toggleClass('disabled', idx >= this.total - 1);
-    this.$popupClone.find('.previousRecord a').toggleClass('disabled', idx <= 0);
+    this.$popupClone.find('button.nextRecord').toggleClass('disabled', idx >= this.total - 1);
+    this.$popupClone.find('button.previousRecord').toggleClass('disabled', idx <= 0);
 
     this.$popupClone.find('.currentRecord').html(idx + 1);
 };
@@ -1038,16 +1038,16 @@ MapPopup.prototype.createElement = function() {
     $popupClone.find('.currentRecord').html(this.currentIdx + 1);
     $popupClone.find('.totalrecords').html(this.total.toString());
 
-    $popupClone.find('a.viewAllRecords').attr('href', this.getViewAllLink());
+    $popupClone.find('button.viewAllRecords').attr('href', this.getViewAllLink());
 
     // footer
     $popupClone.find('.multiRecordFooter').show();
 
-    $popupClone.find('.nextRecord a').on('click', function() {
+    $popupClone.find('button.nextRecord').click(function() {
         this.next();
     }.bind(this));
 
-    $popupClone.find('.previousRecord a').on('click', function() {
+    $popupClone.find('button.previousRecord').click(function() {
         this.previous();
     }.bind(this));
 
