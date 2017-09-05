@@ -39,29 +39,29 @@
         <div class="row">
             <div class="col-12">
                 <%-- SEARCH INPUT --%>
-                <div>
-                    <form name="searchForm" id="searchForm" action="" method="GET" class="form-group">
-                        <div class="input-plus">
-                            <input
-                                type="text"
-                                name="address"
-                                id="address"
-                                placeholder="<g:message code='eya.searchform.des01' />"
-                                class="input-plus__field"
-                            />
+                <form name="searchForm" id="searchForm" action="" method="GET">
+                    <div class="input-plus">
+                        <input
+                            type="text"
+                            name="address"
+                            id="address"
+                            placeholder="<g:message code='eya.searchform.des01' />"
+                            class="input-plus__field"
+                        />
 
-                            <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
-                                <span class="fa fa-search"></span>
-                                <g:message code="advancedsearch.button.submit" />
-                            </button>
-                        </div>
+                        <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
+                            <span class="fa fa-search"></span>
+                            <g:message code="advancedsearch.button.submit" />
+                        </button>
+                    </div>
 
-                        <input type="hidden" name="latitude" id="latitude" value="${latitude}" />
-                        <input type="hidden" name="longitude" id="longitude" value="${longitude}" />
-                        <input type="hidden" name="location" id="location" value="${location}" />
-                    </form>
+                    <input type="hidden" name="latitude" id="latitude" value="${latitude}" />
+                    <input type="hidden" name="longitude" id="longitude" value="${longitude}" />
+                    <input type="hidden" name="location" id="location" value="${location}" />
+                </form>
 
-                    <g:if test="${location}">
+                <g:if test="${location}">
+                    <p>
                         <g:message code="eya.searchform.label02" />:
 
                         <span id="markerAddress">
@@ -74,33 +74,8 @@
                                 &nbsp;
                             </span>
                         </a>
-                    </g:if>
-                </div>
-
-                <form class="form-inline float-right search-controls">
-                    <div class="form-group">
-                        <label for="radius">
-                            <g:message code="eya.searchformradius.label" />
-                        </label>
-                        <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
-
-
-                    </div>
-
-                    <div class="form-group">
-                        <button id="viewAllRecords" class="erk-button erk-button--dark">
-                            <span class="fa fa-list"></span>
-                            <g:message code="eya.searchform.a.viewallrecords.label" />
-                        </button>
-                    </div>
-
-                    <div class="form-group">
-                        <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                            <span class="fa fa-download"></span>
-                            <g:message code="download.download.label" />
-                        </button>
-                    </div>
-                </form>
+                    </p>
+                </g:if>
 
                 <%-- TODO XXX --%>
                 <div id="dialog-confirm" title="<g:message code='eya.dialogconfirm.title' />" style="display: none">
@@ -122,6 +97,11 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-7 col-lg-5">
+                <p>
+                    <span class="fa fa-info-circle"></span>
+                    <g:message code="eya.groupTable.help" />
+                </>
+
                 <div id="taxaBox">
                     <div id="leftList">
                         <table id="taxa-level-0">
@@ -174,7 +154,42 @@
                 </div>
             </div>
 
+            <%-- MAP CONTROL --%>
             <div class="col">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p>
+                            <span class="fa fa-info-circle"></span>
+                            <g:message code="eya.maptips" />
+                        </p>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <form class="inline-controls inline-controls--right">
+                            <div class="inline-controls__group">
+                                <label for="radius">
+                                    <g:message code="eya.searchformradius.label" />
+                                </label>
+                                <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
+                            </div>
+
+                            <div class="inline-controls__group">
+                                <button id="viewAllRecords" class="erk-button erk-button--dark">
+                                    <span class="fa fa-list"></span>
+                                    <g:message code="eya.searchform.a.viewallrecords.label" />
+                                </button>
+                            </div>
+
+                            <div class="inline-controls__group">
+                                <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                    <span class="fa fa-download"></span>
+                                    <g:message code="download.download.label" />
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <%-- TODO XXX --%>
                 <div id="mapCanvas" style="width: 100%; height: 490px;"></div>
 
@@ -206,14 +221,6 @@
                             </td>
                         </tr>
                     </table>
-                </div>
-
-                <div id="mapTips">
-                    <b>
-                        <g:message code="eya.maptips.01" />
-                    </b>
-                    :&nbsp;
-                    <g:message code="eya.maptips.02" />
                 </div>
             </div>
         </div>

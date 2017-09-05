@@ -169,13 +169,13 @@ table#cellCountsLegend {
 
 .hoverRow {
     cursor: pointer;
-    background-color: #30d8ef;
+    background-color: #3dc8d3;
     color: #fff;
 }
 
 .hoverCell {
     cursor: pointer;
-    background-color: #30d8ef;
+    background-color: #3dc8d3;
     color: #fff;
 }
 
