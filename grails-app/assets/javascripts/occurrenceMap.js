@@ -390,8 +390,25 @@ OccurrenceMap.prototype.addGridLegendItem = function() {
         );
 }
 
+/*
+ * Helper for addLegendItem as that recieves its label as a dynamic message string
+ * and those messages aren't always translated
+ */
+function getLegendLabel(name) {
+    if(name in $.i18n.map) {
+        return $.i18n.prop(name);
+    }
+    var label = name.split('.');
+    label = label[label.length - 1];
+    label = label.match(/[A-Za-z][a-z,]*/g);
+
+    return label.map(function (word) {
+        return word.charAt(0).toUpperCase() + word.substring(1);
+    }).join(" ");
+}
+
 function addLegendItem(name, red, green, blue, data){
-    var nameLabel = jQuery.i18n.prop(name);
+    var nameLabel = getLegendLabel(name);
     var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/; // e.g. 2001-02-31T12:00:00Z with year capture
     if (name.search(isoDateRegEx) > -1) {
         // convert full ISO date to YYYY-MM-DD format
@@ -404,7 +421,7 @@ function addLegendItem(name, red, green, blue, data){
                     .attr('type', 'checkbox')
                     .attr('checked', 'checked')
                     .attr('id', name)
-                    .attr('fq',data.fq)
+                    .attr('fq', data.fq)
                     .addClass('layerFacet')
                     .addClass('leaflet-control-layers-selector')
                 )
@@ -412,11 +429,11 @@ function addLegendItem(name, red, green, blue, data){
             .append($('<td>')
                 .append($('<i>')
                     .addClass('legendColour')
-                    .attr('style', "background-color:rgb("+ red +","+ green +","+ blue + ");")
+                    .attr('style', 'background-color:rgb(' + red + ',' + green + ',' + blue + ');')
                 )
                 .append($('<span>')
                     .addClass('legendItemName')
-                    .html((nameLabel.indexOf("[") == -1) ? nameLabel : name)
+                    .html(nameLabel)
                 )
             )
         );
@@ -734,9 +751,9 @@ ColorMode.prototype.initialize = function() {
 
             function updateLegend(data) {
                 $.each(data, function(index, legendDef){
-                    var legItemName = legendDef.name ? legendDef.name : 'Not specified';
+                    var legItemName = legendDef.name ? legendDef.name : 'recordcore.record.value.unspecified';
 
-                    addLegendItem(legItemName, legendDef.red,legendDef.green,legendDef.blue, legendDef );
+                    addLegendItem(legItemName, legendDef.red, legendDef.green, legendDef.blue, legendDef );
                 });
             }
 
@@ -744,6 +761,12 @@ ColorMode.prototype.initialize = function() {
                 loadMoreButton.addClass('hidden-node');
 
                 pageNum++;
+
+                console.log(self.map.props.contextPath + '/occurrence/legend' + self.map.query +
+                    '&cm=' + self.facet +
+                    '&pageNum=' + pageNum +
+                    '&pageSize=' + pageSize +
+                    '&type=application/json',);
 
                 $.ajax({
                     url: self.map.props.contextPath + '/occurrence/legend' + self.map.query +

@@ -19,7 +19,11 @@
     font-size: 12px;
 }
 
-.leaflet-control-layers-base label, .leaflet-control-layers-base input, .leaflet-control-layers-base button, .leaflet-control-layers-base select, .leaflet-control-layers-base textarea {
+.leaflet-control-layers-base label,
+.leaflet-control-layers-base input,
+.leaflet-control-layers-base button,
+.leaflet-control-layers-base select,
+.leaflet-control-layers-base textarea {
     margin: 0px;
     height: 20px;
     font-size: 12px;
@@ -101,4 +105,113 @@
 
 .multiRecordFooter > * {
     margin-right: 5px;
+}
+
+.leaflet-drag-target {
+    line-height: 18px;
+    font-size: 12px;
+}
+
+i.legendColour {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    display: inline-block;
+    height: 12px;
+    line-height: 12px;
+    width: 14px;
+    margin-bottom: -5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+i#defaultLegendColour {
+    margin-bottom: -2px;
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
+.legendTable {
+    padding: 0px;
+    margin: 0px;
+}
+
+a.colour-by-legend-toggle {
+    color: #000000;
+    text-decoration: none;
+    cursor: auto;
+    display: block;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 18px;
+    text-decoration: none solid rgb(0, 120, 168);
+    padding: 6px 10px 6px 10px;
+}
+
+#mapLayerControls label {
+    margin-bottom: 0;
+}
+
+.leaflet-bar-bg a,
+.leaflet-bar-bg a:hover {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+}
+
+.leaflet-bar-bg .fa {
+    line-height: 36px;
+    opacity: 0.8;
+}
+
+#mapLayerControls {
+    height: 30px;
+    color: #000;
+    font-size: 13px;
+}
+
+#mapLayerControls .layerControls, #mapLayerControls #sizeslider {
+    display: inline-block;
+    float: none;
+}
+
+#mapLayerControls td {
+    padding: 2px 5px 0px 5px;
+}
+
+#mapLayerControls label {
+    padding-top: 4px;
+}
+
+#mapLayerControls .slider {
+    margin-bottom: 4px;
+}
+
+#mapLayerControls select {
+    color: #000;
+    background: #EEEEEE;
+    /*-moz-user-select: auto;*/
+}
+
+#mapLayerControls .layerControls {
+    margin-top: 0;
+}
+
+#outlineDots {
+    height: 20px;
+}
+
+#recordLayerControl {
+    padding: 0 5px;
+    padding-bottom: 10px;
 }
