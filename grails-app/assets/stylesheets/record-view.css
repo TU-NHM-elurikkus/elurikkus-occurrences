@@ -75,3 +75,7 @@ td.noStripe {
 .compare-table__cell--break {
     word-break: break-all;
 }
+
+.failedTestResult, .warningTestResult, .passedTestResult, .missingPropResult, .uncheckTestResult {
+    display: none;
+}

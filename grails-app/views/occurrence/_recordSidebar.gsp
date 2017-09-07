@@ -614,7 +614,7 @@
                             <g:message code="show.tabledataqualityresults.tr01td01.fail" />
                             ${warningTestSet ? warningTestSet.length() : 0}
                             <g:message code="show.tabledataqualityresults.tr01td01.warning" />
-                            <span class="fa fa-caret-square-o-up"></span>
+                            <span class="fa fa-caret-square-o-down"></span>
                         </a>
                     </td>
                 </tr>
@@ -663,7 +663,7 @@
                 </tr>
 
                 <g:each in="${passedTestSet}" var="test">
-                    <tr class="passedTestResult" style="display:none">
+                    <tr class="passedTestResult">
                         <td>
                             <g:message code="${test.name}" default="${test.name}" />
                             <alatag:dataQualityHelp code="${test.code}" />
@@ -692,7 +692,7 @@
 
             <g:set var="testSet" value="${record.systemAssertions.missing}" />
             <g:each in="${testSet}" var="test">
-                <tr class="missingPropResult" style="display:none;">
+                <tr class="missingPropResult">
                     <td>
                         <g:message code="${test.name}" default="${test.name}" />
                         <alatag:dataQualityHelp code="${test.code}" />
@@ -718,7 +718,7 @@
 
             <g:set var="testSet" value="${record.systemAssertions.unchecked}" />
             <g:each in="${testSet}" var="test">
-                <tr class="uncheckTestResult" style="display:none;">
+                <tr class="uncheckTestResult">
                     <td>
                         <g:message code="${test.name}" default="${test.name}" /><alatag:dataQualityHelp code="${test.code}" />
                     </td>
