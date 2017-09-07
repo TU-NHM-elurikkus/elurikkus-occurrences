@@ -159,7 +159,7 @@
             <div class="col-sm-12 col-md-6 col-lg-7 order-md-2">
                 <div class="row">
                     <div class="col-md-12 col-lg-9 col-xl-8 order-lg-2">
-                        <form class="inline-controls inline-controls--right">
+                        <div class="inline-controls inline-controls--right">
                             <div class="inline-controls__group">
                                 <label for="radius">
                                     <g:message code="eya.searchformradius.label" />
@@ -175,12 +175,12 @@
                             </div>
 
                             <div class="inline-controls__group">
-                                <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                                     <span class="fa fa-download"></span>
                                     <g:message code="download.download.label" />
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <div class="col-md-12 col-lg-3 col-xl-4">
@@ -235,7 +235,7 @@
                 contextPath: "${request.contextPath}",
                 biocacheServiceUrl: "${biocacheServiceUrl.encodeAsHTML()?:''}",
                 imagesUrlPrefix: "${request.contextPath}/assets/eya-images",
-                zoom: "${zoom}",
+                zoom: ${zoom ?: 12},
                 radius: ${radius},
                 speciesPageUrl: "${speciesPageUrl}",
                 queryContext: "${queryContext}",
