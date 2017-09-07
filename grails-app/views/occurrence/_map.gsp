@@ -113,7 +113,7 @@
                 </label>
 
                 <div class="layerControls">
-                    <span class="slider-val" id="sizeslider-val">1</span>
+                    <span class="slider-val" id="sizeslider-val">2</span>
                 </div>
 
                 <div id="sizeslider" style="width:75px;"></div>
