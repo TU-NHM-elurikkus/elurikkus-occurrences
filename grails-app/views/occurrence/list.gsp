@@ -299,11 +299,6 @@
                             </span>
                         </p>
 
-                        <%--
-                            What is this?
-                            <g:set var="hasFq" value="${false}" />
-                        --%>
-
                         <g:if test="${sr.activeFacetMap?.size() > 0 || params.wkt || params.radius}">
                             <g:render template="activeFilters" />
                         </g:if>

@@ -8,8 +8,7 @@
 
     <g:each var="fq" in="${sr.activeFacetMap}">
         <g:if test="${fq.key}">
-            <g:set var="hasFq" value="${true}" />
-            <alatag:currentFilterItem item="${fq}"/>
+            <alatag:currentFilterItem item="${fq}" />
         </g:if>
     </g:each>
 

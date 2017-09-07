@@ -142,19 +142,21 @@ class OccurrenceTagLib {
             span(class: "active-filters__label") {
                 if (item.key.contains("occurrence_year")) {
                     fqLabel = fqLabel
-                        .replaceAll(':',': ')
+                        .replaceAll(':', ': ')
                         .replaceAll(
                             'occurrence_year',
                             alatag.message(code: 'facet.occurrence_year', default:'occurrence_year')
                         )
+                        .replaceAll(/(\d{4})\-.*?Z/)
 
-                    mkp.yieldUnescaped(fqLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
+                    mkp.yieldUnescaped(fqLabel { all, year ->
                         def year10 = year?.toInteger() + 10
 
                         "${year} - ${year10}"
                     })
                 } else {
-                    mkp.yieldUnescaped(alatag.message(code: fqLabel, default: fqLabel).replaceFirst(':',': '))
+                    fqLabel = fqLabel.replaceAll('\\(', '')
+                    mkp.yieldUnescaped(alatag.message(code: fqLabel, default: fqLabel).replaceFirst(':', ': '))
                 }
             }
 
