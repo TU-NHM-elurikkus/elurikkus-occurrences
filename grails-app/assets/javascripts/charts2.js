@@ -1103,10 +1103,11 @@ var taxonomyChart = {
         // draw the back button / instructions
         var $backLink = $('#backLink');
         if($backLink.length === 0) {
-            $backLink = $('<div class="erk-button erk-button--inline" id="backLink">&laquo; ' + $.i18n.prop('charts2.taxonPie.previousRank') + '</div>').appendTo($outerContainer);  // create it
+            $backLink = $('<button class="erk-link-button" id="backLink">&laquo;' + $.i18n.prop('charts2.taxonPie.previousRank') + '</button>');
+
             $backLink.click(function() {
                 // only act if link was real
-                if(!$backLink.hasClass('erk-button')) { return; }
+                if(!$backLink.hasClass('erk-link-button')) { return; }
 
                 // show spinner while loading
                 $container.append($('<img class="loading" style="position:absolute;left:130px;top:220px;z-index:2000" ' +
@@ -1122,13 +1123,26 @@ var taxonomyChart = {
                 // redraw chart
                 thisChart.load();
             });
+
+            $outerContainer.append($backLink);
         }
+
+        var $instruction = $('#taxa-chart-instruction');
+
+        if($instruction.length === 0) {
+            $instruction = $('<div id="taxa-chart-instruction">' + $.i18n.prop('charts2.taxonPie.des') + '.</div>');
+
+            $outerContainer.append($instruction);
+        }
+
         if(this.hasState()) {
             // show the prev link
-            $backLink.html('&laquo; ' + $.i18n.prop('charts2.taxonPie.previousRank')).addClass('erk-button');
+            $instruction.addClass('hidden-node');
+            $backLink.removeClass('hidden-node');
         } else {
             // show the instruction
-            $backLink.html($.i18n.prop('charts2.taxonPie.des')).removeClass('erk-button');
+            $instruction.removeClass('hidden-node');
+            $backLink.addClass('hidden-node');
         }
 
         // draw records link
@@ -1143,7 +1157,7 @@ var taxonomyChart = {
 
         // set link text
         if(this.hasState()) {
-            $recordsLink.html($.i18n.prop('charts2.taxonPie.label') + ' ' + this.rank + ' ' + this.name);
+            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts2.taxonPie.label') + ' ' + this.rank + ' ' + this.name);
         } else {
             $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts2.taxonPie.viewRecords'));
         }
