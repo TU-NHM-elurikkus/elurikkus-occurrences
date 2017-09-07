@@ -762,12 +762,6 @@ ColorMode.prototype.initialize = function() {
 
                 pageNum++;
 
-                console.log(self.map.props.contextPath + '/occurrence/legend' + self.map.query +
-                    '&cm=' + self.facet +
-                    '&pageNum=' + pageNum +
-                    '&pageSize=' + pageSize +
-                    '&type=application/json',);
-
                 $.ajax({
                     url: self.map.props.contextPath + '/occurrence/legend' + self.map.query +
                         '&cm=' + self.facet +
