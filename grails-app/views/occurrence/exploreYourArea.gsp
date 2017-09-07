@@ -157,33 +157,41 @@
 
             <%-- MAP CONTROLS & INFO --%>
             <div class="col-sm-12 col-md-6 col-lg-7 order-md-2">
-                <form class="inline-controls inline-controls--right">
-                    <div class="inline-controls__group">
-                        <label for="radius">
-                            <g:message code="eya.searchformradius.label" />
-                        </label>
-                        <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
+                <div class="row">
+                    <div class="col-md-12 col-lg-9 col-xl-8 order-lg-2">
+                        <form class="inline-controls inline-controls--right">
+                            <div class="inline-controls__group">
+                                <label for="radius">
+                                    <g:message code="eya.searchformradius.label" />
+                                </label>
+                                <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
+                            </div>
+
+                            <div class="inline-controls__group">
+                                <button id="viewAllRecords" class="erk-button erk-button--dark">
+                                    <span class="fa fa-list"></span>
+                                    <g:message code="eya.searchform.a.viewallrecords.label" />
+                                </button>
+                            </div>
+
+                            <div class="inline-controls__group">
+                                <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                    <span class="fa fa-download"></span>
+                                    <g:message code="download.download.label" />
+                                </button>
+                            </div>
+                        </form>
                     </div>
 
-                    <div class="inline-controls__group">
-                        <button id="viewAllRecords" class="erk-button erk-button--dark">
-                            <span class="fa fa-list"></span>
-                            <g:message code="eya.searchform.a.viewallrecords.label" />
-                        </button>
+                    <div class="col-md-12 col-lg-3 col-xl-4">
+                        <div class="column-reverse">
+                            <p>
+                                <span class="fa fa-info-circle"></span>
+                                <g:message code="eya.maptips" />
+                            </p>
+                        </div>
                     </div>
-
-                    <div class="inline-controls__group">
-                        <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                            <span class="fa fa-download"></span>
-                            <g:message code="download.download.label" />
-                        </button>
-                    </div>
-                </form>
-
-                <p>
-                    <span class="fa fa-info-circle"></span>
-                    <g:message code="eya.maptips" />
-                </p>
+                </div>
             </div>
 
             <%-- MAP --%>
