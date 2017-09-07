@@ -91,12 +91,18 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-md-7 col-lg-5">
-                <p>
-                    <span class="fa fa-info-circle"></span>
-                    <g:message code="eya.groupTable.help" />
-                </p>
+            <%-- TAXA INFO --%>
+            <div class="col-sm-12 col-md-6 col-lg-5">
+                <div class="column-reverse">
+                    <p>
+                        <span class="fa fa-info-circle"></span>
+                        <g:message code="eya.groupTable.help" />
+                    </p>
+                </div>
+            </div>
 
+            <%-- TAXA CONTROLS --%>
+            <div class="col-sm-12 col-md-6 col-lg-5 order-md-3">
                 <div id="taxaBox">
                     <div id="leftList">
                         <table id="taxa-level-0">
@@ -149,74 +155,67 @@
                 </div>
             </div>
 
-            <%-- MAP CONTROL --%>
-            <div class="col">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <p>
-                            <span class="fa fa-info-circle"></span>
-                            <g:message code="eya.maptips" />
-                        </p>
+            <%-- MAP CONTROLS & INFO --%>
+            <div class="col-sm-12 col-md-6 col-lg-7 order-md-2">
+                <form class="inline-controls inline-controls--right">
+                    <div class="inline-controls__group">
+                        <label for="radius">
+                            <g:message code="eya.searchformradius.label" />
+                        </label>
+                        <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
                     </div>
 
-                    <div class="col-lg-6">
-                        <form class="inline-controls inline-controls--right">
-                            <div class="inline-controls__group">
-                                <label for="radius">
-                                    <g:message code="eya.searchformradius.label" />
-                                </label>
-                                <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
-                            </div>
-
-                            <div class="inline-controls__group">
-                                <button id="viewAllRecords" class="erk-button erk-button--dark">
-                                    <span class="fa fa-list"></span>
-                                    <g:message code="eya.searchform.a.viewallrecords.label" />
-                                </button>
-                            </div>
-
-                            <div class="inline-controls__group">
-                                <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
-                                    <span class="fa fa-download"></span>
-                                    <g:message code="download.download.label" />
-                                </button>
-                            </div>
-                        </form>
+                    <div class="inline-controls__group">
+                        <button id="viewAllRecords" class="erk-button erk-button--dark">
+                            <span class="fa fa-list"></span>
+                            <g:message code="eya.searchform.a.viewallrecords.label" />
+                        </button>
                     </div>
-                </div>
 
-                <%-- TODO XXX --%>
+                    <div class="inline-controls__group">
+                        <button id="down-button" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                            <span class="fa fa-download"></span>
+                            <g:message code="download.download.label" />
+                        </button>
+                    </div>
+                </form>
+
+                <p>
+                    <span class="fa fa-info-circle"></span>
+                    <g:message code="eya.maptips" />
+                </p>
+            </div>
+
+            <%-- MAP --%>
+            <div class="col-sm-12 col-md-6 col-lg-7 order-md-3">
                 <div id="mapCanvas" style="width: 100%; height: 490px;"></div>
 
-                <%-- TODO XXX --%>
-                <div style="font-size:11px;width:100%;color:black;height:20px;" class="show-80">
-                    <table id="cellCountsLegend">
-                        <tr>
-                            <td style="background-color:#000; color:white; text-align:right;">
-                                <g:message code="eya.speciesTable.header.count.label" />:&nbsp;
-                            </td>
+                <table id="cellCountsLegend">
+                    <tr>
+                        <td style="background-color:#000; color:white; text-align:right;">
+                            <g:message code="eya.speciesTable.header.count.label" />:&nbsp;
+                        </td>
 
-                            <td style="background-color:#ffff00;">
-                                1&ndash;9
-                            </td>
-                            <td style="background-color:#ffcc00;">
-                                10&ndash;49
-                            </td>
-                            <td style="background-color:#ff9900;">
-                                50&ndash;99
-                            </td>
-                            <td style="background-color:#ff6600;">
-                                100&ndash;249
-                            </td>
-                            <td style="background-color:#ff3300;">
-                                250&ndash;499
-                            </td>
-                            <td style="background-color:#cc0000;">
-                                500+
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                        <td style="background-color:#ffff00;">
+                            1&ndash;9
+                        </td>
+                        <td style="background-color:#ffcc00;">
+                            10&ndash;49
+                        </td>
+                        <td style="background-color:#ff9900;">
+                            50&ndash;99
+                        </td>
+                        <td style="background-color:#ff6600;">
+                            100&ndash;249
+                        </td>
+                        <td style="background-color:#ff3300;">
+                            250&ndash;499
+                        </td>
+                        <td style="background-color:#cc0000;">
+                            500+
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
