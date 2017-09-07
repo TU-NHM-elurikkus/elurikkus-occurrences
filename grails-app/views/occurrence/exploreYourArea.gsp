@@ -235,7 +235,7 @@
                 contextPath: "${request.contextPath}",
                 biocacheServiceUrl: "${biocacheServiceUrl.encodeAsHTML()?:''}",
                 imagesUrlPrefix: "${request.contextPath}/assets/eya-images",
-                zoom: ${zoom},
+                zoom: "${zoom}",
                 radius: ${radius},
                 speciesPageUrl: "${speciesPageUrl}",
                 queryContext: "${queryContext}",

@@ -1,4 +1,5 @@
 <g:set var="biocacheServiceUrl" value="${alatag.getBiocacheAjaxUrl()}" />
+
 <div id="download" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="downloadsLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
