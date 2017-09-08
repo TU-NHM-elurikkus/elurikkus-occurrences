@@ -404,7 +404,7 @@ $(document).ready(function() {
         fq = fq.replace(/ OR $/, ''); // remove trailing OR
 
         if(fq.indexOf(' OR ') !== -1) {
-            fq = '(' + fq + ')'; // so that exclude (inverse) searches work
+            fq = '(' + fq + ')';  // so that exclude (inverse) searches work
         }
 
         if(checkedFound && selectedCount > maxSelected) {
@@ -1066,7 +1066,7 @@ function loadSpeciesInTab(start, sortField, group) {
                 var h = el.height();
                 var w = el.width();
                 var wh;
-                checkwh = (h < w) ? (wh = (w / h * resize) / 2) : ();
+                checkwh = (h < w) ? (wh = (w / h * resize) / 2) : (wh = (w * resize / h) / 2);
 
                 $(this).clone().prependTo(ibox);
 
@@ -1273,7 +1273,6 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                 $('.scrollContent td + td + td').width(thWidth);
 
             }
-
         } else {
             $('tr#loadingRow').remove(); // remove the loading message
             $('tr#loadMore').remove(); // remove the load more records link
