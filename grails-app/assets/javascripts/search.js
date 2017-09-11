@@ -570,45 +570,45 @@ function reloadWithParam(paramName, paramValue) {
 
     // add query param
     if(q) {
-        paramList.push("q=" + q);
+        paramList.push('q=' + q);
     }
 
     // add filter query param
-    if(fqList && typeof fqList === "string") {
+    if(fqList && typeof fqList === 'string') {
         fqList = [ fqList ];
     } else if(!fqList) {
         fqList = [];
     }
 
     if(fqList) {
-        paramList.push("fq=" + fqList.join("&fq="));
+        paramList.push('fq=' + fqList.join('&fq='));
     }
 
     // add sort/dir/pageSize params if already set (different to default)
-    if(paramName != 'sort' && sort) {
-        paramList.push('sort' + "=" + sort);
+    if(sort && paramName != 'sort') {
+        paramList.push('sort' + '=' + sort);
     }
 
-    if(paramName != 'dir' && dir) {
-        paramList.push('dir' + "=" + dir);
+    if(dir && paramName != 'dir') {
+        paramList.push('dir' + '=' + dir);
     }
 
-    if(paramName != 'pageSize' && pageSize) {
-        paramList.push("pageSize=" + pageSize);
+    if(pageSize && paramName != 'pageSize') {
+        paramList.push('pageSize=' + pageSize);
     }
 
     if(paramName && paramValue) {
-        paramList.push(paramName + "=" + paramValue);
+        paramList.push(paramName + '=' + paramValue);
     }
 
     if(lat && lon && rad) {
-        paramList.push("lat=" + lat);
-        paramList.push("lon=" + lon);
-        paramList.push("radius=" + rad);
+        paramList.push('lat=' + lat);
+        paramList.push('lon=' + lon);
+        paramList.push('radius=' + rad);
     }
 
     if(taxa) {
-        paramList.push("taxa=" + taxa);
+        paramList.push('taxa=' + taxa);
     }
 
     window.location.href = window.location.pathname + '?' + paramList.join('&');
