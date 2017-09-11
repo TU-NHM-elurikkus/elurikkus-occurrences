@@ -1157,7 +1157,8 @@ function loadMoreFacets(facetName, displayName, fsort, foffset) {
 }
 
 function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets) {
-    var jsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' + BC_CONF.searchString +
+    var jsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' +
+        BC_CONF.searchString +
         '&facets=' + facetName +
         '&flimit=' + facetLimit +
         '&foffset=' + foffset +
@@ -1170,6 +1171,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
     jsonUri += '&callback=?';  // JSONP trigger
 
     $.getJSON(jsonUri, function(data) {
+
         if(data.totalRecords && data.totalRecords > 0) {
             var hasMoreFacets = false;
             var html = '';
@@ -1185,51 +1187,53 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     // surround with quotes: fq value if contains spaces but not for range queries
                     var fqEsc = ((el.label.indexOf(' ') != -1 || el.label.indexOf(',') != -1 || el.label.indexOf('lsid') != -1) && el.label.indexOf('[') != 0)
                         ? '"' + el.label + '"'
-                        : el.label;
+                        : el.label; // .replace(/:/g,"\\:")
                     var label = (el.displayLabel) ? el.displayLabel : el.label;
                     var trIdAttr = '';
                     if(!label) {
                         label = 'absent';
                         $('tr#facets-row-absent').remove();  // remove the absent row, as it is reinserted
-                        var trIdAttr = 'id=facets-row-absent';  // not proud of it, but has to do now
+                        var trIdAttr = 'id=facets-row-absent'  // not proud of it, but has to do now
                     }
+
                     var encodeFq = true;
                     if(label.indexOf('@') != -1) {
                         label = label.substring(0, label.indexOf('@'));
-                    } else if(jQuery.i18n.prop(label).indexOf('[') == -1) {
+                    } else if($.i18n.prop(label).indexOf("[") == -1) {
                         // i18n substitution
-                        var code = facetName + '.' + label;
-                        var i18nLabel = jQuery.i18n.prop(code);
-                        label = (i18nLabel.indexOf('[') == -1) ? i18nLabel : jQuery.i18n.prop(label);
+                        var code = facetName + "." + label;
+                        var i18nLabel = $.i18n.prop(code);
+                        label = (i18nLabel.indexOf('[') == -1) ? i18nLabel : $.i18n.prop(label);
                     } else if(facetName.indexOf('outlier_layer') != -1 || /^el\d+/.test(label)) {
-                        label = jQuery.i18n.prop('layer.' + label);
+                        label = $.i18n.prop('layer.' + label);
                     } else if(facetName.indexOf('geospatial_kosher') != -1 || /^el\d+/.test(label)) {
-                        label = jQuery.i18n.prop('geospatial_kosher.' + label);
+                        label = $.i18n.prop('geospatial_kosher.' + label);
                     } else if(facetName.indexOf('user_assertions') != -1 || /^el\d+/.test(label)) {
-                        label = jQuery.i18n.prop('user_assertions.' + label);
+                        label = $.i18n.prop('user_assertions.' + label);
                     } else if(facetName.indexOf('duplicate_type') != -1 || /^el\d+/.test(label)) {
-                        label = jQuery.i18n.prop('duplication.' + label);
+                        label = $.i18n.prop('duplication.' + label);
                     } else if(facetName.indexOf('taxonomic_issue') != -1 || /^el\d+/.test(label)) {
-                        label = jQuery.i18n.prop(label);
+                        label = $.i18n.prop(label);
                     } else {
                         var code = facetName + '.' + label;
-                        var i18nLabel = jQuery.i18n.prop(code);
-                        var newLabel = (i18nLabel.indexOf('[') == -1) ? i18nLabel : (jQuery.i18n.prop(label));
+                        var i18nLabel = $.i18n.prop(code);
+                        var newLabel = (i18nLabel.indexOf('[') == -1) ? i18nLabel : ($.i18n.prop(label));
                         label = (newLabel.indexOf('[') == -1) ? newLabel : label;
                     }
-                    facetName = facetName.replace(/_RNG$/, '');  // remove range version if present
+                    facetName = facetName.replace(/_RNG$/, ''); // remove range version if present
                     var fqParam = (el.fq) ? encodeURIComponent(el.fq) : facetName + ':' + ((encodeFq) ? encodeURIComponent(fqEsc) : fqEsc);
 
                     // NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues
                     // Problematic URL http://biocache.ala.org.au/occurrences/search?q=lsid:urn:lsid:biodiversity.org.au:afd.taxon:b76f8dcf-fabd-4e48-939c-fd3cafc1887a&fq=geospatial_kosher:true&fq=state:%22Australian%20Capital%20Territory%22
-                    var link = BC_CONF.searchString + "&fq=" + fqParam;
-                    html += ''
+                    var link = BC_CONF.searchString + '&fq=' + fqParam;
+                    html +=
                         '<tr>' +
                             '<td>' +
                                 '<input type="checkbox" name="fqs" class="fqs" value="' + fqParam + '" />' +
                             '</td>' +
                             '<td>' +
-                                '<a href="' + link + '"> ' + label +
+                                '<a href="' + link + '">' +
+                                    label +
                                 '</a>' +
                             '</td>' +
                             '<td style="text-align: right">' +
@@ -1246,36 +1250,37 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             // Fix some border issues - ToDo this only somewhat fixes...
             $('table#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
             $('table#fullFacets td:last-child, table#fullFacets th:last-child').css('border-right', 'none');
+            // $("tr.hidden").fadeIn('slow');
 
             if(hasMoreFacets) {
                 var offsetInt = Number(foffset);
                 var flimitInt = Number(facetLimit);
-                var loadMore = '' +
+                var loadMore =
                     '<tr id="loadMore" class="">' +
                         '<td colspan="3">' +
-                            '<a href="#index" class="loadMoreValues" data-sort="' + fsort + '" data-foffset="' + (offsetInt + flimitInt) + '" >' +
+                            '<a href="#index" class="loadMoreValues" data-sort="' + fsort + '" data-foffset="' + (offsetInt + flimitInt) + '">' +
                                 'Loading ' + facetLimit + ' more values&hellip;' +
                             '</a>' +
                         '</td>' +
                     '</tr>';
                 $('table#fullFacets tbody').append(loadMore);
+                // $("tr#loadMore").fadeIn('slow');
             }
-
             var tableHeight = $('#fullFacets tbody').height();
             var tbodyHeight = 0;
             $('#fullFacets tbody tr').each(function(i, el) {
                 tbodyHeight += $(el).height();
             });
 
-            if(false && tbodyHeight < tableHeight) {
-                // no scroll bar so adjust column widths
-                var thWidth = $('.scrollContent td + td + td').width() + 18;
-                $('.scrollContent td + td + td').width(thWidth);
-
-            }
+            // always false, probably not needed then
+            // if(false && tbodyHeight < tableHeight) {
+            //     // no scroll bar so adjust column widths
+            //     var thWidth = $('.scrollContent td + td + td').width() + 18;  // $("th#indexCol").width() + 36;
+            //     $('.scrollContent td + td + td').width(thWidth);
+            // }
         } else {
-            $('tr#loadingRow').remove(); // remove the loading message
-            $('tr#loadMore').remove(); // remove the load more records link
+            $('tr#loadingRow').remove();  // remove the loading message
+            $('tr#loadMore').remove();  // remove the load more records link
             $('#spinnerRow').hide();
             $('table#fullFacets tbody').append(
                 '<tr>' +
@@ -1283,6 +1288,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     '<td>' +
                         '[Error: no values returned]' +
                     '</td>' +
+                    '<td></td>' +
                 '</tr>');
         }
     });
