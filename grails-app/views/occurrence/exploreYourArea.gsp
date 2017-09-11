@@ -9,7 +9,7 @@
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="yourArea" />
         <title>
-            <g:message code="eya.title" /> | eElurikkus
+            <g:message code="eya.title" />
         </title>
 
         <g:render template="/layouts/global" plugin="elurikkus-biocache-hubs" />
@@ -32,7 +32,7 @@
             </h1>
 
             <div class="page-header__subtitle">
-                <g:message code="home.index.subtitle" args="${['eElurikkus']}" />
+                <g:message code="eya.description" />
             </div>
         </div>
 

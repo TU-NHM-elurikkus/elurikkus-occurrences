@@ -13,7 +13,7 @@
         <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
 
         <title>
-            <g:message code="home.index.title" /> | ${hubDisplayName}
+            <g:message code="home.index.title" />
         </title>
 
         <asset:javascript src="index.js"/>
