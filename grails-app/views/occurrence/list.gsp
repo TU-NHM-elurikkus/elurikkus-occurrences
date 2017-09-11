@@ -14,8 +14,6 @@
             <g:message code="list.title" />: ${sr?.queryTitle?.replaceAll("<(.|\n)*?>", '')}
             |
             <g:message code="search.heading.list" />
-            |
-            ${grailsApplication.config.skin.orgNameLong}
         </title>
 
         <g:if test="${grailsApplication.config.google.apikey}">
