@@ -11,8 +11,6 @@
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
         <title>
-            <g:message code="list.title" />: ${sr?.queryTitle?.replaceAll("<(.|\n)*?>", '')}
-            |
             <g:message code="search.heading.list" />
         </title>
 
