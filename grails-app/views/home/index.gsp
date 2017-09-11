@@ -80,6 +80,10 @@
             <div id="simple-search" class="tab-pane active">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6">
+                        <p>
+                            <span class="fa fa-info-circle"></span>
+                            <g:message code="home.index.simsplesearch.help" />
+                        </p>
                         <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
                             <div class="input-plus">
                                 <input type="text" name="taxa" id="taxa" class="input-plus__field" />
@@ -93,13 +97,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <small>
-                            <g:message code="home.index.simsplesearch.help" />
-                        </small>
-                    </div>
-                </div>
             </div>
 
             <div id="advanced-search" class="tab-pane">
@@ -109,6 +106,7 @@
             <div id="taxa-upload" class="tab-pane">
                 <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
                     <p>
+                        <span class="fa fa-info-circle"></span>
                         <g:message code="home.index.taxaupload.des01" />
                     </p>
 
@@ -136,6 +134,7 @@
             <div id="catalog-upload" class="tab-pane">
                 <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
                     <p>
+                        <span class="fa fa-info-circle"></span>
                         <g:message code="home.index.catalogupload.des01" />
                     </p>
 
@@ -166,6 +165,7 @@
                 <div class="row">
                     <div class="col-3 wkt-section">
                         <p>
+                            <span class="fa fa-info-circle"></span>
                             <g:message code="search.map.helpText" />
                         </p>
 
