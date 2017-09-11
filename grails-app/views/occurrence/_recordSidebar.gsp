@@ -611,7 +611,7 @@
                     <td colspan="2">
                         <a
                             id="showErrorAndWarningTests"
-                            onclick="javascript:toggleTests(this)"
+                            onclick="toggleTests(this)"
                             href="javascript:void(0)"
                             class="undecorated"
                         >
@@ -661,7 +661,7 @@
                     <td colspan="2">
                         <a
                             id="showPassedTests"
-                            onclick="javascript:toggleTests(this)"
+                            onclick="toggleTests(this)"
                             href="javascript:void(0)"
                             class="undecorated"
                         >
@@ -693,7 +693,7 @@
                     <td colspan="2">
                         <a
                             id="showMissingPropResult"
-                            onclick="javascript:toggleTests(this)"
+                            onclick="toggleTests(this)"
                             href="javascript:void(0)"
                             class="undecorated"
                         >
@@ -724,7 +724,7 @@
                     <td colspan="2">
                         <a
                             id="showUncheckedTests"
-                            onclick="javascript:toggleTests(this)"
+                            onclick="toggleTests(this)"
                             href="javascript:void(0)"
                             class="undecorated"
                         >
