@@ -305,11 +305,21 @@
 
                         <%-- XXX XXX XXX jQuery template used for taxon drop-downs --%>
                         <div class="btn-group invisible" id="template" style="display: none;">
-                            <a class="erk-button erk-button--light" href="" id="taxa_" title="${message(code: 'list.resultsretuened.speciesLink.title')}" target="BIE">
+                            <a
+                                class="erk-button erk-button--light"
+                                href=""
+                                id="taxa_"
+                                title="${message(code: 'list.resultsretuened.speciesLink.title')}"
+                                target="BIE"
+                            >
                                 <g:message code="list.resultsretuened.navigator01" />
                             </a>
 
-                            <button class="erk-button erk-button--light dropdown-toggle" data-toggle="dropdown" title="${message(code: 'list.resultsretuened.speciesLink.title')}">
+                            <button
+                                class="erk-button erk-button--light dropdown-toggle"
+                                data-toggle="dropdown"
+                                title="${message(code: 'list.resultsretuened.speciesLink.title')}"
+                            >
                                 <span class="caret"></span>
                             </button>
 
@@ -323,7 +333,12 @@
                                         <g:message code="list.resultsretuened.des03" />
                                     </span>).
 
-                                    <form name="raw_taxon_search" class="rawTaxonSearch" action="${request.contextPath}/occurrences/search/taxa" method="POST">
+                                    <form
+                                        name="raw_taxon_search"
+                                        class="rawTaxonSearch"
+                                        action="${request.contextPath}/occurrences/search/taxa"
+                                        method="POST"
+                                    >
                                         <div class="refineTaxaSearch">
                                             <g:message code="list.resultsretuened.form.des01" />:
                                             <input
@@ -342,7 +357,7 @@
                         </div>
                     </section>
                 </div>
-            </div><!-- /#searchInfoRow -->
+            </div>  <%-- /#searchInfoRow --%>
 
             <p>
                 <span class="fa fa-info-circle"></span>
@@ -377,7 +392,14 @@
 
                 <div class="col-sm-7 col-md-9">
                     <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
-                        <div id="alert" class="modal fade invisible" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
+                        <div
+                            id="alert"
+                            class="modal fade invisible"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="alertLabel"
+                            aria-hidden="true"
+                        >
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -417,7 +439,9 @@
                                         </div>
 
                                         <%-- XXX --%>
-                                        <p>&nbsp;</p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
 
                                         <p>
                                             <a href="${grailsApplication.config.alerts.baseUrl}/notification/myAlerts">
@@ -499,7 +523,12 @@
                         <div id="records" role="tabpanel" class="tab-pane solrResults active" >
                             <div class="search-controls">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
-                                    <button id="downloads" data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
+                                    <button
+                                        id="downloads"
+                                        data-toggle="modal"
+                                        data-target="#download"
+                                        class="erk-button erk-button--light"
+                                    >
                                        <span class="fa fa-download"></span>
                                        <g:message code="download.download.label" />
                                     </button>
@@ -525,7 +554,7 @@
                                         </label>
 
                                         <select id="per-page" name="per-page">
-                                            <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:"20"}" />
+                                            <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:'20'}" />
                                             <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
                                             <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
                                             <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>
@@ -682,7 +711,13 @@
                                     <button class="erk-button erk-button--light">
                                         <g:message code="generic.button.loadMore" />
                                     </button>
-                                    <g:img plugin="elurikkus-biocache-hubs" dir="images" file="spinner.gif" style="display:none;" alt="indicator icon" />
+                                    <g:img
+                                        plugin="elurikkus-biocache-hubs"
+                                        dir="images"
+                                        file="spinner.gif"
+                                        style="display:none;"
+                                        alt="indicator icon"
+                                    />
                                 </div>
                             </div> <%-- end #speciesWrapper --%>
                         </g:if>
@@ -690,13 +725,19 @@
                         <g:if test="${hasImages}">
                             <div id="images" role="tabpanel" class="tab-pane">
                                 <div id="imagesGrid">
-                                    <g:message code="list.speciesgallerycontrols.imagesgrid" />...
+                                    <g:message code="list.speciesgallerycontrols.imagesgrid" />&hellip;
                                 </div>
 
                                 <div id="loadMoreImages" style="display:none;">
                                     <button class="erk-button erk-button--light">
                                         <g:message code="generic.button.loadMore" />
-                                        <g:img plugin="elurikkus-biocache-hubs" dir="images" file="spinner.gif" style="display:none;" alt="indicator icon" />
+                                        <g:img
+                                            plugin="elurikkus-biocache-hubs"
+                                            dir="images"
+                                            file="spinner.gif"
+                                            style="display:none;"
+                                            alt="indicator icon"
+                                        />
                                      </button>
                                  </div>
 
@@ -717,7 +758,13 @@
                         </g:if>
                     </div>
 
-                    <form name="raw_taxon_search" class="rawTaxonSearch" id="rawTaxonSearchForm" action="${request.contextPath}/occurrences/search/taxa" method="POST">
+                    <form
+                        name="raw_taxon_search"
+                        class="rawTaxonSearch"
+                        id="rawTaxonSearchForm"
+                        action="${request.contextPath}/occurrences/search/taxa"
+                        method="POST"
+                    >
                         <%-- taxon concept search drop-down div are put in here via Jquery --%>
                         <div style="display:none;"></div>
                     </form>
