@@ -79,3 +79,14 @@ td.noStripe {
 .failedTestResult, .warningTestResult, .passedTestResult, .missingPropResult, .uncheckTestResult {
     display: none;
 }
+
+
+.undecorated {
+    color: inherit;
+    text-decoration: none;
+}
+
+.undecorated:hover {
+    color: inherit;
+    text-decoration: none;
+}
