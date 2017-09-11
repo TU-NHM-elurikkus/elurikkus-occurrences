@@ -5,7 +5,6 @@
 <g:set var="collectionsWebappContext" value="${grailsApplication.config.collections.baseUrl}" />
 <g:set var="taxaLinks" value="${grailsApplication.config.skin.taxaLinks}" />
 <g:set var="dwcExcludeFields" value="${grailsApplication.config.dwc.exclude}" />
-<g:set var="hubDisplayName" value="${grailsApplication.config.skin.orgNameLong}" />
 <g:set var="biocacheService" value="${alatag.getBiocacheAjaxUrl()}" />
 <g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.baseUrl}" />
 <g:set var="sensitiveDatasetRaw" value="${grailsApplication.config.sensitiveDataset?.list?:''}" />
@@ -21,10 +20,7 @@
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
         <title>
-            <g:message code="show.title" />:
-            ${recordId} |
-            <g:message code="show.occurrenceRecord" />
-            | ${hubDisplayName}
+            <g:message code="show.occurrenceRecord" />: ${recordId}
         </title>
 
         <g:if test="${grailsApplication.config.google.apikey}">
