@@ -80,12 +80,13 @@ td.noStripe {
     display: none;
 }
 
+
 .undecorated {
-    color: #3a3e42;
+    color: inherit;
     text-decoration: none;
 }
 
 .undecorated:hover {
-    color: #3a3e42;
+    color: inherit;
     text-decoration: none;
 }
