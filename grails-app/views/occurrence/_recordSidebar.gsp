@@ -126,24 +126,6 @@
         </a>
     </div>
 
-    <g:if test="${record.systemAssertions && record.processed.attribution.provenance != 'Draft'}">
-        <div class="sidebar-general-info__item">
-            <a href="#dataQuality">
-                <g:message code="show.dataquality.title" />
-                (${record.systemAssertions.failed?.size()?:0}
-                <span class="fa fa-times-circle tooltips" style="color:red;" title="${message(code: 'assertions.failed')}"></span>,
-                ${record.systemAssertions.warning?.size()?:0}
-                <span class="fa fa-exclamation-circle tooltips" style="color:orange;" title="${message(code: 'assertions.warnings')}"></span>,
-                ${record.systemAssertions.passed?.size()?:0}
-                <span class="fa fa-check-circle tooltips" style="color:green;" title="${message(code: 'assertions.passed')}"></span>,
-                ${record.systemAssertions.missing?.size()?:0}
-                <span class="fa fa-question-circle tooltips" style="color:gray;" title="${message(code: 'assertions.missing')}"></span>,
-                ${record.systemAssertions.unchecked?.size()?:0}
-                <span class="fa fa-ban tooltips" style="color:gray;" title="${message(code: 'assertions.unchecked')}"></span>)
-            </a>
-        </div>
-    </g:if>
-
     <g:if test="${record.processed.occurrence.outlierForLayers}">
         <div class="sidebar-general-info__item">
             <a href="#outlierInformation">

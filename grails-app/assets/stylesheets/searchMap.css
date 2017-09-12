@@ -231,3 +231,8 @@ a.colour-by-legend-toggle {
     padding-top: 0;
     font-size: 14px;
 }
+
+.data-quality-block {
+    display: inline-block;
+    margin-bottom: .5rem;
+}

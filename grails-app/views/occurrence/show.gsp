@@ -152,44 +152,70 @@
                 </div>
 
                 <div class="row">
-                    <div id="SidebarBoxZ" class="col-sm-5 col-lg-3">
+                    <div class="col-sm-6 col-md-5">
+                        <g:if test="${record.systemAssertions && record.processed.attribution.provenance != 'Draft'}">
+                            <a href="#dataQuality" class="float-left">
+                                <g:message code="show.dataquality.title" />
+                                <div class="data-quality-block">
+                                    (${record.systemAssertions.failed?.size()?:0}
+                                    <span class="fa fa-times-circle tooltips" style="color:red;" title="${message(code: 'assertions.failed')}"></span>,
+                                    ${record.systemAssertions.warning?.size()?:0}
+                                    <span class="fa fa-exclamation-circle tooltips" style="color:orange;" title="${message(code: 'assertions.warnings')}"></span>,
+                                    ${record.systemAssertions.passed?.size()?:0}
+                                    <span class="fa fa-check-circle tooltips" style="color:green;" title="${message(code: 'assertions.passed')}"></span>,
+                                    ${record.systemAssertions.missing?.size()?:0}
+                                    <span class="fa fa-question-circle tooltips" style="color:gray;" title="${message(code: 'assertions.missing')}"></span>,
+                                    ${record.systemAssertions.unchecked?.size()?:0}
+                                    <span class="fa fa-ban tooltips" style="color:gray;" title="${message(code: 'assertions.unchecked')}"></span>)
+                                </div>
+                            </a>
+                        </g:if>
+                    </div>
+
+                    <div class="col">
+                        <div class="inline-controls inline-controls--right">
+                            <g:if test="${contacts && contacts.size()}">
+                                <div class="inline-controls__group">
+                                    <button
+                                        href="#contactCuratorView"
+                                        class="erk-button erk-button--light"
+                                        id="showCurator"
+                                        role="button"
+                                        data-toggle="modal"
+                                        title="${message(code: 'show.showcontactcurator.title')}"
+                                    >
+                                        <span id="contactCuratorSpan" href="#contactCuratorView" title="">
+                                            <span class="fa fa-envelope-o"></span>
+                                            <g:message code="show.showcontactcurator.label" />
+                                        </span>
+                                    </button>
+                                </div>
+                            </g:if>
+
+                            <div class="inline-controls__group">
+                                <button
+                                    id="showRawProcessed"
+                                    data-toggle="modal"
+                                    href="#processedVsRawView"
+                                    class="erk-button erk-button--light"
+                                    role="button"
+                                    title="<g:message code='show.sidebar02.showrawprocessed.title' />"
+                                >
+                                    <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
+                                        <g:message code="show.sidebar02.showrawprocessed.label" />
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-5 col-lg-3">
                         <g:render template="recordSidebar" />
                     </div>
 
                     <div class="col-sm-7 col-lg-9 occurrence-table-container">
-                        <div class="float-right">
-                            <g:if test="${contacts && contacts.size()}">
-                                <button
-                                    href="#contactCuratorView"
-                                    class="erk-button erk-button--light"
-                                    id="showCurator"
-                                    role="button"
-                                    data-toggle="modal"
-                                    title="${message(code: 'show.showcontactcurator.title')}"
-                                >
-                                    <span id="contactCuratorSpan" href="#contactCuratorView" title="">
-                                        <span class="fa fa-envelope-o"></span>
-                                        <g:message code="show.showcontactcurator.label" />
-                                    </span>
-                                </button>
-                            </g:if>
-
-                            <button
-                                id="showRawProcessed"
-                                data-toggle="modal"
-                                href="#processedVsRawView"
-                                class="erk-button erk-button--light"
-                                role="button"
-                                title="<g:message code='show.sidebar02.showrawprocessed.title' />"
-                            >
-                                <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                                    <g:message code="show.sidebar02.showrawprocessed.label" />
-                                </span>
-                            </button>
-                        </div>
-
-                        <br />
-
                         <g:render template="recordCore" />
                     </div>
                 </div>
