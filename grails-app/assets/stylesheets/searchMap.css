@@ -222,3 +222,12 @@ a.colour-by-legend-toggle {
     padding: 0 5px;
     padding-bottom: 10px;
 }
+
+/**
+ * If common size help text are need elsewhere in Bootstrap 4's forms,
+ * move this to commons.
+ */
+.erk-form-legend {
+    padding-top: 0;
+    font-size: 14px;
+}
