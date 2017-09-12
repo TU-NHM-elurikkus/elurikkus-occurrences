@@ -47,7 +47,7 @@ table#cellCountsLegend {
 }
 
 #taxaBox div#rightList {
-    float: left;
+    float: right;
     width: 66%;
     padding: 0;
     margin: 0;
@@ -148,13 +148,14 @@ table#cellCountsLegend {
     width: 5%;
 }
 
-#rightList .sciName {
-    width: 85%;
+#rightList .rightCounts {
+    padding-right: 1em;
+    width: 5%;
 }
 
-#rightList .rightCounts {
-    padding-right: 5px;
-    width: 10%;
+#rightList #right-count {
+    float: right;
+    margin-right: 24px;
 }
 
 .activeRow {
@@ -313,7 +314,7 @@ thead.fixedHeader tr {
 /* set THEAD element to have block level attributes. All other non-IE browsers            */
 /* this enables overflow to work on TBODY element. All other non-IE, non-Mozilla browsers */
 html>body thead.fixedHeader tr {
-    display: block;
+    /* display: block; */
 }
 
 /* define the table content to be scrollable                                              */
