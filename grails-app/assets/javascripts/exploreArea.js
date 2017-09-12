@@ -84,7 +84,7 @@ function loadExploreArea(EYA_CONF) {
 
     function registerEventHandlers() {
         // Register events for the species_group column
-        $('#taxa-level-0 tbody tr').live('mouseover mouseout', function() {
+        $('#taxa-level-0 tbody tr').live('mouseover mouseout', function(event) {
             // mouse hover on groups
             if(event.type === 'mouseover') {
                 $(this).addClass('hoverRow');
@@ -350,9 +350,9 @@ function loadExploreArea(EYA_CONF) {
             if($.inArray('|', taxa) > 0) {
                 var parts = taxa.split('|');
                 var newParts = [];
-                for(var j in parts) {
+                parts.forEach(function(j) {
                     newParts.push(rank + ':' + parts[j]);
-                }
+                });
                 solrQuery = newParts.join(' OR ');
             } else {
                 solrQuery = '*:*'; // rank+':'+taxa;
@@ -368,7 +368,7 @@ function loadExploreArea(EYA_CONF) {
                 '<div class="infoWindow">' +
                     'Number of records: ' + n.properties.count +
                     '<br />' +
-                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.05">' +
+                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.06">' +
                         '<span class="fa fa-list"></span> View records' +
                     '</a>' +
                 '</div>';
@@ -507,14 +507,14 @@ function loadExploreArea(EYA_CONF) {
         });
     }
 
+    var sortOrder;  // Keep the last used ordering state for the right panel
+
     /**
      * Process the JSON data from an Species list AJAX request (species in area)
      */
-    function processSpeciesJsonData(data, appendResults) {
+    function processSpeciesJsonData(data) {
         // clear right list unless we're paging
-        if(!appendResults) {
-            $('#rightList tbody').empty();
-        }
+        var newStart = 0;
         // process JSON data
         if(data.length > 0) {
             var lastRow = $('#rightList tbody tr').length;
@@ -526,10 +526,17 @@ function loadExploreArea(EYA_CONF) {
                 // create new table row
                 var count = i + lastRow;
                 // add count
-                var tr = '<tr><td class="speciesIndex">' + (count + 1) + '.</td>';
-                // add scientific name
-                tr += '<td class="sciName"><a id="' + data[i].guid + '" class="taxonBrowse2" title="' + linkTitle + '" href="' + // id=taxon_name
-                    data[i].name + '"><i>' + data[i].name + '</i></a>';
+                var tr =
+                    '<tr>' +
+                        '<td class="speciesIndex">' +
+                            (count + 1) + '.' +
+                        '</td>' +
+                        '<td class="sciName">' +
+                            '<a id="' + data[i].guid + '" class="taxonBrowse2" title="' + linkTitle + '" href="' + data[i].name + '">' +
+                                '<i>' +
+                                    data[i].name +
+                                '</i>' +
+                            '</a>';
                 // add common name
                 if(data[i].commonName) {
                     tr += ' : ' + data[i].commonName;
@@ -543,12 +550,13 @@ function loadExploreArea(EYA_CONF) {
                         '</a> | ';
                 }
                 speciesInfo +=
-                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + data[i].name +
-                        '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
-                        recsTitle + '"' +
-                    '>' +
-                        '<span class="fa fa-list"></span> View records' +
-                    '</a></div>';
+                        '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + data[i].name +
+                            '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
+                            recsTitle + '"' +
+                        '>' +
+                            '<span class="fa fa-list"></span> View records' +
+                        '</a>' +
+                    '</div>';
                 tr += speciesInfo;
                 // add number of records
                 tr += '</td><td class="rightCounts">' + data[i].count + ' </td></tr>';
@@ -558,22 +566,18 @@ function loadExploreArea(EYA_CONF) {
 
             if(data.length === 50) {
                 // add load more link
-                var newStart = $('#rightList tbody tr').length;
-                var sortOrder = $('div#rightList').data('sort') ? $('div#rightList').data('sort') : 'index';
+                newStart = $('#rightList tbody tr').length;
                 var loadMore =
-                    '<tr id="loadMoreSpecies">' +
+                    '<tr id="loadMoreRow">' +
                         '<td>&nbsp;</td>' +
                         '<td colspan="2"> ' +
-                            '<a href="' + newStart + '" data-sort="' + sortOrder + '">' +
+                            '<button id="loadMoreSpecies" class="erk-link-button">' +
                                 'Load more&hellip;' +
-                            '</a>' +
+                            '</button>' +
                         '</td>' +
                     '</tr>';
                 $('#rightList tbody').append(loadMore);
             }
-
-        } else if(appendResults) {
-            // do nothing
         } else {
             // no spceies were found (either via paging or clicking on taxon group
             var text = '<tr><td></td><td colspan="2">[no species found]</td></tr>';
@@ -582,6 +586,10 @@ function loadExploreArea(EYA_CONF) {
 
         // Register clicks for the list of species links so that map changes
         $('#rightList tbody tr').click(function(e) {
+            if(this.id === 'loadMoreRow') {
+                e.preventDefault;
+                return;
+            }
             e.preventDefault(); // ignore the href text - used for data
             var thisTaxonA = $(this).find('a.taxonBrowse2').attr('href').split('/');
             var thisTaxon = thisTaxonA[thisTaxonA.length - 1].replace(/%20/g, ' ');
@@ -603,22 +611,20 @@ function loadExploreArea(EYA_CONF) {
         });
 
         // Register onClick for "load more species" link & sort headers
-        $('#loadMoreSpecies a, thead.fixedHeader a').click(function(e) {
-            e.preventDefault(); // ignore the href text - used for data
-            var start = $(this).attr('href');
-            var sortOrder = $(this).data('sort') ? $(this).data('sort') : 'index';
+        $('#loadMoreSpecies, .fixedHeader button').off().click(function(e) {
+            if(this.id !== 'loadMoreSpecies') {
+                $('#rightList tbody').empty();
+                sortOrder = $(this).data('sort') ? $(this).data('sort') : 'index';
+                newStart = 0;
+            }
+
             var sortParam = sortOrder;
             var commonName = false;
             if(sortOrder === 'common') {
                 commonName = true;
                 sortParam = 'index';
             }
-            var append = true;
-            if(start === 0) {
-                append = false;
-                $('.scrollContent').scrollTop(0); // return scroll bar to top of tbody
-            }
-            $('div#rightList').data('sort', sortOrder); // save it to the DOM
+
             // AJAX...
             var uri = EYA_CONF.biocacheServiceUrl + '/explore/group/' + state.speciesGroup + '.json?callback=?';
             var params = {
@@ -626,16 +632,16 @@ function loadExploreArea(EYA_CONF) {
                 lon: $('#longitude').val(),
                 radius: $('#radius').val(),
                 fq: 'geospatial_kosher:true',
-                start: start,
+                start: newStart,
                 common: commonName,
                 sort: sortParam,
                 pageSize: 50,
                 qc: EYA_CONF.queryContext
             };
-            $('#loadMoreSpecies').detach(); // delete it
+            $('#loadMoreRow').detach(); // delete it
             $.getJSON(uri, params, function(data) {
                 // process JSON data from request
-                processSpeciesJsonData(data, append);
+                processSpeciesJsonData(data);
             });
         });
 
