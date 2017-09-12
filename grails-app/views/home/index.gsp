@@ -163,7 +163,7 @@
 
             <div id="spatial-search" class="tab-pane">
                 <div class="row">
-                    <div class="col-3 wkt-section">
+                    <div class="col-md-3 wkt-section">
                         <p>
                             <span class="fa fa-info-circle"></span>
                             <g:message code="search.map.helpText" />
@@ -192,7 +192,7 @@
                         </div>
                     </div>
 
-                    <div class="col-9">
+                    <div class="col-md-9">
                         <div id="leafletMap" style="height:600px;"></div>
                     </div>
                 </div>

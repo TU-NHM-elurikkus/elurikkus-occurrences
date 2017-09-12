@@ -50,6 +50,14 @@
 
 .wkt-section__wkt {
     flex: 1;
+    margin-bottom: 1em;
+}
+
+/* Boostrap 4's medium breakpoint. */
+@media(min-width: 768px) {
+    .wkt-section__wkt {
+        margin-bottom: 0;
+    }
 }
 
 .wkt-panel__body {
@@ -81,7 +89,6 @@
 }
 
 .wkt-panel {
-    padding-top: 5px;
 }
 
 .wkt-panel__content {
