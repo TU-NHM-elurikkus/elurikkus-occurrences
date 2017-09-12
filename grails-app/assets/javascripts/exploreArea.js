@@ -350,9 +350,9 @@ function loadExploreArea(EYA_CONF) {
             if($.inArray('|', taxa) > 0) {
                 var parts = taxa.split('|');
                 var newParts = [];
-                for(var j in parts) {
+                parts.forEach(function(j) {
                     newParts.push(rank + ':' + parts[j]);
-                }
+                });
                 solrQuery = newParts.join(' OR ');
             } else {
                 solrQuery = '*:*'; // rank+':'+taxa;
@@ -368,7 +368,7 @@ function loadExploreArea(EYA_CONF) {
                 '<div class="infoWindow">' +
                     'Number of records: ' + n.properties.count +
                     '<br />' +
-                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.05">' +
+                    '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.06">' +
                         '<span class="fa fa-list"></span> View records' +
                     '</a>' +
                 '</div>';
