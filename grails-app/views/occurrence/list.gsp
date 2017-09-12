@@ -517,7 +517,7 @@
 
                     <div class="tab-content clearfix">
                         <div id="records" role="tabpanel" class="tab-pane solrResults active" >
-                            <div class="search-controls">
+                            <div class="float-left">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                                     <button
                                         id="downloads"
@@ -540,72 +540,71 @@
                                     </div>
                                 </g:if>
                                 --%>
+                            </div>
 
-                                <form class="form-inline float-right">
-                                    <g:set var="useDefault" value="${(!params.sort && !params.dir) ? true : false }" />
+                            <div class="inline-controls inline-controls--right">
+                                <g:set var="useDefault" value="${(!params.sort && !params.dir) ? true : false }" />
 
-                                    <div class="form-group">
-                                        <label for="per-page">
-                                            <g:message code="list.table.resultsPerPage.label" />
-                                        </label>
+                                <div class="inline-controls__group">
+                                    <label for="per-page">
+                                        <g:message code="list.table.resultsPerPage.label" />
+                                    </label>
 
-                                        <select id="per-page" name="per-page">
-                                            <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:'20'}" />
-                                            <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
-                                            <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
-                                            <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>
-                                            <option value="100" <g:if test="${pageSizeVar == "100"}">selected</g:if>>100</option>
-                                        </select>
-                                    </div>
+                                    <select id="per-page" name="per-page">
+                                        <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:'20'}" />
+                                        <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
+                                        <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
+                                        <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>
+                                        <option value="100" <g:if test="${pageSizeVar == "100"}">selected</g:if>>100</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="sort">
-                                            <g:message code="list.table.sortBy.label" />
-                                        </label>
+                                <div class="inline-controls__group">
+                                    <label for="sort">
+                                        <g:message code="list.table.sortBy.label" />
+                                    </label>
 
-                                        <select id="sort" name="sort">
-                                            <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.sort.option01" />
+                                    <select id="sort" name="sort">
+                                        <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option01" />
+                                        </option>
+                                        <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option02" />
+                                        </option>
+                                        <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option03" />
+                                        </option>
+                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>
+                                            ${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401") : g.message(code:"list.sortwidgets.sort.option0402")}
+                                        </option>
+                                        <g:if test="${skin != 'avh'}">
+                                            <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>>
+                                                <g:message code="list.sortwidgets.sort.option05" />
                                             </option>
-                                            <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.sort.option02" />
-                                            </option>
-                                            <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.sort.option03" />
-                                            </option>
-                                            <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>
-                                                ${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401") : g.message(code:"list.sortwidgets.sort.option0402")}
-                                            </option>
-                                            <g:if test="${skin != 'avh'}">
-                                                <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>>
-                                                    <g:message code="list.sortwidgets.sort.option05" />
-                                                </option>
-                                            </g:if>
-                                            <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.sort.option06" />
-                                            </option>
-                                            <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.sort.option07" />
-                                            </option>
-                                        </select>
-                                        &nbsp;
-                                    </div>
+                                        </g:if>
+                                        <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option06" />
+                                        </option>
+                                        <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option07" />
+                                        </option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="dir">
-                                            <g:message code="list.table.sortOrder.label" />
-                                        </label>
+                                <div class="inline-controls__group">
+                                    <label for="dir">
+                                        <g:message code="list.table.sortOrder.label" />
+                                    </label>
 
-                                        <select id="dir" name="dir">
-                                            <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.dir.option01" />
-                                            </option>
-                                            <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.dir.option02" />
-                                            </option>
-                                        </select>
-                                    </div>
-                                </form>
+                                    <select id="dir" name="dir">
+                                        <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.dir.option01" />
+                                        </option>
+                                        <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.dir.option02" />
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div id="results" class="search-results">

@@ -112,7 +112,7 @@
                                         <g:message code="eya.groupTable.header.group.label" />
                                     </th>
                                     <th>
-                                        <g:message code="eya.groupTable.header.count.label" />
+                                        #
                                     </th>
                                 </tr>
                             </thead>
@@ -125,11 +125,7 @@
                         <table>
                             <thead class="fixedHeader">
                                 <tr>
-                                    <th class="speciesIndex">
-                                        &nbsp;&nbsp;
-                                    </th>
-
-                                    <th class="sciName">
+                                    <th class="sciName" colspan="3">
                                         <button class="erk-link-button" data-sort="taxa" title="<g:message code='eya.speciesTable.header.taxon.title' />">
                                             <g:message code="eya.speciesTable.header.taxon.label" />
                                         </button>
@@ -139,11 +135,9 @@
                                         <button class="erk-link-button" data-sort="common" title="<g:message code='eya.speciesTable.header.common.title' />">
                                             <g:message code="eya.speciesTable.header.common.label" />
                                         </button>
-                                    </th>
 
-                                    <th class="rightCounts">
-                                        <button class="erk-link-button" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
-                                            <g:message code="eya.speciesTable.header.count.label" />
+                                        <button id="right-count" class="erk-link-button" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
+                                            #
                                         </button>
                                     </th>
                                 </tr>
