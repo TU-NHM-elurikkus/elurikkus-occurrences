@@ -514,7 +514,7 @@ function loadExploreArea(EYA_CONF) {
      */
     function processSpeciesJsonData(data) {
         // clear right list unless we're paging
-        var newStart = 1;
+        var newStart = 0;
         // process JSON data
         if(data.length > 0) {
             var lastRow = $('#rightList tbody tr').length;
@@ -615,7 +615,7 @@ function loadExploreArea(EYA_CONF) {
             if(this.id !== 'loadMoreSpecies') {
                 $('#rightList tbody').empty();
                 sortOrder = $(this).data('sort') ? $(this).data('sort') : 'index';
-                newStart = 1;
+                newStart = 0;
             }
 
             var sortParam = sortOrder;
