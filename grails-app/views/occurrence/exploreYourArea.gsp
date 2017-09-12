@@ -130,21 +130,21 @@
                                     </th>
 
                                     <th class="sciName">
-                                        <a href="0" id="speciesSort" data-sort="taxa" title="<g:message code='eya.speciesTable.header.taxon.title' />">
+                                        <button class="erk-link-button" data-sort="taxa" title="<g:message code='eya.speciesTable.header.taxon.title' />">
                                             <g:message code="eya.speciesTable.header.taxon.label" />
-                                        </a>
+                                        </button>
 
-                                        <span id="sortSeparator">:</span>
+                                        <span>:</span>
 
-                                        <a href="0" id="commonSort" data-sort="common" title="<g:message code='eya.speciesTable.header.common.title' />">
+                                        <button class="erk-link-button" data-sort="common" title="<g:message code='eya.speciesTable.header.common.title' />">
                                             <g:message code="eya.speciesTable.header.common.label" />
-                                        </a>
+                                        </button>
                                     </th>
 
                                     <th class="rightCounts">
-                                        <a href="0" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
+                                        <button class="erk-link-button" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
                                             <g:message code="eya.speciesTable.header.count.label" />
-                                        </a>
+                                        </button>
                                     </th>
                                 </tr>
                             </thead>
