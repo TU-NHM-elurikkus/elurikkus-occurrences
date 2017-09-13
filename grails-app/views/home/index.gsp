@@ -76,6 +76,7 @@
             </ul>
         </div>
 
+        <%-- Simple Search --%>
         <div class="tab-content searchPage">
             <div id="simple-search" class="tab-pane active">
                 <div class="row">
@@ -84,11 +85,20 @@
                             <span class="fa fa-info-circle"></span>
                             <g:message code="home.index.simsplesearch.help" />
                         </p>
-                        <form name="simpleSearchForm" id="simpleSearchForm" action="${request.contextPath}/occurrences/search" method="GET">
+                        <form
+                            id="simpleSearchForm"
+                            name="simpleSearchForm"
+                            action="${request.contextPath}/occurrences/search"
+                            method="GET"
+                        >
                             <div class="input-plus">
                                 <input type="text" name="taxa" id="taxa" class="input-plus__field" />
 
-                                <button id="locationSearch" type="submit" class="erk-button erk-button--dark input-plus__addon">
+                                <button
+                                    type="submit"
+                                    id="locationSearch"
+                                    class="erk-button erk-button--dark input-plus__addon"
+                                >
                                     <span class="fa fa-search"></span>
                                     <g:message code="advancedsearch.button.submit" />
                                 </button>
@@ -99,23 +109,42 @@
 
             </div>
 
+            <%-- Adv Search --%>
             <div id="advanced-search" class="tab-pane">
                 <g:render template="advanced" />
-            </div> <%-- end #advancedSearch div --%>
+            </div>
 
+            <%-- Batch Taxa Search --%>
             <div id="taxa-upload" class="tab-pane">
-                <form name="taxaUploadForm" id="taxaUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
+                <form
+                    id="taxaUploadForm"
+                    name="taxaUploadForm"
+                    action="${biocacheServiceUrl}/occurrences/batchSearch"
+                    method="POST"
+                    onsubmit="return validateBatchForm('batch-taxon-input');"
+                >
                     <p>
                         <span class="fa fa-info-circle"></span>
                         <g:message code="home.index.taxaupload.des01" />
                     </p>
 
                     <p>
-                        <textarea name="queries" id="raw_names" class="col-6" rows="15" cols="60"></textarea>
+                        <textarea
+                            id="batch-taxon-input"
+                            name="queries"
+                            class="col-6"
+                            rows="15"
+                            cols="60"
+                            required
+                        ></textarea>
                     </p>
 
                     <div>
-                        <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
+                        <input
+                            type="hidden"
+                            name="redirectBase"
+                            value="${serverName}${request.contextPath}/occurrences/search"
+                        />
                         <input type="hidden" name="field" value="raw_name" />
 
                         <input type="hidden" name="action" value="Search" />
@@ -129,21 +158,39 @@
                         </button>
                     </div>
                 </form>
-            </div> <!-- end #uploadDiv div -->
+            </div>
 
+            <%-- Catalogue Number Search --%>
             <div id="catalog-upload" class="tab-pane">
-                <form name="catalogUploadForm" id="catalogUploadForm" action="${biocacheServiceUrl}/occurrences/batchSearch" method="POST">
+                <form
+                    id="catalogUploadForm"
+                    name="catalogUploadForm"
+                    action="${biocacheServiceUrl}/occurrences/batchSearch"
+                    method="POST"
+                    onsubmit="return validateBatchForm('catalogue-numbers-input');"
+                >
                     <p>
                         <span class="fa fa-info-circle"></span>
                         <g:message code="home.index.catalogupload.des01" />
                     </p>
 
                     <p>
-                        <textarea id="catalogueSearchQueries" name="queries" id="catalogue_numbers" class="col-6" rows="15" cols="60"></textarea>
+                        <textarea
+                            id="catalogue-numbers-input"
+                            name="queries"
+                            class="col-6"
+                            rows="15"
+                            cols="60"
+                            required
+                        ></textarea>
                     </p>
 
                     <div>
-                        <input type="hidden" name="redirectBase" value="${serverName}${request.contextPath}/occurrences/search" />
+                        <input
+                            type="hidden"
+                            name="redirectBase"
+                            value="${serverName}${request.contextPath}/occurrences/search"
+                        />
                         <input type="hidden" name="field" value="catalogue_number" />
 
                         <input type="hidden" name="action" value="Search" />
@@ -151,7 +198,6 @@
                         <button
                             type="submit"
                             id="catalogueSearchButton"
-                            disabled
                             class="erk-button erk-button--dark"
                         >
                             <span class="fa fa-search"></span>
@@ -159,8 +205,9 @@
                         </button>
                     </div>
                 </form>
-            </div><%-- end #catalogUploadDiv div --%>
+            </div>
 
+            <%-- Map Search --%>
             <div id="spatial-search" class="tab-pane">
                 <div class="row">
                     <div class="col-md-3 wkt-section">
@@ -171,7 +218,12 @@
 
                         <div id="wktPanel" class="wkt-panel wkt-section__wkt">
                             <div class="wkt-panel__header">
-                                <a class="wkt-panel__toggle collapsed" data-toggle="collapse" data-parent="#wktPanel" href="#wktBody">
+                                <a
+                                    href="#wktBody"
+                                    class="wkt-panel__toggle collapsed"
+                                    data-toggle="collapse"
+                                    data-parent="#wktPanel"
+                                >
                                     <g:message code="search.map.importToggle" />
                                 </a>
                             </div>
@@ -202,6 +254,12 @@
         <asset:deferredScripts/>
 
         <g:javascript>
+            function validateBatchForm(inputID) {
+                var inputText = $('#' + inputID).val().trim();
+                $('#' + inputID).val(inputText);
+                return inputText.length !== 0;
+            }
+
             var defaultBaseLayer = L.tileLayer("${grailsApplication.config.map.minimal.url}", {
                 attribution: "${raw(grailsApplication.config.map.minimal.attr)}",
                 subdomains: "${grailsApplication.config.map.minimal.subdomains}",

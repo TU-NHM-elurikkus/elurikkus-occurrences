@@ -76,12 +76,6 @@ $(document).ready(function() {
             alert('Please paste a valid WKT string'); // TODO i18n this
         }
     });
-
-    $('#catalogueSearchQueries').on('input', function() {
-        var value = $('#catalogueSearchQueries').val();
-
-        $('#catalogueSearchButton').attr('disabled', value.trim().length === 0);
-    });
 });
 
 // TODO: DRY with occurrenceMap:OccurrenceMap.initialize
