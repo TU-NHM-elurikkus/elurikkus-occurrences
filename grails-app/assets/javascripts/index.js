@@ -73,7 +73,7 @@ $(document).ready(function() {
         try {
             drawWktObj(wktString);
             $('#wktInput').val('');
-            $('#wkt-input-error').hide('close');
+            $('#wkt-input-error').hide();
         } catch(err) {
             $('#wkt-input-error').show();
         }

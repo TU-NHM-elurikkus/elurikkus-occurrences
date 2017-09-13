@@ -241,9 +241,7 @@
                                     ></textarea>
 
                                     <div id=wkt-input-error class="alert alert-danger collapse" role="alert">
-                                        <span class="alert-danger">
-                                            <g:message code="search.map.invalidWKT" />
-                                        </span>
+                                        <g:message code="search.map.invalidWKT" />
                                     </div>
 
                                     <button class="erk-button erk-button--light" id="addWkt">
