@@ -234,7 +234,15 @@
                                         <g:message code="search.map.importText" />
                                     </p>
 
-                                    <textarea type="text" id="wktInput" class="wkt-panel__input"></textarea>
+                                    <textarea
+                                        type="text"
+                                        id="wktInput"
+                                        class="wkt-panel__input"
+                                    ></textarea>
+
+                                    <div id=wkt-input-error class="alert alert-danger collapse" role="alert">
+                                        <g:message code="search.map.invalidWKT" />
+                                    </div>
 
                                     <button class="erk-button erk-button--light" id="addWkt">
                                         <g:message code="search.map.wktButtonText" />

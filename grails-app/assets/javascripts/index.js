@@ -70,10 +70,12 @@ $(document).ready(function() {
     $('#addWkt').click(function() {
         var wktString = $('#wktInput').val();
 
-        if(wktString) {
-            drawWktObj($('#wktInput').val());
-        } else {
-            alert('Please paste a valid WKT string'); // TODO i18n this
+        try {
+            drawWktObj(wktString);
+            $('#wktInput').val('');
+            $('#wkt-input-error').hide();
+        } catch(err) {
+            $('#wkt-input-error').show();
         }
     });
 });
