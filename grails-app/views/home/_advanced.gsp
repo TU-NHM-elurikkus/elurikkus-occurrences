@@ -1,7 +1,13 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<form name="advancedSearchForm" id="advancedSearchForm" action="${request.contextPath}/advancedSearch" method="POST" class="container-fluid">
+<form
+    id="advancedSearchForm"
+    name="advancedSearchForm"
+    class="container-fluid"
+    action="${request.contextPath}/advancedSearch"
+    method="POST"
+>
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}" />
     <input type="hidden" name="nameType" value="${grailsApplication.config.advancedTaxaField?:'matched_name_children'}" />
 
@@ -16,7 +22,15 @@
         </label>
 
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <input type="text" name="text" id="text" class="dataset form-control" placeholder="" size="80" value="${params.text}" />
+            <input
+                type="text"
+                id="text"
+                name="text"
+                class="dataset form-control"
+                placeholder=""
+                value="${params.text}"
+                size="80"
+            />
         </div>
     </div>
 
@@ -36,7 +50,14 @@
                 </label>
 
                 <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                    <input type="text" value="" id="taxa_${i}" name="taxonText" class="name_autocomplete form-control" size="60" />
+                    <input
+                        type="text"
+                        id="taxa_${i}"
+                        name="taxonText"
+                        class="name_autocomplete form-control"
+                        value=""
+                        size="60"
+                     />
                     <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}" value="" />
                 </div>
             </div>
@@ -54,7 +75,15 @@
         </label>
 
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <input type="text" name="raw_taxon_name" id="raw_taxon_name" class="dataset form-control" placeholder="" size="60" value="" />
+            <input
+                type="text"
+                id="raw_taxon_name"
+                name="raw_taxon_name"
+                class="dataset form-control"
+                placeholder=""
+                value=""
+                size="60"
+            />
         </div>
     </div>
 
@@ -324,7 +353,14 @@
             </label>
 
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <input type="text" name="catalogue_number" id="catalogue_number" class="dataset form-control" placeholder="" value="" />
+                <input
+                    type="text"
+                    id="catalogue_number"
+                    name="catalogue_number"
+                    class="dataset form-control"
+                    placeholder=""
+                    value=""
+                />
             </div>
         </div>
 
@@ -334,7 +370,14 @@
             </label>
 
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <input type="text" name="record_number" id="record_number" class="dataset form-control" placeholder="" value="" />
+                <input
+                    type="text"
+                    id="record_number"
+                    name="record_number"
+                    class="dataset form-control"
+                    placeholder=""
+                    value=""
+                />
             </div>
         </div>
     </fieldset>
@@ -350,7 +393,14 @@
         </label>
 
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <input type="text" name="start_date" id="startDate" class="occurrence_date form-control" placeholder="" value="" />
+            <input
+                type="text"
+                id="startDate"
+                name="start_date"
+                class="occurrence_date form-control"
+                placeholder=""
+                value=""
+            />
             <small class="form-text text-muted">
                 <g:message code="advancedsearch.table10col01.des" />
             </small>
@@ -363,7 +413,14 @@
         </label>
 
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <input type="text" name="end_date" id="endDate" class="occurrence_date form-control" placeholder="" value="" />
+            <input
+                type="text"
+                id="endDate"
+                name="end_date"
+                class="occurrence_date form-control"
+                placeholder=""
+                value=""
+            />
             <small class="form-text text-muted">
                 <g:message code="advancedsearch.table10col02.des" />
             </small>
@@ -382,7 +439,7 @@
         &nbsp;&nbsp;
         <input
             type="reset"
-            value="<g:message code="advancedsearch.button.clearAll" />"
+            value="${message(code: 'advancedsearch.button.clearAll')}"
             id="clearAll"
             class="erk-button erk-button--light"
             onclick="$('input#solrQuery').val(''); $('input.clear_taxon').click(); return true;"
