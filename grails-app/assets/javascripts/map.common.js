@@ -18,7 +18,11 @@ function generatePopup(layer, latlng, query, map) {
     }
 
     if(!latlng) {
-        latlng = layer.getBounds().getCenter();
+        if($.isFunction(layer.getBounds)) {
+            latlng = layer.getBounds().getCenter();
+        } else {
+            latlng = layer.getLatLng();
+        }
     }
 
     var recordsLink = BC_CONF.contextPath + '/occurrences/search' + params + '#tab-map';
@@ -44,8 +48,7 @@ function generatePopup(layer, latlng, query, map) {
 function getSpeciesCountInArea(params) {
     $.getJSON(BC_CONF.biocacheServiceUrl + '/occurrence/facets.json' + params + '&facets=taxon_name&callback=?',
         function(data) {
-            var speciesCount = data[0].count;
-            document.getElementById('speciesCountDiv').innerHTML = speciesCount;
+            document.getElementById('speciesCountDiv').innerHTML = data.length ? data[0].count : 0;
         });
 }
 
