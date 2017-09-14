@@ -124,8 +124,7 @@ function loadExploreArea(EYA_CONF) {
         $('.tooltips').tooltip();
 
         // catch the link for "View all records"
-        $('#viewAllRecords').live('click', function(e) {
-            e.preventDefault();
+        $('#viewAllRecords').on('click', function(e) {
             var params = 'q=*:*&lat=' + $('#latitude').val() + '&lon=' + $('#longitude').val() + '&radius=' + $('#radius').val();
             if(state.speciesGroup !== 'ALL_SPECIES') {
                 params += '&fq=species_group:' + state.speciesGroup;
@@ -148,8 +147,8 @@ function loadExploreArea(EYA_CONF) {
     }
 
     /**
-     * Google map API v3
-     */
+    * Google map API v3
+    */
     function loadMap() {
         var latLng = new google.maps.LatLng($('#latitude').val(), $('#longitude').val());
         map = new google.maps.Map(document.getElementById('mapCanvas'), {
@@ -482,6 +481,7 @@ function loadExploreArea(EYA_CONF) {
         $('#taxa-level-0 tr').removeClass('activeRow');
         $(el).addClass('activeRow');
         $('#taxa-level-1 tbody tr').addClass('activeRow');
+        $('#rightList tbody').empty();
         // load records layer on map
         // update links to downloads and records list
 
