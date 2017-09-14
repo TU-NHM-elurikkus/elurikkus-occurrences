@@ -32,6 +32,7 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
+        compile "commons-httpclient:commons-httpclient:3.1"
     }
 
     plugins {
