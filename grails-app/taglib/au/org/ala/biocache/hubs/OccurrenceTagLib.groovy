@@ -155,7 +155,6 @@ class OccurrenceTagLib {
                         "${year} - ${year10}"
                     })
                 } else {
-                    fqLabel = fqLabel.replaceAll('\\(', '')
                     mkp.yieldUnescaped(alatag.message(code: fqLabel, default: fqLabel).replaceFirst(':', ': '))
                 }
             }
