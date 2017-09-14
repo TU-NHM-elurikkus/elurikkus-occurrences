@@ -119,30 +119,28 @@
                         </table>
                     </div>
 
-                    <div id="rightList" class="tableContainer">
-                        <table>
-                            <thead class="fixedHeader">
-                                <tr>
-                                    <th class="sciName" colspan="3">
-                                        <button class="erk-link-button" data-sort="taxa" title="<g:message code='eya.speciesTable.header.taxon.title' />">
-                                            <g:message code="eya.speciesTable.header.taxon.label" />
-                                        </button>
+                    <div id="rightList">
+                        <div id="rightListHeader">
+                            <button class="erk-link-button" data-sort="taxa" title="<g:message code='eya.speciesTable.header.taxon.title' />">
+                                <g:message code="eya.speciesTable.header.taxon.label" />
+                            </button>
 
-                                        <span>:</span>
+                            <span>:</span>
 
-                                        <button class="erk-link-button" data-sort="common" title="<g:message code='eya.speciesTable.header.common.title' />">
-                                            <g:message code="eya.speciesTable.header.common.label" />
-                                        </button>
+                            <button class="erk-link-button" data-sort="common" title="<g:message code='eya.speciesTable.header.common.title' />">
+                                <g:message code="eya.speciesTable.header.common.label" />
+                            </button>
 
-                                        <button id="right-count" class="erk-link-button" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
-                                            #
-                                        </button>
-                                    </th>
-                                </tr>
-                            </thead>
+                            <button id="right-count" class="erk-link-button" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
+                                #
+                            </button>
+                        </div>
 
-                            <tbody class="scrollContent"></tbody>
-                        </table>
+                        <div class="tableContainer">
+                            <table>
+                                <tbody class="scrollContent"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
