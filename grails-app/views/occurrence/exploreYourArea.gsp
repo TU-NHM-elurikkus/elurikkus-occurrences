@@ -12,8 +12,6 @@
             <g:message code="eya.title" />
         </title>
 
-        <g:render template="/layouts/global" plugin="elurikkus-biocache-hubs" />
-
         <g:if test="${grailsApplication.config.google.apikey}">
             <script src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
         </g:if>
