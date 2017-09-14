@@ -162,7 +162,7 @@
                             <div class="inline-controls__group">
                                 <button id="viewAllRecords" class="erk-button erk-button--dark">
                                     <span class="fa fa-list"></span>
-                                    <g:message code="eya.searchform.a.viewallrecords.label" />
+                                    <g:message code="eya.searchform.a.viewSelectedRecords.label" />
                                 </button>
                             </div>
 
