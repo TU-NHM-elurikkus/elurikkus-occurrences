@@ -498,7 +498,6 @@ function loadExploreArea(EYA_CONF) {
             qc: EYA_CONF.queryContext,
             pageSize: 50
         };
-        $('#taxaDiv').html('[loading...]');
         $.getJSON(uri, params, function(data) {
             // process JSON data from request
             if(data) {
@@ -607,7 +606,7 @@ function loadExploreArea(EYA_CONF) {
         });
 
         // Register onClick for "load more species" link & sort headers
-        $('#loadMoreSpecies, .fixedHeader button').off().click(function(e) {
+        $('#loadMoreSpecies, .rightList-header button').off().click(function(e) {
             if(this.id !== 'loadMoreSpecies') {
                 $('#rightList tbody').empty();
                 sortOrder = $(this).data('sort') ? $(this).data('sort') : 'index';
@@ -644,10 +643,10 @@ function loadExploreArea(EYA_CONF) {
         // add hover effect to table cell with scientific names
         $('#rightList tbody tr').hover(
             function() {
-                $(this).addClass('hoverCell');
+                $(this).addClass('hoverRow');
             },
             function() {
-                $(this).removeClass('hoverCell');
+                $(this).removeClass('hoverRow');
             }
         );
     }
@@ -683,11 +682,6 @@ function loadExploreArea(EYA_CONF) {
                 addGroupRow(n.name, n.speciesCount, n.level);
             });
 
-            // Dynamically set height of #taxaDiv (to match containing div height)
-            var tableHeight = $('#taxa-level-0').height();
-            $('.tableContainer').height(tableHeight + 2);
-            var tbodyHeight = $('#taxa-level-0 tbody').height();
-            $('#rightList tbody').height(tbodyHeight);
             $('#taxa-level-0 tbody tr.activeRow').click();
         }
 
