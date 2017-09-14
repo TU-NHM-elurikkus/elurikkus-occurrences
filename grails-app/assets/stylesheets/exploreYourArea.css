@@ -198,13 +198,6 @@ table#cellCountsLegend {
     text-decoration: none;
 }
 
-a.taxonBrowse, a.taxonBrowse:hover, a.taxonBrowse:focus,
-a.taxonBrowse2, a.taxonBrowse2:hover, a.taxonBrowse2:focus {
-    text-decoration: none;
-    color: #444;
-    color: inherit;
-}
-
 #download {
     float: right;
 }
