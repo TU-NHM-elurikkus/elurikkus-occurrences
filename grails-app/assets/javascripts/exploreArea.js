@@ -475,7 +475,7 @@ function loadExploreArea(EYA_CONF) {
      */
     function groupClicked(el) {
         // Change the global var speciesGroup
-        state.speciesGroup = $(el).find('a.taxonBrowse').attr('id');
+        state.speciesGroup = $(el).attr('data-taxon-name');
         taxon = null; // clear any species click
         taxonGuid = null;
         $('#taxa-level-0 tr').removeClass('activeRow');
@@ -518,39 +518,38 @@ function loadExploreArea(EYA_CONF) {
         // process JSON data
         if(data.length > 0) {
             var lastRow = $('#rightList tbody tr').length;
-            var linkTitle = 'display on map';
             var infoTitle = 'view species page';
             var recsTitle = 'view list of records';
             // iterate over list of species from search
-            for(var i = 0; i < data.length; i++) {
+            var i = 0;
+            data.forEach(function(taxon) {
                 // create new table row
                 var count = i + lastRow;
+                i++;
                 // add count
                 var tr =
-                    '<tr>' +
+                    '<tr id="' + taxon.guid + '" data-taxon-name="' + taxon.name + '">' +
                         '<td class="speciesIndex">' +
                             (count + 1) + '.' +
                         '</td>' +
                         '<td class="sciName">' +
-                            '<a id="' + data[i].guid + '" class="taxonBrowse2" title="' + linkTitle + '" href="' + data[i].name + '">' +
-                                '<i>' +
-                                    data[i].name +
-                                '</i>' +
-                            '</a>';
+                            '<i>' +
+                                taxon.name +
+                            '</i>';
                 // add common name
-                if(data[i].commonName) {
-                    tr += ' : ' + data[i].commonName;
+                if(taxon.commonName) {
+                    tr += ' : ' + taxon.commonName;
                 }
                 // add links to species page and ocurrence search (inside hidden div)
                 var speciesInfo = '<div class="speciesInfo">';
-                if(data[i].guid) {
+                if(taxon.guid) {
                     speciesInfo +=
-                        '<a title="' + infoTitle + '" href="' + EYA_CONF.speciesPageUrl + data[i].guid + '">' +
+                        '<a title="' + infoTitle + '" href="' + EYA_CONF.speciesPageUrl + taxon.guid + '">' +
                             '<span class="fa fa-tag"></span> Species page' +
                         '</a> | ';
                 }
                 speciesInfo +=
-                        '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + data[i].name +
+                        '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=taxon_name:%22' + taxon.name +
                             '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
                             recsTitle + '"' +
                         '>' +
@@ -559,10 +558,10 @@ function loadExploreArea(EYA_CONF) {
                     '</div>';
                 tr += speciesInfo;
                 // add number of records
-                tr += '</td><td class="rightCounts">' + data[i].count + ' </td></tr>';
+                tr += '</td><td class="rightCounts">' + taxon.count + ' </td></tr>';
                 // write list item to page
                 $('#rightList tbody').append(tr);
-            }
+            });
 
             if(data.length === 50) {
                 // add load more link
@@ -587,13 +586,10 @@ function loadExploreArea(EYA_CONF) {
         // Register clicks for the list of species links so that map changes
         $('#rightList tbody tr').click(function(e) {
             if(this.id === 'loadMoreRow') {
-                e.preventDefault;
                 return;
             }
-            e.preventDefault(); // ignore the href text - used for data
-            var thisTaxonA = $(this).find('a.taxonBrowse2').attr('href').split('/');
-            var thisTaxon = thisTaxonA[thisTaxonA.length - 1].replace(/%20/g, ' ');
-            var guid = $(this).find('a.taxonBrowse2').attr('id');
+            var thisTaxon = $(this).attr('data-taxon-name');
+            var guid = $(this).attr('id');
             taxonGuid = guid;
             taxon = thisTaxon; // global var so map can show just this taxon
             $('#rightList tbody tr').removeClass('activeRow2'); // un-highlight previous current taxon
@@ -695,18 +691,16 @@ function loadExploreArea(EYA_CONF) {
             $('#taxa-level-0 tbody tr.activeRow').click();
         }
 
-        function addGroupRow(group, count, indent) {
-            var label = group;
-            if(group === 'ALL_SPECIES') {
+        function addGroupRow(taxonName, count, indent) {
+            var label = taxonName;
+            if(taxonName === 'ALL_SPECIES') {
                 label = 'All Species';
             }
-            var rc = (group === state.speciesGroup) ? ' class=\'activeRow\'' : ''; // highlight active group
+            var rc = (taxonName === state.speciesGroup) ? ' class=\'activeRow\'' : ''; // highlight active taxonName
             var h =
-                '<tr' + rc + ' title="click to view group on map">' +
+                '<tr' + rc + ' title="click to view group on map" data-taxon-name="' + taxonName + '">' +
                     '<td class="indent' + indent + '">' +
-                        '<a href="#" id="' + group + '" class="taxonBrowse" title="click to view group on map">' +
-                            label +
-                        '</a>' +
+                        label +
                     '</td>' +
                     '<td>' + count + '</td>' +
                 '</tr>';
