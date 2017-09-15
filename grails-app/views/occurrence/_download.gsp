@@ -234,7 +234,7 @@
                     function notifyDownloadStarted() {
                         window.setTimeout(function() {
                             $('#download').modal('hide');
-                        }, 2000);
+                        }, 500);
                     }
 
                     function validateForm() {
@@ -245,6 +245,8 @@
                             isValid = false;
                             $("#reasonTypeId").focus();
                             $("label[for='reasonTypeId']").css("color", "red");
+                        } else {
+                            $("label[for='reasonTypeId']").css("color", "inherit");
                         }
 
                         return isValid;

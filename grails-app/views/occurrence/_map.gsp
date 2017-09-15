@@ -333,12 +333,12 @@
 
                             <select name="pradiusmm" id="pradiusmm">
                                 <option>0.1</option>
-                                <option>0.2</option>
+                                <option selected>0.2</option>
                                 <option>0.3</option>
                                 <option>0.4</option>
                                 <option>0.5</option>
                                 <option>0.6</option>
-                                <option selected="true">0.7</option>
+                                <option >0.7</option>
                                 <option>0.8</option>
                                 <option>0.9</option>
                                 <option>1</option>
@@ -361,9 +361,9 @@
 
                             <select name="popacity" id="popacity">
                                 <option>1</option>
-                                <option>0.9</option>
+                                <option selected>0.9</option>
                                 <option>0.8</option>
-                                <option selected="true">0.7</option>
+                                <option>0.7</option>
                                 <option>0.6</option>
                                 <option>0.5</option>
                                 <option>0.4</option>
@@ -413,16 +413,18 @@
                             <g:message code="generic.button.no" />
                         </p>
 
+                        <%-- Pointless drop-down since all except one are Australia-specific choices. --%>
+                        <%--
                         <p>
                             <label for="baselayer">
                                 <g:message code="map.downloadmap.field09.label" />
                             </label>
                             <select name="baselayer" id="baselayer">
-                                <option value="world">
+                                <option value="world" selected>
                                     <g:message code="map.downloadmap.field09.option01" />
                                 </option>
 
-                                <option value="aus1" selected="true">
+                                <option value="aus1">
                                     <g:message code="map.downloadmap.field09.option02" />
                                 </option>
 
@@ -443,6 +445,7 @@
                                 </option>
                             </select>
                         </p>
+                        --%>
 
                         <p>
                             <label for="fileName">
@@ -499,25 +502,25 @@
     function downloadMapNow(){
 
         var bounds = occMap.map.getBounds();
-        var ne =  bounds.getNorthEast();
-        var sw =  bounds.getSouthWest();
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
         var extents = sw.lng + ',' + sw.lat + ',' + ne.lng + ','+ ne.lat;
 
-        var downloadUrl =  $('#mapDownloadUrl').val() +
-                '${raw(sr.urlParameters)}' +
-            //'&extents=' + '142,-45,151,-38' +  //need to retrieve the
-                '&extents=' + extents +  //need to retrieve the
-                '&format=' + $('#format').val() +
-                '&dpi=' + $('#dpi').val() +
-                '&pradiusmm=' + $('#pradiusmm').val() +
-                '&popacity=' + $('#popacity').val() +
-                '&pcolour=' + $(':input[name=pcolour]').val().replace('#','').toUpperCase() +
-                '&widthmm=' + $('#widthmm').val() +
-                '&scale=' + $(':input[name=scale]:checked').val() +
-                '&outline=' + $(':input[name=outline]:checked').val() +
-                '&outlineColour=0x000000' +
-                '&baselayer=' + $('#baselayer').val()+
-                '&fileName=' + $('#fileName').val()+'.'+$('#format').val().toLowerCase();
+        var downloadUrl = $('#mapDownloadUrl').val() +
+            '${raw(sr.urlParameters)}' +
+            //'&extents=' + '142,-45,151,-38' +  // need to retrieve the
+            '&extents=' + extents +  // need to retrieve the
+            '&format=' + $('#format').val() +
+            '&dpi=' + $('#dpi').val() +
+            '&pradiusmm=' + $('#pradiusmm').val() +
+            '&popacity=' + $('#popacity').val() +
+            '&pcolour=' + $(':input[name=pcolour]').val().replace('#', '').toUpperCase() +
+            '&widthmm=' + $('#widthmm').val() +
+            '&scale=' + $(':input[name=scale]:checked').val() +
+            '&outline=' + $(':input[name=outline]:checked').val() +
+            '&outlineColour=0x000000' +
+            '&baselayer=world' +  // $('#baselayer').val()+
+            '&fileName=' + $('#fileName').val() + '.' + $('#format').val().toLowerCase();
 
         //console.log('downloadUrl', downloadUrl);
         $('#downloadMap').modal('hide');
