@@ -36,7 +36,6 @@
                     </g:else>
 
                     <input type="hidden" name="url" id="downloadChecklistUrl" value="${biocacheServiceUrl}/occurrences/facets/download" />
-                    <input type="hidden" name="url" id="downloadFieldGuideUrl" value="${request.contextPath}/occurrences/fieldguide/download" />
                     <input type="hidden" name="extra" id="extraFields" value="${grailsApplication.config.biocache.downloads.extra}" />
                     <input type="hidden" name="sourceTypeId" id="sourceTypeId" value="${alatag.getSourceId()}" />
 
@@ -117,32 +116,8 @@
                                 <span>
                                     <g:message code="download.downloadform.downloadType.option.speciesChecklist.label" />
                                 </span>
-                                <br />
-
-                                <g:if test="${skin != 'avh'}">
-                                    <input
-                                        type="radio"
-                                        name="downloadType"
-                                        value="fieldGuide"
-                                        class="tooltips"
-                                        title="${message(code: 'download.downloadform.downloadType.option.fieldGuide.title')}"
-                                    />
-                                    &nbsp;
-
-                                    <span>
-                                        <g:message code="download.downloadform.downloadType.option.fieldGuide.label" />
-                                    </span>
-                                </g:if>
                             </div>
                         </div>
-
-                        <div style="margin-top:10px;">
-                            <strong>
-                                <g:message code="download.note.01" />:
-                            </strong>
-                            <g:message code="download.note.02" />.
-                        </div>
-
                     </fieldset>
                 </form>
 
@@ -196,13 +171,6 @@
                                         "&sourceTypeId=" + $("#sourceTypeId").val() +
                                         "&reasonTypeId=" + $("#reasonTypeId").val();
                                     window.location.href = downloadUrl;
-                                    notifyDownloadStarted();
-                                } else if (downloadType == "fieldGuide") {
-                                    var downloadUrl = generateDownloadPrefix($("input#downloadFieldGuideUrl").val()) +
-                                        "&facets=species_guid" +
-                                        "&sourceTypeId=" + $("#sourceTypeId").val() +
-                                        "&reasonTypeId=" + $("#reasonTypeId").val();
-                                    window.open(downloadUrl);
                                     notifyDownloadStarted();
                                 } else {
                                     // can't happen as type is a fixed list
