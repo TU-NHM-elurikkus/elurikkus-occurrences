@@ -149,13 +149,10 @@ function loadExploreArea(EYA_CONF) {
             }
         });
 
-        $('.indent0').live('click', '.indent0', function(e) {
+        $('.indent0').live('click', function(e) {
             $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewAllRecords.label'));
         });
-        $('.indent1').live('click', function(e) {
-            $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewSelectedRecords.label'));
-        });
-        $('.indent2').live('click', function(e) {
+        $('.indent1, .indent2, .indent3').live('click', function(e) {
             $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewSelectedRecords.label'));
         });
     }
