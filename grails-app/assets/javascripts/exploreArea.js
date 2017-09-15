@@ -29,6 +29,14 @@ function loadExploreArea(EYA_CONF) {
      * Document onLoad event using JQuery
      */
     $(document).ready(function() {
+        $.i18n.properties({
+            name: 'messages',
+            path: BC_CONF.contextPath + '/messages/i18n/',
+            mode: 'map',
+            language: BC_CONF.locale // default is to use browser specified locale
+            //callback: function(){} //alert( "facet.conservationStatus = " + jQuery.i18n.prop('facet.conservationStatus')); }
+        });
+
         // initialise Google Geocoder
         geocoder = new google.maps.Geocoder();
 
@@ -139,6 +147,16 @@ function loadExploreArea(EYA_CONF) {
                 e.preventDefault();
                 geocodeAddress();
             }
+        });
+
+        $('.indent0').live('click', '.indent0', function(e) {
+            $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewAllRecords.label'));
+        });
+        $('.indent1').live('click', function(e) {
+            $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewSelectedRecords.label'));
+        });
+        $('.indent2').live('click', function(e) {
+            $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewSelectedRecords.label'));
         });
     }
 
@@ -690,9 +708,10 @@ function loadExploreArea(EYA_CONF) {
             if(taxonName === 'ALL_SPECIES') {
                 label = 'All Species';
             }
-            var rc = (taxonName === state.speciesGroup) ? ' class=\'activeRow\'' : ''; // highlight active taxonName
+            var row_class = 'class="indent' + indent;
+            row_class += (taxonName === state.speciesGroup) ? ' activeRow' : ''; // highlight active taxonName
             var h =
-                '<tr' + rc + ' title="click to view group on map" data-taxon-name="' + taxonName + '">' +
+                '<tr ' + row_class + '" title="click to view group on map" data-taxon-name="' + taxonName + '">' +
                     '<td class="indent' + indent + '">' +
                         label +
                     '</td>' +
