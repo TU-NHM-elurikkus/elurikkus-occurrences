@@ -326,22 +326,6 @@ $(document).ready(function() {
         loadImages(start);
     });
 
-    // load more species images button
-    $('#loadMoreSpecies').live('click', function(e) {
-        e.preventDefault();
-        var start = $('#speciesGallery').data('count');
-        var group = $('#speciesGroup :selected').val();
-        var sort = $('#speciesGallery').data('sort');
-        loadSpeciesInTab(start, sort, group);
-    });
-
-    // species tab -> species group drop down
-    $('#speciesGroup, #speciesGallerySort').live('change', function(e) {
-        var group = $('#speciesGroup :selected').val();
-        var sort = $('#speciesGallerySort :selected').val();
-        loadSpeciesInTab(0, sort, group);
-    });
-
     // add click even on each record row in results list
     $('.recordRow').click(function(e) {
         e.preventDefault();
@@ -444,13 +428,13 @@ $(document).ready(function() {
     });
 
     // loadMoreValues (legacy - now handled by inview)
-    $('button.loadMoreValues').live('click', function(e) {
+    $('.loadMoreValues').live('click', function(e) {
         var link = $(this);
         var fsort = link.data('sort');
         var foffset = link.data('foffset');
-        var table = $('table#fullFacets');
+        var table = $('#fullFacets');
         var facetName = $(table).data('facet');
-        loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, false);
+        loadFacetsContent(facetName, fsort, foffset, link.data('count'), false);
     });
 
     /**
@@ -885,209 +869,6 @@ function loadImages(start) {
 }
 
 /**
- * Load the species tab with list of species from the current query.
- * Uses automatic scrolling to load new bunch of rows when user scrolls.
- *
- * @param start
- */
-function loadSpeciesInTab(start, sortField, group) {
-    var pageSize = 20;
-    var init = $('#speciesGallery').data('init');
-    start = (start) ? start : 0;
-    group = (group) ? group : 'ALL_SPECIES';
-    // sortField should be one of: taxa, common, count
-    var sortExtras;
-    switch(sortField) {
-        case 'taxa':
-            sortExtras = '&common=false&sort=index';
-            break;
-        case 'count':
-            sortExtras = '&common=false&sort=count';
-            break;
-        default:  // === case 'common':
-            sortExtras = '&common=true&sort=index';
-            break;
-    }
-
-    if(!init) {
-        // populate the groups dropdown
-        var groupsUrl = BC_CONF.biocacheServiceUrl + '/explore/groups.json' +
-            BC_CONF.searchString +
-            '&facets=species_group' +
-            '&callback=?';
-        $.getJSON(groupsUrl, function(data) {
-            if(data.length > 0) {
-                $('#speciesGroup').empty();
-                $.each(data, function(i, el) {
-                    if(el.count > 0) {
-                        var indent = Array(el.level + 1).join('-') + ' ';
-                        var dispayName = el.name.replace('_', ' ');
-                        if(el.level === 0) {
-                            dispayName = dispayName.toLowerCase();  // lowercase
-                            dispayName = dispayName.charAt(0).toUpperCase() + dispayName.slice(1);  // capitalise first letter
-                        }
-                        var opt = $(
-                            '<option value="' + el.name + '">' +
-                                indent + dispayName + ' (' + el.speciesCount + ')' +
-                            '</option>');
-                        $('#speciesGroup').append(opt);
-                    }
-                });
-            }
-        }).error(function() {
-            $('#speciesGroup option').val('Error: species groups were not loaded');
-        });
-        //
-        $('#speciesGallery').data('init', true);
-    }
-
-    if(start === 0) {
-        $('#speciesGallery').empty().before('<div id="loadingSpecies">Loading... <img src="' + BC_CONF.contextPath + '/assets/spinner.gif"/></div>');
-        $('#loadMoreSpecies').hide();
-    } else {
-        $('#loadMoreSpecies img').show();
-    }
-
-    var speciesJsonUrl = BC_CONF.contextPath + '/proxy/exploreGroupWithGallery' +
-        BC_CONF.searchString + // TODO fix proxy
-        '&group=' + group +
-        '&pageSize=' + pageSize +
-        '&start=' + start +
-        sortExtras;
-
-    $.getJSON(speciesJsonUrl, function(data) {
-        if(data.length > 0) {
-            var count = 0;
-            $.each(data, function(i, el) {
-                // don't show higher taxa
-                count++;
-                if(el.rankId > 6000 && el.thumbnailUrl) {
-                    var imgEl = $('<img src="' + el.thumbnailUrl + '" style="height:100px; cursor:pointer;"/>');
-                    var metaData = {
-                        type: 'species',
-                        guid: el.guid,
-                        rank: el.rank,
-                        rankId: el.rankId,
-                        sciName: el.scientificName,
-                        commonName: el.commonName,
-                        count: el.count
-                    };
-                    imgEl.data(metaData);
-                    $('#speciesGallery').append(imgEl);
-                }
-            });
-
-            if(count === pageSize) {
-                $('#speciesGallery').data('count', count + start);
-                $('#loadMoreSpecies').show();
-            } else {
-                $('#loadMoreSpecies').hide();
-            }
-
-            $('#speciesGallery img').ibox(); // enable hover effect
-        }
-    }).error(function(request, status, error) {
-        alert(request.responseText);
-    }).complete(function() {
-        $('#loadingSpecies').remove();
-        $('#loadMoreSpecies img').hide();
-    });
-}
-
-/**
- * iBox Jquery plugin for Google Images hover effect.
- * Origin by roxon http://stackoverflow.com/users/383904/roxon
- * Posted to stack overflow:
- *   http://stackoverflow.com/questions/7411393/pop-images-like-google-images/7412302#7412302
- */
-(function($) {
-    $.fn.ibox = function() {
-        // set zoom ratio //
-        var resize = 50; // pixels to add to img height
-        var img = this;
-        img.parent().parent().parent().append('<div id="ibox" />');
-        $('body').append('<div id="ibox" />');
-        var ibox = $('#ibox');
-        var elX = 0;
-        var elY = 0;
-
-        img.each(function() {
-            var el = $(this);
-
-            el.mouseenter(function() {
-                ibox.html('');
-                var elH = el.height();
-                var elW = el.width();
-                var ratio = elW / elH;  // (elW > elH) ? elW / elH : elH / elW;
-                var newH = elH + resize;
-                var newW = newH * ratio;
-                var offset = (((newW - elW) / 2) + 6);
-                elX = el.position().left - offset;  // 6 = CSS#ibox padding+border
-                elY = el.position().top - 6;
-                var h = el.height();
-                var w = el.width();
-                var wh;
-                var checkwh = (h < w) ? (wh = (w / h * resize) / 2) : (wh = (w * resize / h) / 2);
-
-                $(this).clone().prependTo(ibox);
-
-                var link, rank, linkTitle, count;
-                var md = $(el).data();
-
-                if(md.type === 'species') {
-                    link = BC_CONF.bieWebappUrl + '/species/' + md.guid;
-                    linkTitle = 'Go to ALA species page';
-                    rank = ' ';
-                    count = ' <br />Record count: ' + md.count;
-                } else {
-                    link = BC_CONF.contextPath + '/occurrences/' + md.uuid;
-                    linkTitle = 'Go to occurrence record';
-                    rank = '<span style="text-transform: capitalize">' + md.rank + '</span>: ';
-                    count = '';
-                }
-
-                var spanBegins = (md.rankId >= 6000) ? '<span style="font-style: italic;">' : '<span>';
-                var infoDiv =
-                    '<div style="">' +
-                        '<a href="' + link + '" title="' + linkTitle + '">' +
-                            rank +
-                            spanBegins +
-                                md.sciName +
-                            '</span>' +
-                            '<br />' +
-                            md.commonName.replace('| ', '') +
-                        '</a>' +
-                        '&nbsp;' +
-                        count +
-                    '</div>';
-                $(ibox).append(infoDiv);
-                $(ibox).click(function(e) {
-                    e.preventDefault();
-                    window.location.href = link;
-                });
-
-                ibox.css({
-                    top: elY + 'px',
-                    left: elX + 'px',
-                    'max-width': $(el).width() + (2 * wh) + 12
-                });
-
-                ibox.stop().fadeTo(200, 1, function() {
-                    $(this).children('img').animate({
-                        height: '+=' + resize
-                    }, 200);
-                });
-
-            });
-
-            ibox.mouseleave(function() {
-                ibox.html('').hide();
-            });
-        });
-    };
-})(jQuery);
-
-/**
  * draws the div for selecting multiple facets (popup div)
  *
  * Uses HTML template, found in the table itself.
@@ -1106,8 +887,8 @@ function loadMoreFacets(facetName, displayName, fsort, foffset) {
         }
     });
     $('#facetRefineForm').append(inputsHtml);
-    $('table#fullFacets').data('facet', facetName);  // data attribute for storing facet field
-    $('table#fullFacets').data('label', displayName);  // data attribute for storing facet display name
+    $('#fullFacets').data('facet', facetName);  // data attribute for storing facet field
+    $('#fullFacets').data('label', displayName);  // data attribute for storing facet display name
     $('#indexCol a').html(displayName);  // table heading
 
     $('a.fsort').tooltip();
@@ -1140,7 +921,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             $('tr#loadMore').remove();  // remove the load more records link
             if(replaceFacets) {
                 // remove any facet values in table
-                $('table#fullFacets tr').not('tr.tableHead').not('#spinnerRow').remove();
+                $('#fullFacets tr').not('tr.tableHead').not('#spinnerRow').remove();
             }
 
             $.each(data.facetResults[0].fieldResult, function(i, el) {
@@ -1206,11 +987,11 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     hasMoreFacets = true;
                 }
             });
-            $('table#fullFacets tbody').append(html);
+            $('#fullFacets tbody').append(html);
             $('#spinnerRow').hide();
             // Fix some border issues - ToDo this only somewhat fixes...
-            $('table#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
-            $('table#fullFacets td:last-child, table#fullFacets th:last-child').css('border-right', 'none');
+            $('#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
+            $('#fullFacets td:last-child, #fullFacets th:last-child').css('border-right', 'none');
 
             if(hasMoreFacets) {
                 var offsetInt = Number(foffset);
@@ -1218,18 +999,34 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                 var loadMore =
                     '<tr id="loadMore">' +
                         '<td colspan="3">' +
-                            '<button class="loadMoreValues erk-link-button" data-sort="' + fsort + '" data-foffset="' + (offsetInt + flimitInt) + '">' +
-                                'Load ' + facetLimit + ' more values&hellip;' +
+                            '<a ' +
+                                'href="#index" ' +
+                                'class="loadMoreValues erk-link-button" ' +
+                                'data-sort="' + fsort + '" ' +
+                                'data-foffset="' + (offsetInt + flimitInt) + '"' +
+                                'data-count="100"' +
+                            '>' +
+                                $.i18n.prop('facet.modal.load') + ' 100 ' + $.i18n.prop('facet.modal.more') + '&hellip;' +
+                            '</a>' +
+                            '<br />' +
+                            '<a ' +
+                                'href="#index" ' +
+                                'class="loadMoreValues erk-link-button" ' +
+                                'data-sort="' + fsort + '" ' +
+                                'data-foffset="' + (offsetInt + flimitInt) + '"' +
+                                'data-count="1000"' +
+                            '>' +
+                                $.i18n.prop('facet.modal.load') + ' 1000 ' + $.i18n.prop('facet.modal.more') + '&hellip;' +
                             '</a>' +
                         '</td>' +
                     '</tr>';
-                $('table#fullFacets tbody').append(loadMore);
+                $('#fullFacets tbody').append(loadMore);
             }
         } else {
             $('tr#loadingRow').remove();  // remove the loading message
             $('tr#loadMore').remove();  // remove the load more records link
             $('#spinnerRow').hide();
-            $('table#fullFacets tbody').append(
+            $('#fullFacets tbody').append(
                 '<tr>' +
                     '<td></td>' +
                     '<td>' +

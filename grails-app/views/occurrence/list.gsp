@@ -497,14 +497,6 @@
                                 </g:if>
                             </plugin:isAvailable>
 
-                            <g:if test="${showSpeciesImages}">
-                                <li class="nav-item">
-                                    <a id="t4" href="#speciesImages" data-toggle="tab" class="nav-link">
-                                        <g:message code="list.link.t4" />
-                                    </a>
-                                </li>
-                            </g:if>
-
                             <g:if test="${hasImages}">
                                 <li class="nav-item">
                                     <a id="t5" href="#images" data-toggle="tab" class="nav-link">
@@ -669,53 +661,6 @@
                                 </div>
 
                         </plugin:isAvailable>
-
-                        <g:if test="${showSpeciesImages}">
-                            <div id="speciesImages" role="tabpanel" class="tab-pane">
-                                <h3>
-                                    <g:message code="list.speciesimages.title" />
-                                </h3>
-                                <div id="speciesGalleryControls">
-                                    <g:message code="list.speciesgallerycontrols.label.01" />
-                                    <select id="speciesGroup">
-                                        <option>
-                                            <g:message code="list.speciesgallerycontrols.speciesgroup.option01" />
-                                        </option>
-                                    </select>
-                                    &nbsp;
-                                    <g:message code="list.speciesgallerycontrols.label.02" />
-                                    <select id="speciesGallerySort">
-                                        <option value="common">
-                                            <g:message code="list.speciesgallerycontrols.speciesgallerysort.option01" />
-                                        </option>
-                                        <option value="taxa">
-                                            <g:message code="list.speciesgallerycontrols.speciesgallerysort.option02" />
-                                        </option>
-                                        <option value="count">
-                                            <g:message code="list.speciesgallerycontrols.speciesgallerysort.option03" />
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div id="speciesGallery">
-                                    [<g:message code="list.speciesgallerycontrols.speciesgallery" />]
-                                </div>
-
-                                <%-- XXX --%>
-                                <div id="loadMoreSpecies" style="display:none;">
-                                    <button class="erk-button erk-button--light">
-                                        <g:message code="generic.button.loadMore" />
-                                    </button>
-                                    <g:img
-                                        plugin="elurikkus-biocache-hubs"
-                                        dir="images"
-                                        file="spinner.gif"
-                                        style="display:none;"
-                                        alt="indicator icon"
-                                    />
-                                </div>
-                            </div> <%-- end #speciesWrapper --%>
-                        </g:if>
 
                         <g:if test="${hasImages}">
                             <div id="images" role="tabpanel" class="tab-pane">
