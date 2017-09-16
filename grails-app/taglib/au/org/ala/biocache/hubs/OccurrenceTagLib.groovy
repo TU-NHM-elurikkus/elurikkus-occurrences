@@ -147,9 +147,8 @@ class OccurrenceTagLib {
                             'occurrence_year',
                             alatag.message(code: 'facet.occurrence_year', default:'occurrence_year')
                         )
-                        .replaceAll(/(\d{4})\-.*?Z/)
 
-                    mkp.yieldUnescaped(fqLabel { all, year ->
+                    mkp.yieldUnescaped(fqLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
                         def year10 = year?.toInteger() + 10
 
                         "${year} - ${year10}"
