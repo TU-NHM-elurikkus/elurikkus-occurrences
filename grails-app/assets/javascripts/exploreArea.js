@@ -424,12 +424,14 @@ function loadExploreArea(EYA_CONF) {
             }
             // Add message to browser - FF needs this as it is not easy to see
             var msg =
-                'Waiting for confirmation to use your current location (see browser message at top of window)' +
+                '<span style="color: red; font-size: 14px">' +
+                    'Waiting for confirmation to use your current location (see browser message at top of window)' +
+                '</span>' +
                 '<br />' +
                 '<a href="#" onClick="loadMap(); return false;">' +
                     'Click here to load map' +
                 '</a>';
-            $('#mapCanvas').html(msg).css('color', 'red').css('font-size', '14px');
+            $('#mapCanvas').html(msg);
             navigator.geolocation.getCurrentPosition(getMyPostion, positionWasDeclined);
             // Neither functions gets called for some reason, so I've added a delay to initalize map anyway
             setTimeout(function() { if(!map) { positionWasDeclined(); } }, 9000);
