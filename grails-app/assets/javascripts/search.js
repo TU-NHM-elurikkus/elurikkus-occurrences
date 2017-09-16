@@ -168,82 +168,80 @@ $(document).ready(function() {
         // Check user has selected at least 1 facet
         if(selectedFacets.length > 0) {
             // save facets to the user_facets cookie
-            $.cookie("user_facets", selectedFacets, { expires: 7 });
+            $.cookie('user_facets', selectedFacets, { expires: 7 });
             // reload page
             document.location.reload(true);
         } else {
-            alert("Please select at least one filter category to display");
+            alert('Please select at least one filter category to display');
         }
 
     });
 
     // reset facet options to default values (clear cookie)
-    $("#resetFacetOptions").click(function(e) {
+    $('#resetFacetOptions').click(function(e) {
         e.preventDefault();
         $.removeCookie('user_facets');
         document.location.reload(true);
     });
 
     // load stored prefs from cookie
-    var userFacets = $.cookie("user_facets");
+    var userFacets = $.cookie('user_facets');
     if(userFacets) {
-        $(":input.search-filter-checkbox__label__input").removeAttr("checked");
-        var facetList = userFacets.split(",");
-        for(i in facetList) {
-            if(typeof facetList[i] === "string") {
+        $(':input.search-filter-checkbox__label__input').removeAttr('checked');
+        var facetList = userFacets.split(',');
+        for(var i in facetList) {
+            if(typeof facetList[i] === 'string') {
                 var thisFacet = facetList[i];
-                //console.log("thisFacet", thisFacet);
-                $(":input.search-filter-checkbox__label__input[value='" + thisFacet + "']").attr("checked", "checked");
+                $(':input.search-filter-checkbox__label__input[value="' + thisFacet + '"]').attr('checked', 'checked');
             }
         }
     } //  note removed else that did page refresh by triggering cookie update code.
 
     // select all and none buttons
-    $("#selectNone").click(function(e) {
+    $('#selectNone').click(function(e) {
         e.preventDefault();
-        $(":input.search-filter-checkbox__label__input").removeAttr("checked");
+        $(':input.search-filter-checkbox__label__input').removeAttr('checked');
     });
 
     // XXX BLOODY HELL
-    $("#selectAll").click(function(e) {
+    $('#selectAll').click(function(e) {
         e.preventDefault();
-        $(":input.search-filter-checkbox__label__input").attr("checked", "checked");
+        $(':input.search-filter-checkbox__label__input').attr('checked', 'checked');
     });
 
     // taxa search - show included synonyms with popup to allow user to refine to a single name
-    $("span.lsid").not('.searchError, .lsid').each(function(i, el) {
-        var lsid = $(this).attr("id");
+    $('span.lsid').not('.searchError, .lsid').each(function(i, el) {
+        var lsid = $(this).attr('id');
         var nameString = $(this).html();
         var maxFacets = 20;
         var index = i; // keep a copy
-        var queryContextParam = (BC_CONF.queryContext) ? "&qc=" + BC_CONF.queryContext : "";
-        var jsonUri = BC_CONF.biocacheServiceUrl + "/occurrences/search.json?q=lsid:" + lsid + "&" + BC_CONF.facetQueries +
-            "&facets=raw_taxon_name&pageSize=0&flimit=" + maxFacets + queryContextParam + "&callback=?";
+        var queryContextParam = (BC_CONF.queryContext) ? '&qc=' + BC_CONF.queryContext : '';
+        var jsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json?q=lsid:' + lsid + '&' + BC_CONF.facetQueries +
+            '&facets=raw_taxon_name&pageSize=0&flimit=' + maxFacets + queryContextParam + '&callback=?';
 
         var $clone = $('#resultsReturned #template').clone();
-        $clone.attr("id", ""); // remove the ID
-        $clone.find(".taxaMenuContent").addClass("stopProp");
+        $clone.attr('id', ''); // remove the ID
+        $clone.find('.taxaMenuContent').addClass('stopProp');
         // add unique IDs to some elements
-        $clone.find("form.raw_taxon_search").attr("id", "rawTaxonSearch_" + i);
-        $clone.find(":input.rawTaxonSumbit").attr("id", "rawTaxonSumbit_" + i);
-        $clone.find('.refineTaxaSearch').attr("id", "refineTaxaSearch_" + i);
+        $clone.find('form.raw_taxon_search').attr('id', 'rawTaxonSearch_' + i);
+        $clone.find(':input.rawTaxonSumbit').attr('id', 'rawTaxonSumbit_' + i);
+        $clone.find('.refineTaxaSearch').attr('id', 'refineTaxaSearch_' + i);
 
         $.getJSON(jsonUri, function(data) {
             // use HTML template, see http://stackoverflow.com/a/1091493/249327
-            var speciesPageUri = BC_CONF.bieWebappUrl + "/species/" + lsid;
-            var speciesPageLink = "<a href='" + speciesPageUri + "' title='Species page' target='BIE'>view species page</a>";
+            var speciesPageUri = BC_CONF.bieWebappUrl + '/species/' + lsid;
             var speciesPageLink =
                 '<a href="' + speciesPageUri + '" title="Species page" target="BIE">' +  // TODO: Translate
                     'view species page' +  // TODO: Translate
                 '</a>';
-            $clone.find('a.erk-button').text(nameString).attr("href", speciesPageUri);
+            $clone.find('a.erk-button').text(nameString).attr('href', speciesPageUri);
             $clone.find('.nameString').text(nameString);
             $clone.find('.speciesPageLink').html(speciesPageLink);
 
             var synListSize = 0;
             var synList1 = '';
             $.each(data.facetResults, function(k, el) {
-                if(el.fieldName == "raw_taxon_name") {
+                if(el.fieldName === 'raw_taxon_name') {
                     $.each(el.fieldResult, function(j, el1) {
                         synListSize++;
                         synList1 +=
@@ -258,8 +256,8 @@ $(document).ready(function() {
                 }
             });
 
-            if(synListSize == 0) {
-                synList1 += "[no records found]";
+            if(synListSize === 0) {
+                synList1 += '[no records found]';
             }
 
             if(synListSize >= maxFacets) {
@@ -273,39 +271,39 @@ $(document).ready(function() {
             }
 
             $clone.find('div.rawTaxaList').html(synList1);
-            $clone.removeClass("hide"); // XXX This won't work.
+            $clone.removeClass('hide'); // XXX This won't work.
             // prevent BS dropdown from closing when clicking on content
             $clone.find('.stopProp').children().not('input.rawTaxonSumbit').click(function(e) {
                 e.stopPropagation();
             });
 
-            // $("#rawTaxonSearchForm").append(synList);
+            // $('#rawTaxonSearchForm').append(synList);
             // position it under the drop down
-            // $("#refineTaxaSearch_"+i).position({
-                // my: "right top",
-                // at: "right bottom",
+            // $('#refineTaxaSearch_'+i).position({
+                // my: 'right top',
+                // at: 'right bottom',
                 // of: $(el), // or this
-                // offset: "0 -1",
-                // collision: "none"
+                // offset: '0 -1',
+                // collision: 'none'
             // });
-            // $("#refineTaxaSearch_"+i).hide();
+            // $('#refineTaxaSearch_'+i).hide();
         });
 
         // format display with drop-down
-        // $("span.lsid").before("<span class='plain'> which matched: </span>");
-        // $(el).html("<a href='#' title='click for details about this taxon search' id='lsid_" + i + "'>" + nameString + "</a>");
-        // $(el).addClass("dropDown");
+        // $('span.lsid').before('<span class='plain'> which matched: </span>');
+        // $(el).html('<a href='#' title='click for details about this taxon search' id='lsid_' + i + ''>' + nameString + '</a>');
+        // $(el).addClass('dropDown');
         $(el).html($clone);
     });
 
     // form validation for raw_taxon_name popup div with checkboxes
-    $(":input.rawTaxonSumbit").on("click", function(e) {
+    $(':input.rawTaxonSumbit').on('click', function(e) {
         e.preventDefault();
-        var submitId = $(this).attr("id");
-        var formNum = submitId.replace("rawTaxonSumbit_", ""); // 1, 2, etc
+        var submitId = $(this).attr('id');
+        var formNum = submitId.replace('rawTaxonSumbit_', ''); // 1, 2, etc
         var checkedFound = false;
 
-        $("#refineTaxaSearch_" + formNum).find(":input.rawTaxonCheckBox").each(function(i, el) {
+        $('#refineTaxaSearch_' + formNum).find(':input.rawTaxonCheckBox').each(function(i, el) {
             if($(el).is(':checked')) {
                 checkedFound = true;
                 return false;  // break loop
@@ -326,22 +324,6 @@ $(document).ready(function() {
         $(this).find('img').show();  // turn on spinner
         var start = $('#imagesGrid').data('count');
         loadImages(start);
-    });
-
-    // load more species images button
-    $('#loadMoreSpecies').live('click', function(e) {
-        e.preventDefault();
-        var start = $('#speciesGallery').data('count');
-        var group = $('#speciesGroup :selected').val();
-        var sort = $('#speciesGallery').data('sort');
-        loadSpeciesInTab(start, sort, group);
-    });
-
-    // species tab -> species group drop down
-    $('#speciesGroup, #speciesGallerySort').live('change', function(e) {
-        var group = $('#speciesGroup :selected').val();
-        var sort = $('#speciesGallerySort :selected').val();
-        loadSpeciesInTab(0, sort, group);
     });
 
     // add click even on each record row in results list
@@ -379,7 +361,7 @@ $(document).ready(function() {
     });
 
     $('#downloadFacet').live('click', function(e) {
-        var facetName = $('table#fullFacets').data('facet');
+        var facetName = $('#fullFacets').data('facet');
         window.location.href = BC_CONF.biocacheServiceUrl + '/occurrences/facets/download' +
             BC_CONF.facetDownloadQuery +
             '&facets=' + facetName +
@@ -424,7 +406,7 @@ $(document).ready(function() {
         e.preventDefault();
         var link = this;
         var inverseModifier = ($(link).attr('id').indexOf('exclude') !== -1) ? '-' : '';
-        var facetName = $('table#fullFacets').data('facet');
+        var facetName = $('#fullFacets').data('facet');
         var fqString = '&fq=' + inverseModifier + facetName + ':*';
         window.location.href = window.location.pathname + BC_CONF.searchString + fqString;
     });
@@ -439,65 +421,30 @@ $(document).ready(function() {
         var foffset = $(this).data('foffset');
         var table = $(this).closest('table');
         if(table.length === 0) {
-            table = $(this).parent().siblings('table#fullFacets');
+            table = $(this).parent().siblings('#fullFacets');
         }
         var facetName = $(table).data('facet');
         loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, true);
     });
 
     // loadMoreValues (legacy - now handled by inview)
-    $('a.loadMoreValues').live('click', function(e) {
-        e.preventDefault();
+    $('.loadMoreValues').live('click', function(e) {
         var link = $(this);
         var fsort = link.data('sort');
         var foffset = link.data('foffset');
-        var table = $('table#fullFacets');
+        var table = $('#fullFacets');
         var facetName = $(table).data('facet');
-        loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, false);
+        loadFacetsContent(facetName, fsort, foffset, link.data('count'), false);
     });
-
-    // Inview trigger to load more values when tr comes into view
-    $('tr#loadMore').live('inview', function() {
-        var link = $(this).find('a.loadMoreValues');
-        var fsort = link.data('sort');
-        var foffset = link.data('foffset');
-        var table = $('table#fullFacets');
-        var facetName = $(table).data('facet');
-        loadFacetsContent(facetName, fsort, foffset, BC_CONF.facetLimit, false);
-    });
-
-    // Email alert buttons
-    // var alertsUrlPrefix = BC_CONF.alertsUrl || 'http://alerts.ala.org.au';
-    // $('a#alertNewRecords, a#alertNewAnnotations').click(function(e) {
-    //     e.preventDefault();
-    //     var query = $('<p>' + BC_CONF.queryString + '</p>').text(); // strips <span> from string
-    //     var fqArray = decodeURIComponent(BC_CONF.facetQueries).split('&fq=').filter(function(e) { return e === 0 || e; }); // remove empty elements
-    //     if(fqArray) {
-    //         var fqueryString = fqArray.join('; ');
-    //         if(fqueryString.length > 0) {
-    //             query += ' (' + fqueryString + ')'; // append the fq queries to queryString
-    //         }
-    //     }
-    //     var methodName = $(this).data('method');
-    //     var url = alertsUrlPrefix + '/ws/' + methodName + '?';
-    //     url += 'queryDisplayName=' + encodeURIComponent(query);
-    //     url += '&baseUrlForWS=' + encodeURIComponent(BC_CONF.biocacheServiceUrl.replace(/\/ws$/, ''));
-    //     url += '&baseUrlForUI=' + encodeURIComponent(BC_CONF.serverName);
-    //     url += '&webserviceQuery=%2Fws%2Foccurrences%2Fsearch' + BC_CONF.searchString;
-    //     url += '&uiQuery=%2Foccurrences%2Fsearch%3Fq%3D*%3A*';
-    //     url += '&resourceName=' + encodeURIComponent(BC_CONF.resourceName);
-    //     window.location.href = url;
-    // });
 
     /**
-     * Load Spring i18n messages into JS
-     */
-    jQuery.i18n.properties({
+    * Load Spring i18n messages into JS
+    */
+    $.i18n.properties({
         name: 'messages',
         path: BC_CONF.contextPath + '/messages/i18n/',
         mode: 'map',
         language: BC_CONF.locale // default is to use browser specified locale
-        //callback: function(){} //alert( "facet.conservationStatus = " + jQuery.i18n.prop('facet.conservationStatus')); }
     });
 
     // Show/hide the facet groups
@@ -511,7 +458,7 @@ $(document).ready(function() {
 
         $('#group_' + name).slideToggle(600, function() {
 
-            if($('#group_' + name).is(":visible")) {
+            if($('#group_' + name).is(':visible')) {
                 amplify.store('search-facets-state-' + name, true);
             } else {
                 amplify.store('search-facets-state-' + name, null);
@@ -545,11 +492,11 @@ $(document).ready(function() {
 
     // set size of modal dialog during a resize
     // XXX This shouldn't be necessary.
-    $(window).on('resize', setDialogSize)
+    $(window).on('resize', setDialogSize);
     function setDialogSize() {
-        var height = $(window).height()
-        height *= 0.8
-        $("#viewerContainerId").height(height);
+        var height = $(window).height();
+        height *= 0.8;
+        $('#viewerContainerId').height(height);
     }
 }); // end JQuery document ready
 
@@ -558,8 +505,8 @@ $(document).ready(function() {
  */
 function reloadWithParam(paramName, paramValue) {
     var paramList = [];
-    var q = $.url().param('q'); //$.query.get('q')[0];
-    var fqList = $.url().param('fq'); //$.query.get('fq');
+    var q = $.url().param('q'); // $.query.get('q')[0];
+    var fqList = $.url().param('fq'); // $.query.get('fq');
     var sort = $.url().param('sort');
     var dir = $.url().param('dir');
     var pageSize = $.url().param('pageSize');
@@ -575,7 +522,7 @@ function reloadWithParam(paramName, paramValue) {
 
     // add filter query param
     if(fqList && typeof fqList === 'string') {
-        fqList = [ fqList ];
+        fqList = [fqList];
     } else if(!fqList) {
         fqList = [];
     }
@@ -585,15 +532,15 @@ function reloadWithParam(paramName, paramValue) {
     }
 
     // add sort/dir/pageSize params if already set (different to default)
-    if(sort && paramName != 'sort') {
-        paramList.push('sort' + '=' + sort);
+    if(sort && paramName !== 'sort') {
+        paramList.push('sort=' + sort);
     }
 
-    if(dir && paramName != 'dir') {
-        paramList.push('dir' + '=' + dir);
+    if(dir && paramName !== 'dir') {
+        paramList.push('dir=' + dir);
     }
 
-    if(pageSize && paramName != 'pageSize') {
+    if(pageSize && paramName !== 'pageSize') {
         paramList.push('pageSize=' + pageSize);
     }
 
@@ -619,7 +566,7 @@ function reloadWithParam(paramName, paramValue) {
  * page minus the requested fq param
  */
 function removeFacet(el) {
-    var facet = $(el).data("facet").replace(/\+/g,' ');
+    var facet = $(el).data('facet').replace(/\+/g, ' ');
     var q = $.url().param('q');  // $.query.get('q')[0];
     var fqList = $.url().param('fq');  // $.query.get('fq');
     var lat = $.url().param('lat');
@@ -634,7 +581,7 @@ function removeFacet(el) {
 
     // add filter query param
     if(fqList && typeof fqList === 'string') {
-        fqList = [ fqList ];
+        fqList = [fqList];
     }
 
     if(lat && lon && rad) {
@@ -650,17 +597,17 @@ function removeFacet(el) {
     if(fqList instanceof Array) {
         for(var i in fqList) {
             var thisFq = decodeURIComponent(fqList[i].replace(/\+/g, ' '));
-            if(thisFq.indexOf(decodeURIComponent(facet)) != -1) {
+            if(thisFq.indexOf(decodeURIComponent(facet)) !== -1) {
                 fqList.splice($.inArray(fqList[i], fqList), 1);
             }
         }
     } else {
-        if(decodeURIComponent(fqList) == facet) {
+        if(decodeURIComponent(fqList) === facet) {
             fqList = null;
         }
     }
 
-    if(fqList != null) {
+    if(fqList) {
         paramList.push('fq=' + fqList.join('&fq='));
     }
 
@@ -668,9 +615,9 @@ function removeFacet(el) {
 }
 
 function removeFilter(el) {
-    var facet = $(el).data('facet').replace(/^\-/g, '');  // remove leading "-" for exclude searches
-    var q = $.url().param('q');  //$.query.get('q')[0];
-    var fqList = $.url().param('fq');  //$.query.get('fq');
+    var facet = $(el).data('facet').replace(/^\-/g, '');  // remove leading '-' for exclude searches
+    var q = $.url().param('q');  // $.query.get('q')[0];
+    var fqList = $.url().param('fq');  // $.query.get('fq');
     var lat = $.url().param('lat');
     var lon = $.url().param('lon');
     var rad = $.url().param('radius');
@@ -684,7 +631,7 @@ function removeFilter(el) {
 
     // add filter query param
     if(fqList && typeof fqList === 'string') {
-        fqList = [ fqList ];
+        fqList = [fqList];
     }
 
     if(lat && lon && rad) {
@@ -705,12 +652,12 @@ function removeFilter(el) {
         var fqParts = fqList[i].split(':');
         var fqField = fqParts[0].replace(/[\(\)\-]/g, '');
 
-        if(fqField.indexOf(facet) != -1) {
+        if(fqField.indexOf(facet) !== -1) {
             fqList.splice($.inArray(fqList[i], fqList), 1);
         }
     }
 
-    if(facet == 'all') {
+    if(facet === 'all') {
         fqList = [];
     }
 
@@ -727,18 +674,18 @@ function removeFilter(el) {
 function loadDefaultCharts() {
     if(this.dynamicFacets && this.dynamicFacets.length > 0) {
         var chartsConfigUri = BC_CONF.biocacheServiceUrl + '/upload/charts/' + BC_CONF.selectedDataResource + '.json';
-        $.getJSON(chartsConfigUri, function (chartsConfig) {
+        $.getJSON(chartsConfigUri, function(chartsConfig) {
 
-            var conf = {}
+            var conf = {};
 
-            $.each(chartsConfig, function (index, config) {
+            $.each(chartsConfig, function(index, config) {
                 if(config.visible) {
                     conf[config.field] = {
-                        chartType: config.format == 'pie' ? 'doughnut' : 'bar',
+                        chartType: config.format === 'pie' ? 'doughnut' : 'bar',
                         emptyValueMsg: '',
                         hideEmptyValues: true,
                         title: config.field
-                    }
+                    };
                 }
             });
             chartConfig.charts = conf;
@@ -755,24 +702,23 @@ function loadDefaultCharts() {
  */
 function loadUserCharts() {
 
-    if(userChartConfig) {  //userCharts
-        //load user charts
+    if(userChartConfig) {  // userCharts
+        // load user charts
         $.ajax({
             dataType: 'json',
             url: BC_CONF.serverName + '/user/chart',
             success: function(data) {
-                if($.map(data, function (n, i) {
-                        return i;
-                    }).length > 3) {
-
+                if($.map(data, function(n, i) {
+                    return i;
+                }).length > 3) {
                     // do not display user charts by default
                     $.map(data.charts, function (value, key) {
                         value.hideOnce = true;
                     });
 
-                    data.chartControlsCallback = saveChartConfig
+                    data.chartControlsCallback = saveChartConfig;
 
-                    //set current context
+                    // set current context
                     data.biocacheServiceUrl = userChartConfig.biocacheServiceUrl;
                     data.biocacheWebappUrl = userChartConfig.biocacheWebappUrl;
                     data.query = userChartConfig.query;
@@ -782,14 +728,14 @@ function loadUserCharts() {
 
                     var charts = ALA.BiocacheCharts('userCharts', data);
                 } else {
-                    userChartConfig.charts = {}
-                    userChartConfig.chartControlsCallback = saveChartConfig
+                    userChartConfig.charts = {};
+                    userChartConfig.chartControlsCallback = saveChartConfig;
                     var charts = ALA.BiocacheCharts('userCharts', userChartConfig);
                 }
             },
-            error: function (data) {
-                userChartConfig.charts = {}
-                userChartConfig.chartControlsCallback = saveChartConfig
+            error: function(data) {
+                userChartConfig.charts = {};
+                userChartConfig.chartControlsCallback = saveChartConfig;
                 var charts = ALA.BiocacheCharts('userCharts', userChartConfig);
             }
         })
@@ -797,7 +743,7 @@ function loadUserCharts() {
 }
 
 function saveChartConfig(data) {
-    var d = jQuery.extend(true, {}, data);
+    var d = $.extend(true, {}, data);
 
     // remove unnecessary data
     delete d.chartControlsCallback;
@@ -822,7 +768,7 @@ function saveChartConfig(data) {
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(d)
-        })
+        });
     }
 }
 
@@ -923,210 +869,6 @@ function loadImages(start) {
 }
 
 /**
- * Load the species tab with list of species from the current query.
- * Uses automatic scrolling to load new bunch of rows when user scrolls.
- *
- * @param start
- */
-function loadSpeciesInTab(start, sortField, group) {
-    var pageSize = 20;
-    var init = $('#speciesGallery').data('init');
-    start = (start) ? start : 0;
-    group = (group) ? group : 'ALL_SPECIES';
-    // sortField should be one of: taxa, common, count
-    var sortExtras;
-    switch (sortField) {
-        case 'taxa':
-            sortExtras = '&common=false&sort=index';
-            break;
-        case 'count':
-            sortExtras = '&common=false&sort=count';
-            break;
-        default:  // === case 'common':
-            sortExtras = '&common=true&sort=index';
-            break;
-    }
-
-    if(!init) {
-        // populate the groups dropdown
-        var groupsUrl = BC_CONF.biocacheServiceUrl + '/explore/groups.json' +
-            BC_CONF.searchString +
-            '&facets=species_group' +
-            '&callback=?';
-        $.getJSON(groupsUrl, function(data) {
-            if(data.length > 0) {
-                $('#speciesGroup').empty();
-                $.each(data, function(i, el) {
-                    if(el.count > 0) {
-                        var indent = Array(el.level + 1).join('-') + ' ';
-                        var dispayName = el.name.replace('_', ' ');
-                        if(el.level == 0) {
-                            dispayName = dispayName.toLowerCase();  // lowercase
-                            dispayName = dispayName.charAt(0).toUpperCase() + dispayName.slice(1);  // capitalise first letter
-                        }
-                        var opt = $(
-                            '<option value="' + el.name + '">' +
-                                indent + dispayName + ' (' + el.speciesCount + ')' +
-                            '</option>');
-                        $('#speciesGroup').append(opt);
-                    }
-                });
-            }
-        }).error(function() {
-            $('#speciesGroup option').val('Error: species groups were not loaded');
-        });
-        //
-        $('#speciesGallery').data('init', true);
-    }
-
-    if(start == 0) {
-        $('#speciesGallery').empty().before('<div id="loadingSpecies">Loading... <img src="' + BC_CONF.contextPath + '/assets/spinner.gif"/></div>');
-        $('#loadMoreSpecies').hide();
-    } else {
-        $('#loadMoreSpecies img').show();
-    }
-
-    var speciesJsonUrl = BC_CONF.contextPath + '/proxy/exploreGroupWithGallery' +
-        BC_CONF.searchString + // TODO fix proxy
-        '&group=' + group +
-        '&pageSize=' + pageSize +
-        '&start=' + start +
-        sortExtras;
-
-    $.getJSON(speciesJsonUrl, function(data) {
-        if(data.length > 0) {
-            var count = 0;
-            $.each(data, function(i, el) {
-                // don't show higher taxa
-                count++;
-                if(el.rankId > 6000 && el.thumbnailUrl) {
-                    var imgEl = $('<img src="' + el.thumbnailUrl + '" style="height:100px; cursor:pointer;"/>');
-                    var metaData = {
-                        type: 'species',
-                        guid: el.guid,
-                        rank: el.rank,
-                        rankId: el.rankId,
-                        sciName: el.scientificName,
-                        commonName: el.commonName,
-                        count: el.count
-                    };
-                    imgEl.data(metaData);
-                    $('#speciesGallery').append(imgEl);
-                }
-            });
-
-            if(count == pageSize) {
-                $('#speciesGallery').data('count', count + start);
-                $('#loadMoreSpecies').show();
-            } else {
-                $('#loadMoreSpecies').hide();
-            }
-
-            $('#speciesGallery img').ibox(); // enable hover effect
-        }
-    }).error(function (request, status, error) {
-        alert(request.responseText);
-    }).complete(function() {
-        $('#loadingSpecies').remove();
-        $('#loadMoreSpecies img').hide();
-    });
-}
-
-/**
- * iBox Jquery plugin for Google Images hover effect.
- * Origin by roxon http://stackoverflow.com/users/383904/roxon
- * Posted to stack overflow:
- *   http://stackoverflow.com/questions/7411393/pop-images-like-google-images/7412302#7412302
- */
-(function($) {
-    $.fn.ibox = function() {
-        // set zoom ratio //
-        resize = 50; // pixels to add to img height
-        ////////////////////
-        var img = this;
-        img.parent().parent().parent().append('<div id="ibox" />');
-        $('body').append('<div id="ibox" />');
-        var ibox = $('#ibox');
-        var elX = 0;
-        var elY = 0;
-
-        img.each(function() {
-            var el = $(this);
-
-            el.mouseenter(function() {
-                ibox.html('');
-                var elH = el.height();
-                var elW = el.width();
-                var ratio = elW / elH;  //(elW > elH) ? elW / elH : elH / elW;
-                var newH = elH + resize;
-                var newW = newH * ratio;
-                var offset = (((newW - elW) / 2) + 6);
-                elX = el.position().left - offset ;  // 6 = CSS#ibox padding+border
-                elY = el.position().top - 6;
-                var h = el.height();
-                var w = el.width();
-                var wh;
-                checkwh = (h < w) ? (wh = (w / h * resize) / 2) : (wh = (w * resize / h) / 2);
-
-                $(this).clone().prependTo(ibox);
-
-                var link, rank, linkTitle, count;
-                var md = $(el).data();
-
-                if(md.type == 'species') {
-                    link = BC_CONF.bieWebappUrl + '/species/'  + md.guid;
-                    linkTitle = 'Go to ALA species page';
-                    rank = ' ';
-                    count = ' <br />Record count: ' + md.count;
-                } else {
-                    link = BC_CONF.contextPath + '/occurrences/'  + md.uuid;
-                    linkTitle = 'Go to occurrence record';
-                    rank = '<span style="text-transform: capitalize">' + md.rank + '</span>: ';
-                    count = '';
-                }
-
-                var spanBegins = (md.rankId >= 6000) ? '<span style="font-style: italic;">' : '<span>';
-                var infoDiv =
-                    '<div style="">' +
-                        '<a href="' + link + '" title="' + linkTitle + '">' +
-                            rank +
-                            spanBegins +
-                                md.sciName +
-                            '</span>' +
-                            '<br />' +
-                            md.commonName.replace('| ', '') +
-                        '</a>' +
-                        '&nbsp;' +
-                        count +
-                    '</div>';
-                $(ibox).append(infoDiv);
-                $(ibox).click(function(e) {
-                    e.preventDefault();
-                    window.location.href = link;
-                });
-
-                ibox.css({
-                    top: elY + 'px',
-                    left: elX + 'px',
-                    'max-width': $(el).width() + (2 * wh) + 12
-                });
-
-                ibox.stop().fadeTo(200, 1, function() {
-                    $(this).children('img').animate({
-                        height: '+=' + resize
-                    }, 200);
-                });
-
-            });
-
-            ibox.mouseleave(function() {
-                ibox.html('').hide();
-            });
-        });
-    };
-})(jQuery);
-
-/**
  * draws the div for selecting multiple facets (popup div)
  *
  * Uses HTML template, found in the table itself.
@@ -1140,13 +882,13 @@ function loadMoreFacets(facetName, displayName, fsort, foffset) {
     var inputsHtml = '';
     $.each(params, function(i, el) {
         var pair = el.split('=');
-        if(pair.length == 2) {
+        if(pair.length === 2) {
             inputsHtml += '<input type="hidden" name="' + pair[0] + '" value="' + pair[1] + '" />';
         }
     });
     $('#facetRefineForm').append(inputsHtml);
-    $('table#fullFacets').data('facet', facetName);  // data attribute for storing facet field
-    $('table#fullFacets').data('label', displayName);  // data attribute for storing facet display name
+    $('#fullFacets').data('facet', facetName);  // data attribute for storing facet field
+    $('#fullFacets').data('label', displayName);  // data attribute for storing facet display name
     $('#indexCol a').html(displayName);  // table heading
 
     $('a.fsort').tooltip();
@@ -1179,46 +921,46 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             $('tr#loadMore').remove();  // remove the load more records link
             if(replaceFacets) {
                 // remove any facet values in table
-                $('table#fullFacets tr').not('tr.tableHead').not('#spinnerRow').remove();
+                $('#fullFacets tr').not('tr.tableHead').not('#spinnerRow').remove();
             }
 
             $.each(data.facetResults[0].fieldResult, function(i, el) {
                 if(el.count > 0) {
                     // surround with quotes: fq value if contains spaces but not for range queries
-                    var fqEsc = ((el.label.indexOf(' ') != -1 || el.label.indexOf(',') != -1 || el.label.indexOf('lsid') != -1) && el.label.indexOf('[') != 0)
+                    var fqEsc = ((el.label.indexOf(' ') !== -1 || el.label.indexOf(',') !== -1 || el.label.indexOf('lsid') !== -1) && el.label.indexOf('[') !== 0)
                         ? '"' + el.label + '"'
                         : el.label; // .replace(/:/g,"\\:")
                     var label = (el.displayLabel) ? el.displayLabel : el.label;
-                    var trIdAttr = '';
                     if(!label) {
                         label = 'absent';
                         $('tr#facets-row-absent').remove();  // remove the absent row, as it is reinserted
-                        var trIdAttr = 'id=facets-row-absent'  // not proud of it, but has to do now
                     }
 
+                    var code;
+                    var i18nLabel;
                     var encodeFq = true;
-                    if(label.indexOf('@') != -1) {
+                    if(label.indexOf('@') !== -1) {
                         label = label.substring(0, label.indexOf('@'));
-                    } else if($.i18n.prop(label).indexOf("[") == -1) {
+                    } else if($.i18n.prop(label).indexOf('[') === -1) {
                         // i18n substitution
-                        var code = facetName + "." + label;
-                        var i18nLabel = $.i18n.prop(code);
-                        label = (i18nLabel.indexOf('[') == -1) ? i18nLabel : $.i18n.prop(label);
-                    } else if(facetName.indexOf('outlier_layer') != -1 || /^el\d+/.test(label)) {
+                        code = facetName + '.' + label;
+                        i18nLabel = $.i18n.prop(code);
+                        label = (i18nLabel.indexOf('[') === -1) ? i18nLabel : $.i18n.prop(label);
+                    } else if(facetName.indexOf('outlier_layer') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('layer.' + label);
-                    } else if(facetName.indexOf('geospatial_kosher') != -1 || /^el\d+/.test(label)) {
+                    } else if(facetName.indexOf('geospatial_kosher') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('geospatial_kosher.' + label);
-                    } else if(facetName.indexOf('user_assertions') != -1 || /^el\d+/.test(label)) {
+                    } else if(facetName.indexOf('user_assertions') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('user_assertions.' + label);
-                    } else if(facetName.indexOf('duplicate_type') != -1 || /^el\d+/.test(label)) {
+                    } else if(facetName.indexOf('duplicate_type') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('duplication.' + label);
-                    } else if(facetName.indexOf('taxonomic_issue') != -1 || /^el\d+/.test(label)) {
+                    } else if(facetName.indexOf('taxonomic_issue') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop(label);
                     } else {
-                        var code = facetName + '.' + label;
-                        var i18nLabel = $.i18n.prop(code);
-                        var newLabel = (i18nLabel.indexOf('[') == -1) ? i18nLabel : ($.i18n.prop(label));
-                        label = (newLabel.indexOf('[') == -1) ? newLabel : label;
+                        code = facetName + '.' + label;
+                        i18nLabel = $.i18n.prop(code);
+                        var newLabel = (i18nLabel.indexOf('[') === -1) ? i18nLabel : ($.i18n.prop(label));
+                        label = (newLabel.indexOf('[') === -1) ? newLabel : label;
                     }
                     facetName = facetName.replace(/_RNG$/, ''); // remove range version if present
                     var fqParam = (el.fq) ? encodeURIComponent(el.fq) : facetName + ':' + ((encodeFq) ? encodeURIComponent(fqEsc) : fqEsc);
@@ -1245,44 +987,46 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     hasMoreFacets = true;
                 }
             });
-            $('table#fullFacets tbody').append(html);
+            $('#fullFacets tbody').append(html);
             $('#spinnerRow').hide();
             // Fix some border issues - ToDo this only somewhat fixes...
-            $('table#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
-            $('table#fullFacets td:last-child, table#fullFacets th:last-child').css('border-right', 'none');
-            // $("tr.hidden").fadeIn('slow');
+            $('#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
+            $('#fullFacets td:last-child, #fullFacets th:last-child').css('border-right', 'none');
 
             if(hasMoreFacets) {
                 var offsetInt = Number(foffset);
                 var flimitInt = Number(facetLimit);
                 var loadMore =
-                    '<tr id="loadMore" class="">' +
+                    '<tr id="loadMore">' +
                         '<td colspan="3">' +
-                            '<a href="#index" class="loadMoreValues" data-sort="' + fsort + '" data-foffset="' + (offsetInt + flimitInt) + '">' +
-                                'Loading ' + facetLimit + ' more values&hellip;' +
+                            '<a ' +
+                                'href="#index" ' +
+                                'class="loadMoreValues erk-link-button" ' +
+                                'data-sort="' + fsort + '" ' +
+                                'data-foffset="' + (offsetInt + flimitInt) + '"' +
+                                'data-count="100"' +
+                            '>' +
+                                $.i18n.prop('facet.modal.load') + ' 100 ' + $.i18n.prop('facet.modal.more') + '&hellip;' +
+                            '</a>' +
+                            '<br />' +
+                            '<a ' +
+                                'href="#index" ' +
+                                'class="loadMoreValues erk-link-button" ' +
+                                'data-sort="' + fsort + '" ' +
+                                'data-foffset="' + (offsetInt + flimitInt) + '"' +
+                                'data-count="1000"' +
+                            '>' +
+                                $.i18n.prop('facet.modal.load') + ' 1000 ' + $.i18n.prop('facet.modal.more') + '&hellip;' +
                             '</a>' +
                         '</td>' +
                     '</tr>';
-                $('table#fullFacets tbody').append(loadMore);
-                // $("tr#loadMore").fadeIn('slow');
+                $('#fullFacets tbody').append(loadMore);
             }
-            var tableHeight = $('#fullFacets tbody').height();
-            var tbodyHeight = 0;
-            $('#fullFacets tbody tr').each(function(i, el) {
-                tbodyHeight += $(el).height();
-            });
-
-            // always false, probably not needed then
-            // if(false && tbodyHeight < tableHeight) {
-            //     // no scroll bar so adjust column widths
-            //     var thWidth = $('.scrollContent td + td + td').width() + 18;  // $("th#indexCol").width() + 36;
-            //     $('.scrollContent td + td + td').width(thWidth);
-            // }
         } else {
             $('tr#loadingRow').remove();  // remove the loading message
             $('tr#loadMore').remove();  // remove the load more records link
             $('#spinnerRow').hide();
-            $('table#fullFacets tbody').append(
+            $('#fullFacets tbody').append(
                 '<tr>' +
                     '<td></td>' +
                     '<td>' +
