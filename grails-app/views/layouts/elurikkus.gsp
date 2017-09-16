@@ -31,16 +31,13 @@
         <g:layoutHead />
     </head>
 
-    <body class="${pageProperty(name:'body.class')?:'nav-collections'}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
-        <g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout?.toBoolean()}" />
-
+    <body>
         <g:render template="/menu" plugin="elurikkus-commons" />
 
-        <div id="main-content">
+        <div>
             <g:layoutBody />
         </div>
 
         <g:render template="/footer" plugin="elurikkus-commons" />
-
     </body>
 </html>

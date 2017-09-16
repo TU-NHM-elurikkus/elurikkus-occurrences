@@ -621,7 +621,7 @@ function loadExploreArea(EYA_CONF) {
         });
 
         // Register onClick for "load more species" link & sort headers
-        $('#loadMoreSpecies, .rightList-header button').off().click(function(e) {
+        $('#loadMoreSpecies, #rightListHeader button').off().click(function(e) {
             if(this.id !== 'loadMoreSpecies') {
                 $('#rightList tbody').empty();
                 sortOrder = $(this).data('sort') ? $(this).data('sort') : 'index';
