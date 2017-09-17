@@ -326,20 +326,6 @@ $(document).ready(function() {
         loadImages(start);
     });
 
-    // add click even on each record row in results list
-    $('.recordRow').click(function(e) {
-        e.preventDefault();
-        window.location.href = BC_CONF.contextPath + '/occurrences/' + $(this).attr('id');
-    }).hover(function() {
-        // mouse in
-        $(this).css('cursor', 'pointer');
-        $(this).css('background-color', '#FFF');
-    }, function() {
-        // mouse out
-        $(this).css('cursor', 'default');
-        $(this).css('background-color', 'transparent');
-    });
-
     $('.multipleFacetsLink').click(function() {
         var link = this;
         var facetName = link.id
