@@ -285,10 +285,6 @@
         <div class="modal-content">
             <form id="downloadMapForm">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        ×
-                    </button>
-
                     <h3 id="downloadsMapLabel">
                         <g:message code="map.downloadmap.title" />
                     </h3>

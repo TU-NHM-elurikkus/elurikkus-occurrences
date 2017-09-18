@@ -21,10 +21,6 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            ×
-                        </button>
-
                         <h3 id="loginOrFlagLabel">
                             <g:message code="show.loginorflag.title" />
                         </h3>
@@ -549,9 +545,6 @@
 
     <div id="dataQualityModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-                ×
-            </button>
             <h3>
                 <g:message code="show.dataqualitymodal.title" />
             </h3>
@@ -560,7 +553,7 @@
         <div class="modal-body">
             <p>
                 <g:message code="show.dataqualitymodal.body" />
-                ...
+                &hellip;
             </p>
         </div>
 

@@ -4,10 +4,6 @@
             <h3 id="processedVsRawViewLabel">
                 <g:message code="show.processedvsrawview.title" />
             </h3>
-
-            <button type="button" class="close" data-dismiss="modal" aria-label="${message(code: 'general.btn.close')}">
-                <span aria-hidden="true">&times;</span>
-            </button>
         </div>
 
         <div class="modal-body">
