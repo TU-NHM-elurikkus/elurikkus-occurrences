@@ -4,9 +4,6 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    ×
-                </button>
                 <h3 id="downloadsLabel">
                     <g:message code="download.download.title" />
                 </h3>
@@ -97,7 +94,6 @@
                                     title="${message(code: 'download.downloadform.downloadType.option.allRecords.title')}"
                                     checked="checked"
                                 />
-                                &nbsp;
 
                                 <span>
                                     <g:message code="download.downloadform.downloadType.option.allRecords.label" />
@@ -111,7 +107,6 @@
                                     class="tooltips"
                                     title="${message(code: 'download.downloadform.downloadType.option.speciesChecklist.title')}"
                                 />
-                                &nbsp;
 
                                 <span>
                                     <g:message code="download.downloadform.downloadType.option.speciesChecklist.label" />
@@ -147,15 +142,6 @@
                             if (validateForm()) {
                                 if (downloadType == "fast") {
                                     var downloadUrl = generateDownloadPrefix($(":input#fastDownloadUrl").val()) +
-                                        "&email=" + $("#email").val() +
-                                        "&sourceTypeId=" + $("#sourceTypeId").val() +
-                                        "&reasonTypeId=" + $("#reasonTypeId").val() +
-                                        "&file=" + fileName +
-                                        "&extra=" + $(":input#extraFields").val();
-                                    window.location.href = downloadUrl;
-                                    notifyDownloadStarted();
-                                } else if (downloadType == "detailed") {
-                                    var downloadUrl = generateDownloadPrefix($(":input#downloadUrl").val()) +
                                         "&email=" + $("#email").val() +
                                         "&sourceTypeId=" + $("#sourceTypeId").val() +
                                         "&reasonTypeId=" + $("#reasonTypeId").val() +
