@@ -19,7 +19,7 @@
 
     <button id="downloadMaps" data-toggle="modal" data-target="#downloadMap" class="erk-button erk-button--light" style="margin-bottom: 2px;">
         <span class="fa fa-download"></span>
-        <g:message code="download.download.label" />
+        <g:message code="general.btn.download.label" />
     </button>
 
     <g:if test="${params.wkt}">
@@ -465,7 +465,7 @@
 
                     <button id="submitDownloadMap" class="erk-button erk-button--light">
                         <span class="fa fa-download"></span>
-                        <g:message code="download.download.label" />
+                        <g:message code="general.btn.download.label" />
                     </button>
                 </div>
             </form>

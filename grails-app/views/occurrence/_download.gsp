@@ -5,24 +5,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="downloadsLabel">
-                    <g:message code="download.download.title" />
+                    <g:message code="download.title" />
                 </h3>
             </div>
 
             <div class="modal-body">
-                <p id="termsOfUseDownload">
-                    <g:message code="download.termsofusedownload.01" />
+                <p>
+                    <g:message code="download.terms.01" />
                     <a href="https://plutof.ut.ee/#/privacy-policy" target="_blank">
-                        <g:message code="download.termsofusedownload.02" />
+                        <g:message code="download.terms.02" />
                     </a>
-                    <g:message code="download.termsofusedownload.03" />
-                    <br />
-                    <br />
-                    <g:message code="download.termsofusedownload.04" />:
+                    <g:message code="download.terms.03" />
+                </p>
+
+                <br />
+
+                <p>
+                    <g:message code="download.form.title" />
                 </p>
 
                 <form id="downloadForm">
                     <input type="hidden" name="searchParams" id="searchParams" value="${sr?.urlParameters}" />
+                    <%-- Probs going to be deleted; currently unused anyway
                     <g:if test="${clubView}">
                         <input type="hidden" name="url" id="downloadUrl" value="${request.contextPath}/proxy/download/download" />
                         <input type="hidden" name="url" id="fastDownloadUrl" value="${request.contextPath}/proxy/download/index/download" />
@@ -31,99 +35,98 @@
                         <input type="hidden" name="url" id="downloadUrl" value="${biocacheServiceUrl}/occurrences/download" />
                         <input type="hidden" name="url" id="fastDownloadUrl" value="${biocacheServiceUrl}/occurrences/index/download" />
                     </g:else>
-
+                    --%>
+                    <input type="hidden" name="url" id="fastDownloadUrl" value="${biocacheServiceUrl}/occurrences/index/download" />
                     <input type="hidden" name="url" id="downloadChecklistUrl" value="${biocacheServiceUrl}/occurrences/facets/download" />
                     <input type="hidden" name="extra" id="extraFields" value="${grailsApplication.config.biocache.downloads.extra}" />
                     <input type="hidden" name="sourceTypeId" id="sourceTypeId" value="${alatag.getSourceId()}" />
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="email">
-                                <g:message code="download.downloadform.label01" />
+                            <label class="col control-label" for="email">
+                                <g:message code="download.form.email.label" /> *
                             </label>
-                            <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                value="${request.remoteUser}"
-                                class="form-control"
-                            />
+
+                            <div class="col">
+                                <input
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    value="${request.remoteUser}"
+                                    class="form-control"
+                                />
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="filename">
-                                <g:message code="download.downloadform.label02" />
+                            <label class="col control-label" for="filename">
+                                <g:message code="download.form.fileName.label" />
                             </label>
-                            <input
-                                type="text"
-                                name="filename"
-                                id="filename"
-                                value="${message(code: 'download.downloadform.fileName')}"
-                                class="form-control"
-                            />
+
+                            <div class="col">
+                                <input
+                                    type="text"
+                                    name="filename"
+                                    id="filename"
+                                    value="${message(code: 'download.form.fileName.value')}"
+                                    class="form-control"
+                                />
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="reasonTypeId" style="vertical-align: top">
-                                <g:message code="download.downloadform.label03" /> *
+                            <label class="col control-label" for="reasonTypeId">
+                                <g:message code="download.form.reason.label" /> *
                             </label>
-                            <select name="reasonTypeId" id="reasonTypeId" class="form-control">
-                                <option value="">
-                                    -- <g:message code="download.downloadformreasontypeid.option" /> --
-                                </option>
-                                <g:each var="it" in="${alatag.getLoggerReasons()}">
-                                    <option value="${it.id}">
-                                        <g:message code="${it.rkey}" />
+
+                            <div class="col">
+                                <select name="reasonTypeId" id="reasonTypeId" class="erk-select">
+                                    <option value="">
+                                        <g:message code="download.form.reason.placeholder"/>
                                     </option>
-                                </g:each>
-                            </select>
+
+                                    <g:each in="${alatag.getLoggerReasons()}" var="reason">
+                                        <option value="${reason.key}">
+                                            <g:message code="download.form.reason.${reason.key}" default="${reason.value}" />
+                                        </option>
+                                    </g:each>
+                                </select>
+                            </div>
                         </div>
 
-                        <div>
-                            <label for="filename">
-                                <g:message code="download.downloadform.downloadType.label" />
+                        <div class="form-group">
+                            <label class="col control-label" for="downloadType">
+                                <g:message code="download.form.downloadType.label" />
                             </label>
-                            <br />
 
-                            <div style="padding-left: 5px;">
-                                <input
-                                    type="radio"
-                                    name="downloadType"
-                                    value="fast"
-                                    class="tooltips"
-                                    title="${message(code: 'download.downloadform.downloadType.option.allRecords.title')}"
-                                    checked="checked"
-                                />
-
-                                <span>
-                                    <g:message code="download.downloadform.downloadType.option.allRecords.label" />
-                                </span>
-                                <br />
-
-                                <input
-                                    type="radio"
-                                    name="downloadType"
-                                    value="checklist"
-                                    class="tooltips"
-                                    title="${message(code: 'download.downloadform.downloadType.option.speciesChecklist.title')}"
-                                />
-
-                                <span>
-                                    <g:message code="download.downloadform.downloadType.option.speciesChecklist.label" />
-                                </span>
+                            <div id="downloadType" class="col">
+                                <div>
+                                    <label class="erk-radio-label">
+                                        <input
+                                            type="radio"
+                                            name="downloadType"
+                                            value="fast"
+                                            class="erk-radio-input"
+                                            checked="checked"
+                                        />
+                                        &nbsp;<g:message code="download.form.downloadType.0"/>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="erk-radio-label">
+                                    <input
+                                        type="radio"
+                                        name="downloadType"
+                                        value="checklist"
+                                        class="erk-radio-input"
+                                    />
+                                    &nbsp;<g:message code="download.form.downloadType.1"/>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
                 </form>
-
-                <style type="text/css">
-                    /* style outside of HEAD is not valid HTML but is 100% compatible with all modern browsers
-                       Why did you put it here then?
-                    */
-                    #downloadForm fieldset > div {
-                        padding: 5px 0;
-                    }
-                </style>
 
                 <script type="text/javascript">
                     $(document).ready(function() {
@@ -211,12 +214,12 @@
 
             <div class="modal-footer">
                 <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
-                    <g:message code="generic.button.close" />
+                    <g:message code="general.btn.close" />
                 </button>
 
                 <button id="downloadStart" class="erk-button erk-button--light tooltips">
                     <span class="fa fa-download"></span>
-                    <g:message code="download.download.label" />
+                    <g:message code="general.btn.download.label" />
                 </button>
             </div>
         </div>
