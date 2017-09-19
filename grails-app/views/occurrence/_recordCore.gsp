@@ -271,7 +271,10 @@
             </g:if>
             <g:else>
                 <g:if test="${record.raw.occurrence.recordNumber && StringUtils.startsWith(record.raw.occurrence.recordNumber,'http://')}">
-                    <a href="${record.raw.occurrence.recordNumber}">
+                    <a
+                        href="${record.raw.occurrence.recordNumber}"
+                        target="_blank"
+                    >
                 </g:if>
 
                 ${record.raw.occurrence.recordNumber}
@@ -1148,8 +1151,8 @@
                     <g:message code="recordcore.dynamic.${entry.key}" default="${entry.key}" />
                 </g:set>
                 <alatag:occurrenceTableRow annotate="true" section="misc" fieldCode="${entry.key}" fieldName="${label}">
-                    <g:if test="${StringUtils.startsWith(entry.value,'http')}">
-                        <a href="${entry.value}">
+                    <g:if test="${StringUtils.startsWith(entry.value, 'http')}">
+                        <a href="${entry.value}" target="_blank">
                             ${entry.value}
                         </a>
                     </g:if>
@@ -1210,7 +1213,11 @@
                         </tr>
                     </g:if>
                     <g:set var="fn">
-                        <a href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}' title="${message(code: 'show.outlierinformation.02.label')}">
+                        <a
+                            href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}'
+                            title="${message(code: 'show.outlierinformation.02.label')}"
+                            target="_blank"
+                        >
                             ${sample.layerDisplayName}
                         </a>
                     </g:set>
