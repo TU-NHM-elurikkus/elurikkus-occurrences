@@ -271,10 +271,7 @@
             </g:if>
             <g:else>
                 <g:if test="${record.raw.occurrence.recordNumber && StringUtils.startsWith(record.raw.occurrence.recordNumber,'http://')}">
-                    <a
-                        href="${record.raw.occurrence.recordNumber}"
-                        target="_blank"
-                    >
+                    <a href="${record.raw.occurrence.recordNumber}" target="_blank" >
                 </g:if>
 
                 ${record.raw.occurrence.recordNumber}
