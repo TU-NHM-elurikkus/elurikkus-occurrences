@@ -86,8 +86,8 @@
                                     </option>
 
                                     <g:each in="${alatag.getLoggerReasons()}" var="reason">
-                                        <option value="${reason.key}">
-                                            <g:message code="download.form.reason.${reason.key}" default="${reason.value}" />
+                                        <option value="${reason.id}">
+                                            <g:message code="download.form.reason.${reason.id}" default="${reason.name}" />
                                         </option>
                                     </g:each>
                                 </select>
