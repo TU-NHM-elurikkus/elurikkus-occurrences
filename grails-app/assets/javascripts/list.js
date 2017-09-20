@@ -4,7 +4,8 @@
 //= require jquery.jsonp-2.4.0.min
 //= require jquery_migration
 //= require jquery.autocomplete
-//= require charts2
+//= require jquery-plugins
+//= require charts
 //= require leafletPlugins
 //= require amplify
 //= require purl

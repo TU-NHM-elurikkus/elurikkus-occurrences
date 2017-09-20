@@ -637,6 +637,7 @@
                                     plugin="elurikkus-biocache-hubs"
                                 />
 
+                                <!-- Taxon pie chart -->
                                 <script>
                                     var searchString = '${searchString}';
 
@@ -650,13 +651,11 @@
                                 </script>
                             </div>
 
-
-                                <div id="userChartsView" role="tabpanel" class="tab-pane">
-                                    <g:render template="userCharts"
-                                        model="[searchString: searchString]"
-                                        plugin="elurikkus-biocache-hubs" />
-                                </div>
-
+                            <div id="userChartsView" role="tabpanel" class="tab-pane">
+                                <g:render template="userCharts"
+                                    model="[searchString: searchString]"
+                                    plugin="elurikkus-biocache-hubs" />
+                            </div>
                         </plugin:isAvailable>
 
                         <g:if test="${hasImages}">
