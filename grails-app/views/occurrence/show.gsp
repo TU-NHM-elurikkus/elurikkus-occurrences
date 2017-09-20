@@ -369,7 +369,7 @@
                             </p>
                         </div>
 
-                        <div id="charts" style="margin-top:20px;"></div>
+                        <div id="charts"></div>
 
                         <script>
                             function renderOutlierCharts(data){

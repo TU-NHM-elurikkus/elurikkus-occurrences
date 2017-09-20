@@ -9,6 +9,7 @@
         <alatag:addApplicationMetaTags />
 
         <g:render template="/manifest" plugin="elurikkus-commons" />
+        <g:render template="/layouts/global" />
 
         <title>
             <g:layoutTitle />

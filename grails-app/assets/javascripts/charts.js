@@ -1,6 +1,13 @@
-/* ------------------------------------------------------------------------------------------*
- *---------------- FACET BREAKDOWN CHARTS USING THE MODULE PATTERN -------------------------*
- *------------------------------------------------------------------------------------------*/
+/**
+ * Load Spring i18n messages into JS
+ */
+jQuery.i18n.properties({
+    name: 'messages',
+    path: OCCURRENCES_CONF.contextPath + '/messages/i18n/',
+    mode: 'map',
+    language: OCCURRENCES_CONF.locale // default is to use browser specified locale
+});
+
 // define a base object with the major defaults that we can inherit from (prototypically)
 var baseFacetChart = {
     collectionsUrl: 'http://no-default-collectory',
@@ -255,6 +262,8 @@ var baseFacetChart = {
 
         // specify the type (for css tweaking)
         $container.addClass('chart-' + this.chartType);
+        // Add common chart class.
+        $container.addClass('chart');
 
         // create the chart
         switch(this.chartType) {
@@ -652,39 +661,54 @@ var biocacheWebappUrl = 'http://biocache.ala.org.au';  // should be overridden f
 
 // defaults for taxa chart
 var taxonomyPieChartOptions = {
-    width: 480,
-    height: 350,
-    chartArea: { left: 0, top: 0, width: '100%', height: '100%' },
-    is3D: false,
-    titleTextStyle: { color: '#555', fontName: 'Arial', fontSize: 16 },
-    sliceVisibilityThreshold: 0,
-    legend: 'right'
+    width: 450,
+    height: 450
 };
 
 // defaults for facet charts
 var genericChartOptions = {
-    width: 480,
-    height: 350,
-    chartArea: { left: 0, top: 0, width: '100%', height: '100%' },
+    width: 600,
+    height: 400,
     is3D: false,
-    titleTextStyle: { color: '#555', fontName: 'Arial', fontSize: 16 },
     sliceVisibilityThreshold: 0,
-    legend: 'right',
-    chartType: 'pie'
+    chartType: 'pie',
+    backgroundColor: 'transparent',
+    chartArea: {
+        left: 10,
+        top: 30,
+        width: '100%',
+        height: '100%'
+    },
+
+    legend: {
+        position: 'right',
+        textStyle: {
+            fontSize: 12
+        }
+    },
+
+    titleTextStyle: {
+        color: '#555',
+        fontName: 'Arial',
+        fontSize: 16
+    }
 };
 
 // defaults for individual facet charts
 var individualChartOptions = {
-    state_conservation: { chartType: 'column', width: 450, chartArea: { left: 60, height: '58%' },
-        title: 'By state conservation status', hAxis: { slantedText: true } },
-    occurrence_year: { chartType: 'column', width: 450, chartArea: { left: 60, height: '65%' }, hAxis: { slantedText: true } },
-    species_group: { title: 'By higher-level group', ignore: ['Animals'] },
-    state: { ignore: ['Unknown1'] },
-    type_status: { title: 'By type status (as % of all type specimens)', ignore: ['notatype'] },
-    assertions: { chartType: 'bar', chartArea: { left: 170 } }
+    state_conservation: {chartType: 'column', width: 450, chartArea: {left:60, height: "58%"},
+    title: jQuery.i18n.prop('charts2.js.stateconservationstatus'), hAxis: {slantedText: true}},
+    occurrence_year: {chartType: 'column', width: 450, chartArea: {left:60, height: "65%"},
+        hAxis: {slantedText: true}},
+    species_group: {title: jQuery.i18n.prop('charts2.js.higherlevelgroup'), ignore: ['Animals'], chartType: 'column',
+        width: 450, chartArea: {left:60, height:"58%"}, vAxis: {minValue: 0},
+        colors: ['#108628']},
+    state: {ignore: ['Unknown1']},
+    type_status: {title: jQuery.i18n.prop('charts2.js.typestatus'), ignore: ['notatype']},
+    assertions: {title: jQuery.i18n.prop('charts2.js.dataassertion'), chartType: 'bar', chartArea: {left:170}}
 };
 
-/* ----------------- FACET-BASED CHARTS USING DIRECT CALLS TO BIO-CACHE SERVICES ---------------------*/
+/*----------------- FACET-BASED CHARTS USING DIRECT CALLS TO BIO-CACHE SERVICES ---------------------*/
 // these override the facet names in chart titles
 var chartLabels = {
     institution_uid: 'institution',
@@ -711,17 +735,16 @@ var syncTransforms = {
     // assertions: {method: 'expandCamelCase'}
 };
 
-/** ******************************************************************************\
- * Ajax request for charts based on the facets available in the biocache breakdown.
- \********************************************************************************/
+/********************************************************************************\
+* Ajax request for charts based on the facets available in the biocache breakdown.
+\********************************************************************************/
 function loadFacetCharts(chartOptions) {
     if(chartOptions.collectionsUrl !== undefined) { collectionsUrl = chartOptions.collectionsUrl; }
     if(chartOptions.biocacheServicesUrl !== undefined) { biocacheServicesUrl = chartOptions.biocacheServicesUrl; }
     if(chartOptions.displayRecordsUrl !== undefined) { biocacheWebappUrl = chartOptions.displayRecordsUrl; }
 
     var chartsDiv = $('#' + (chartOptions.targetDivId ? chartOptions.targetDivId : 'charts'));
-    chartsDiv.append($('<span>Loading charts...</span>'));
-
+    chartsDiv.append($("<span>" + jQuery.i18n.prop('charts.js.loading') + "</span>"));
     var query = chartOptions.query ? chartOptions.query : buildQueryString(chartOptions.instanceUid);
     $.ajax({
         url: urlConcat(biocacheServicesUrl, '/occurrences/search.json?pageSize=0&q=') + query + '&fsort=index',
@@ -746,10 +769,10 @@ function cleanUp(chartOptions) {
         window[chartOptions.error]();
     }
 }
-/** *******************************************************************\
- * Loads charts based on the facets declared in the config object.
- * - does not require any markup other than div#charts element
- \*********************************************************************/
+/*********************************************************************\
+* Loads charts based on the facets declared in the config object.
+* - does not require any markup other than div#charts element
+\*********************************************************************/
 function drawFacetCharts(data, chartOptions) {
     // check that we have results
     if(data.length === 0 || data.totalRecords === undefined || data.totalRecords === 0) {
@@ -776,17 +799,25 @@ function drawFacetCharts(data, chartOptions) {
         }
     });
 }
-/** **********************************************************\
- * Create and show a generic facet chart
- \************************************************************/
+/************************************************************\
+* Create and show a generic facet chart
+\************************************************************/
 function buildGenericFacetChart(name, data, query, chartsDiv, chartOptions) {
-
     // resolve chart label
     var chartLabel = chartLabels[name] ? chartLabels[name] : name;
 
     // resolve the chart options
     var opts = $.extend({}, genericChartOptions);
-    opts.title = 'By ' + chartLabel;  // default title
+
+    if (chartLabel == "state") {
+        opts.title = jQuery.i18n.prop('charts.js.byregion');
+    }else{
+        if (chartLabel == "country"){
+            opts.title = jQuery.i18n.prop('charts.js.bycountry');
+        }else{
+            opts.title = jQuery.i18n.prop('charts.js.by') + " " + chartLabel;  // default title
+        }
+    }
     var individualOptions = individualChartOptions[name] ? individualChartOptions[name] : {};
     // merge generic, individual and user options
     opts = $.extend(true, {}, opts, individualOptions, chartOptions[name]);
@@ -1069,28 +1100,62 @@ var taxonomyChart = {
         });
 
         // resolve the chart options
-        var opts = $.extend({}, taxonomyPieChartOptions);
+        var rango = '';
+        var opts = $.extend({ name: this.name }, genericChartOptions);
+        opts = $.extend(opts, taxonomyPieChartOptions);
         opts = $.extend(true, opts, this.chartOptions);
-        opts.title = opts.name ? opts.name + ' records by ' + data.rank : 'By ' + data.rank;
+
+        switch(data.rank) {
+            case 'kingdom':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.kingdom');
+                break;
+            case 'phylum':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.phylum');
+                break;
+            case 'order':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.order');
+                break;
+            case 'family':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.family');
+                break;
+            case 'genus':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.genus')
+                break;
+            case 'class':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.class');
+                break;
+            case 'species':
+                rango = jQuery.i18n.prop('charts.taxonomy.byRank.species');
+                break;
+            default:
+                rango = data.rank;
+        }
+
+        if(opts.name) {
+            opts.title = opts.name + ' ' + rango
+        } else {
+            // Capitalize the first letter. Can't do it in CSS because it's buried in third party SVG.
+            opts.title = rango.charAt(0).toUpperCase() + rango.slice(1);
+        }
 
         // create the outer div that will contain the chart and the additional links
         var $outerContainer = $('#taxa');
         if($outerContainer.length === 0) {
-            $outerContainer = $('<div id="taxa"></div>'); // create it
+            $outerContainer = $('<div id="taxa" class="chart"></div>'); // create it
             var chartsDiv = $('div#' + (this.chartOptions.targetDivId ? this.chartOptions.targetDivId : 'charts'));
             // append it
             chartsDiv.prepend($outerContainer);
         }
 
         // create the chart container if not already there
-        var $container = $('#taxaChart');
+        var $container = $('#taxa-chart');
         if($container.length === 0) {
-            $container = $('<div id="taxaChart" class="chart-pie"></div>');
+            $container = $('<div id="taxa-chart" class="chart-pie"></div>');
             $outerContainer.append($container);
         }
 
         // create the chart
-        var chart = new google.visualization.PieChart(document.getElementById('taxaChart'));
+        var chart = new google.visualization.PieChart(document.getElementById('taxa-chart'));
 
         // notify any listeners
         if(this.chartOptions.notifyChange) {
@@ -1103,7 +1168,7 @@ var taxonomyChart = {
         // draw the back button / instructions
         var $backLink = $('#backLink');
         if($backLink.length === 0) {
-            $backLink = $('<button class="erk-link-button" id="backLink">&laquo;' + $.i18n.prop('charts2.taxonPie.previousRank') + '</button>');
+            $backLink = $('<button class="erk-link-button" id="backLink">&laquo;' + $.i18n.prop('charts.taxonPie.previousRank') + '</button>');
 
             $backLink.click(function() {
                 // only act if link was real
@@ -1130,7 +1195,12 @@ var taxonomyChart = {
         var $instruction = $('#taxa-chart-instruction');
 
         if($instruction.length === 0) {
-            $instruction = $('<div id="taxa-chart-instruction">' + $.i18n.prop('charts2.taxonPie.des') + '.</div>');
+            $instruction = $(
+                '<div id="taxa-chart-instruction">' +
+                    '<span class="fa fa-info-circle"></span>&nbsp;' +
+                    $.i18n.prop('charts.taxonPie.sliceToDrill') +
+                '</div>'
+            );
 
             $outerContainer.append($instruction);
         }
@@ -1148,7 +1218,7 @@ var taxonomyChart = {
         // draw records link
         var $recordsLink = $('#recordsLink');
         if($recordsLink.length === 0) {
-            var linkDiv = '<div class="erk-link" id="recordsLink">' + $.i18n.prop('charts2.taxonPie.viewRecords') + '</div>'
+            var linkDiv = '<div class="erk-link" id="recordsLink">' + $.i18n.prop('charts.taxonPie.viewRecords') + '</div>'
             $recordsLink = $(linkDiv).appendTo($outerContainer);  // create it
             $recordsLink.click(function() {
                 thisChart.showRecords();  // called explicitly so we have the correct 'this' context
@@ -1157,9 +1227,9 @@ var taxonomyChart = {
 
         // set link text
         if(this.hasState()) {
-            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts2.taxonPie.label') + ' ' + this.rank + ' ' + this.name);
+            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts.taxonPie.viewRecordsFor', this.rank, this.name));
         } else {
-            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts2.taxonPie.viewRecords'));
+            $recordsLink.html('<span class="fa fa-list"></span> ' + $.i18n.prop('charts.taxonPie.viewRecords'));
         }
 
         // setup a click handler - if requested
@@ -1170,10 +1240,12 @@ var taxonomyChart = {
 
                 // find out what they clicked
                 var name = chart.getSelection();
+
                 if(!name.length) {
                     // chart is already rendering; return so as console wouldn't throw errors
                     return;
                 }
+
                 name = dataTable.getValue(name[0].row, 0);
 
                 /* DRILL DOWN */
@@ -1193,7 +1265,7 @@ var taxonomyChart = {
                     thisChart.load();
                 } else if(clickThru) {
                     // show occurrence records
-                    document.location = urlConcat(biocacheWebappUrl, '/occurrences/search?q=') + query +
+                    document.location = urlConcat(biocacheWebappUrl, '/occurrences/search?q=') + thisChart.query +
                         '&fq=' + data.rank + ':' + name;
                 }
             });
@@ -1230,136 +1302,27 @@ var taxonomyChart = {
     }
 };
 
-/* ------------------------- TAXON TREE -----------------------------*/
-function initTaxonTree(treeOptions) {
-    var query = treeOptions.query ? treeOptions.query : buildQueryString(treeOptions.instanceUid);
 
-    var targetDivId = treeOptions.targetDivId ? treeOptions.targetDivId : 'tree';
-    var $container = $('#' + targetDivId);
-    var title = treeOptions.title || 'Explore records by taxonomy';
-    if(treeOptions.title !== '') {
-        $container.append($('<h3>' + title + '</h3>'));
-    }
-    var $treeContainer = $('<div id="treeContainer"></div>').appendTo($container);
-    $treeContainer.resizable({
-        maxHeight: 900,
-        minHeight: 100,
-        maxWidth: 900,
-        minWidth: 500
-    });
-    var $tree = $('<div id="taxaTree"></div>').appendTo($treeContainer);
-    $tree
-        .bind('after_open.jstree', function(event, data) {
-            var children = $.jstree._reference(data.rslt.obj)._get_children(data.rslt.obj);
-            // automatically open if only one child node
-            if(children.length === 1) {
-                $tree.jstree('open_node', children[0]);
-            }
-            // adjust container size
-            var fullHeight = $tree[0].scrollHeight;
-            if(fullHeight > $tree.height()) {
-                fullHeight = Math.min(fullHeight, 700);
-                $treeContainer.animate({ height: fullHeight });
-            }
-        })
-        .bind('select_node.jstree', function(event, data) {
-            // click will show the context menu
-            $tree.jstree('show_contextmenu', data.rslt.obj);
-        })
-        .bind('loaded.jstree', function(event, data) {
-            // get rid of the anchor click handler because it hides the context menu (which we are 'binding' to click)
-            $tree.jstree('open_node', '#top');
-        })
-        .jstree({
-            json_data: {
-                data: { 'data': 'Kingdoms', 'state': 'closed', 'attr': { 'rank': 'kingdoms', 'id': 'top' } },
-                ajax: {
-                    url: function(node) {
-                        var rank = $(node).attr('rank');
-                        var u = urlConcat(biocacheServicesUrl, '/breakdown.json?q=') + query + '&rank=';
-                        if(rank === 'kingdoms') {
-                            u += 'kingdom';  // starting node
-                        } else {
-                            u += rank + '&name=' + $(node).attr('id');
-                        }
-                        return u;
-                    },
-                    dataType: 'jsonp',
-                    success: function(data) {
-                        var nodes = [];
-                        var rank = data.rank;
-                        $.each(data.taxa, function(i, obj) {
-                            var label = obj.label + ' - ' + obj.count;
-                            if(rank === 'species') {
-                                nodes.push({ 'data': label, 'attr': { 'rank': rank, 'id': obj.label } });
-                            } else {
-                                nodes.push({ 'data': label, 'state': 'closed', 'attr': { 'rank': rank, 'id': obj.label } });
-                            }
-                        });
-                        return nodes;
-                    },
-                    error: function(xhr, text_status) {}
-                }
-            },
-            core: { animation: 200, open_parents: true },
-            themes: {
-                theme: treeOptions.theme || 'default',
-                icons: treeOptions.icons || false,
-                url: treeOptions.serverUrl + '/js/themes/' + (treeOptions.theme || 'default') + '/style.css'
-            },
-            checkbox: { override_ui: true },
-            contextmenu: { select_node: false, show_at_node: false, items: {
-                records: { label: 'Show records', action: function(obj) { showRecords(obj, query); } },
-                bie: { label: 'Show information', action: function(obj) { showBie(obj); } },
-                create: false,
-                rename: false,
-                remove: false,
-                ccp: false }
-            },
-            plugins: ['json_data', 'themes', 'ui', 'contextmenu']
-        });
-}
-/** **********************************************************\
- * Go to occurrence records for selected node
- \************************************************************/
-function showRecords(node, query) {
-    var rank = node.attr('rank');
-    if(rank === 'kingdoms') { return; }
-    var name = node.attr('id');
-    // url for records list
-    var recordsUrl = urlConcat(biocacheWebappUrl, '/occurrences/search?q=') + query +
-        '&fq=' + rank + ':' + name;
-    document.location.href = recordsUrl;
-}
-/** **********************************************************\
- * Go to 'species' page for selected node
- \************************************************************/
-function showBie(node) {
-    var rank = node.attr('rank');
-    if(rank === 'kingdoms') { return; }
-    var name = node.attr('id');
-    var sppUrl = 'http://bie.ala.org.au/species/' + name;
-    if(rank !== 'species') { sppUrl += '_(' + rank + ')'; }
-    document.location.href = sppUrl;
-}
-
-/* ------------------------- UTILITIES ------------------------------*/
-/** **********************************************************\
- * build records query handling multiple uids
- * uidSet can be a comma-separated string or an array
- \************************************************************/
+/*------------------------- UTILITIES ------------------------------*/
+/************************************************************\
+* build records query handling multiple uids
+* uidSet can be a comma-separated string or an array
+\************************************************************/
 function buildQueryString(uidSet) {
-    var uids = (typeof uidSet === 'string') ? uidSet.split(',') : uidSet;
+    var uids = (typeof uidSet == 'string') ? uidSet.split(',') : uidSet;
     var str = '';
+
     $.each(uids, function(index, value) {
         str += solrFieldNameForUid(value) + ':' + value + ' OR ';
     });
+
     return str.substring(0, str.length - 4);
 }
-/** **********************************************************\
- * returns the appropriate facet name for the uid - to build
- * biocache occurrence searches
- \************************************************************/
+
+/************************************************************\
+* returns the appropriate facet name for the uid - to build
+* biocache occurrence searches
+\************************************************************/
 function solrFieldNameForUid(uid) {
     switch(uid.substring(0, 2)) {
         case 'co': return 'collection_uid';
@@ -1370,10 +1333,10 @@ function solrFieldNameForUid(uid) {
         default: return '';
     }
 }
-/** **********************************************************\
- * returns the appropriate context for the uid - to build
- * biocache webservice urls
- \************************************************************/
+/************************************************************\
+* returns the appropriate context for the uid - to build
+* biocache webservice urls
+\************************************************************/
 function wsEntityForBreakdown(uid) {
     switch(uid.substr(0, 2)) {
         case 'co': return 'collections';
@@ -1384,9 +1347,9 @@ function wsEntityForBreakdown(uid) {
         default: return '';
     }
 }
-/** **********************************************************\
- * Concatenate url fragments handling stray slashes
- \************************************************************/
+/************************************************************\
+* Concatenate url fragments handling stray slashes
+\************************************************************/
 function urlConcat(base, context) {
     // remove any trailing slash from base
     base = base.replace(/\/$/, '');
@@ -1394,19 +1357,4 @@ function urlConcat(base, context) {
     context = context.replace(/^\//, '');
     // join
     return base + '/' + context;
-}
-
-/** **********************************************************\
- * Add commas to number strings
- \************************************************************/
-function addCommas(nStr) {
-    nStr = String(nStr);
-    var x = nStr.split('.');
-    var x1 = x[0];
-    var x2 = x.length > 1 ? '.' + x[1] : '';
-    var rgx = /(\d+)(\d{3})/;
-    while(rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$1,$2');
-    }
-    return x1 + x2;
 }
