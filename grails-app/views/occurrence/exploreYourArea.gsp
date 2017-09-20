@@ -167,7 +167,7 @@
                             <div class="inline-controls__group">
                                 <button data-toggle="modal" data-target="#download" class="erk-button erk-button--light">
                                     <span class="fa fa-download"></span>
-                                    <g:message code="download.download.label" />
+                                    <g:message code="general.btn.download.label" />
                                 </button>
                             </div>
                         </div>

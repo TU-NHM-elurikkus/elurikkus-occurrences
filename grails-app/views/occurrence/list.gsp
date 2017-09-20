@@ -261,7 +261,7 @@
                             <%-- XXX BUTTON INSIDE LINK --%>
                             <button id="downloads" class="erk-button erk-button--light">
                                 <span class="fa fa-download"></span>
-                                <g:message code="download.download.label" />
+                                <g:message code="general.btn.download.label" />
                             </button>
                         </a>
                     </g:if>
@@ -515,7 +515,7 @@
                                         class="erk-button erk-button--light"
                                     >
                                        <span class="fa fa-download"></span>
-                                       <g:message code="download.download.label" />
+                                       <g:message code="general.btn.download.label" />
                                     </button>
                                 </g:if>
 
