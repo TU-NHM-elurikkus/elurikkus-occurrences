@@ -2,6 +2,8 @@ package au.org.ala.biocache.hubs
 
 import grails.plugin.cache.Cacheable
 
+import elurikkus.commons.ExtendedPluginAwareResourceBundleMessageSource
+
 /**
  * A service that provides a java.util.Map representation of the i18n
  * messages for a given locale (cached). The main use for this service is
