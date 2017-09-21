@@ -1,6 +1,4 @@
-//= require jquery
-//= require jquery_migration
-//= require jquery_i18n
-//= require purl
 //= require common
+//= require jquery_migration
+//= require purl
 //= require exploreArea

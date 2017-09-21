@@ -374,8 +374,6 @@ var baseFacetChart = {
 
         } else if(options.outlierValues !== undefined) {
             // handle each data item
-            // //console.log('xformedData : ' + xformedData);
-
             $.each(xformedData, function(i, obj) {
                 // filter any crap
                 if(that.ignore !== 'undefined' || $.inArray(obj.label, that.ignore) === -1) {
@@ -590,7 +588,7 @@ var facetChartGroup = {
 
         // update total if requested
         if(options.totalRecordsSelector) {
-            $(options.totalRecordsSelector).html(data.totalRecords.toLocaleString());
+            $(options.totalRecordsSelector).html(data.totalRecords.toLocaleString(OCCURRENCES_CONF.locale));
         }
 
         // if the chart is Cumulative, keep a running total
@@ -759,7 +757,7 @@ function drawFacetCharts(data, chartOptions) {
 
     // update total if requested
     if(chartOptions.totalRecordsSelector) {
-        $(chartOptions.totalRecordsSelector).html(data.totalRecords.toLocaleString());
+        $(chartOptions.totalRecordsSelector).html(data.totalRecords.toLocaleString(OCCURRENCES_CONF.locale));
     }
 
     // transform facet results into map

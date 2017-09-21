@@ -32,14 +32,6 @@ $(document).ready(function() {
         });
     });
 
-    $.i18n.properties({
-        name: 'messages',
-        path: OCC_REC.contextPath + '/messages/i18n/',
-        mode: 'map',
-        language: OCC_REC.locale // default is to use browser specified locale
-        // callback: function(){} //alert( "facet.conservationStatus = " + jQuery.i18n.prop('facet.conservationStatus')); }
-    });
-
     refreshUserAnnotations();
 
     // bind to form submit for assertions
@@ -366,8 +358,10 @@ function refreshUserAnnotations() {
         }
         $('#userAnnotationsList').empty();
 
-        var userAssertionStatus = $.i18n.prop('user_assertions.' + data.userAssertionStatus);
-        $('#userAssertionStatus').text(userAssertionStatus);
+        if(data.userAssertionStatus) {
+            var userAssertionStatus = $.i18n.prop('assertions.' + data.userAssertionStatus);
+            $('#userAssertionStatus').text(userAssertionStatus);
+        }
 
         var i;
         var $clone;
@@ -436,7 +430,7 @@ function refreshUserAnnotations() {
             $clone = $('#userVerificationTemplate').clone();
 
             $clone.prop('id', 'userVerificationAnnotation_' + sortedVerifiedAssertion[i].uuid);
-            var qaStatusMessage = $.i18n.prop('user_assertions.' + sortedVerifiedAssertion[i].qaStatus);
+            var qaStatusMessage = $.i18n.prop('assertions.' + sortedVerifiedAssertion[i].qaStatus);
             $clone.find('.qaStatus').text(qaStatusMessage);
             $clone.find('.comment').text(sortedVerifiedAssertion[i].comment);
             $clone.find('.userDisplayName').text(sortedVerifiedAssertion[i].userDisplayName);
