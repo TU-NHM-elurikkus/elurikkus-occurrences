@@ -29,14 +29,6 @@ function loadExploreArea(EYA_CONF) {
      * Document onLoad event using JQuery
      */
     $(document).ready(function() {
-        $.i18n.properties({
-            name: 'messages',
-            path: BC_CONF.contextPath + '/messages/i18n/',
-            mode: 'map',
-            language: BC_CONF.locale // default is to use browser specified locale
-            //callback: function(){} //alert( "facet.conservationStatus = " + jQuery.i18n.prop('facet.conservationStatus')); }
-        });
-
         // initialise Google Geocoder
         geocoder = new google.maps.Geocoder();
 

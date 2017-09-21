@@ -16,13 +16,6 @@
 //= require map.common
 //= require advancedSearch
 
-$.i18n.properties({
-    name: 'messages',
-    path: BC_CONF.contextPath + '/messages/i18n/',
-    mode: 'map',
-    language: BC_CONF.locale
-});
-
 $(document).ready(function() {
     var mapInit = false;
 

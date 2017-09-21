@@ -423,16 +423,6 @@ $(document).ready(function() {
         loadFacetsContent(facetName, fsort, foffset, link.data('count'), false);
     });
 
-    /**
-    * Load Spring i18n messages into JS
-    */
-    $.i18n.properties({
-        name: 'messages',
-        path: BC_CONF.contextPath + '/messages/i18n/',
-        mode: 'map',
-        language: BC_CONF.locale // default is to use browser specified locale
-    });
-
     // Show/hide the facet groups
     $('.showHideFacetGroup').click(function(e) {
         e.preventDefault();
@@ -937,7 +927,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     } else if(facetName.indexOf('geospatial_kosher') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('geospatial_kosher.' + label);
                     } else if(facetName.indexOf('user_assertions') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('user_assertions.' + label);
+                        label = $.i18n.prop('assertions.' + label);
                     } else if(facetName.indexOf('duplicate_type') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('duplication.' + label);
                     } else if(facetName.indexOf('taxonomic_issue') !== -1 || (/^el\d+/).test(label)) {

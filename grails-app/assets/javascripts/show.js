@@ -1,4 +1,4 @@
-//= require jquery
+//= require common
 //= require jquery.cookie
 //= require jquery.inview.min
 //= require jquery.jsonp-2.4.0.min
@@ -10,7 +10,6 @@
 //= require amplify
 //= require purl
 //= require nanoscroller
-//= require common
 //= require ala-charts
 //= require bootstrap-combobox
 //= require bootstrap-slider
