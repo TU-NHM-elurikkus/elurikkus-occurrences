@@ -474,6 +474,39 @@ $(document).ready(function() {
         height *= 0.8;
         $('#viewerContainerId').height(height);
     }
+
+    $('#submitDownloadMap').click(function(e) {
+        var bounds = occMap.map.getBounds();
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+        var extents = [sw.lng, sw.lat, ne.lng, ne.lat].join(',');
+
+        var dpi = $('#dpi').val();
+        var dotRadius = $('#pradiusmm').val();
+
+        if(dpi === '100' && parseFloat(dotRadius) < 0.3) {
+            // Smaller dots won't appear on 100 dpi map
+            dotRadius = '0.3';
+        }
+
+        var downloadUrl = $('#mapDownloadUrl').val() +
+            BC_CONF.searchString +
+            '&extents=' + extents +  // need to retrieve the
+            '&format=' + $('#format').val() +
+            '&dpi=' + dpi +
+            '&pradiusmm=' + dotRadius +
+            '&popacity=' + $('#popacity').val() +
+            '&pcolour=' + $(':input[name=pcolour]').val().replace('#', '').toUpperCase() +
+            '&widthmm=' + $('#widthmm').val() +
+            '&scale=' + $(':input[name=scale]:checked').val() +
+            '&outline=' + $(':input[name=outline]:checked').val() +
+            '&outlineColour=0x000000' +
+            '&baselayer=world' +  // $('#baselayer').val()+
+            '&fileName=' + $('#fileName').val() + '.' + $('#format').val().toLowerCase();
+
+        $('#downloadMap').modal('hide');
+        document.location.href = downloadUrl;
+    });
 }); // end JQuery document ready
 
 /**
