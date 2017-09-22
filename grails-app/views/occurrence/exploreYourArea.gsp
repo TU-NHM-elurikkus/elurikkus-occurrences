@@ -32,6 +32,17 @@
             <div class="page-header__subtitle">
                 <g:message code="eya.description" />
             </div>
+
+            <div class="page-header-links">
+                <a class="page-header-links__link" href="http://ala-test.ut.ee/regions/#rt=Maakonnad">
+                    <span class="fa fa-search"></span>
+                    <g:message code="menu.regions.label" />
+                </a>
+                <a class="page-header-links__link" href="${request.contextPath}/search?#tab-spatial-search">
+                    <span class="fa fa-search"></span>
+                    <g:message code="general.searchByPolygon" />
+                </a>
+            </div>
         </div>
 
         <div class="row">
@@ -229,7 +240,6 @@
                 radius: ${radius},
                 speciesPageUrl: "${speciesPageUrl}",
                 queryContext: "${queryContext}",
-                locale: "${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}",
                 hasGoogleKey: ${grailsApplication.config.google.apikey as Boolean}
             }
 
