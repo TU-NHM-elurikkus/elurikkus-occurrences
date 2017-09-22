@@ -90,7 +90,7 @@
                                             class="fsort"
                                             data-sort="index"
                                             data-foffset="0"
-                                            title="<g:message code='list.table.sortBy.label' />"
+                                            title="${message(code: 'general.list.sortBy.label')}"
                                         </a>
                                     </th>
                                     <th style="border-right-style: none;text-align: right;">
@@ -99,7 +99,7 @@
                                             class="fsort"
                                             data-sort="count"
                                             data-foffset="0"
-                                            title="<g:message code='facets.multiplefacets.tableth01.sort' />"
+                                            title="${message(code: 'facets.multiplefacets.tableth01.sort')}"
                                         >
                                             <g:message code="facets.multiplefacets.tableth01" />
                                         </a>

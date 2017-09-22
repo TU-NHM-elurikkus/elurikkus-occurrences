@@ -197,13 +197,22 @@
                     function validateForm() {
                         var isValid = true;
                         var reasonId = $("#reasonTypeId option:selected").val();
+                        var email = $("#email").val().trim();
 
-                        if (!reasonId) {
+                        if(!reasonId) {
                             isValid = false;
                             $("#reasonTypeId").focus();
                             $("label[for='reasonTypeId']").css("color", "red");
                         } else {
                             $("label[for='reasonTypeId']").css("color", "inherit");
+                        }
+
+                        if(!email) {
+                            isValid = false;
+                            $("#email").focus();
+                            $("label[for='email']").css("color", "red");
+                        } else {
+                            $("label[for='email']").css("color", "inherit");
                         }
 
                         return isValid;
