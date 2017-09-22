@@ -476,6 +476,7 @@ $(document).ready(function() {
     }
 
     $('#submitDownloadMap').click(function(e) {
+        e.preventDefault();
         var bounds = occMap.map.getBounds();
         var ne = bounds.getNorthEast();
         var sw = bounds.getSouthWest();
@@ -505,7 +506,7 @@ $(document).ready(function() {
             '&fileName=' + $('#fileName').val() + '.' + $('#format').val().toLowerCase();
 
         $('#downloadMap').modal('hide');
-        document.location.href = downloadUrl;
+        window.open(downloadUrl);
     });
 }); // end JQuery document ready
 
