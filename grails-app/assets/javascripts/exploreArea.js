@@ -486,7 +486,7 @@ function loadExploreArea(EYA_CONF) {
                     initialize();
                     loadRecordsLayer();
                 } else {
-                    console.error('Geocode was not successful for the following reason: ' + status);
+                    console.error(status);
                 }
             });
         } else {
