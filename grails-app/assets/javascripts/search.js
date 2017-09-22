@@ -835,12 +835,13 @@ function loadImages(start) {
                 $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
 
                 // detail metadata
-                var leftDetail = '<div class="col-sm-10"><b>Taxon:</b> ' + el.raw_scientificName;
-                if(el.typeStatus) { leftDetail += br + '<b>Type:</b> ' + el.typeStatus; }
-                if(el.collector) { leftDetail += br + '<b>By:</b> ' + el.collector; }
-                if(el.eventDate) { leftDetail += br + '<b>Date:</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
+                var leftDetail = '<div class="col-sm-10"><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
 
-                leftDetail += br + '<b>Source:</b> ';
+                if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
+                if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
+                if(el.eventDate) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.date') + ':</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
+
+                leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.source') + ':</b> ';
                 if(el.institutionName) {
                     leftDetail += el.institutionName;
                 } else {
@@ -851,7 +852,7 @@ function loadImages(start) {
                 var rightDetail =
                     '<div class="col-sm-2" style="text-align:right;">' +
                         '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
-                            'View record' +
+                            $.i18n.prop('gallery.modal.viewRecord') +
                         '</a>' +
                     '</div>';
 
@@ -939,15 +940,18 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     var fqEsc = ((el.label.indexOf(' ') !== -1 || el.label.indexOf(',') !== -1 || el.label.indexOf('lsid') !== -1) && el.label.indexOf('[') !== 0)
                         ? '"' + el.label + '"'
                         : el.label; // .replace(/:/g,"\\:")
+
                     var label = (el.displayLabel) ? el.displayLabel : el.label;
+
                     if(!label) {
-                        label = 'absent';
+                        label = $.i18n.prop('facet.absent');
                         $('tr#facets-row-absent').remove();  // remove the absent row, as it is reinserted
                     }
 
                     var code;
                     var i18nLabel;
-                    var encodeFq = true;
+                    var encodeFq = true; // Not sure what the point of this is.
+
                     if(label.indexOf('@') !== -1) {
                         label = label.substring(0, label.indexOf('@'));
                     } else if($.i18n.prop(label).indexOf('[') === -1) {
@@ -957,6 +961,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                         label = (i18nLabel.indexOf('[') === -1) ? i18nLabel : $.i18n.prop(label);
                     } else if(facetName.indexOf('outlier_layer') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('layer.' + label);
+                    // XXX !!! XXX
                     } else if(facetName.indexOf('geospatial_kosher') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('geospatial_kosher.' + label);
                     } else if(facetName.indexOf('user_assertions') !== -1 || (/^el\d+/).test(label)) {
@@ -971,19 +976,30 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                         var newLabel = (i18nLabel.indexOf('[') === -1) ? i18nLabel : ($.i18n.prop(label));
                         label = (newLabel.indexOf('[') === -1) ? newLabel : label;
                     }
+
                     facetName = facetName.replace(/_RNG$/, ''); // remove range version if present
-                    var fqParam = (el.fq) ? encodeURIComponent(el.fq) : facetName + ':' + ((encodeFq) ? encodeURIComponent(fqEsc) : fqEsc);
+
+                    var fqParam;
+
+                    if(el.fq) {
+                        fqParam = encodeURIComponent(el.fq)
+                    } else if(encodeFq) {
+                        fqParam = facetName + ':' + encodeURIComponent(fqEsc);
+                    } else {
+                        fqParam = facetName + ':' + fqEsc;
+                    }
 
                     // NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues
                     // Problematic URL http://biocache.ala.org.au/occurrences/search?q=lsid:urn:lsid:biodiversity.org.au:afd.taxon:b76f8dcf-fabd-4e48-939c-fd3cafc1887a&fq=geospatial_kosher:true&fq=state:%22Australian%20Capital%20Territory%22
                     var link = BC_CONF.searchString + '&fq=' + fqParam;
+
                     html +=
                         '<tr>' +
                             '<td>' +
                                 '<input type="checkbox" name="fqs" class="fqs" value="' + fqParam + '" />' +
                             '</td>' +
                             '<td>' +
-                                '<a href="' + link + '">' +
+                            '<a href="' + link + '">' +
                                     label +
                                 '</a>' +
                             '</td>' +
@@ -992,10 +1008,12 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                             '</td>' +
                         '</tr>';
                 }
+
                 if(i >= facetLimit - 1) {
                     hasMoreFacets = true;
                 }
             });
+
             $('#fullFacets tbody').append(html);
             $('#spinnerRow').hide();
             // Fix some border issues - ToDo this only somewhat fixes...

@@ -52,7 +52,9 @@
                                         value="${fieldValue}"
                                         ${(defaultFacets.get(fieldValue)) ? 'checked=checked' : ''}
                                     >
-                                    <alatag:message code="facet.${fieldValue}" />
+                                    <g:set var="filterDisplayName" value="${alatag.formatDynamicFacetName(fieldName: "${fieldValue}")}" />
+
+                                    ${filterDisplayName}
                                 </label>
                             </div>
                         </g:if>
