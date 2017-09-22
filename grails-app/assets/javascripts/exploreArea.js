@@ -142,10 +142,18 @@ function loadExploreArea(EYA_CONF) {
         });
 
         $('.indent0').live('click', function(e) {
-            $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewAllRecords.label'));
+            $('#viewAllRecords').html(
+                '<span class="fa fa-list"></span>' +
+                '&nbsp;' +
+                $.i18n.prop('eya.searchform.viewAllRecords.label')
+            );
         });
         $('.indent1, .indent2, .indent3').live('click', function(e) {
-            $('#viewAllRecords').html($.i18n.prop('eya.searchform.viewSelectedRecords.label'));
+            $('#viewAllRecords').html(
+                '<span class="fa fa-list"></span>' +
+                '&nbsp;' +
+                $.i18n.prop('eya.searchform.viewSelectedRecords.label')
+            );
         });
     }
 
@@ -175,13 +183,16 @@ function loadExploreArea(EYA_CONF) {
         });
         marker = new google.maps.Marker({
             position: latLng,
-            title: 'Marker Location',
+            title: $.i18n.prop('eya.map.marker.title'),
             map: map,
             draggable: true
         });
 
         markerInfowindow = new google.maps.InfoWindow({
-            content: '<div class="infoWindow">marker address</div>' // gets updated by geocodePosition()
+            content:
+                '<div class="infoWindow">' +
+                    $.i18n.prop('eya.map.marker.address') +
+                '</div>' // gets updated by geocodePosition()
         });
 
         google.maps.event.addListener(marker, 'click', function(event) {
@@ -201,7 +212,7 @@ function loadExploreArea(EYA_CONF) {
             strokeWeight: 1,
             strokeColor: 'white',
             strokeOpacity: 0.5,
-            fillColor: '#222', // '#2C48A6'
+            fillColor: '#222',  // '#2C48A6'
             fillOpacity: 0.2,
             zIndex: -10
         });
@@ -213,15 +224,15 @@ function loadExploreArea(EYA_CONF) {
 
         // Add dragging event listeners.
         google.maps.event.addListener(marker, 'dragstart', function() {
-            updateMarkerAddress('Dragging...');
+            updateMarkerAddress($.i18n.prop('eya.map.dragging') + '&hellip;');
         });
 
         google.maps.event.addListener(marker, 'drag', function() {
-            updateMarkerAddress('Dragging...');
+            updateMarkerAddress($.i18n.prop('eya.map.dragging') + '&hellip;');
         });
 
         google.maps.event.addListener(marker, 'dragend', function() {
-            updateMarkerAddress('Drag ended');
+            updateMarkerAddress($.i18n.prop('eya.map.dragEnd'));
             updateMarkerPosition(marker.getPosition());
             geocodePosition(marker.getPosition());
             loadGroups();
@@ -250,13 +261,15 @@ function loadExploreArea(EYA_CONF) {
                 // update the info window for marker icon
                 var content =
                     '<div class="infoWindow">' +
-                        '<b>Your Location:</b>' +
+                        '<b>' +
+                            $.i18n.prop('eya.map.marker.location') + ':' +
+                        '</b>' +
                         '<br />' +
                         address +
                     '</div>';
                 markerInfowindow.setContent(content);
             } else {
-                updateMarkerAddress('Cannot determine address at this location.');
+                updateMarkerAddress($.i18n.prop('eya.map.marker.noLocation'));
             }
         });
     }
@@ -348,7 +361,7 @@ function loadExploreArea(EYA_CONF) {
             points[i] = new google.maps.Marker({
                 map: map,
                 position: latLng1,
-                title: n.properties.count + ' occurrences',
+                title: n.properties.count + ' ' + $.i18n.prop('eya.map.nrOccurrences'),
                 icon: markerImage
             });
 
@@ -372,10 +385,12 @@ function loadExploreArea(EYA_CONF) {
 
             var content =
                 '<div class="infoWindow">' +
-                    'Number of records: ' + n.properties.count +
+                    $.i18n.prop('eya.speciesTable.header.count.label') + ': ' + n.properties.count +
                     '<br />' +
                     '<a href="' + EYA_CONF.contextPath + '/occurrences/search?q=' + solrQuery + fqParam + '&lat=' + n.geometry.coordinates[1] + '&lon=' + n.geometry.coordinates[0] + '&radius=0.06">' +
-                        '<span class="fa fa-list"></span> View records' +
+                        '<span class="fa fa-list"></span>' +
+                        '&nbsp;' +
+                        $.i18n.prop('general.btn.viewRecords') +
                     '</a>' +
                 '</div>';
 
@@ -417,11 +432,11 @@ function loadExploreArea(EYA_CONF) {
             // Add message to browser - FF needs this as it is not easy to see
             var msg =
                 '<span style="color: red; font-size: 14px">' +
-                    'Waiting for confirmation to use your current location (see browser message at top of window)' +
+                    $.i18n.prop('eya.map.waitingConfirm') +
                 '</span>' +
                 '<br />' +
                 '<a href="#" onClick="loadMap(); return false;">' +
-                    'Click here to load map' +
+                    $.i18n.prop('eya.map.helpText') +
                 '</a>';
             $('#mapCanvas').html(msg);
             navigator.geolocation.getCurrentPosition(getMyPostion, positionWasDeclined);
@@ -452,7 +467,7 @@ function loadExploreArea(EYA_CONF) {
 
             if(lat && lng) {
                 latLng = new google.maps.LatLng(lat.toDD(), lng.toDD());
-                updateMarkerAddress('GPS corrdinates: ' + lat.toDD() + ', ' + lng.toDD());
+                updateMarkerAddress($.i18n.prop('eya.map.marker.coords') + ': ' + lat.toDD() + ', ' + lng.toDD());
                 updateMarkerPosition(latLng);
                 // reload map pin, etc
                 initialize();
@@ -471,7 +486,7 @@ function loadExploreArea(EYA_CONF) {
                     initialize();
                     loadRecordsLayer();
                 } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    console.error(status);
                 }
             });
         } else {
@@ -526,8 +541,8 @@ function loadExploreArea(EYA_CONF) {
         // process JSON data
         if(data.length > 0) {
             var lastRow = $('#rightList tbody tr').length;
-            var infoTitle = 'view species page';
-            var recsTitle = 'view list of records';
+            var infoTitle = $.i18n.prop('general.btn.viewSpecies');
+            var recsTitle = $.i18n.prop('general.btn.viewRecords');
             // iterate over list of species from search
             var i = 0;
             data.forEach(function(taxon) {
@@ -553,7 +568,9 @@ function loadExploreArea(EYA_CONF) {
                 if(taxon.guid) {
                     speciesInfo +=
                         '<a title="' + infoTitle + '" href="' + EYA_CONF.speciesPageUrl + taxon.guid + '">' +
-                            '<span class="fa fa-tag"></span> Species page' +
+                            '<span class="fa fa-tag"></span>' +
+                            '&nbsp;' +
+                            infoTitle +
                         '</a> | ';
                 }
                 speciesInfo +=
@@ -561,7 +578,9 @@ function loadExploreArea(EYA_CONF) {
                             '%22&lat=' + $('input#latitude').val() + '&lon=' + $('input#longitude').val() + '&radius=' + $('select#radius').val() + '" title="' +
                             recsTitle + '"' +
                         '>' +
-                            '<span class="fa fa-list"></span> View records' +
+                            '<span class="fa fa-list"></span>' +
+                            '&nbsp;' +
+                            recsTitle +
                         '</a>' +
                     '</div>';
                 tr += speciesInfo;
@@ -579,7 +598,7 @@ function loadExploreArea(EYA_CONF) {
                         '<td>&nbsp;</td>' +
                         '<td colspan="2"> ' +
                             '<button id="loadMoreSpecies" class="erk-link-button">' +
-                                'Load more&hellip;' +
+                                $.i18n.prop('general.btn.loadMore') +
                             '</button>' +
                         '</td>' +
                     '</tr>';
@@ -587,7 +606,10 @@ function loadExploreArea(EYA_CONF) {
             }
         } else {
             // no spceies were found (either via paging or clicking on taxon group
-            var text = '<tr><td></td><td colspan="2">[no species found]</td></tr>';
+            var text =
+                '<tr><td></td><td colspan="2">' +
+                    '[' + $.i18n.prop('eya.search.noSpecies') + ']' +
+                '</td></tr>';
             $('#rightList tbody').append(text);
         }
 
@@ -697,12 +719,12 @@ function loadExploreArea(EYA_CONF) {
         function addGroupRow(taxonName, count, indent) {
             var label = taxonName;
             if(taxonName === 'ALL_SPECIES') {
-                label = 'All Species';
+                label = $.i18n.prop('eya.search.allSpecies');
             }
             var row_class = 'class="indent' + indent;
             row_class += (taxonName === state.speciesGroup) ? ' activeRow' : ''; // highlight active taxonName
             var h =
-                '<tr ' + row_class + '" title="click to view group on map" data-taxon-name="' + taxonName + '">' +
+                '<tr ' + row_class + '" title="' + $.i18n.prop('eya.group.help') + '" data-taxon-name="' + taxonName + '">' +
                     '<td class="indent' + indent + '">' +
                         label +
                     '</td>' +

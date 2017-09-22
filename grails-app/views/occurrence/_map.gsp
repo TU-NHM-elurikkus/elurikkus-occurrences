@@ -19,7 +19,7 @@
 
     <button id="downloadMaps" data-toggle="modal" data-target="#downloadMap" class="erk-button erk-button--light" style="margin-bottom: 2px;">
         <span class="fa fa-download"></span>
-        <g:message code="general.btn.download.label" />
+        <g:message code="search.map.download.label" />
     </button>
 
     <g:if test="${params.wkt}">
@@ -31,10 +31,10 @@
 
     <%--
     <div id="spatialSearchFromMap" class="erk-button erk-button--light">
-        <a href="#" id="wktFromMapBounds" class="tooltips" title="Restrict search to current view">
+        <button id="wktFromMapBounds" class="tooltips" title="Restrict search to current view">
             <i class="hide icon-share-alt"></i>
             Restrict search
-        </a>
+        </button>
     </div>
 
     TODO - Needs hook in UI to detect a wkt param and include button/link under search query and selected facets.
@@ -474,52 +474,17 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function() {
         // restrict search to current map bounds/view
         $('#wktFromMapBounds').click(function(e) {
-            e.preventDefault();
             var b = occMap.map.getBounds();
             var wkt = "POLYGON ((" + b.getWest() + " " + b.getNorth() + ", " +
                     b.getEast()  + " " + b.getNorth() + ", " +
                     b.getEast()  + " " + b.getSouth() + ", " +
                     b.getWest()  + " " + b.getSouth() + ", " +
                     b.getWest() + " " + b.getNorth() + "))";
-            //console.log('wkt', wkt);
             var url = "${g.createLink(uri:'/occurrences/search')}" + occMap.query + "&wkt=" + encodeURIComponent(wkt);
             window.location.href = url;
         });
     });
-
-    $('#submitDownloadMap').click(function(e){
-        e.preventDefault();
-        downloadMapNow();
-    });
-
-    function downloadMapNow(){
-
-        var bounds = occMap.map.getBounds();
-        var ne = bounds.getNorthEast();
-        var sw = bounds.getSouthWest();
-        var extents = sw.lng + ',' + sw.lat + ',' + ne.lng + ','+ ne.lat;
-
-        var downloadUrl = $('#mapDownloadUrl').val() +
-            '${raw(sr.urlParameters)}' +
-            //'&extents=' + '142,-45,151,-38' +  // need to retrieve the
-            '&extents=' + extents +  // need to retrieve the
-            '&format=' + $('#format').val() +
-            '&dpi=' + $('#dpi').val() +
-            '&pradiusmm=' + $('#pradiusmm').val() +
-            '&popacity=' + $('#popacity').val() +
-            '&pcolour=' + $(':input[name=pcolour]').val().replace('#', '').toUpperCase() +
-            '&widthmm=' + $('#widthmm').val() +
-            '&scale=' + $(':input[name=scale]:checked').val() +
-            '&outline=' + $(':input[name=outline]:checked').val() +
-            '&outlineColour=0x000000' +
-            '&baselayer=world' +  // $('#baselayer').val()+
-            '&fileName=' + $('#fileName').val() + '.' + $('#format').val().toLowerCase();
-
-        //console.log('downloadUrl', downloadUrl);
-        $('#downloadMap').modal('hide');
-        document.location.href = downloadUrl;
-    }
 </script>

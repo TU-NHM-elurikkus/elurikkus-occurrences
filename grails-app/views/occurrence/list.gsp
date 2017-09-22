@@ -241,17 +241,6 @@
                     <a name="map" class="jumpTo"></a>
                     <a name="list" class="jumpTo"></a>
 
-                    <%-- OFF for now --%>
-                    <g:if test="${false && flash.message}">
-                        <div class="alert alert-info" style="margin-left: -30px;">
-                            <button type="button" class="close" data-dismiss="alert">
-                                &times;
-                            </button>
-
-                            ${flash.message}
-                        </div>
-                    </g:if>
-
                     <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                         <a
                             href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
@@ -355,15 +344,22 @@
                 </div>
             </div>  <%-- /#searchInfoRow --%>
 
-            <p>
-                <span class="fa fa-info-circle"></span>
-                <alatag:message code="search.filter.customise.title" />
-            </p>
-
             <%--  Second row - facet column and results column --%>
             <div class="row" id="content">
-                <div class="col-sm-5 col-md-3">
+                <%-- Refine info --%>
+                <div class="col-sm-4 col-md-5 col-lg-3">
+                    <div class="row">
+                        <div class="col">
+                            <p>
+                                <span class="fa fa-info-circle"></span>
+                                <alatag:message code="search.filter.customise.title" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
+                <%-- Filters --%>
+                <div class="col-sm-4 col-md-5 col-lg-3 order-sm-2">
                     <div class="card card-body filters-container">
                         <div id="filters-selection" class="dropdown">
                             <button
@@ -386,7 +382,11 @@
                     </div>
                 </div>
 
-                <div class="col-sm-7 col-md-9">
+                <%-- Buttons --%>
+                <div class="col-sm-8 col-md-7 col-lg-9"></div>
+
+                <%-- Search results --%>
+                <div class="col-sm-8 col-md-7 col-lg-9 order-sm-2">
                     <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                         <div
                             id="alert"
@@ -458,8 +458,6 @@
                             </div>
                         </div>  <%-- /#alerts --%>
                     </g:if>
-
-                    <g:render template="download" />
 
                     <%--- XXX ---%>
                     <div style="display:none"></div>
@@ -536,7 +534,7 @@
 
                                 <div class="inline-controls__group">
                                     <label for="per-page">
-                                        <g:message code="list.table.resultsPerPage.label" />
+                                        <g:message code="general.list.pageSize.label" />
                                     </label>
 
                                     <select id="per-page" name="per-page">
@@ -550,7 +548,7 @@
 
                                 <div class="inline-controls__group">
                                     <label for="sort">
-                                        <g:message code="list.table.sortBy.label" />
+                                        <g:message code="general.list.sortBy.label" />
                                     </label>
 
                                     <select id="sort" name="sort">
@@ -582,15 +580,15 @@
 
                                 <div class="inline-controls__group">
                                     <label for="dir">
-                                        <g:message code="list.table.sortOrder.label" />
+                                        <g:message code="general.list.sortBy.label" />
                                     </label>
 
                                     <select id="dir" name="dir">
                                         <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>>
-                                            <g:message code="list.sortwidgets.dir.option01" />
+                                            <g:message code="general.list.sortOrder.asc" />
                                         </option>
                                         <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>>
-                                            <g:message code="list.sortwidgets.dir.option02" />
+                                            <g:message code="general.list.sortOrder.desc" />
                                         </option>
                                     </select>
                                 </div>
@@ -610,8 +608,8 @@
                                     max="${sr.pageSize}"
                                     offset="${sr.startIndex}"
                                     omitLast="true"
-                                    next="${message(code: 'list.paginate.next')}"
-                                    prev="${message(code: 'list.paginate.prev')}&nbsp;"
+                                    next="${message(code: 'general.paginate.next')}"
+                                    prev="${message(code: 'general.paginate.prev')}&nbsp;"
                                     params="${[taxa:params.taxa, q:params.q, fq:params.fq, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}"
                                 />
                             </div>
@@ -706,16 +704,18 @@
                     </form>
                 </div>
             </div>
-        </g:else>
 
-        <div id="imageDialog" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div id="viewerContainerId"></div>
+            <g:render template="download" />
+
+            <div id="imageDialog" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div id="viewerContainerId"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </g:else>
     </body>
 </html>
