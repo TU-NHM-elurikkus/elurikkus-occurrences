@@ -182,19 +182,16 @@ OccurrenceMap.prototype.initialize = function() {
     }
 
     $('#colourByControl,#recordLayerControl').mouseover(function(e){
-        //console.log('mouseover');
         self.map.dragging.disable();
         self.map.off('click', pointLookupClickRegister);
     });
 
     $('#colourByControl,#recordLayerControl').mouseout(function(e){
-        //console.log('mouseout');
         self.map.dragging.enable();
         self.map.on('click', pointLookupClickRegister);
     });
 
     $('.hideColourControl').click(function(e){
-        //console.log('hideColourControl');
         $('#colourByControl').removeClass('leaflet-control-layers-expanded');
         $('.colour-by-legend-toggle').show();
         e.preventDefault();
@@ -351,7 +348,6 @@ OccurrenceMap.prototype.changeFacetColours = function() {
 
 // TODO: Is this used anywhere
 function showHideControls(el) {
-    //console.log("el", el, this);
     var $this = this;
     if ($($this).hasClass('fa')) {
         alert("activating");
@@ -400,11 +396,17 @@ function getLegendLabel(name) {
     }
     var label = name.split('.');
     label = label[label.length - 1];
-    label = label.match(/[A-Za-z][a-z,]*/g);
 
-    return label.map(function (word) {
-        return word.charAt(0).toUpperCase() + word.substring(1);
-    }).join(" ");
+    // TODO: label needs some adv humanisation; current outcommented code adds spaces to abbrevations
+    // var labelMatch = label.match(/^[a-z]+|[A-Z][a-z,]*/g);
+    //
+    // if(labelMatch) {
+    //     label = labelMatch.map(function (word) {
+    //         return word.charAt(0).toUpperCase() + word.substring(1);
+    //     }).join(' ');
+    // }
+
+    return label;
 }
 
 function addLegendItem(name, red, green, blue, data){
@@ -562,7 +564,6 @@ OccurrenceMap.prototype.fitMapToBounds = function() {
 
                 // fitBounds is async so we set a one time only listener to detect change
                 this.map.once('zoomend', function() {
-                    //console.log("zoomend", this.map.getZoom());
                     if (this.map.getZoom() < 2) {
                         this.map.setView(L.latLng(0, 24), 2); // zoom level 2 and centered over africa
                     }
@@ -670,7 +671,7 @@ ColorMode.prototype.initialize = function() {
 
         var envProperty = "color:" + self.map.props.pointColour + ";nam:circle;size:" + pointSize + ";opacity:" + opacity;
 
-        if(self.facet){
+        if(self.facet) {
             if(self.facet == "gridVariable"){
                 self.facet = "coordinate_uncertainty"
                 envProperty = "colormode:coordinate_uncertainty;name:circle;size:" + pointSize + ";opacity:1;cellfill:0xffccff;variablegrids:on"
@@ -703,7 +704,7 @@ ColorMode.prototype.initialize = function() {
     }
 
     function initLayerFacet() {
-        $('.layerFacet').click(function(e){
+        $('.layerFacet').click(function(e) {
             var controlIdx = 0;
             self.map.additionalFqs = '';
             self.map.removeFqs = ''
@@ -753,25 +754,26 @@ ColorMode.prototype.initialize = function() {
                 $.each(data, function(index, legendDef){
                     var legItemName = legendDef.name ? legendDef.name : 'recordcore.record.value.unspecified';
 
-                    addLegendItem(legItemName, legendDef.red, legendDef.green, legendDef.blue, legendDef );
+                    addLegendItem(legItemName, legendDef.red, legendDef.green, legendDef.blue, legendDef);
                 });
             }
 
             function loadMoreLegend(onDone) {
+                pageNum++;
+                var legendUrl = self.map.props.contextPath + '/occurrence/legend' + self.map.query +
+                    '&cm=' + self.facet +
+                    '&pageNum=' + pageNum +
+                    '&pageSize=' + pageSize +
+                    '&type=application/json';
+
                 loadMoreButton.addClass('hidden-node');
 
-                pageNum++;
-
                 $.ajax({
-                    url: self.map.props.contextPath + '/occurrence/legend' + self.map.query +
-                        '&cm=' + self.facet +
-                        '&pageNum=' + pageNum +
-                        '&pageSize=' + pageSize +
-                        '&type=application/json',
+                    url: legendUrl,
                     success: function(data) {
                         updateLegend(data);
 
-                        if(data.length ===  pageSize) {
+                        if(data.length >= pageSize) {
                             loadMoreButton.removeClass('hidden-node');
                         }
 
@@ -783,9 +785,10 @@ ColorMode.prototype.initialize = function() {
             }
 
             loadMoreButton.off('click');
-            loadMoreButton.on('click', function() {
+            loadMoreButton.on('click', function(e) {
+                e.preventDefault();
                 // Wrapped so that click event doesn't get passed
-                loadMoreLegend()
+                loadMoreLegend();
             });
 
             loadMoreLegend(initLayerFacet);

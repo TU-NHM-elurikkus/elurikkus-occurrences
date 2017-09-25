@@ -63,7 +63,7 @@
 
             <div class="modal-footer">
                 <button class="erk-button erk-button--light float-right" data-dismiss="modal" aria-hidden="true">
-                    <g:message code="generic.button.close" />
+                    <g:message code="general.btn.close" />
                 </button>
             </div>
         </div>

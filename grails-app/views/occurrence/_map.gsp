@@ -70,23 +70,22 @@
 
                         <option disabled role="separator">————————————</option>
 
+                        <g:set var="excludedFacets">
+                            ${grailsApplication.config.facets.mapExclude?:""}.split(",")
+                        </g:set>
                         <g:each var="facetResult" in="${facets}">
-                            <g:set var="defaultselected">
-                                <g:if test="${defaultColourBy && facetResult.fieldName == defaultColourBy}">
-                                    selected="selected"
+                            <g:if test="${!excludedFacets.contains(facetResult.fieldName)}">
+                                <g:set var="defaultselected">
+                                    <g:if test="${defaultColourBy && facetResult.fieldName == defaultColourBy}">
+                                        selected="selected"
+                                    </g:if>
+                                </g:set>
+
+                                <g:if test="${facetResult.fieldResult.size() > 1 || defaultselected}">
+                                    <option value="${facetResult.fieldName}" ${defaultselected}>
+                                        <alatag:formatDynamicFacetName fieldName="${facetResult.fieldName}" />
+                                    </option>
                                 </g:if>
-                            </g:set>
-
-                            %{--<g:if test="${facetResult.fieldName == 'occurrence_year'}">${facetResult.fieldName = 'decade'}</g:if>--}%
-
-                            <g:if test="${facetResult.fieldName == 'uncertainty'}">
-                                ${facetResult.fieldName = 'coordinate_uncertainty'}
-                            </g:if>
-
-                            <g:if test="${facetResult.fieldResult.size() > 1 || defaultselected}">
-                                <option value="${facetResult.fieldName}" ${defaultselected}>
-                                    <alatag:formatDynamicFacetName fieldName="${facetResult.fieldName}" />
-                                </option>
                             </g:if>
                         </g:each>
                     </select>
@@ -161,7 +160,7 @@
                         <table class="legendTable"></table>
 
                         <button id="legendLoadMore" class="erk-link-button hidden-node">
-                            <g:message code="generic.button.loadMore" />
+                            <g:message code="general.btn.loadMore" />
                         </button>
                     </div>
                 </div>
@@ -391,10 +390,10 @@
                             </label>
 
                             <input type="radio" name="scale" value="on" id="scale_on" checked="checked" />
-                            <g:message code="generic.button.yes" /> &nbsp;
+                            <g:message code="general.bool.true" /> &nbsp;
 
                             <input type="radio" name="scale" value="off" />
-                            <g:message code="generic.button.no" />
+                            <g:message code="general.bool.false" />
                         </p>
 
                         <p>
@@ -403,10 +402,10 @@
                             </label>
 
                             <input type="radio" name="outline" value="true" id="outline" checked="checked" />
-                            <g:message code="generic.button.yes" /> &nbsp;
+                            <g:message code="general.bool.true" /> &nbsp;
 
                             <input type="radio" name="outline" value="false" />
-                            <g:message code="generic.button.no" />
+                            <g:message code="general.bool.false" />
                         </p>
 
                         <%-- Pointless drop-down since all except one are Australia-specific choices. --%>
@@ -460,7 +459,7 @@
 
                 <div class="modal-footer">
                     <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
-                        <g:message code="generic.button.close" />
+                        <g:message code="general.btn.close" />
                     </button>
 
                     <button id="submitDownloadMap" class="erk-button erk-button--light">

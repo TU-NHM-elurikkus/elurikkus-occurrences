@@ -664,7 +664,7 @@
 
                                 <div id="loadMoreImages" style="display:none;">
                                     <button class="erk-button erk-button--light">
-                                        <g:message code="generic.button.loadMore" />
+                                        <g:message code="general.btn.loadMore" />
                                         <g:img
                                             plugin="elurikkus-biocache-hubs"
                                             dir="images"

@@ -82,7 +82,7 @@
                                         <input
                                             type="button"
                                             id="close"
-                                            value="<g:message code='generic.button.close' />"
+                                            value="<g:message code='general.btn.close' />"
                                             class="erk-button erk-button--light"
                                             style="display:none;"
                                         />
@@ -104,7 +104,7 @@
                             aria-hidden="true"
                             style="float:right;"
                         >
-                            <g:message code="generic.button.close" />
+                            <g:message code="general.btn.close" />
                         </button>
                     </div>
                 </div>
@@ -307,7 +307,7 @@
                     <button
                         class="erk-button erk-button--light cancelVerify"
                         data-dismiss="modal">
-                        <g:message code="generic.button.cancel" />
+                        <g:message code="general.btn.cancel" />
                     </button>
                     <img src="${request.contextPath}/images/spinner.gif" id="verifySpinner" class="hide" alt="spinner icon" />
                 </div>
@@ -317,7 +317,7 @@
                     <g:message code="show.verifydone.message" />
                     <br />
                     <button class="erk-button erk-button--light closeVerify" data-dismiss="modal">
-                        <g:message code="generic.button.close" />
+                        <g:message code="general.btn.close" />
                     </button>
                 </div>
             </div>
@@ -559,7 +559,7 @@
 
         <div class="modal-footer">
             <button class="erk-button erk-button--light" data-dismiss="modal">
-                <g:message code="generic.button.close" />
+                <g:message code="general.btn.close" />
             </button>
         </div>
     </div>
