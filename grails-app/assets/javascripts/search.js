@@ -836,7 +836,7 @@ function loadImages(start) {
                 $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
 
                 // detail metadata
-                var leftDetail = '<div class="col-sm-10"><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
+                var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
 
                 if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
                 if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
@@ -851,13 +851,13 @@ function loadImages(start) {
                 leftDetail += '</div>';
 
                 var rightDetail =
-                    '<div class="col-sm-2" style="text-align:right;">' +
+                    '<div>' +
                         '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
                             $.i18n.prop('gallery.modal.viewRecord') +
                         '</a>' +
                     '</div>';
 
-                var detailHtml = '<div class="row">' + leftDetail + rightDetail + '</div>';
+                var detailHtml = leftDetail + rightDetail;
 
                 link.attr('data-footer', detailHtml);
 
