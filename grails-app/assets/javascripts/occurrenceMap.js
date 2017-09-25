@@ -397,7 +397,7 @@ function getLegendLabel(name) {
     var label = name.split('.');
     label = label[label.length - 1];
 
-    // TODO: label needs some adv humanisation
+    // TODO: label needs some adv humanisation; current outcommented code adds spaces to abbrevations
     // var labelMatch = label.match(/^[a-z]+|[A-Z][a-z,]*/g);
     //
     // if(labelMatch) {
