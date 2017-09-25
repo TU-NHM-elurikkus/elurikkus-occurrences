@@ -12,7 +12,7 @@ class SpatialSearchRequestParams extends SearchRequestParams {
     protected Float radius = null;
     protected Float lat = null;
     protected Float lon = null;
-    protected String wkt ="";
+    protected String wkt = "";
     protected Boolean gk = false; //include only the geospatially kosher records
     private String[] gkFq = ["geospatial_kosher:true"] // groovy syntax
 

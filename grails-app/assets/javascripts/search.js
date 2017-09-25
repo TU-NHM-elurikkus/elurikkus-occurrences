@@ -77,7 +77,7 @@ $(document).ready(function() {
         $('.nav-tabs a:first').tab('show');
     }
 
-    // Substitute LSID strings for tacon names in facet values for species
+    // Substitute LSID strings for taxon names in facet values for species
     var guidList = [];
     $('li.species_guid, li.genus_guid').each(function(i, el) {
         guidList[i] = $(el).attr('id');
@@ -955,11 +955,6 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
 
                     if(label.indexOf('@') !== -1) {
                         label = label.substring(0, label.indexOf('@'));
-                    } else if($.i18n.prop(label).indexOf('[') === -1) {
-                        // i18n substitution
-                        code = facetName + '.' + label;
-                        i18nLabel = $.i18n.prop(code);
-                        label = (i18nLabel.indexOf('[') === -1) ? i18nLabel : $.i18n.prop(label);
                     } else if(facetName.indexOf('outlier_layer') !== -1 || (/^el\d+/).test(label)) {
                         label = $.i18n.prop('layer.' + label);
                     // XXX !!! XXX
@@ -973,9 +968,11 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                         label = $.i18n.prop(label);
                     } else {
                         code = facetName + '.' + label;
-                        i18nLabel = $.i18n.prop(code);
-                        var newLabel = (i18nLabel.indexOf('[') === -1) ? i18nLabel : ($.i18n.prop(label));
-                        label = (newLabel.indexOf('[') === -1) ? newLabel : label;
+                        if(code in $.i18n.map) {
+                            label = $.i18n.prop(code);
+                        } else if(label in $.i18n.map) {
+                            label = $.i18n.prop(label);
+                        }
                     }
 
                     facetName = facetName.replace(/_RNG$/, ''); // remove range version if present

@@ -91,7 +91,6 @@ class WebServicesService {
     }
 
     def JSONObject getDuplicateRecordDetails(JSONObject record) {
-        log.debug "getDuplicateRecordDetails -> ${record?.processed?.occurrence?.associatedOccurrences}"
         if (record?.processed?.occurrence?.associatedOccurrences) {
             def status = record.processed.occurrence.duplicationStatus
             def uuid
@@ -320,7 +319,6 @@ class WebServicesService {
         Map imageSizes = [:]
 
         images.each { image ->
-            //log.debug "image = ${image}"
             String originalImageUrl = image.alternativeFormats?.imageUrl
             if (originalImageUrl) {
                 Long imageSizeInBytes = getImageSizeInBytes(originalImageUrl)
@@ -382,7 +380,6 @@ class WebServicesService {
      * @return
      */
     def JSONElement getJsonElements(String url) {
-        log.debug "(internal) getJson URL = " + url
         def conn = new URL(url).openConnection()
         try {
             conn.setConnectTimeout(10000)
@@ -403,7 +400,6 @@ class WebServicesService {
      * @return
      */
     def String getText(String url) {
-        log.debug "(internal text) getText URL = " + url
         def conn = new URL(url).openConnection()
 
         try {
@@ -428,7 +424,6 @@ class WebServicesService {
      */
     def Map postFormData(String uri, Map postParams) {
         HTTPBuilder http = new HTTPBuilder(uri)
-        log.debug "POST (form encoded) to ${http.uri}"
         Map postResponse = [:]
 
         http.request( Method.POST ) {
@@ -436,7 +431,6 @@ class WebServicesService {
             send ContentType.URLENC, postParams
 
             response.success = { resp ->
-                log.debug "POST - response status: ${resp.statusLine}"
                 postResponse.statusCode = resp.statusLine.statusCode
                 postResponse.statusMsg = resp.statusLine.reasonPhrase
                 //assert resp.statusLine.statusCode == 201
@@ -470,12 +464,8 @@ class WebServicesService {
             wr.write(jsonBody)
             wr.flush()
             def resp = conn.inputStream.text
-            log.debug "fileid = ${conn.getHeaderField("fileId")}"
-            //log.debug "resp = ${resp}"
-            //log.debug "code = ${conn.getResponseCode()}"
             if (!resp && conn.getResponseCode() == 201) {
                 // Field guide code...
-                log.debug "field guide catch"
                 resp = "{fileId: \"${conn.getHeaderField("fileId")}\" }"
             }
             wr.close()

@@ -62,18 +62,14 @@ class FacetsCacheService {
         sr.facetResults.each { fq ->
             def fieldName = fq.fieldName
             def fields = [:]
-            log.debug fq
             fq.fieldResult.each {
                 if (it.fq) {
                     def values = it.fq.tokenize(":")
                     def value = StringUtils.remove(values[1], '"') // some values have surrounding quotes
                     def label = it.label
-                    if (value == '*') {
+                    if(value == '*') {
                         label = 'advancedsearch.matchAnything'
-                    } else if (fieldName == 'collection_uid') {
-                        label = it.label
-                    }
-                    else {
+                    } else if (!label) {
                         label = "${fieldName}.${value}".replace(" ", "").replace("\'", "").replace(".'", "")
                     }
                     fields.put(value, label)
