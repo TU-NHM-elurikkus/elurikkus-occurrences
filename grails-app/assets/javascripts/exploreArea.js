@@ -69,8 +69,6 @@ function loadExploreArea(EYA_CONF) {
             attemptGeolocation();
         }
 
-        addTooltips();
-
     }); // end onLoad event
 
     // var proj900913 = new OpenLayers.Projection("EPSG:900913");
@@ -121,8 +119,6 @@ function loadExploreArea(EYA_CONF) {
             }
         );
 
-        $('.tooltips').tooltip();
-
         // catch the link for "View all records"
         $('#viewAllRecords').on('click', function(e) {
             var params = 'q=*:*&lat=' + $('#latitude').val() + '&lon=' + $('#longitude').val() + '&radius=' + $('#radius').val();
@@ -148,6 +144,7 @@ function loadExploreArea(EYA_CONF) {
                 $.i18n.prop('eya.searchform.viewAllRecords.label')
             );
         });
+
         $('.indent1, .indent2, .indent3').live('click', function(e) {
             $('#viewAllRecords').html(
                 '<span class="fa fa-list"></span>' +
@@ -155,10 +152,8 @@ function loadExploreArea(EYA_CONF) {
                 $.i18n.prop('eya.searchform.viewSelectedRecords.label')
             );
         });
-    }
 
-    function addTooltips() {
-        $('#left-col a').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
     }
 
     /**

@@ -55,11 +55,17 @@
                                 type="text"
                                 name="address"
                                 id="address"
-                                placeholder="<g:message code='eya.searchform.des01' />"
+                                data-toggle="tooltip"
+                                placeholder="${message(code: 'eya.btn.search.placeholder')}"
+                                title="${message(code: 'eya.btn.search.tooltip')}"
                                 class="input-plus__field"
                             />
 
-                            <button type="submit" id="locationSearch" class="erk-button erk-button--dark input-plus__addon">
+                            <button
+                                type="submit"
+                                id="locationSearch"
+                                class="erk-button erk-button--dark input-plus__addon"
+                            >
                                 <span class="fa fa-search"></span>
                                 <g:message code="advancedsearch.button.submit" />
                             </button>
@@ -132,18 +138,34 @@
 
                     <div id="rightList">
                         <div id="rightListHeader">
-                            <button class="erk-link-button" data-sort="taxa" title="<g:message code='eya.speciesTable.header.taxon.title' />">
+                            <button
+                                class="erk-link-button"
+                                data-sort="taxa"
+                                data-toggle="tooltip"
+                                title="<g:message code='eya.speciesTable.header.taxon.title' />"
+                            >
                                 <g:message code="eya.speciesTable.header.taxon.label" />
                             </button>
 
                             <span>:</span>
 
-                            <button class="erk-link-button" data-sort="common" title="<g:message code='eya.speciesTable.header.common.title' />">
+                            <button
+                                class="erk-link-button"
+                                data-sort="common"
+                                data-toggle="tooltip"
+                                title="<g:message code='eya.speciesTable.header.common.title' />"
+                            >
                                 <g:message code="eya.speciesTable.header.common.label" />
                             </button>
 
-                            <button id="right-count" class="erk-link-button" data-sort="count" title="<g:message code='eya.speciesTable.header.count.title' />">
-                                #
+                            <button
+                                id="right-count"
+                                class="erk-link-button"
+                                data-sort="count"
+                                data-toggle="tooltip"
+                                title="<g:message code='eya.speciesTable.header.count.title' />"
+                            >
+                                <g:message code="eya.speciesTable.header.count.label" />
                             </button>
                         </div>
 
