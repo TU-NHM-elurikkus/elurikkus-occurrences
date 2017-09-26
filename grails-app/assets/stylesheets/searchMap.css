@@ -8,13 +8,6 @@
     margin: 0px;
 }
 
-.tooltip-inner {
-    max-width: 350px;
-    white-space: nowrap;
-    /* If max-width does not work, try using width instead */
-    /* width: 150px; */
-}
-
 .leaflet-control-layers-base  {
     font-size: 12px;
 }
