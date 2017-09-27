@@ -50,14 +50,16 @@
                 <%-- SEARCH INPUT --%>
                 <div class="search-section">
                     <form name="searchForm" id="searchForm" action="" method="GET">
-                        <div class="input-plus">
+                        <div
+                            class="input-plus"
+                            title="${message(code: 'eya.btn.search.tooltip')}"
+                            data-toggle="tooltip"
+                        >
                             <input
                                 type="text"
                                 name="address"
                                 id="address"
-                                data-toggle="tooltip"
                                 placeholder="${message(code: 'eya.btn.search.placeholder')}"
-                                title="${message(code: 'eya.btn.search.tooltip')}"
                                 class="input-plus__field"
                             />
 
@@ -142,7 +144,7 @@
                                 class="erk-link-button"
                                 data-sort="taxa"
                                 data-toggle="tooltip"
-                                title="<g:message code='eya.speciesTable.header.taxon.title' />"
+                                title="${message(code: 'eya.speciesTable.header.taxon.title')}"
                             >
                                 <g:message code="eya.speciesTable.header.taxon.label" />
                             </button>
@@ -153,7 +155,7 @@
                                 class="erk-link-button"
                                 data-sort="common"
                                 data-toggle="tooltip"
-                                title="<g:message code='eya.speciesTable.header.common.title' />"
+                                title="${message(code: 'eya.speciesTable.header.common.title')}"
                             >
                                 <g:message code="eya.speciesTable.header.common.label" />
                             </button>
@@ -163,7 +165,7 @@
                                 class="erk-link-button"
                                 data-sort="count"
                                 data-toggle="tooltip"
-                                title="<g:message code='eya.speciesTable.header.count.title' />"
+                                title="${message(code: 'eya.speciesTable.header.count.title')}"
                             >
                                 <g:message code="eya.speciesTable.header.count.label" />
                             </button>
@@ -187,7 +189,7 @@
                                 <label for="radius">
                                     <g:message code="eya.searchformradius.label" />
                                 </label>
-                                <g:select id="radius" name="radius" value="${1}" from="${[1,5,10]}" />
+                                <g:select id="radius" name="radius" value="${1}" from="${[1, 5, 10]}" />
                             </div>
 
                             <div class="inline-controls__group">
