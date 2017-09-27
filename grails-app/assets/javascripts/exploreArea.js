@@ -154,7 +154,7 @@ function loadExploreArea(EYA_CONF) {
         });
 
         $('[data-toggle="tooltip"]').tooltip({
-            delay: { "show": 1000, "hide": 100 },
+            delay: { 'show': 1000, 'hide': 100 },
             trigger: 'hover'
         });
     }
