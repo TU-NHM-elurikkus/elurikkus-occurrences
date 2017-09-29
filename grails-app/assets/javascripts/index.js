@@ -20,10 +20,14 @@ $(document).ready(function() {
     var mapInit = false;
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-
         var id = $(this).attr('id');
+        var tab = $(e.target).attr('href').replace('tab-', '');
 
-        location.hash = 'tab-' + $(e.target).attr('href').substr(1);
+        if(window.history) {
+            window.history.replaceState({}, '', tab);
+        } else {
+            window.location.hash = tab;
+        }
 
         if(id === 't5' && !mapInit) {
             initialiseMap();
@@ -33,7 +37,7 @@ $(document).ready(function() {
 
     // catch hash URIs and trigger tabs
     if(location.hash !== '') {
-        $('.nav-tabs a[href="' + location.hash.replace('tab-', '') + '"]').tab('show');
+        $('.nav-tabs a[href="#tab-' + location.hash.substr(1) + '"]').tab('show');
     } else {
         $('.nav-tabs a:first').tab('show');
     }
