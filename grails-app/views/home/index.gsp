@@ -49,27 +49,27 @@
         <div class="tabbable">
             <ul class="nav nav-tabs" id="searchTabs">
                 <li class="nav-item">
-                    <a id="t1" href="#simple-search" data-toggle="tab" class="nav-link active">
+                    <a id="t1" href="#tab-simple-search" data-toggle="tab" class="nav-link active">
                         <g:message code="home.index.navigator01" />
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="t2" href="#advanced-search" data-toggle="tab" class="nav-link">
+                    <a id="t2" href="#tab-advanced-search" data-toggle="tab" class="nav-link">
                         <g:message code="home.index.navigator02" />
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="t3" href="#taxa-upload" data-toggle="tab" class="nav-link">
+                    <a id="t3" href="#tab-taxa-upload" data-toggle="tab" class="nav-link">
                         <g:message code="home.index.navigator03" />
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="t4" href="#catalog-upload" data-toggle="tab" class="nav-link">
+                    <a id="t4" href="#tab-catalog-upload" data-toggle="tab" class="nav-link">
                         <g:message code="home.index.navigator04" />
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="t5" href="#spatial-search" data-toggle="tab" class="nav-link">
+                    <a id="t5" href="#tab-spatial-search" data-toggle="tab" class="nav-link">
                         <g:message code="home.index.navigator05" />
                     </a>
                 </li>
@@ -78,7 +78,7 @@
 
         <%-- Simple Search --%>
         <div class="tab-content searchPage">
-            <div id="simple-search" class="tab-pane active">
+            <div id="tab-simple-search" class="tab-pane active">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6">
                         <p>
@@ -110,12 +110,12 @@
             </div>
 
             <%-- Adv Search --%>
-            <div id="advanced-search" class="tab-pane">
+            <div id="tab-advanced-search" class="tab-pane">
                 <g:render template="advanced" />
             </div>
 
             <%-- Batch Taxa Search --%>
-            <div id="taxa-upload" class="tab-pane">
+            <div id="tab-taxa-upload" class="tab-pane">
                 <form
                     id="taxaUploadForm"
                     name="taxaUploadForm"
@@ -161,7 +161,7 @@
             </div>
 
             <%-- Catalogue Number Search --%>
-            <div id="catalog-upload" class="tab-pane">
+            <div id="tab-catalog-upload" class="tab-pane">
                 <form
                     id="catalogUploadForm"
                     name="catalogUploadForm"
@@ -208,7 +208,7 @@
             </div>
 
             <%-- Map Search --%>
-            <div id="spatial-search" class="tab-pane">
+            <div id="tab-spatial-search" class="tab-pane">
                 <div class="row">
                     <div class="col-md-3 wkt-section">
                         <p>
