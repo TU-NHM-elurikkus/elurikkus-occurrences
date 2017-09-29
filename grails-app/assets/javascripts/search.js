@@ -36,10 +36,15 @@ $(document).ready(function() {
     // initialise BS tabs
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
         var id = $(this).attr('id');
-        var tab = $(e.target).attr('href').substr(1);
+        var tab = $(e.target).attr('href').replace('tab-', '');
 
-        amplify.store('search-tab-state', tab);
-        location.hash = 'tab-' + tab;
+        amplify.store('search-tab-state', tab.substr(1));
+
+        if(window.history) {
+            window.history.replaceState({}, '', tab);
+        } else {
+            window.location.hash = tab;
+        }
 
         if(id === 't2' && !tabsInit.map) {
             initialiseMap();
@@ -70,9 +75,9 @@ $(document).ready(function() {
 
     // catch hash URIs and trigger tabs
     if(location.hash !== '') {
-        $('.nav-tabs a[href="' + location.hash.replace('tab-', '') + '"]').tab('show');
+        $('.nav-tabs a[href="#tab-' + location.hash.substr(1) + '"]').tab('show');
     } else if(storedSearchTab) {
-        $('.nav-tabs a[href="#' + storedSearchTab + '"]').tab('show');
+        $('.nav-tabs a[href="#tab-' + storedSearchTab + '"]').tab('show');
     } else {
         $('.nav-tabs a:first').tab('show');
     }
@@ -700,10 +705,10 @@ function loadDefaultCharts() {
             });
             chartConfig.charts = conf;
 
-            var charts = ALA.BiocacheCharts('charts', chartConfig);
+            var charts = ALA.BiocacheCharts('tab-charts', chartConfig);
         });
     } else {
-        var charts = ALA.BiocacheCharts('charts', chartConfig);
+        var charts = ALA.BiocacheCharts('tab-charts', chartConfig);
     }
 }
 
