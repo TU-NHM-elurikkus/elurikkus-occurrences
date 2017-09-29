@@ -465,36 +465,28 @@
                     <div class="tabbable">
                         <ul class="nav nav-tabs">
                             <li class="nav-item active">
-                                <a id="t1" href="#records" data-toggle="tab" class="nav-link">
+                                <a id="t1" href="#tab-records" data-toggle="tab" class="nav-link">
                                     <g:message code="list.records.label" />
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a id="t2" href="#map" data-toggle="tab" class="nav-link">
+                                <a id="t2" href="#tab-map" data-toggle="tab" class="nav-link">
                                     <g:message code="map.map.label" />
                                 </a>
                             </li>
 
                             <plugin:isAvailable name="elurikkus-charts">
                                 <li class="nav-item">
-                                    <a id="t3" href="#charts" data-toggle="tab" class="nav-link">
+                                    <a id="t3" href="#tab-charts" data-toggle="tab" class="nav-link">
                                         <g:message code="list.link.t3" />
                                     </a>
                                 </li>
-
-                                <g:if test="${grailsApplication.config.userCharts && grailsApplication.config.userCharts.toBoolean()}">
-                                    <li class="nav-item">
-                                        <a id="t6" href="#userChartsView" data-toggle="tab" class="nav-link">
-                                            <g:message code="list.link.t6" />
-                                        </a>
-                                    </li>
-                                </g:if>
                             </plugin:isAvailable>
 
                             <g:if test="${hasImages}">
                                 <li class="nav-item">
-                                    <a id="t5" href="#images" data-toggle="tab" class="nav-link">
+                                    <a id="t5" href="#tab-images" data-toggle="tab" class="nav-link">
                                         <g:message code="list.link.t5" />
                                     </a>
                                 </li>
@@ -503,7 +495,7 @@
                     </div>
 
                     <div class="tab-content clearfix">
-                        <div id="records" role="tabpanel" class="tab-pane solrResults active" >
+                        <div id="tab-records" role="tabpanel" class="tab-pane solrResults active" >
                             <div class="float-left">
                                 <g:if test="${!grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                                     <button
@@ -615,7 +607,7 @@
                             </div>
                         </div>  <%-- end solrResults --%>
 
-                        <div id="map" role="tabpanel" class="tab-pane">
+                        <div id="tab-map" role="tabpanel" class="tab-pane">
                             <g:render template="map"
                                 model="[
                                     mappingUrl:alatag.getBiocacheAjaxUrl(),
@@ -629,7 +621,7 @@
                         </div>
 
                         <plugin:isAvailable name="elurikkus-charts">
-                            <div id="charts" role="tabpanel" class="tab-pane">
+                            <div id="tab-charts" role="tabpanel" class="tab-pane">
                                 <g:render template="charts"
                                     model="[searchString: searchString]"
                                     plugin="elurikkus-biocache-hubs"
@@ -648,16 +640,10 @@
                                     });
                                 </script>
                             </div>
-
-                            <div id="userChartsView" role="tabpanel" class="tab-pane">
-                                <g:render template="userCharts"
-                                    model="[searchString: searchString]"
-                                    plugin="elurikkus-biocache-hubs" />
-                            </div>
                         </plugin:isAvailable>
 
                         <g:if test="${hasImages}">
-                            <div id="images" role="tabpanel" class="tab-pane">
+                            <div id="tab-images" role="tabpanel" class="tab-pane">
                                 <div id="imagesGrid">
                                     <g:message code="list.speciesgallerycontrols.imagesgrid" />&hellip;
                                 </div>

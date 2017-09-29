@@ -395,7 +395,7 @@
                                 facetChartOptions.query = biocacheQuery;
                                 facetChartOptions.charts = [chartName];
                                 facetChartOptions.width = "75%";
-                                facetChartOptions.chartsDiv = "charts";
+                                facetChartOptions.chartsDiv = "tab-charts";
                                 facetChartOptions[facetName] = {chartType: 'scatter'};
                                 facetChartOptions.biocacheServicesUrl = "${alatag.getBiocacheAjaxUrl()}";
                                 facetChartOptions.displayRecordsUrl = "${grailsApplication.config.grails.serverURL}";

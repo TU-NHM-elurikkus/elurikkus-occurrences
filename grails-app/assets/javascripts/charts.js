@@ -240,7 +240,7 @@ var baseFacetChart = {
         }
         if(opts.displayRecordsUrl !== undefined) { biocacheWebappUrl = opts.displayRecordsUrl; }
 
-        this.chartsDiv = $('#' + (this.chartsDiv || 'charts'));
+        this.chartsDiv = $('#' + (this.chartsDiv || 'tab-charts'));
 
         // preserve context for callback
         var that = this;
@@ -767,7 +767,7 @@ function drawFacetCharts(data, chartOptions) {
     });
 
     // draw the charts
-    var chartsDiv = $('#' + (chartOptions.targetDivId ? chartOptions.targetDivId : 'charts'));
+    var chartsDiv = $('#' + (chartOptions.targetDivId ? chartOptions.targetDivId : 'tab-charts'));
     var query = chartOptions.query ? chartOptions.query : buildQueryString(chartOptions.instanceUid);
     $.each(chartOptions.charts, function(index, name) {
         if(facetMap[name] !== undefined) {
@@ -1123,7 +1123,7 @@ var taxonomyChart = {
         var $outerContainer = $('#taxa');
         if($outerContainer.length === 0) {
             $outerContainer = $('<div id="taxa" class="chart"></div>'); // create it
-            var chartsDiv = $('div#' + (this.chartOptions.targetDivId ? this.chartOptions.targetDivId : 'charts'));
+            var chartsDiv = $('div#' + (this.chartOptions.targetDivId ? this.chartOptions.targetDivId : 'tab-charts'));
             // append it
             chartsDiv.prepend($outerContainer);
         }
