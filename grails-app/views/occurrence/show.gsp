@@ -77,10 +77,6 @@
                 <%-- WIP --%>
                 <div class="page-header">
                     <h1 class="page-header__title">
-                        <g:if test="${collectionLogo}">
-                            <img src="${collectionLogo}" alt="institution logo" id="institutionLogo" />
-                        </g:if>
-
                         <g:message code="show.occurrenceRecord" />:
                         <span id="recordId">
                             ${recordId}
