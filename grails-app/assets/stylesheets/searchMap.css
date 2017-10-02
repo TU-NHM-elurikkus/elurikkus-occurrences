@@ -112,7 +112,13 @@
     font-size: 12px;
 }
 
-i.legendColour {
+.legendTable {
+    padding: 0px;
+    margin: 0px;
+    white-space: nowrap;
+}
+
+.legendColour {
     -webkit-background-clip: border-box;
     -webkit-background-origin: padding-box;
     -webkit-background-size: auto;
@@ -125,22 +131,16 @@ i.legendColour {
     height: 12px;
     line-height: 12px;
     width: 14px;
-    margin-bottom: -5px;
     margin-left: 2px;
     margin-right: 2px;
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
-i#defaultLegendColour {
+#defaultLegendColour {
     margin-bottom: -2px;
     margin-left: 2px;
     margin-right: 5px;
-}
-
-.legendTable {
-    padding: 0px;
-    margin: 0px;
 }
 
 a.colour-by-legend-toggle {

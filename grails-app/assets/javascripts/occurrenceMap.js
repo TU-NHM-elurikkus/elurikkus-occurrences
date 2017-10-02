@@ -330,93 +330,71 @@ OccurrenceMap.prototype.pointLookupClickRegister = function(e) {
 var ZOOM_TO_RADIUS = [
     800, 400, 200, 100, 50, 25, 20, 7.5, 3, 1.5,
     0.75, 0.25, 0.1, 0.05, 0.025, 0.015, 0.0075, 0.004, 0.002, 0.001
-]
+];
 
 OccurrenceMap.prototype.pointLookup = function(e) {
     return this.mode.click(e);
-}
+};
 
 OccurrenceMap.prototype.changeFacetColours = function() {
     this.additionalFqs = '';
     // clear this variable every time a new colour by is chosen.
-    this.removeFqs = ''
+    this.removeFqs = '';
 
     this.addQueryLayer();
 
     return true;
-}
+};
 
 // TODO: Is this used anywhere
 function showHideControls(el) {
     var $this = this;
-    if ($($this).hasClass('fa')) {
-        alert("activating");
+    if($($this).hasClass('fa')) {
+        alert('activating');
         $($this).hide();
         $($this + ' table.controls').show();
     } else {
-        alert("deactivating");
+        alert('deactivating');
         $($this).show();
         $($this + ' table.controls').hide();
     }
 }
 
-function addDefaultLegendItem(pointColour){
-    $(".legendTable")
+function addDefaultLegendItem(pointColour) {
+    $('.legendTable')
         .append($('<tr>')
             .append($('<td>')
-                .append($('<i>')
+                .append($('<span>')
                     .addClass('legendColour')
-                    .attr('style', "background-color:#"+ pointColour + ";")
+                    .attr('style', 'background-color:#' + pointColour + ';')
                     .attr('id', 'defaultLegendColour')
                 )
                 .append($('<span>')
                     .addClass('legendItemName')
-                    .html("All records")
+                    .html('All records')
                 )
             )
         );
 }
 
 OccurrenceMap.prototype.addGridLegendItem = function() {
-    $(".legendTable")
+    $('.legendTable')
         .append($('<tr>')
             .append($('<td>')
                 .append($('<img id="gridLegendImg" src="' + this.props.mappingUrl + '/density/legend' + this.query + '"/>'))
             )
         );
-}
+};
 
-/*
- * Helper for addLegendItem as that recieves its label as a dynamic message string
- * and those messages aren't always translated
- */
-function getLegendLabel(name) {
-    if(name in $.i18n.map) {
-        return $.i18n.prop(name);
-    }
+function addLegendItem(name, red, green, blue, data) {
     var label = name.split('.');
-    label = label[label.length - 1];
-
-    // TODO: label needs some adv humanisation; current outcommented code adds spaces to abbrevations
-    // var labelMatch = label.match(/^[a-z]+|[A-Z][a-z,]*/g);
-    //
-    // if(labelMatch) {
-    //     label = labelMatch.map(function (word) {
-    //         return word.charAt(0).toUpperCase() + word.substring(1);
-    //     }).join(' ');
-    // }
-
-    return label;
-}
-
-function addLegendItem(name, red, green, blue, data){
-    var nameLabel = getLegendLabel(name);
+    var nameLabel = label[label.length - 1];
     var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/; // e.g. 2001-02-31T12:00:00Z with year capture
-    if (name.search(isoDateRegEx) > -1) {
+    if(name.search(isoDateRegEx) > -1) {
         // convert full ISO date to YYYY-MM-DD format
-        name = name.replace(isoDateRegEx, "$1");
+        name = name.replace(isoDateRegEx, '$1');
     }
-    $(".legendTable")
+    $('.legendTable')
         .append($('<tr>')
             .append($('<td>')
                 .append($('<input>')
@@ -429,25 +407,16 @@ function addLegendItem(name, red, green, blue, data){
                 )
             )
             .append($('<td>')
-                .append($('<i>')
+                .append($('<span>')
                     .addClass('legendColour')
                     .attr('style', 'background-color:rgb(' + red + ',' + green + ',' + blue + ');')
                 )
                 .append($('<span>')
                     .addClass('legendItemName')
-                    .html(nameLabel)
+                    .html($.i18n.prop('basis_of_record.' + nameLabel))
                 )
             )
         );
-}
-
-function rgbToHex(redD, greenD, blueD){
-    var red = parseInt(redD);
-    var green = parseInt(greenD);
-    var blue = parseInt(blueD);
-
-    var rgb = blue | (green << 8) | (red << 16);
-    return rgb.toString(16);
 }
 
 // XXX TODO: Normally
@@ -583,7 +552,7 @@ OccurrenceMap.prototype.fitMapToBounds = function() {
  * https://github.com/allmarkedup/purl
  */
 OccurrenceMap.prototype.drawCircleRadius = function() {
-    if (isSpatialRadiusSearch()) {
+    if(isSpatialRadiusSearch()) {
         // spatial search from EYA
         var lat = $.url().param('lat');
         var lng = $.url().param('lon');
@@ -595,21 +564,21 @@ OccurrenceMap.prototype.drawCircleRadius = function() {
             opacity: 0.5,
             fillColor: '#222', // '#2C48A6'
             fillOpacity: 0.2
-        }
+        };
 
-        L.Icon.Default.imagePath = this.contextPath + "/static/js/leaflet-0.7.2/images";
+        L.Icon.Default.imagePath = this.contextPath + '/static/js/leaflet-0.7.7/images';
 
-        var popupText = "Centre of spatial search with radius of " + radius + " km";
+        var popupText = 'Centre of spatial search with radius of ' + radius + ' km';
 
         var circle = L.circle(latLng, radius * 1030, circleOpts);
         circle.addTo(this.map);
         // make circle the centre of the map, not the points
         this.map.fitBounds(circle.getBounds());
 
-        L.marker(latLng, {title: popupText}).bindPopup(popupText).addTo(this.map);
+        L.marker(latLng, { title: popupText }).bindPopup(popupText).addTo(this.map);
         this.map.invalidateSize();
     }
-}
+};
 
 /**
  * Returns true for a lat/lon/radius (params) style search
