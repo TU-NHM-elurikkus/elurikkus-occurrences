@@ -408,49 +408,34 @@
                             <g:message code="general.bool.false" />
                         </p>
 
-                        <%-- Pointless drop-down since all except one are Australia-specific choices. --%>
-                        <%--
                         <p>
                             <label for="baselayer">
-                                <g:message code="map.downloadmap.field09.label" />
+                                <g:message code="map.downloadmap.layer.label" />
                             </label>
                             <select name="baselayer" id="baselayer">
                                 <option value="world" selected>
-                                    <g:message code="map.downloadmap.field09.option01" />
+                                    <g:message code="map.downloadmap.layer.world" />
                                 </option>
 
-                                <option value="aus1">
-                                    <g:message code="map.downloadmap.field09.option02" />
+                                <option value="maakonnad_intersected_for_real">
+                                    <g:message code="map.downloadmap.layer.counties" />
                                 </option>
 
-                                <option value="aus2">
-                                    <g:message code="map.downloadmap.field09.option03" />
-                                </option>
-
-                                <option value="ibra_merged">
-                                    <g:message code="map.downloadmap.field09.option04" />
-                                </option>
-
-                                <option value="ibra_sub_merged">
-                                    <g:message code="map.downloadmap.field09.option05" />
-                                </option>
-
-                                <option value="imcra4_pb">
-                                    <g:message code="map.downloadmap.field09.option06" />
+                                <option value="omavalitsused">
+                                    <g:message code="map.downloadmap.layer.localGovernment" />
                                 </option>
                             </select>
                         </p>
-                        --%>
 
                         <p>
                             <label for="fileName">
-                                <g:message code="map.downloadmap.field10.label" />
+                                <g:message code="map.downloadmap.fileName.label" />
                             </label>
 
                             <input
+                                id="fileName"
                                 type="text"
                                 name="fileName"
-                                id="fileName"
                                 value="${message(code: 'map.downloadmap.fileName.value')}"
                             />
                         </p>
