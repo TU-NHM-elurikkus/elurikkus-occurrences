@@ -38,7 +38,7 @@
                     <span class="fa fa-search"></span>
                     <g:message code="menu.regions.label" />
                 </a>
-                <a class="page-header-links__link" href="${request.contextPath}/search?#tab-spatial-search">
+                <a class="page-header-links__link" href="${request.contextPath}/search?#spatial-search">
                     <span class="fa fa-search"></span>
                     <g:message code="general.searchByPolygon" />
                 </a>

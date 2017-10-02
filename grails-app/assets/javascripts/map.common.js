@@ -25,7 +25,7 @@ function generatePopup(layer, latlng, query, map) {
         }
     }
 
-    var recordsLink = BC_CONF.contextPath + '/occurrences/search' + params + '#tab-map';
+    var recordsLink = BC_CONF.contextPath + '/occurrences/search' + params + '#map';
 
     L.popup()
         .setLatLng([latlng.lat, latlng.lng])
