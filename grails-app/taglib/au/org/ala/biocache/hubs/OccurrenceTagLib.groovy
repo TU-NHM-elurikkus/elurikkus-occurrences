@@ -245,7 +245,7 @@ class OccurrenceTagLib {
 
                         }
                     } else {
-                        def label = alatag.message(code: facetResult.fieldName + "." + fieldResult.label, default: '') ?: alatag.message(code: fieldResult.label)
+                        def label = alatag.message(code: facetResult.fieldName + "." + fieldResult.label) ?: alatag.message(code: fieldResult.label)
                         def href = "?${queryParam}&fq=${facetResult.fieldName}:"
                         if (isRangeFilter(fieldResult.label)) {
                             href = href + "${fieldResult.label?.encodeAsURL()}"
