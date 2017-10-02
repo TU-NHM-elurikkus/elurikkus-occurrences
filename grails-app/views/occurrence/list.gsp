@@ -100,22 +100,22 @@
             </div>
 
             <div class="page-header-links">
-                <a href="${g.createLink(uri: '/search')}#tab-advanced-search" class="page-header-links__link">
+                <a href="${g.createLink(uri: '/search')}#advanced-search" class="page-header-links__link">
                     <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator02" />
                 </a>
 
-                <a href="${g.createLink(uri: '/search')}#tab-taxa-upload" class="page-header-links__link">
+                <a href="${g.createLink(uri: '/search')}#taxa-upload" class="page-header-links__link">
                     <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator03" />
                 </a>
 
-                <a href="${g.createLink(uri: '/search')}#tab-catalog-upload" class="page-header-links__link">
+                <a href="${g.createLink(uri: '/search')}#catalog-upload" class="page-header-links__link">
                     <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator04" />
                 </a>
 
-                <a href="${g.createLink(uri: '/search')}#tab-spatial-search" class="page-header-links__link">
+                <a href="${g.createLink(uri: '/search')}#spatial-search" class="page-header-links__link">
                     <span class="fa fa-search"></span>
                     <g:message code="home.index.navigator05" />
                 </a>
