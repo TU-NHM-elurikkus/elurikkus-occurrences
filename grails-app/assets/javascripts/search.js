@@ -507,7 +507,7 @@ $(document).ready(function() {
             '&scale=' + $(':input[name=scale]:checked').val() +
             '&outline=' + $(':input[name=outline]:checked').val() +
             '&outlineColour=0x000000' +
-            '&baselayer=world' +  // $('#baselayer').val()+
+            '&baselayer=' + $('#baselayer').val() +
             '&fileName=' + $('#fileName').val() + '.' + $('#format').val().toLowerCase();
 
         $('#downloadMap').modal('hide');
@@ -626,7 +626,7 @@ function removeFacet(el) {
         paramList.push('fq=' + fqList.join('&fq='));
     }
 
-    window.location.href = window.location.pathname + '?' + paramList.join('&') + window.location.hash + '';
+    window.location.href = String(window.location.pathname + '?' + paramList.join('&') + window.location.hash);
 }
 
 function removeFilter(el) {
@@ -680,7 +680,7 @@ function removeFilter(el) {
         paramList.push('fq=' + fqList.join('&fq='));
     }
 
-    window.location.href = window.location.pathname + '?' + paramList.join('&') + window.location.hash + '';
+    window.location.href = String(window.location.pathname + '?' + paramList.join('&') + window.location.hash);
 }
 
 /**
@@ -727,7 +727,7 @@ function loadUserCharts() {
                     return i;
                 }).length > 3) {
                     // do not display user charts by default
-                    $.map(data.charts, function (value, key) {
+                    $.map(data.charts, function(value, key) {
                         value.hideOnce = true;
                     });
 
@@ -955,7 +955,6 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     }
 
                     var code;
-                    var i18nLabel;
                     var encodeFq = true; // Not sure what the point of this is.
 
                     if(label.indexOf('@') !== -1) {
@@ -985,7 +984,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     var fqParam;
 
                     if(el.fq) {
-                        fqParam = encodeURIComponent(el.fq)
+                        fqParam = encodeURIComponent(el.fq);
                     } else if(encodeFq) {
                         fqParam = facetName + ':' + encodeURIComponent(fqEsc);
                     } else {
