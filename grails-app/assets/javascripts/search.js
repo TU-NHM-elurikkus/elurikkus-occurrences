@@ -816,58 +816,60 @@ function loadImages(start) {
 
             $.each(data.occurrences, function(i, el) {
                 count++;
-                // clone template div & populate with metadata
-                var $ImgConTmpl = $('.gallery-thumb-template').clone();
+                if(el.image) {
+                    // clone template div & populate with metadata
+                    var $ImgConTmpl = $('.gallery-thumb-template').clone();
 
-                $ImgConTmpl.removeClass('gallery-thumb-template').removeClass('invisible');
+                    $ImgConTmpl.removeClass('gallery-thumb-template').removeClass('invisible');
 
-                var link = $ImgConTmpl.find('a.cbLink');
-                link.addClass('thumbImage tooltips');
-                link.attr('title', 'click to enlarge');
-                link.attr('data-occurrenceuid', el.uuid);
-                link.attr('data-image-id', el.largeImageUrl);
-                link.attr('data-scientific-name', el.raw_scientificName);
-                link.attr('data-gallery', 'main-gallery');
-                link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
+                    var link = $ImgConTmpl.find('a.cbLink');
+                    link.addClass('thumbImage tooltips');
+                    link.attr('title', 'click to enlarge');
+                    link.attr('data-occurrenceuid', el.uuid);
+                    link.attr('data-image-id', el.largeImageUrl);
+                    link.attr('data-scientific-name', el.raw_scientificName);
+                    link.attr('data-gallery', 'main-gallery');
+                    link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
 
-                $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
-                // brief metadata
-                var briefHtml = el.raw_scientificName;
-                var br = '<br />';
-                if(el.typeStatus) {
-                    briefHtml += br + el.typeStatus;
+                    $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
+                    // brief metadata
+                    var briefHtml = el.raw_scientificName;
+                    var br = '<br />';
+                    if(el.typeStatus) {
+                        briefHtml += br + el.typeStatus;
+                    }
+                    if(el.institutionName) { briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName; }
+                    $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
+
+                    // detail metadata
+                    var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
+
+                    if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
+                    if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
+                    if(el.eventDate) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.date') + ':</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
+
+                    leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.source') + ':</b> ';
+                    if(el.institutionName) {
+                        leftDetail += el.institutionName;
+                    } else {
+                        leftDetail += el.dataResourceName;
+                    }
+                    leftDetail += '</div>';
+
+                    var rightDetail =
+                        '<div>' +
+                            '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
+                                $.i18n.prop('gallery.modal.viewRecord') +
+                            '</a>' +
+                        '</div>';
+
+                    var detailHtml = leftDetail + rightDetail;
+
+                    link.attr('data-footer', detailHtml);
+
+                    // write to DOM
+                    $('#imagesGrid').append($ImgConTmpl.html());
                 }
-                if(el.institutionName) { briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName; }
-                $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
-
-                // detail metadata
-                var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
-
-                if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
-                if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
-                if(el.eventDate) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.date') + ':</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
-
-                leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.source') + ':</b> ';
-                if(el.institutionName) {
-                    leftDetail += el.institutionName;
-                } else {
-                    leftDetail += el.dataResourceName;
-                }
-                leftDetail += '</div>';
-
-                var rightDetail =
-                    '<div>' +
-                        '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
-                            $.i18n.prop('gallery.modal.viewRecord') +
-                        '</a>' +
-                    '</div>';
-
-                var detailHtml = leftDetail + rightDetail;
-
-                link.attr('data-footer', detailHtml);
-
-                // write to DOM
-                $('#imagesGrid').append($ImgConTmpl.html());
             });
 
             if(count + start < data.totalRecords) {
