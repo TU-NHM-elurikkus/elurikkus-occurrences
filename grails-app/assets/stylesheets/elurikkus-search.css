@@ -134,3 +134,13 @@
 #loadMoreImages {
     margin-top: 10px;
 }
+
+.input-group-addon {
+    background-color: #fff;
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
+    background-color: #3dc8d3;
+    color: #fff;
+}
