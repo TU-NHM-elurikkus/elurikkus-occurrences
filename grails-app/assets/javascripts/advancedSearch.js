@@ -232,7 +232,7 @@ $(document).ready(function() {
         });
     });
 
-    $('.bscombobox').combobox({ bsVersion: '2' });
+    $('#dataset').combobox();
 
 }); // end document ready
 
