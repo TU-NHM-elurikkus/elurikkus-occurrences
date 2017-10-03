@@ -336,14 +336,14 @@
                     <g:message code="advancedsearch.dataset.col.label" />
                 </label>
 
-                <select class="dataset bscombobox" name="dataset" id="dataset">
-                    <option value=""></option>
-                    <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
-                        <option value="${region.key}">
-                            ${region.value}
-                        </option>
-                    </g:each>
-                </select>
+                <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
+                    <select class="dataset form-control" name="dataset" id="dataset">
+                        <option value=""></option>
+                        <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
+                            <option value="${region.key}">${region.value}</option>
+                        </g:each>
+                    </select>
+                </div>
             </div>
         </g:if>
 
