@@ -389,6 +389,11 @@ OccurrenceMap.prototype.addGridLegendItem = function() {
 function addLegendItem(name, red, green, blue, data) {
     var label = name.split('.');
     var nameLabel = label[label.length - 1];
+    var translatedLabel = $.i18n.prop('basis_of_record.' + nameLabel);
+    if(translatedLabel.startsWith('[')) {
+        translatedLabel = nameLabel;
+    }
+
     var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/; // e.g. 2001-02-31T12:00:00Z with year capture
     if(name.search(isoDateRegEx) > -1) {
         // convert full ISO date to YYYY-MM-DD format
@@ -413,7 +418,7 @@ function addLegendItem(name, red, green, blue, data) {
                 )
                 .append($('<span>')
                     .addClass('legendItemName')
-                    .html($.i18n.prop('basis_of_record.' + nameLabel))
+                    .html(translatedLabel)
                 )
             )
         );
