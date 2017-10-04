@@ -30,13 +30,13 @@ function generatePopup(layer, latlng, query, map) {
     L.popup()
         .setLatLng([latlng.lat, latlng.lng])
         .setContent(
-            'species count: <b id="speciesCountDiv">calculating...</b>' +
+            $.i18n.prop('advancedsearch.js.map.popup.speciescount') + ': <b id="speciesCountDiv">calculating...</b>' +
             '<br />' +
-            'occurrence count: <b id="occurrenceCountDiv">calculating...</b>' +
+            $.i18n.prop('advancedsearch.js.map.popup.occurrencecount') + ': <b id="occurrenceCountDiv">calculating...</b>' +
             '<br />' +
             '<a id="showOnlyTheseRecords" href="' + recordsLink + '">' +
-                '<span class="fa fa-search"></span>' +
-                $.i18n.prop('search.map.popup.linkText') +
+                '<span class="fa fa-search"></span> ' +
+                $.i18n.prop('advancedsearch.js.map.popup.linkText') +
             '</a>'
         )
         .openOn(map);
