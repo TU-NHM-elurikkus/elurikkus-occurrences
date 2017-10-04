@@ -353,8 +353,9 @@ $(document).ready(function() {
 
     $('#downloadFacet').live('click', function(e) {
         var facetName = $('#fullFacets').data('facet');
+        var facetQuery = BC_CONF.facetDownloadQuery.replace(/&quot;/g, '"')
         window.location.href = BC_CONF.biocacheServiceUrl + '/occurrences/facets/download' +
-            BC_CONF.facetDownloadQuery +
+            facetQuery +
             '&facets=' + facetName +
             '&count=true';
     });
