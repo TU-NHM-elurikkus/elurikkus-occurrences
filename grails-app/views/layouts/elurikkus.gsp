@@ -23,7 +23,8 @@
                 autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
                 contextPath: "${request.contextPath}",
                 locale: "${RequestContextUtils.getLocale(request)}",
-                queryContext: "${grailsApplication.config.biocache.queryContext}"
+                queryContext: "${grailsApplication.config.biocache.queryContext}",
+                bieIndexUrl: "${grailsApplication.config.ala.baseURL}/bie-index"
             };
         </g:javascript>
 

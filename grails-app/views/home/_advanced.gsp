@@ -29,12 +29,10 @@
                 class="dataset form-control"
                 placeholder=""
                 value="${params.text}"
-                size="80"
             />
         </div>
     </div>
 
-    <%-- XXX row classes --%>
     <fieldset class="form-group">
         <legend class="col-form-legend erk-form-legend row">
             <span class="fa fa-info-circle"></span>
@@ -46,7 +44,6 @@
             <div class="form-group row">
                 <label for="taxa_${i}" class="col col-xl-2">
                     <g:message code="advancedsearch.table02col01.title" />
-                    <g:set var="lsidParam" value="lsid_${i}" />
                 </label>
 
                 <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
@@ -54,11 +51,11 @@
                         type="text"
                         id="taxa_${i}"
                         name="taxonText"
+                        placeholder="${message(code: 'advancedsearch.ac.placeholder')}&hellip;"
                         class="name_autocomplete form-control"
                         value=""
-                        size="60"
                      />
-                    <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}" value="" />
+                        <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}" value="" />
                 </div>
             </div>
         </g:each>
@@ -82,7 +79,6 @@
                 class="dataset form-control"
                 placeholder=""
                 value=""
-                size="60"
             />
         </div>
     </div>
@@ -97,9 +93,8 @@
             <g:message code="advancedsearch.table04col01.title" />
         </label>
 
-        <%-- TODO: Classes. --%>
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <select class="species_group" name="species_group" id="species_group">
+            <select class="species_group erk-select" name="species_group" id="species_group">
                 <option value="">
                     <g:message code="advancedsearch.table04col01.option.label" />
                 </option>
@@ -123,7 +118,7 @@
         </label>
 
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <select class="institution_uid collection_uid" name="institution_collection" id="institution_collection">
+            <select class="institution_uid collection_uid erk-select" name="institution_collection" id="institution_collection">
                 <option value="">
                     <g:message code="advancedsearch.table05col01.option01.label" />
                 </option>
@@ -137,7 +132,6 @@
                             </option>
 
                             <g:each var="coll" in="${request.getAttribute('collection_uid')}">
-                                coll
                                 <g:if test="${inst.key == 'in4' && StringUtils.startsWith(coll.value, 'TAM')}">
                                     <option value="${coll.key}">
                                         ${coll.value}
@@ -185,7 +179,7 @@
         </label>
 
         <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-            <select class="country" name="country" id="country">
+            <select class="country erk-select" name="country" id="country">
                 <option value="">
                     <g:message code="advancedsearch.table06col01.option.label" />
                 </option>
@@ -213,7 +207,7 @@
             </label>
 
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <select class="biogeographic_region form-control" name="ibra" id="ibra">
+                <select class="biogeographic_region erk-select" name="ibra" id="ibra">
                     <option value="">
                         <g:message code="advancedsearch.table06col03.option.label" />
                     </option>
@@ -238,7 +232,7 @@
             </label>
 
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <select class="biogeographic_region form-control" name="imcra" id="imcra">
+                <select class="biogeographic_region erk-select" name="imcra" id="imcra">
                     <option value="">
                         <g:message code="advancedsearch.table06col04.option.label" />
                     </option>
@@ -260,7 +254,7 @@
             </label>
 
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <select class="lga form-control" name="lga" id="lga">
+                <select class="lga erk-select" name="lga" id="lga">
                     <option value=""><g:message code="advancedsearch.table06col05.option.label" /></option>
                     <g:each var="region" in="${request.getAttribute("cl959").sort()}">
                         <option value="${region.key}">
@@ -283,7 +277,7 @@
                 <g:message code="advancedsearch.table07col01.title" />
             </label>
 
-            <select class="type_status" name="type_status" id="type_status">
+            <select class="type_status erk-select" name="type_status" id="type_status">
                 <option value="">
                     <g:message code="advancedsearch.table07col01.option.label" />
                 </option>
@@ -309,7 +303,7 @@
             </label>
 
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <select class="basis_of_record" name="basis_of_record" id="basis_of_record">
+                <select class="basis_of_record erk-select" name="basis_of_record" id="basis_of_record">
                     <option value="">
                         <g:message code="advancedsearch.table08col01.option.label" />
                     </option>
@@ -337,8 +331,10 @@
                 </label>
 
                 <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                    <select class="dataset form-control" name="dataset" id="dataset">
-                        <option value=""></option>
+                    <select class="dataset erk-select" name="dataset" id="dataset">
+                        <option value="">
+                            <g:message code="advancedsearch.dataset.option.label" />
+                        </option>
                         <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
                             <option value="${region.key}">${region.value}</option>
                         </g:each>
