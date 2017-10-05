@@ -567,10 +567,11 @@
     <table class="table table-sm table-bordered data-quality-table">
         <thead>
             <tr class="sectionName">
-                <td class="dataQualityTestName">
+                <td class="data-quality-test-name">
                     <g:message code="show.tabledataqualityresultscol01.title" />
                 </td>
-                <td class="dataQualityTestResult">
+
+                <td class="data-quality-test-result">
                     <g:message code="show.tabledataqualityresultscol02.title" />
                 </td>
             </tr>
@@ -601,12 +602,12 @@
 
                 <g:each in="${failedTestSet}" var="test">
                     <tr class="failedTestResult">
-                        <td>
+                        <td class="data-quality-test-name">
                             <g:message code="${test.name}" default="${test.name}" />
                             <alatag:dataQualityHelp code="${test.code}" />
                         </td>
 
-                        <td>
+                        <td class="data-quality-test-result">
                             <span class="fa fa-times-circle" style="color:red;"></span>
                             <g:message code="show.tabledataqualityresults.tr01td02" />
                         </td>
@@ -615,12 +616,12 @@
 
                 <g:each in="${warningTestSet}" var="test">
                     <tr class="warningTestResult">
-                        <td>
+                        <td class="data-quality-test-name">
                             <g:message code="${test.name}" default="${test.name}" />
                             <alatag:dataQualityHelp code="${test.code}" />
                         </td>
 
-                        <td>
+                        <td class="data-quality-test-result">
                             <span class="fa fa-exclamation-circle" style="color:orange;"></span>
                             <g:message code="show.tabledataqualityresults.tr02td02" />
                         </td>
@@ -649,12 +650,12 @@
 
                 <g:each in="${passedTestSet}" var="test">
                     <tr class="passedTestResult">
-                        <td>
+                        <td class="data-quality-test-name">
                             <g:message code="${test.name}" default="${test.name}" />
                             <alatag:dataQualityHelp code="${test.code}" />
                         </td>
 
-                        <td>
+                        <td class="data-quality-test-result">
                             <span class="fa fa-check-circle" style="color:green;"></span>
                             <g:message code="show.tabledataqualityresults.tr03td02" />
                         </td>
@@ -683,11 +684,12 @@
             <g:set var="testSet" value="${record.systemAssertions.missing}" />
             <g:each in="${testSet}" var="test">
                 <tr class="missingPropResult">
-                    <td>
+                    <td class="data-quality-test-name">
                         <g:message code="${test.name}" default="${test.name}" />
                         <alatag:dataQualityHelp code="${test.code}" />
                     </td>
-                    <td>
+
+                    <td class="data-quality-test-result">
                         <span class="fa fa-question-circle"></span>
                         <g:message code="show.tabledataqualityresults.tr05td02" />
                     </td>
@@ -714,9 +716,14 @@
             <g:set var="testSet" value="${record.systemAssertions.unchecked}" />
             <g:each in="${testSet}" var="test">
                 <tr class="uncheckTestResult">
-                    <td>
+                    <td class="data-quality-test-name">
                         <g:message code="${test.name}" default="${test.name}" /><alatag:dataQualityHelp code="${test.code}" />
                     </td>
+
+                    <!--
+                        Unchecked results don't use the same styling as checked results,
+                        henche no data-quality-test-result class.
+                    -->
                     <td>
                         <span class="fa fa-ban"></span>
                         <g:message code="show.tabledataqualityresults.tr07td02" />
