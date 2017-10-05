@@ -274,12 +274,18 @@
                                 <strong>
                                     <g:formatNumber number="${sr.totalRecords}" format="#,###,###" />
                                 </strong>
-                                <g:message code="list.resultsretuened.returnedtext" />
+                                <g:message code="list.resultsreturned.returnedtext" />
                             </span>
 
                             <span class="queryDisplay">
                                 <strong>
-                                    ${raw(queryDisplay)}
+                                    <g:if test="${queryDisplay == '[all records]'}">
+                                        <g:message code="list.resultsreturned.allrecords" />
+                                    </g:if>
+
+                                    <g:else>
+                                        ${raw(queryDisplay)}
+                                    </g:else>
                                 </strong>
                             </span>
                         </p>
@@ -294,28 +300,28 @@
                                 class="erk-button erk-button--light"
                                 href=""
                                 id="taxa_"
-                                title="${message(code: 'list.resultsretuened.speciesLink.title')}"
+                                title="${message(code: 'list.resultsreturned.speciesLink.title')}"
                                 target="BIE"
                             >
-                                <g:message code="list.resultsretuened.navigator01" />
+                                <g:message code="list.resultsreturned.navigator01" />
                             </a>
 
                             <button
                                 class="erk-button erk-button--light dropdown-toggle"
                                 data-toggle="dropdown"
-                                title="${message(code: 'list.resultsretuened.speciesLink.title')}"
+                                title="${message(code: 'list.resultsreturned.speciesLink.title')}"
                             >
                                 <span class="caret"></span>
                             </button>
 
                             <div class="dropdown-menu" aria-labelledby="taxa_">
                                 <div class="taxaMenuContent">
-                                    <g:message code="list.resultsretuened.des01" />
+                                    <g:message code="list.resultsreturned.des01" />
                                     <b class="nameString">
-                                        <g:message code="list.resultsretuened.navigator01" />
+                                        <g:message code="list.resultsreturned.navigator01" />
                                     </b>
                                     (<span class="speciesPageLink">
-                                        <g:message code="list.resultsretuened.des03" />
+                                        <g:message code="list.resultsreturned.des03" />
                                     </span>).
 
                                     <form
@@ -325,15 +331,16 @@
                                         method="POST"
                                     >
                                         <div class="refineTaxaSearch">
-                                            <g:message code="list.resultsretuened.form.des01" />:
+                                            <g:message code="list.resultsreturned.form.des01" />:
+
                                             <input
                                                 type="submit"
                                                 class="erk-button erk-button--light rawTaxonSumbit"
-                                                value="<g:message code='list.resultsretuened.form.label' />"
-                                                title="<g:message code='list.resultsretuened.form.title' />"
+                                                value="${message(code: 'list.resultsreturned.form.label')}"
+                                                title="${message(code: 'list.resultsreturned.form.title')}"
                                             />
                                             <div class="rawTaxaList">
-                                                <g:message code="list.resultsretuened.form.placeholder" />
+                                                <g:message code="list.resultsreturned.form.placeholder" />
                                             </div>
                                         </div>
                                     </form>
