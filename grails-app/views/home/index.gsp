@@ -132,7 +132,7 @@
                         <textarea
                             id="batch-taxon-input"
                             name="queries"
-                            class="col-6"
+                            class="col-12 col-md-10 col-lg-8 col-xl-6"
                             rows="15"
                             cols="60"
                             required
@@ -178,7 +178,7 @@
                         <textarea
                             id="catalogue-numbers-input"
                             name="queries"
-                            class="col-6"
+                            class="col-12 col-md-10 col-lg-8 col-xl-6"
                             rows="15"
                             cols="60"
                             required
