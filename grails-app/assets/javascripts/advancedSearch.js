@@ -250,6 +250,11 @@ $(document).ready(function() {
             $($this).toggleClass('toggleOptionsActive');
         });
     });
+
+    $('[data-toggle="tooltip"]').tooltip({
+        delay: { 'show': 1000, 'hide': 100 },
+        trigger: 'hover'
+    });
 }); // end document ready
 
 function selectChange(fieldName, fieldValue) {
