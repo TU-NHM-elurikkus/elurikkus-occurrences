@@ -5,6 +5,7 @@
 *= require slider
 *= require ekko-lightbox-5.2.0
 *= require record-view
+*= require jquery.autocomplete
 *= require elurikkus-search
 *= require ala-charts
 *= require searchMap

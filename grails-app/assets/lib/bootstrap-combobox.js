@@ -371,7 +371,7 @@
   , keyup: function (e) {
       switch(e.keyCode) {
         case 40: // down arrow
-         if (!this.shown){
+         if(!this.shown) {
            this.toggle();
          }
          break;

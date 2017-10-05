@@ -27,36 +27,37 @@ $(document).ready(function() {
     };
 
     //  for taxon concepts
-    $('.name_autocomplete').autocomplete('http://bie.ala.org.au/search/auto.json', {
-        extraParams: { limit: 100 },
+    $('.name_autocomplete').autocomplete(BC_CONF.bieIndexUrl + '/search/auto.json', {
+        extraParams: { limit: 10 },
         dataType: 'jsonp',
         parse: function(data) {
             var rows = [];
             data = data.autoCompleteList;
-            for(var i = 0; i < data.length; i++) {
-                rows[i] = {
-                    data: data[i],
-                    value: data[i].guid,
-                    result: data[i].matchedNames[0]
-                };
-            }
+            data.forEach(function(result) {
+                rows.push({
+                    data: result,
+                    value: result.guid,
+                    result: result.matchedNames[0]
+                });
+            });
             return rows;
         },
         matchSubset: false,
         formatItem: function(row, i, n) {
-            var result = (row.scientificNameMatches.length > 0) ? row.scientificNameMatches[0] : row.commonNameMatches[0];
-            if(row.name !== result && row.rankString) {
-                result = result + '<div class=\'autoLine2\'>' + row.rankString + ': ' + row.name + '</div>';
-            } else if(row.rankString) {
-                result = result + '<div class=\'autoLine2\'>' + row.rankString + '</div>';
+            var result = row.name;
+
+            if(row.commonName) {
+                result += '; ' + row.commonName;
+            }
+
+            if(row.rankString) {
+                result += ' <span class="autoLine2">(' + row.rankString + ')</span>';
             }
             return result;
         },
         cacheLength: 10,
-        minChars: 3,
         scroll: false,
         max: 10,
-        selectFirst: false
     }).result(function(event, item) {
         // user has selected an autocomplete item
         $('input#lsid').val(item.guid);
@@ -231,9 +232,6 @@ $(document).ready(function() {
             $($this).toggleClass('toggleOptionsActive');
         });
     });
-
-    $('#dataset').combobox();
-
 }); // end document ready
 
 function selectChange(fieldName, fieldValue) {
