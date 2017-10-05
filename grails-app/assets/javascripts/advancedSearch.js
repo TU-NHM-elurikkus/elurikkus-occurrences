@@ -26,16 +26,6 @@ $(document).ready(function() {
         return this.replace(/^\s*(OR|AND|NOT)\s+|\s+(OR|AND|NOT)\s*$/g, '');
     };
 
-    function extractTaxonName(acItem) {
-        var name = (acItem.name) ? acItem.name : acItem.matchedNames[0] || "";
-        if(acItem.commonName) {
-            name += '; ' + acItem.commonName;
-        } else if(acItem.commonNameMatches.length) {
-            name += '; ' + acItem.commonNameMatches[0];
-        }
-        return name;
-    }
-
     $('.taxon-autocomplete').autocomplete({
         serviceUrl: BC_CONF.bieIndexUrl + '/search/auto.json',
         dataType: 'jsonp',
