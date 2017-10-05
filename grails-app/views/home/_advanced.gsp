@@ -40,7 +40,6 @@
         </legend>
 
         <g:each in="${1..4}" var="i">
-            <g:set var="lsidParam" value="lsid_${i}" />
             <div class="form-group row">
                 <label for="taxa_${i}" class="col col-xl-2">
                     <g:message code="advancedsearch.table02col01.title" />
@@ -51,11 +50,13 @@
                         type="text"
                         id="taxa_${i}"
                         name="taxonText"
+                        class="taxon-autocomplete form-control"
                         placeholder="${message(code: 'advancedsearch.ac.placeholder')}&hellip;"
-                        class="name_autocomplete form-control"
+                        title="${message(code: 'advancedsearch.ac.title')}"
+                        data-toggle="tooltip"
                         value=""
-                     />
-                        <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}" value="" />
+                    />
+                    <input type="hidden" name="lsid" class="lsidInput" id="taxa_${i}_lsid" value="" />
                 </div>
             </div>
         </g:each>

@@ -26,43 +26,50 @@ $(document).ready(function() {
         return this.replace(/^\s*(OR|AND|NOT)\s+|\s+(OR|AND|NOT)\s*$/g, '');
     };
 
-    //  for taxon concepts
-    $('.name_autocomplete').autocomplete(BC_CONF.bieIndexUrl + '/search/auto.json', {
-        extraParams: { limit: 10 },
+    $('.taxon-autocomplete').autocomplete({
+        serviceUrl: BC_CONF.bieIndexUrl + '/search/auto.json',
         dataType: 'jsonp',
-        parse: function(data) {
-            var rows = [];
-            data = data.autoCompleteList;
-            data.forEach(function(result) {
-                rows.push({
-                    data: result,
-                    value: result.guid,
-                    result: result.matchedNames[0]
-                });
-            });
-            return rows;
+        paramName: 'q',
+        params: { limit: 10 },
+        minChars: 3,
+        transformResult: function(response) {
+            return {
+                suggestions: $.map(response.autoCompleteList, function(dataItem) {
+                    return {
+                        value: dataItem.matchedNames[0],
+                        data: dataItem
+                    }
+                })
+            }
         },
-        matchSubset: false,
-        formatItem: function(row, i, n) {
-            var result = row.name;
-
-            if(row.commonName) {
-                result += '; ' + row.commonName;
+        formatResult: function(suggestion, currentValue) {
+            var acItem = suggestion.data;
+            var result = '';
+            if(acItem.scientificNameMatches.length) {
+                result += acItem.scientificNameMatches[0];
+            } else if(acItem.name) {
+                result += acItem.name;
+            } else {
+                result += acItem.matchedNames[0];
             }
 
-            if(row.rankString) {
-                result += ' <span class="autoLine2">(' + row.rankString + ')</span>';
+            if(acItem.commonNameMatches.length) {
+                result += '; ' + acItem.commonNameMatches[0];
+            } else if(acItem.commonName) {
+                result += '; ' + acItem.commonName;
+            }
+
+            result = result.replace(currentValue, '<strong>' + currentValue + '<\/strong>');
+
+            if(suggestion.data.rankString) {
+                result += ' <span class="autocomplete-description">(' + $.i18n.prop('taxonomy.rank.' + suggestion.data.rankString) + ')</span>';
             }
             return result;
         },
-        cacheLength: 10,
-        scroll: false,
-        max: 10,
-    }).result(function(event, item) {
-        // user has selected an autocomplete item
-        $('input#lsid').val(item.guid);
-        var id = $(this).attr('id');
-        $('.lsidInput#' + id).val(item.guid);
+        onSelect: function (suggestion) {
+            var inputID = $(this).attr('id');
+            $('#' + inputID + '_lsid').val(suggestion.data.guid);
+        }
     });
 
     // "clear" button next to each taxon row
@@ -70,7 +77,7 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).hide();
         var num = $(this).attr('id').replace('clear_', ''); // get the num
-        var lsid = $('input#lsid_' + num).val();
+        var lsid = $('input#taxa_' + num + '_lsid').val();
         $('#sciname_' + num).html(''); // clear taxon
         $('tr#taxon_row_' + num).hide('slow'); // hide the row
         var query = $('#solrQuery').val(); // get the query text
@@ -88,7 +95,7 @@ $(document).ready(function() {
         e.preventDefault();
         // save cookie with taxonText input values
         var taxaList = [];
-        $(':input[name=\'taxonText\']').each(function(i, el) {
+        $(':input[name="taxonText"]').each(function(i, el) {
             taxaList.push($(el).val()); // we want empty inputs added too!
         });
         $.cookie('taxa_inputs', taxaList, { expires: 7 }); // save cookie
@@ -175,7 +182,7 @@ $(document).ready(function() {
             // taxon concepts
             if(fieldName.indexOf('lsid') !== -1) {
                 // lsid searches
-                var taxonUri = 'http://bie.ala.org.au/species/' + fieldValue + '.json';
+                var taxonUri = BC_CONF.bieWebappUrl + '/species/' + fieldValue + '.json';
                 $.ajax({
                     url: taxonUri,
                     dataType: 'jsonp',
@@ -231,6 +238,11 @@ $(document).ready(function() {
             // change plus/minus icon when transition is complete
             $($this).toggleClass('toggleOptionsActive');
         });
+    });
+
+    $('[data-toggle="tooltip"]').tooltip({
+        delay: { 'show': 1000, 'hide': 100 },
+        trigger: 'hover'
     });
 }); // end document ready
 
@@ -328,7 +340,7 @@ function addTaxonConcept(item) {
         }
     }
 
-    $('input#lsid_' + num).val(item.guid); // add lsid to hidden field
+    $('input#taxa_' + num + '_lsid').val(item.guid); // add lsid to hidden field
     // build the name string
     var matchedName = '<b>' + item.name + '</b>';
     if(item.rankId && item.rankId >= 6000) {
@@ -356,5 +368,5 @@ function addTaxonConcept(item) {
         queryText = queryText + ' lsid:' + item.guid;
     }
     $('#solrQuery').val(queryText.trim()); // add LSID to the main query input
-    $('#name_autocomplete').val(''); // clear the search test
+    $('.taxon-autocomplete').val(''); // clear the search test
 }
