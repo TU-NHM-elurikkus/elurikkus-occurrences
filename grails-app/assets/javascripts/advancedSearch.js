@@ -43,7 +43,6 @@ $(document).ready(function() {
             }
         },
         formatResult: function(suggestion, currentValue) {
-            // var result = $.Autocomplete.defaults.formatResult(suggestion, currentValue);
             var acItem = suggestion.data;
             var result = '';
             if(acItem.scientificNameMatches.length) {
