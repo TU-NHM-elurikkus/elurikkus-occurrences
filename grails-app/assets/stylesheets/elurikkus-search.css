@@ -38,10 +38,7 @@
 
 .search-filter-menu--title {
     padding: 4px 8px;
-    white-space: initial;
-}
-.search-filter-menu--title:hover {
-    background-color: inherit;
+    font-weight: normal;
 }
 
 .search-filter-menu--buttons {
