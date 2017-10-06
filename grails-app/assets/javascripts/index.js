@@ -16,6 +16,8 @@
 //= require map.common
 //= require advancedSearch
 
+var MAP_VAR;  // Populated by index.gsp view
+
 $(document).ready(function() {
     var mapInit = false;
 
@@ -85,13 +87,11 @@ function initialiseMap() {
     // initialise map
     MAP_VAR.map = L.map('leafletMap', {
         center: [MAP_VAR.defaultLatitude, MAP_VAR.defaultLongitude],
-        zoomControl: false,
+        zoomControl: true,
         zoom: MAP_VAR.defaultZoom,
         minZoom: 1,
         scrollWheelZoom: false
     });
-
-    addZoomControl(MAP_VAR.map);
 
     // add edit drawing toolbar
     // Initialise the FeatureGroup to store editable layers

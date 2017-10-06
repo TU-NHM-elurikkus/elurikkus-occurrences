@@ -101,10 +101,3 @@ function drawWktObj(wktString) {
         }
     }
 }
-
-function addZoomControl(map) {
-    L.control.zoom({
-        zoomInTitle: $.i18n.prop('advancedsearch.js.map.zoomin'),
-        zoomOutTitle: $.i18n.prop('advancedsearch.js.map.zoomout'),
-    }).addTo(map);
-}
