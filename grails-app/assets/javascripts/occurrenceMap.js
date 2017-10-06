@@ -85,11 +85,11 @@ OccurrenceMap.prototype.initialize = function() {
     self.map = L.map('leafletMap', {
         center: self.props.center,
 
-        zoom: self.props.defaultZoom,
+        zoom: 7,
         minZoom: 1,
         scrollWheelZoom: false,
 
-        zoomControl: false,
+        zoomControl: true,
 
         fullscreenControl: true,
         fullscreenControlOptions: {
@@ -98,8 +98,6 @@ OccurrenceMap.prototype.initialize = function() {
 
         worldCopyJump: true
     });
-
-    addZoomControl(self.map);
 
     // add edit drawing toolbar
     // Initialise the FeatureGroup to store editable layers

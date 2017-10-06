@@ -277,15 +277,14 @@
 
             // Global var to store map config
             var MAP_VAR = {
-                map : null,
-                mappingUrl : "${mappingUrl}",
-                query : "${searchString}",
-                queryDisplayString : "${queryDisplayString}",
-                //center: [-30.0,133.6],
-                defaultLatitude : "${grailsApplication.config.map.defaultLatitude?:'-25.4'}",
-                defaultLongitude : "${grailsApplication.config.map.defaultLongitude?:'133.6'}",
-                defaultZoom : "${grailsApplication.config.map.defaultZoom?:'4'}",
-                overlays : {
+                map: null,
+                mappingUrl: "${mappingUrl}",
+                query: "${searchString}",
+                queryDisplayString: "${queryDisplayString}",
+                defaultLatitude: "${grailsApplication.config.map.defaultLatitude ?: '58.3735'}",
+                defaultLongitude: "${grailsApplication.config.map.defaultLongitude ?: '26.7161'}",
+                defaultZoom: 7,
+                overlays: {
                     <g:if test="${grailsApplication.config.map.overlay.url}">
                         "${grailsApplication.config.map.overlay.name?:'overlay'}" : L.tileLayer.wms("${grailsApplication.config.map.overlay.url}", {
                             layers: 'ALA:ucstodas',
@@ -295,17 +294,14 @@
                         })
                     </g:if>
                 },
-                baseLayers : {
-                    "Minimal" : defaultBaseLayer,
+                baseLayers: {
+                    "Minimal": defaultBaseLayer,
                     //"Night view" : L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr}),
-                    "Road" :  new L.Google('ROADMAP'),
-                    "Terrain" : new L.Google('TERRAIN'),
-                    "Satellite" : new L.Google('HYBRID')
+                    "Road":  new L.Google('ROADMAP'),
+                    "Terrain": new L.Google('TERRAIN'),
+                    "Satellite": new L.Google('HYBRID')
                 },
                 layerControl : null,
-                //currentLayers : [],
-                //additionalFqs : '',
-                //zoomOutsideScopedRegion: ${(grailsApplication.config.map.zoomOutsideScopedRegion == false || grailsApplication.config.map.zoomOutsideScopedRegion == "false") ? false : true}
             };
         </g:javascript>
     </body>
