@@ -37,24 +37,6 @@
                     div.style.position = 'absolute';
                     div.style.display = 'none';
                     return div;
-                },
-                formatString(resultStr, term) {
-                    // Do not replace anything if the current value is empty
-                    if (!term) {
-                        return resultStr;
-                    } else if(!resultStr) {
-                        return '';
-                    }
-
-                    var pattern = '(' + utils.escapeRegExChars(term) + ')';
-
-                    return resultStr
-                        .replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>')
-                        .replace(/&/g, '&amp;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;')
-                        .replace(/"/g, '&quot;')
-                        .replace(/&lt;(\/?strong)&gt;/g, '<$1>');
                 }
             };
         }()),
@@ -157,7 +139,15 @@
             return suggestion.value;
         }
 
-        return utils.formatString(suggestion.value, currentValue);
+        var pattern = '(' + utils.escapeRegExChars(currentValue) + ')';
+
+        return suggestion.value
+            .replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/&lt;(\/?strong)&gt;/g, '<$1>');
     };
 
     function _formatGroup(suggestion, category) {
