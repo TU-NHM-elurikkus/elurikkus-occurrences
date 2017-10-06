@@ -19,9 +19,6 @@ $(document).ready(function() {
     // $(window).hashchange();
 
     // Custom string methods
-    String.prototype.trim = function() {
-        return this.replace(/^\s+|\s+$/g, '');
-    };
     String.prototype.trimBools = function() {
         return this.replace(/^\s*(OR|AND|NOT)\s+|\s+(OR|AND|NOT)\s*$/g, '');
     };

@@ -52,17 +52,18 @@ class OccurrenceTagLib {
      * @param fieldName
      * @return
      */
-    def formatFieldName(fieldName){
-        def output
+    def formatFieldName(fieldName) {
 
-        if (fieldName.endsWith('_s') || fieldName.endsWith('_i') || fieldName.endsWith('_d')) {
-            def temp = fieldName[0..-2].replaceAll("_", " ")
-            output = "${alatag.message(code:"facet.${fieldName}", default: temp)}"
-        } else if (fieldName.endsWith('_RNG')) {
-            output = fieldName[0..-4].replaceAll("_", " ") + " (range)"
-        } else {
-            def temp = fieldName.replaceAll("_", " ")
-            output = "${alatag.message(code:"facet.${fieldName}", default: temp)}"
+        def _message = "facet.${fieldName.toLowerCase()}"
+        def output = "${alatag.message(code: _message)}"
+
+        if (output == _message) {
+            log.warn("No message for: " + _message)
+            if (_message.endsWith('_s') || _message.endsWith('_i') || _message.endsWith('_d')) {
+                output = fieldName[0..-2].replaceAll("_", " ")
+            } else {
+                output = fieldName.replaceAll("_", " ")
+            }
         }
 
         StringUtils.capitalize(output)

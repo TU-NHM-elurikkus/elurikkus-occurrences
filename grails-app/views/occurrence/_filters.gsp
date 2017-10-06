@@ -1,6 +1,6 @@
 <div class="dropdown-menu search-filter-menu container" id="customiseFilters" aria-labelledby="customiseFiltersButton">
     <%-- XXX dropdown-item class --%>
-    <h4 class="dropdown-item search-filter-menu--title">
+    <h4 class="search-filter-menu--title">
         <g:message code="list.customisefacetsbutton.div01.title" />
     </h4>
 
@@ -52,9 +52,7 @@
                                         value="${fieldValue}"
                                         ${(defaultFacets.get(fieldValue)) ? 'checked=checked' : ''}
                                     >
-                                    <g:set var="filterDisplayName" value="${alatag.formatDynamicFacetName(fieldName: "${fieldValue}")}" />
-
-                                    ${filterDisplayName}
+                                    ${alatag.formatDynamicFacetName(fieldName: "${fieldValue}")}
                                 </label>
                             </div>
                         </g:if>

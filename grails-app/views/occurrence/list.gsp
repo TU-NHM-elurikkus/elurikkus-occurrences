@@ -142,7 +142,7 @@
 
                 <p>
                     Please contact
-                    <a href="mailto:support@ala.org.au?subject=biocache error" style="text-decoration: underline;">
+                    <a href="mailto:support@elurikkus.ut.ee?subject=biocache error" style="text-decoration: underline;">
                         support
                     </a>
                     if this error continues
@@ -161,7 +161,7 @@
                 </h4>
 
                 Please contact
-                    <a href="mailto:support@ala.org.au?subject=biocache error">
+                    <a href="mailto:support@elurikkus.ut.ee?subject=biocache error">
                         support
                     </a>
                 if this error continues
