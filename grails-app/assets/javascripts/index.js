@@ -104,6 +104,8 @@ function initialiseMap() {
             featureGroup: MAP_VAR.drawnItems
         },
         draw: {
+            circlemarker: false,
+            marker: false,
             polyline: false,
             rectangle: {
                 shapeOptions: {
@@ -115,7 +117,6 @@ function initialiseMap() {
                     color: '#bada55'
                 }
             },
-            marker: false,
             polygon: {
                 allowIntersection: false, // Restricts shapes to simple polygons
                 drawError: {
@@ -128,15 +129,15 @@ function initialiseMap() {
             }
         }
     });
+
     MAP_VAR.map.addControl(MAP_VAR.drawControl);
 
     MAP_VAR.map.on('draw:created', function(e) {
         // setup onclick event for this object
         var layer = e.layer;
-        var center = layer.getBounds().getCenter();
+        var center = typeof layer.getLatLng === 'function' ? layer.getLatLng() : layer.getBounds().getCenter();
 
         generatePopup(layer, center, MAP_VAR.query, MAP_VAR.map);
-        addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
 
         MAP_VAR.drawnItems.addLayer(layer);
     });
@@ -147,7 +148,6 @@ function initialiseMap() {
 
         layers.eachLayer(function(layer) {
             generatePopup(layer, layer._latlng, MAP_VAR.query, MAP_VAR.map);
-            addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
         });
     });
 
