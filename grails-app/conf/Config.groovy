@@ -1,15 +1,16 @@
 grails.project.groupId = "au.org.ala" // change this to alter the default package name and Maven publishing destination
 
 default_config = "/data/${appName}/config/${appName}-config.properties"
-if(!grails.config.locations || !(grails.config.locations instanceof List)) {
+commons_config = "/data/commons/config/commons-config.properties"
+
+if(!grails.config.locations) {
     grails.config.locations = []
+} else if(!(grails.config.locations instanceof List)) {
+    grails.config.locations = [grails.config.locations]
 }
-if (new File(default_config).exists()) {
-    println "[${appName}] Including default configuration file: " + default_config;
-    grails.config.locations.add "file:" + default_config
-} else {
-    println "[${appName}] No external configuration file defined."
-}
+
+grails.config.locations.add "file:" + default_config
+grails.config.locations.add "file:" + commons_config
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 println "default_config = ${default_config}"
