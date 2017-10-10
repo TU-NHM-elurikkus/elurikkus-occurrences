@@ -430,6 +430,7 @@
                         <a
                             href="${image.alternativeFormats.imageUrl}"
                             data-toggle="lightbox"
+                            data-gallery="record-image"
                             data-footer="${
                                 render(
                                     template: 'recordImageFooter',
