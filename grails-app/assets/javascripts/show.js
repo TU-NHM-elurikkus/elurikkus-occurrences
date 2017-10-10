@@ -16,3 +16,11 @@
 //= require map.common
 //= require occurrenceMap
 //= require record-view
+
+$(function() {
+    // Lightbox
+    $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+});
