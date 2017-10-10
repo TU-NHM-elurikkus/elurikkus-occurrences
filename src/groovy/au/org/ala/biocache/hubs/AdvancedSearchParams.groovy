@@ -128,8 +128,8 @@ class AdvancedSearchParams {
             log.debug "taxas = ${taxas} || nameType = ${nameType}"
 
             if (nameType == "taxa") {
-                // special case
-                taxa = StringUtils.join(taxas*.trim(), " OR " ).replaceAll('"','') // remove quotes which break the "taxa=foo bar" query type
+                // special case; update: not really
+                taxa = StringUtils.join(taxas*.trim(), " OR " )
             } else {
                 // build up OR'ed taxa query with braces if more than one taxon
                 q.append(" ").append(braces[0]).append(nameType).append(":")
@@ -189,12 +189,12 @@ class AdvancedSearchParams {
         try {
             // attempt to do query encoding
             encodedQ = URIUtil.encodeWithinQuery(q.toString().trim().replaceFirst("\\?", ""))
-            encodedTaxa = URIUtil.encodeWithinQuery(taxa.trim())
+            encodedTaxa = URIUtil.encodeWithinQuery(encodedTaxa)
         } catch (URIException ex) {
             log.error("URIUtil error: " + ex.getMessage(), ex)
         }
 
-        String finalQuery = ((taxa) ? "taxa=" + encodedTaxa + "&" : "") + ((encodedQ) ? "q=" + encodedQ : "")
+        String finalQuery = ((encodedTaxa) ? "taxa=" + encodedTaxa + "&" : "") + ((encodedQ) ? "q=" + encodedQ : "")
         log.debug("query: " + finalQuery)
 
         return finalQuery

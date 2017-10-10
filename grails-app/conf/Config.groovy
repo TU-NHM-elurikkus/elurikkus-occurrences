@@ -9,17 +9,22 @@ if(!grails.config.locations) {
     grails.config.locations = [grails.config.locations]
 }
 
+if (!new File(default_config).exists()) {
+    throw ApplicationException("Config doesn't exist: " + default_config)
+} else if(!new File(commons_config).exists()) {
+    throw ApplicationException("Config doesn't exist: " + commons_config)
+}
+
 grails.config.locations.add "file:" + default_config
 grails.config.locations.add "file:" + commons_config
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
-println "default_config = ${default_config}"
 
 /******************************************************************************\
  *  SKINNING
 \******************************************************************************/
-skin.layout = 'elurikkus'
-skin.orgNameLong = "Generic Data Portal"
+skin.layout = 'eElurikkus'
+skin.orgNameLong = "Occurrence browser"
 skin.orgNameShort = "Occurrences"
 // whether crumb trail should include a home link that is external to this webabpp - ala.baseUrl is used if true
 skin.includeBaseUrl = true
