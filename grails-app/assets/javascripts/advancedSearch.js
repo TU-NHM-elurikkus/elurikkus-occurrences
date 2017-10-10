@@ -154,8 +154,8 @@ $(document).ready(function() {
         var fieldValue = el.val().trim();
         removeFieldFromQuery(fieldName);
         if(fieldValue) {
-            if(fieldValue.match(/\s/)) {
-                fieldValue = '\"' + fieldValue + '\"';
+            if(fieldValue.indexOf(' ') > -1) {
+                fieldValue = '"' + fieldValue + '"';
             }
             addFieldToQuery(fieldName, fieldValue);
         }
@@ -244,9 +244,9 @@ $(document).ready(function() {
 }); // end document ready
 
 function selectChange(fieldName, fieldValue) {
-    if(fieldValue && fieldValue.match(/\s+/)) {
+    if(fieldValue && fieldValue.indexOf(' ') > -1) {
         // add quotes to search terms with spaces in them
-        addFieldToQuery(fieldName, '\"' + fieldValue + '\"');
+        addFieldToQuery(fieldName, '"' + fieldValue + '"');
     } else if(fieldValue) {
         addFieldToQuery(fieldName, fieldValue);
     } else {
