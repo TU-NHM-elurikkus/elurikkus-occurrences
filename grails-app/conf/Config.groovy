@@ -9,10 +9,13 @@ if(!grails.config.locations) {
     grails.config.locations = [grails.config.locations]
 }
 
+// Build server doesn't see config files for some reason
 if (!new File(default_config).exists()) {
-    throw ApplicationException("Config doesn't exist: " + default_config)
+    // throw ApplicationException("Config doesn't exist: " + default_config)
+    println "[${appName}] No external configuration file defined."
 } else if(!new File(commons_config).exists()) {
-    throw ApplicationException("Config doesn't exist: " + commons_config)
+    // throw ApplicationException("Config doesn't exist: " + commons_config)
+    println "[${appName}] No external commons configuration file defined."
 }
 
 grails.config.locations.add "file:" + default_config
