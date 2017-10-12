@@ -945,6 +945,8 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
 
             $.each(data.facetResults[0].fieldResult, function(i, el) {
                 if(el.count > 0) {
+                    var code;
+                    var encodeFq = true; // Not sure what the point of this is.
                     // surround with quotes: fq value if contains spaces but not for range queries
                     var fqEsc = ((el.label.indexOf(' ') !== -1 || el.label.indexOf(',') !== -1 || el.label.indexOf('lsid') !== -1) && el.label.indexOf('[') !== 0)
                         ? '"' + el.label + '"'
@@ -955,24 +957,18 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     if(!label) {
                         label = $.i18n.prop('facet.absent');
                         $('tr#facets-row-absent').remove();  // remove the absent row, as it is reinserted
-                    }
-
-                    var code;
-                    var encodeFq = true; // Not sure what the point of this is.
-
-                    if(label.indexOf('@') !== -1) {
+                    } else if(label.indexOf('@') !== -1) {
                         label = label.substring(0, label.indexOf('@'));
                     } else if(facetName.indexOf('outlier_layer') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('layer.' + label);
-                    // XXX !!! XXX
+                        label = $.i18n.prop('facet.layer.' + label);
                     } else if(facetName.indexOf('geospatial_kosher') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('geospatial_kosher.' + label);
+                        label = $.i18n.prop('facet.geospatial_kosher.' + label);
                     } else if(facetName.indexOf('user_assertions') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('assertions.' + label);
+                        label = $.i18n.prop('facet.assertions.' + label);
                     } else if(facetName.indexOf('duplicate_type') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('duplication.' + label);
+                        label = $.i18n.prop('facet.duplication.' + label);
                     } else if(facetName.indexOf('taxonomic_issue') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop(label);
+                        label = $.i18n.prop('facet.taxonomic_issue' + label);
                     } else {
                         code = facetName + '.' + label;
                         if(code in $.i18n.map) {

@@ -183,6 +183,7 @@ class OccurrenceTagLib {
     def facetLinkList = { attrs ->
         def facetResult = attrs.facetResult
         def queryParam = attrs.queryParam
+        def fieldName = facetResult.fieldName
         def fieldDisplayName = attrs.fieldDisplayName
         def mb = new MarkupBuilder(out)
         def linkTitle = g.message(code: 'facets.results.filterBy', args: [fieldDisplayName])
@@ -208,7 +209,7 @@ class OccurrenceTagLib {
 
                 if(fieldResult.count > 0) {
                     // Catch specific facets fields
-                    if (fieldResult.fq) {
+                    if(fieldResult.fq) {
                         // biocache-service has provided a fq field in the fieldResults list
                         li(class: 'erk-ulist__item') {
                             a(href: "?${queryParam}&fq=${fieldResult.fq?.encodeAsURL()}",
@@ -219,7 +220,13 @@ class OccurrenceTagLib {
                                     mkp.yieldUnescaped("&nbsp;")
                                 }
                                 span(class: "facet-item") {
-                                    mkp.yield(alatag.message(code: fieldResult.label ?: 'search.results.field.absent'))
+                                    if(fieldResult.label) {
+                                        // Get translated facet value. If there's no match, default to the value itself.
+                                        mkp.yield(alatag.message(code: "facet." + fieldName + "." + fieldResult.label, default: fieldResult.label))
+                                    } else {
+                                        mkp.yield(alatag.message(code: "facet.absent"))
+                                    }
+
                                     addCounts(fieldResult.count)
                                 }
 
