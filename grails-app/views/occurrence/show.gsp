@@ -296,26 +296,6 @@
                     </div>
                 </g:if>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div id="userAnnotationsDiv" class="additionalData">
-                            <h2>
-                                <g:message code="show.userannotations.title" />
-                                <a id="userAnnotations">
-                                    &nbsp;
-                                </a>
-                            </h2>
-                            <h4>
-                                <g:message code="user.assertion.status" />:
-                                <i>
-                                    <span id="userAssertionStatus"></span>
-                                </i>
-                            </h4>
-                            <ul id="userAnnotationsList" style="list-style: none; margin:0;"></ul>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="outlierFeedback">
                     <g:if test="${record.processed.occurrence.outlierForLayers}">
                         <div id="outlierInformation" class="additionalData">
