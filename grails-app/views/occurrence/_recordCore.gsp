@@ -1162,6 +1162,13 @@
     </div>
 </g:if>
 
+<%--
+    TODO Default links in this section are not very useful.
+    Keeping this section disabled until we figure out what do with the links.
+    Perhaps links to areas in the Regions module would be useful.
+--%>
+
+<%--
 <div id="outlierInformation" class="additionalData">
     <g:if test="${contextualSampleInfo}">
         <h3 id="contextualSampleInfo">
@@ -1231,3 +1238,4 @@
         </table>
     </g:if>
 </div>
+--%>
