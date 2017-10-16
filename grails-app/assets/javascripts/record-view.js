@@ -346,18 +346,6 @@ function compareModifiedDate(a, b) {
 // load the assertions
 function refreshUserAnnotations() {
     $.get(OCC_REC.contextPath + '/assertions/' + OCC_REC.recordUuid, function(data) {
-
-        if(data.assertionQueries.length === 0 && data.userAssertions.length === 0) {
-            $('#userAnnotationsDiv').hide('slow');
-            $('#userAssertionsContainer').hide('slow');
-            $('#userAnnotationsNav').css('display', 'none');
-        } else {
-            $('#userAnnotationsDiv').show('slow');
-            $('#userAssertionsContainer').show('slow');
-            $('#userAnnotationsNav').css('display', 'block');
-        }
-        $('#userAnnotationsList').empty();
-
         if(data.userAssertionStatus) {
             var userAssertionStatus = $.i18n.prop('assertions.' + data.userAssertionStatus);
             $('#userAssertionStatus').text(userAssertionStatus);
