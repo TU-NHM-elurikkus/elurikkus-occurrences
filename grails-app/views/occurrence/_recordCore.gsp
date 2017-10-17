@@ -13,6 +13,9 @@
         <!-- Data Provider -->
         <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="dataProvider" fieldName="${message(code: 'recordcore.dataset.dataProvider')}">
             ${fieldsMap.put("dataProviderName", true)}
+            <%--
+                We will disable the data provider link for now. That page needs an update.
+                TODO: Update data provider page and re-enable this link.
             <g:if test="${record.processed.attribution.dataProviderUid && collectionsWebappContext}">
                 ${fieldsMap.put("dataProviderUid", true)}
                 <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.dataProviderUid}">
@@ -22,6 +25,8 @@
             <g:else>
                 ${record.processed.attribution.dataProviderName}
             </g:else>
+            --%>
+            ${record.processed.attribution.dataProviderName}
         </alatag:occurrenceTableRow>
 
         <!-- Data Resource -->
