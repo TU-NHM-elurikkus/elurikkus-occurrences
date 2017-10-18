@@ -293,11 +293,7 @@ $(document).ready(function() {
     // hide any DwC sections that are empty
     $('.occurrenceTable').each(function(i, el) {
         if(!$(el).find('tr').length) {
-            // hide section
             $(el).parent().hide();
-            // hide ToC entry
-            var parentId = $(el).parent().attr('id').replace('Table', '');
-            $('a[href="#' + parentId + '"]').hide();
         }
     });
 
