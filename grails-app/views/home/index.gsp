@@ -18,7 +18,7 @@
 
         <asset:javascript src="index.js"/>
 
-        <script src="http://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
+        <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
 
     </head>
 
