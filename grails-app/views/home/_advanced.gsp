@@ -369,8 +369,8 @@
             <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
                 <input
                     type="text"
-                    id="record_number"
-                    name="record_number"
+                    id="occurrence_id"
+                    name="occurrence_id"
                     class="dataset form-control"
                     placeholder=""
                     value=""

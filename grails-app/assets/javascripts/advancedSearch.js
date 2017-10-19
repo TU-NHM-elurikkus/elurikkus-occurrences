@@ -63,7 +63,7 @@ $(document).ready(function() {
             }
             return result;
         },
-        onSelect: function (suggestion) {
+        onSelect: function(suggestion) {
             var inputID = $(this).attr('id');
             $('#' + inputID + '_lsid').val(suggestion.data.guid);
         }
