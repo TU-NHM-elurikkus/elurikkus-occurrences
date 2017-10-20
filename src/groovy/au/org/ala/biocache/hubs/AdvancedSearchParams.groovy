@@ -49,7 +49,7 @@ class AdvancedSearchParams {
     Boolean type_material = false
     String basis_of_record = ""
     String catalogue_number = ""
-    String record_number = ""
+    String occurrence_id = ""
     String collector = ""
     String collectors_number = ""
     String identified_by = ""
@@ -97,7 +97,7 @@ class AdvancedSearchParams {
         if (type_material) q.append(" type_status:").append("*")
         if (basis_of_record) q.append(" basis_of_record:").append(basis_of_record)
         if (catalogue_number) q.append(" catalogue_number:").append(quoteText(catalogue_number))
-        if (record_number) q.append(" record_number:").append(quoteText(record_number))
+        if (occurrence_id) q.append(" occurrence_id:").append(quoteText(occurrence_id))
         if (cultivation_status) q.append(" establishment_means:").append(quoteText(cultivation_status))
         if (collector) q.append(" collector_text:").append(quoteText(collector))
         if (identified_by) q.append(" identified_by_text:").append(quoteText(identified_by))
