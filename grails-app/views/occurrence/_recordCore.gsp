@@ -1140,7 +1140,7 @@
     </div>
 </g:if>
 
-<g:if test="${record.raw.miscProperties}">
+<g:if test="${record.raw.miscProperties || plutofURL}">
     <div>
         <h3>
             <g:message code="recordcore.addtionalproperties.title" />
@@ -1148,6 +1148,14 @@
 
         <table class="occurrenceTable table table-sm table-bordered" id="miscellaneousPropertiesTable">
             <!-- Misc properties -->
+            <g:if test="${plutofURL}">
+                <alatag:occurrenceTableRow annotate="false" section="misc" fieldCode="plutof-link" fieldName="${message(code: 'recordcore.misc.plutofLink.label')}">
+                    <a href="${plutofURL}" target="_blank">
+                        ${plutofURL}
+                    </a>
+                </alatag:occurrenceTableRow>
+            </g:if>
+
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
                 <g:set var="label">
                     <g:message code="recordcore.dynamic.${entry.key}" default="${entry.key}" />
