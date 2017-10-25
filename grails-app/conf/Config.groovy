@@ -1,4 +1,5 @@
 import grails.util.Environment
+import com.nextdoor.rollbar.RollbarLog4jAppender // from /commons/lib/
 
 grails.project.groupId = "au.org.ala" // change this to alter the default package name and Maven publishing destination
 
@@ -121,8 +122,9 @@ if(!new File(logging_dir).exists()) {
 }
 
 log4j = {
-
     def logPattern = pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
+    // TODO Get it from cmmons config.
+    def rollbarServerKey = "0e77c2fa72b24c5caa5bb2c91b2f08d2"
 
     appenders {
         environments {
@@ -133,6 +135,13 @@ log4j = {
                     file: "${logging_dir}/occurrences.log",
                     threshold: org.apache.log4j.Level.WARN,
                     layout: logPattern)
+
+                appender new RollbarLog4jAppender(
+                    name: "rollbar",
+                    layout: logPattern,
+                    threshold: org.apache.log4j.Level.ERROR,
+                    environment: "production",
+                    accessToken: rollbarServerKey)
             }
             test {
                 rollingFile(
@@ -141,6 +150,13 @@ log4j = {
                     file: "${logging_dir}/occurrences.log",
                     threshold: org.apache.log4j.Level.WARN,
                     layout: logPattern)
+
+                appender new RollbarLog4jAppender(
+                    name: "rollbar",
+                    layout: logPattern,
+                    threshold: org.apache.log4j.Level.ERROR,
+                    environment: "test",
+                    accessToken: rollbarServerKey)
             }
             development {
                 console(
@@ -152,7 +168,7 @@ log4j = {
     }
 
     root {
-        error "tomcatLog"
+        error "tomcatLog", "rollbar"
         warn "tomcatLog"
     }
 
