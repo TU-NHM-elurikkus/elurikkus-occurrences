@@ -130,7 +130,7 @@ log4j = {
                 rollingFile(
                     name: "tomcatLog",
                     maxFileSize: "10MB",
-                    file: "${logging_dir}/specieslist.log",
+                    file: "${logging_dir}/occurrences.log",
                     threshold: org.apache.log4j.Level.WARN,
                     layout: logPattern)
             }
@@ -138,7 +138,7 @@ log4j = {
                 rollingFile(
                     name: "tomcatLog",
                     maxFileSize: "10MB",
-                    file: "${logging_dir}/specieslist.log",
+                    file: "${logging_dir}/occurrences.log",
                     threshold: org.apache.log4j.Level.WARN,
                     layout: logPattern)
             }
