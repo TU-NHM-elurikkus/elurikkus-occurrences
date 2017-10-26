@@ -1,5 +1,6 @@
 import grails.util.Environment
-import com.nextdoor.rollbar.RollbarLog4jAppender // from /commons/lib/
+// from /commons/lib/
+import com.nextdoor.rollbar.RollbarLog4jAppender
 
 grails.project.groupId = "au.org.ala" // change this to alter the default package name and Maven publishing destination
 
@@ -20,7 +21,7 @@ def rollbarServerKey
 try {
     File fileLocation = new File(commons_config)
     prop.load(new FileInputStream(fileLocation))
-    rollbarServerKey = prop.getProperty("rollbar.postServerKey") ?:''
+    rollbarServerKey = prop.getProperty("rollbar.postServerKey") ?: ""
 } catch(IOException e) {
     e.printStackTrace()
 }
