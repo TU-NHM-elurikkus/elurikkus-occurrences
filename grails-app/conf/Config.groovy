@@ -1,4 +1,5 @@
 import grails.util.Environment
+import com.nextdoor.rollbar.RollbarLog4jAppender // from /commons/lib/
 
 grails.project.groupId = "au.org.ala" // change this to alter the default package name and Maven publishing destination
 
@@ -12,6 +13,18 @@ grails.config.locations = [
     "file:${default_config}"
 ]
 
+def prop = new Properties()
+def rollbarServerKey
+
+// Load rollbar key from commons config file.
+try {
+    File fileLocation = new File(commons_config)
+    prop.load(new FileInputStream(fileLocation))
+    rollbarServerKey = prop.getProperty("rollbar.postServerKey") ?:''
+} catch(IOException e) {
+    e.printStackTrace()
+}
+
 if(!new File(env_config).exists()) {
     println "ERROR - [${appName}] Couldn't find environment specific configuration file: ${env_config}"
 }
@@ -20,6 +33,9 @@ if(!new File(default_config).exists()) {
 }
 if(!new File(commons_config).exists()) {
     println "ERROR - [${appName}] No external commons configuration file defined. ${commons_config}"
+}
+if(rollbarServerKey.isEmpty()) {
+    println "ERROR - [${appName}] No Rollbar key."
 }
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
@@ -120,27 +136,36 @@ if(!new File(logging_dir).exists()) {
     logging_dir = "/tmp"
 }
 
-log4j = {
+println "INFO - [${appName}] logging_dir: ${logging_dir}"
 
+log4j = {
     def logPattern = pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
+
+    def rollbarAppender = new RollbarLog4jAppender(
+        name: "rollbar",
+        layout: logPattern,
+        threshold: org.apache.log4j.Level.ERROR,
+        environment: Environment.current.name,
+        accessToken: rollbarServerKey
+    )
+
+    def tomcatLogAppender = rollingFile(
+        name: "tomcatLog",
+        maxFileSize: "10MB",
+        file: "${logging_dir}/occurrences.log",
+        threshold: org.apache.log4j.Level.WARN,
+        layout: logPattern
+    )
 
     appenders {
         environments {
             production {
-                rollingFile(
-                    name: "tomcatLog",
-                    maxFileSize: "10MB",
-                    file: "${logging_dir}/occurrences.log",
-                    threshold: org.apache.log4j.Level.WARN,
-                    layout: logPattern)
+                appender(tomcatLogAppender)
+                appender(rollbarAppender)
             }
             test {
-                rollingFile(
-                    name: "tomcatLog",
-                    maxFileSize: "10MB",
-                    file: "${logging_dir}/occurrences.log",
-                    threshold: org.apache.log4j.Level.WARN,
-                    layout: logPattern)
+                appender(tomcatLogAppender)
+                appender(rollbarAppender)
             }
             development {
                 console(
@@ -152,7 +177,7 @@ log4j = {
     }
 
     root {
-        error "tomcatLog"
+        error "tomcatLog", "rollbar"
         warn "tomcatLog"
     }
 
