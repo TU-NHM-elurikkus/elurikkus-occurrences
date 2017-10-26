@@ -136,40 +136,36 @@ if(!new File(logging_dir).exists()) {
     logging_dir = "/tmp"
 }
 
+println "INFO - [${appName}] logging_dir: ${logging_dir}"
+
 log4j = {
     def logPattern = pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
+
+    def rollbarAppender = new RollbarLog4jAppender(
+        name: "rollbar",
+        layout: logPattern,
+        threshold: org.apache.log4j.Level.ERROR,
+        environment: Environment.current.name,
+        accessToken: rollbarServerKey
+    )
+
+    def tomcatLogAppender = rollingFile(
+        name: "tomcatLog",
+        maxFileSize: "10MB",
+        file: "${logging_dir}/occurrences.log",
+        threshold: org.apache.log4j.Level.WARN,
+        layout: logPattern
+    )
 
     appenders {
         environments {
             production {
-                rollingFile(
-                    name: "tomcatLog",
-                    maxFileSize: "10MB",
-                    file: "${logging_dir}/occurrences.log",
-                    threshold: org.apache.log4j.Level.WARN,
-                    layout: logPattern)
-
-                appender new RollbarLog4jAppender(
-                    name: "rollbar",
-                    layout: logPattern,
-                    threshold: org.apache.log4j.Level.ERROR,
-                    environment: "production",
-                    accessToken: rollbarServerKey)
+                appender(tomcatLogAppender)
+                appender(rollbarAppender)
             }
             test {
-                rollingFile(
-                    name: "tomcatLog",
-                    maxFileSize: "10MB",
-                    file: "${logging_dir}/occurrences.log",
-                    threshold: org.apache.log4j.Level.WARN,
-                    layout: logPattern)
-
-                appender new RollbarLog4jAppender(
-                    name: "rollbar",
-                    layout: logPattern,
-                    threshold: org.apache.log4j.Level.ERROR,
-                    environment: "test",
-                    accessToken: rollbarServerKey)
+                appender(tomcatLogAppender)
+                appender(rollbarAppender)
             }
             development {
                 console(
