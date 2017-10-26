@@ -13,6 +13,18 @@ grails.config.locations = [
     "file:${default_config}"
 ]
 
+def prop = new Properties()
+def rollbarServerKey
+
+// Load rollbar key from commons config file.
+try {
+    File fileLocation = new File(commons_config)
+    prop.load(new FileInputStream(fileLocation))
+    rollbarServerKey = prop.getProperty("rollbar.postServerKey") ?:''
+} catch(IOException e) {
+    e.printStackTrace()
+}
+
 if(!new File(env_config).exists()) {
     println "ERROR - [${appName}] Couldn't find environment specific configuration file: ${env_config}"
 }
@@ -21,6 +33,9 @@ if(!new File(default_config).exists()) {
 }
 if(!new File(commons_config).exists()) {
     println "ERROR - [${appName}] No external commons configuration file defined. ${commons_config}"
+}
+if(rollbarServerKey.isEmpty()) {
+    println "ERROR - [${appName}] No Rollbar key."
 }
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
@@ -123,8 +138,6 @@ if(!new File(logging_dir).exists()) {
 
 log4j = {
     def logPattern = pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
-    // TODO Get it from cmmons config.
-    def rollbarServerKey = "0e77c2fa72b24c5caa5bb2c91b2f08d2"
 
     appenders {
         environments {
