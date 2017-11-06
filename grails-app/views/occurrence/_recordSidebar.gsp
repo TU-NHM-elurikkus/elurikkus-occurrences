@@ -416,38 +416,27 @@
         <div id="occurrenceImages" class="occurrence-images">
             <g:each in="${record.images}" var="image">
                 <div class="occurrence-images__image-container">
-                    <g:if test="${grailsApplication.config.skin.useAlaImageService.toBoolean()}">
-                        <a href="${grailsApplication.config.images.viewerUrl}${image.filePath}" target="_blank">
-                            <img
-                                src="${image.alternativeFormats.smallImageUrl}"
-                                class="occurrence-images__image"
-                                alt="Click to view this image in a large viewer"
-                            />
-                        </a>
-                    </g:if>
-                    <g:else>
-                        <%-- data-title is absent on purpose here --%>
-                        <a
-                            href="${image.alternativeFormats.imageUrl}"
-                            data-toggle="lightbox"
-                            data-gallery="record-image"
-                            data-footer="${
-                                render(
-                                    template: 'recordImageFooter',
-                                    model: [
-                                        'image': image,
-                                        'record': record
-                                    ]
-                                )
-                            }"
-                            target="_blank"
-                        >
-                            <img
-                                src="${image.alternativeFormats.largeImageUrl}"
-                                class="occurrence-images__image"
-                            />
-                        </a>
-                    </g:else>
+                    <%-- data-title is absent on purpose here --%>
+                    <a
+                        href="${image.alternativeFormats.imageUrl}"
+                        data-toggle="lightbox"
+                        data-gallery="record-image"
+                        data-footer="${
+                            render(
+                                template: 'recordImageFooter',
+                                model: [
+                                    'image': image,
+                                    'record': record
+                                ]
+                            )
+                        }"
+                        target="_blank"
+                    >
+                        <img
+                            src="${image.alternativeFormats.largeImageUrl}"
+                            class="occurrence-images__image"
+                        />
+                    </a>
                 </div>
             </g:each>
         </div>

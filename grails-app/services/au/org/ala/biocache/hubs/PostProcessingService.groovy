@@ -166,7 +166,6 @@ class PostProcessingService {
                 facetsMap.put(it, !facetsToHide.contains(it))
             }
         }
-        log.debug "facetsMap =${facetsMap}"
         return facetsMap
    }
 
@@ -187,7 +186,6 @@ class PostProcessingService {
             }
         }
 
-        //log.debug("FinalFacets = " + StringUtils.join(finalFacets, "|"));
         String[] filteredFacets = finalFacets.toArray(new String[finalFacets.size()]);
 
         return filteredFacets
