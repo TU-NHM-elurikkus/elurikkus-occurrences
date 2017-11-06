@@ -58,7 +58,7 @@ class OccurrenceTagLib {
         def output = "${alatag.message(code: _message)}"
 
         if (output == _message) {
-            log.warn("No message for: " + _message)
+            log.debug("No message for: " + _message)
             if (_message.endsWith('_s') || _message.endsWith('_i') || _message.endsWith('_d')) {
                 output = fieldName[0..-2].replaceAll("_", " ")
             } else {

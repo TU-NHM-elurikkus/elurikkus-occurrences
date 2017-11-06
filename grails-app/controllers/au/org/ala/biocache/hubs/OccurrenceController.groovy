@@ -208,8 +208,8 @@ class OccurrenceController {
             // Boolean hasClubView = request.isUserInRole("${grailsApplication.config.clubRoleForHub}")
             Boolean hasClubView = false  // we don't use hasClubView, no need to calculate it
             JSONObject record = webServicesService.getRecord(id, hasClubView)
-
             if (record) {
+
                 JSONObject compareRecord = webServicesService.getCompareRecord(id)
                 JSONObject collectionInfo = null
                 JSONArray contacts = null
