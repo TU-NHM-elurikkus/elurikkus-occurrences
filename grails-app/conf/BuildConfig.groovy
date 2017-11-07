@@ -33,6 +33,7 @@ grails.project.dependency.resolution = {
 
     dependencies {
         compile "commons-httpclient:commons-httpclient:3.1"
+        runtime "mysql:mysql-connector-java:5.1.44"  // MySQL driver
     }
 
     plugins {
@@ -46,5 +47,8 @@ grails.project.dependency.resolution = {
         compile ":elurikkus-commons:0.2-SNAPSHOT"
         compile ":elurikkus-biocache-hubs:1.5.1-SNAPSHOT"
         compile ":jquery:1.11.1"
+        compile ":shiro:1.2.1"  // Authentication support
+
+        runtime ":hibernate:3.6.10.19"
     }
 }

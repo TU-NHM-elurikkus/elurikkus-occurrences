@@ -44,7 +44,7 @@ println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 /******************************************************************************\
  *  SKINNING
 \******************************************************************************/
-skin.layout = 'eElurikkus'
+skin.layout = "eElurikkus"
 skin.orgNameLong = "Occurrence browser"
 skin.orgNameShort = "Occurrences"
 // whether crumb trail should include a home link that is external to this webabpp - ala.baseUrl is used if true
@@ -178,8 +178,8 @@ log4j = {
     }
 
     root {
-        error "tomcatLog", "rollbar"
-        warn "tomcatLog"
+        error "tomcatLog", "rollbar", "stdout"
+        warn "tomcatLog", "stdout"
     }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers

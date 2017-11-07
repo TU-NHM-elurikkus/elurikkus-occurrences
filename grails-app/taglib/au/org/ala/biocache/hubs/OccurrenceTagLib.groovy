@@ -26,7 +26,6 @@ class OccurrenceTagLib {
     def authService
     def webServicesService
     def messageSourceCacheService
-    def userService
 
     //static defaultEncodeAs = 'html'
     //static encodeAsForTags = [tagName: 'raw']
@@ -457,11 +456,6 @@ class OccurrenceTagLib {
         def fieldName = attrs.fieldName
         def fieldNameIsMsgCode = attrs.fieldNameIsMsgCode
         def userDetails
-
-        if(fieldCode == 'transcriber'){
-            userDetails = userService.detailsForUserId(bodyText);
-            bodyText = userDetails.displayName;
-        }
 
         if (StringUtils.isNotBlank(bodyText)) {
             def link = (guid) ? "${path}${guid}" : ""

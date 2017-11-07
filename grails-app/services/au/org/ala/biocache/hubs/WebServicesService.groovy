@@ -13,6 +13,7 @@ import org.apache.commons.io.FileUtils
 import org.codehaus.groovy.grails.web.json.JSONArray
 import org.codehaus.groovy.grails.web.json.JSONElement
 import org.codehaus.groovy.grails.web.json.JSONObject
+import org.springframework.context.*
 import org.springframework.web.client.RestClientException
 
 import javax.annotation.PostConstruct
@@ -20,7 +21,9 @@ import javax.annotation.PostConstruct
 /**
  * Service to perform web service DAO operations
  */
-class WebServicesService {
+class WebServicesService implements ApplicationContextAware {
+
+    ApplicationContext applicationContext
 
     public static final String ENVIRONMENTAL = "Environmental"
     public static final String CONTEXTUAL = "Contextual"
@@ -28,9 +31,9 @@ class WebServicesService {
 
     Map cachedGroupedFacets = [:] // keep a copy in case method throws an exception and then blats the saved version
 
-    @PostConstruct
-    def init(){
-        facetsCacheServiceBean = grailsApplication.mainContext.getBean('facetsCacheService')
+    def getFacetsCacheServiceBean() {
+        facetsCacheServiceBean = applicationContext.getBean("facetsCacheServiceBean")
+        return facetsCacheServiceBean
     }
 
     def JSONObject fullTextSearch(SpatialSearchRequestParams requestParams) {
@@ -46,7 +49,7 @@ class WebServicesService {
     def JSONObject getRecord(String id, Boolean hasClubView) {
         def url = "${grailsApplication.config.biocache.baseUrl}/occurrence/${id.encodeAsURL()}"
         if (hasClubView) {
-            url += "?apiKey=${grailsApplication.config.biocache.apiKey?:''}"
+            url += "?apiKey=${grailsApplication.config.biocache.apiKey ?: ''}"
         }
         getJsonElements(url)
     }
@@ -65,7 +68,7 @@ class WebServicesService {
         json.each { item ->
             if (!facetName) {
                 // do this once
-                facetName = item.fq?.tokenize(':')?.get(0)?.replaceFirst(/^\-/,'')
+                facetName = item.fq?.tokenize(":")?.get(0)?.replaceFirst(/^\-/, "")
                 try {
                     facetLabelsMap = facetsCacheServiceBean.getFacetNamesFor(facetName) // cached
                 } catch (IllegalArgumentException iae) {
@@ -108,19 +111,19 @@ class WebServicesService {
         }
     }
 
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def JSONArray getDefaultFacets() {
         def url = "${grailsApplication.config.biocache.baseUrl}/search/facets"
         getJsonElements(url)
     }
 
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def JSONArray getErrorCodes() {
         def url = "${grailsApplication.config.biocache.baseUrl}/assertions/user/codes"
         getJsonElements(url)
     }
 
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def Map getGroupedFacets() {
         log.info "Getting grouped facets"
         def url = "${grailsApplication.config.biocache.baseUrl}/search/grouped/facets"
@@ -150,12 +153,12 @@ class WebServicesService {
         groupedMap
     }
 
-    @CacheEvict(value='collectoryCache', allEntries=true)
+    @CacheEvict(value="collectoryCache", allEntries=true)
     def doClearCollectoryCache() {
         "collectoryCache cache cleared\n"
     }
 
-    @CacheEvict(value='longTermCache', allEntries=true)
+    @CacheEvict(value="longTermCache", allEntries=true)
     def doClearLongTermCache() {
         "longTermCache cache cleared\n"
     }
@@ -203,25 +206,25 @@ class WebServicesService {
         postFormData(grailsApplication.config.biocache.baseUrl + "/occurrences/assertions/delete", postBody)
     }
 
-    @Cacheable('collectoryCache')
+    @Cacheable("collectoryCache")
     def JSONObject getCollectionInfo(String id) {
         def url = "${grailsApplication.config.collections.baseUrl}/lookup/summary/${id.encodeAsURL()}"
         getJsonElements(url)
     }
 
-    @Cacheable('collectoryCache')
+    @Cacheable("collectoryCache")
     def JSONArray getCollectionContact(String id){
         def url = "${grailsApplication.config.collections.baseUrl}/ws/collection/${id.encodeAsURL()}/contact.json"
         getJsonElements(url)
     }
 
-    @Cacheable('collectoryCache')
+    @Cacheable("collectoryCache")
     def JSONArray getDataresourceContact(String id){
         def url = "${grailsApplication.config.collections.baseUrl}/ws/dataResource/${id.encodeAsURL()}/contact.json"
         getJsonElements(url)
     }
 
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def Map getLayersMetaData() {
         Map layersMetaMap = [:]
         def url = "${grailsApplication.config.layersservice.baseUrl}/layers"
@@ -257,12 +260,12 @@ class WebServicesService {
      * @param taxaQueries
      * @return
      */
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def List<String> getGuidsForTaxa(List taxaQueries) {
         List guids = []
 
         if (taxaQueries.size() == 1) {
-            String taxaQ = taxaQueries[0]?:'*:*' // empty taxa search returns all records
+            String taxaQ = taxaQueries[0] ?: "*:*" // empty taxa search returns all records
             taxaQueries.addAll(taxaQ.split(" OR ") as List)
             taxaQueries.remove(0) // remove first entry
         }
@@ -286,20 +289,20 @@ class WebServicesService {
      *
      * @return
      */
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def String getDataQualityCsv() {
         String url = grailsApplication.config.dataQualityChecksUrl ?: "https://docs.google.com/spreadsheet/pub?key=0AjNtzhUIIHeNdHJOYk1SYWE4dU1BMWZmb2hiTjlYQlE&single=true&gid=0&output=csv"
         getText(url)
     }
 
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def JSONArray getLoggerReasons() {
         def url = "${grailsApplication.config.logger.baseUrl}/logger/reasons"
         def jsonObj = getJsonElements(url)
         jsonObj.findAll { !it.deprecated } // skip deprecated reason codes
     }
 
-    @Cacheable('longTermCache')
+    @Cacheable("longTermCache")
     def JSONArray getLoggerSources() {
         def url = "${grailsApplication.config.logger.baseUrl}/logger/sources"
         try {
@@ -364,7 +367,7 @@ class WebServicesService {
             HttpClient httpClient = new HttpClient()
             HeadMethod headMethod = new HeadMethod(uri.toString())
             httpClient.executeMethod(headMethod)
-            String lengthString = headMethod.getResponseHeader("Content-Length")?.getValue()?:'0'
+            String lengthString = headMethod.getResponseHeader("Content-Length")?.getValue() ?: "0"
             imageFileSize = Long.parseLong(lengthString)
         } catch (Exception ex) {
             log.error "Error getting image url file size: ${ex}", ex
@@ -449,7 +452,7 @@ class WebServicesService {
 
     def JSONElement postJsonElements(String url, String jsonBody) {
         HttpURLConnection conn = null
-        def charEncoding = 'UTF-8'
+        def charEncoding = "UTF-8"
         try {
             conn = new URL(url).openConnection()
             conn.setDoOutput(true)
@@ -469,13 +472,13 @@ class WebServicesService {
                 resp = "{fileId: \"${conn.getHeaderField("fileId")}\" }"
             }
             wr.close()
-            return JSON.parse(resp?:"{}")
+            return JSON.parse(resp ?: "{}")
         } catch (SocketTimeoutException e) {
             def error = "Timed out calling web service. URL= ${url}."
             throw new RestClientException(error) // exception will result in no caching as opposed to returning null
         } catch (Exception e) {
             def error = "Failed calling web service. ${e.getMessage()} URL= ${url}." +
-                        "statusCode: " +conn?.responseCode?:"" +
+                        "statusCode: " +conn?.responseCode ?: "" +
                         "detail: " + conn?.errorStream?.text
             throw new RestClientException(error) // exception will result in no caching as opposed to returning null
         }
