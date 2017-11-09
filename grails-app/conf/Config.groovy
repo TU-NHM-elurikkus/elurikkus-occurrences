@@ -4,8 +4,6 @@ import com.nextdoor.rollbar.RollbarLog4jAppender
 
 grails.project.groupId = "au.org.ala" // change this to alter the default package name and Maven publishing destination
 
-grails.assets.bundle = true
-
 default_config = "/data/${appName}/config/${appName}-config.properties"
 commons_config = "/data/commons/config/commons-config.properties"
 env_config = "conf/${Environment.current.name}/Config.groovy"
