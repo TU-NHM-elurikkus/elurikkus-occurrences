@@ -16,10 +16,10 @@
             <g:message code="home.index.title" />
         </title>
 
-        <asset:javascript src="index.js"/>
+        <asset:stylesheet src="index.css" />
+        <asset:javascript src="index.js" />
 
-        <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
-
+        <script async defer src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
     </head>
 
     <body>

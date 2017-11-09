@@ -20,6 +20,7 @@
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
+        <asset:stylesheet src="list.css" />
         <asset:javascript src="list.js" />
 
         <script type="text/javascript">
