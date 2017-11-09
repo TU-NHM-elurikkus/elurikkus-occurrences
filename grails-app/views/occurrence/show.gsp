@@ -30,6 +30,7 @@
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         </g:else>
 
+        <asset:stylesheet src="show.css" />
         <asset:javascript src="show.js" />
 
         <g:javascript>

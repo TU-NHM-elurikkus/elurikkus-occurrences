@@ -1,13 +1,3 @@
-/**
- * Load Spring i18n messages into JS
- */
-$.i18n.properties({
-    name: 'messages',
-    path: OCCURRENCES_CONF.contextPath + '/messages/i18n/',
-    mode: 'map',
-    language: OCCURRENCES_CONF.locale // default is to use browser specified locale
-});
-
 // define a base object with the major defaults that we can inherit from (prototypically)
 var baseFacetChart = {
     collectionsUrl: 'http://no-default-collectory',

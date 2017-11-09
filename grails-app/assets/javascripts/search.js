@@ -1027,25 +1027,25 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                 var loadMore =
                     '<tr id="loadMore">' +
                         '<td colspan="3">' +
-                            '<a ' +
-                                'href="#index" ' +
+                            '<button ' +
+                                'type="button"' +
                                 'class="loadMoreValues erk-link-button" ' +
                                 'data-sort="' + fsort + '" ' +
                                 'data-foffset="' + (offsetInt + flimitInt) + '"' +
                                 'data-count="100"' +
                             '>' +
                                 $.i18n.prop('facet.modal.load') + ' 100 ' + $.i18n.prop('facet.modal.more') + '&hellip;' +
-                            '</a>' +
+                            '</button>' +
                             '<br />' +
-                            '<a ' +
-                                'href="#index" ' +
+                            '<button ' +
+                                'type="button"' +
                                 'class="loadMoreValues erk-link-button" ' +
                                 'data-sort="' + fsort + '" ' +
                                 'data-foffset="' + (offsetInt + flimitInt) + '"' +
                                 'data-count="1000"' +
                             '>' +
                                 $.i18n.prop('facet.modal.load') + ' 1000 ' + $.i18n.prop('facet.modal.more') + '&hellip;' +
-                            '</a>' +
+                            '</button>' +
                         '</td>' +
                     '</tr>';
                 $('#fullFacets tbody').append(loadMore);
