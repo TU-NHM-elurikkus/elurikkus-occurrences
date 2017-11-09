@@ -1,8 +1,6 @@
-//= require common
 //= require jquery.cookie
 //= require jquery.jsonp-2.4.0.min
 //= require jquery_migration
-//= require charts
 //= require leafletPlugins
 //= require amplify
 //= require purl
@@ -13,3 +11,4 @@
 //= require map.common
 //= require occurrenceMap
 //= require search
+//= require charts
