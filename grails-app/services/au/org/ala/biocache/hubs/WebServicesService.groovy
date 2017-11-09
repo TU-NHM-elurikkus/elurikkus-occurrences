@@ -32,7 +32,7 @@ class WebServicesService implements ApplicationContextAware {
     Map cachedGroupedFacets = [:] // keep a copy in case method throws an exception and then blats the saved version
 
     def getFacetsCacheServiceBean() {
-        facetsCacheServiceBean = applicationContext.getBean("facetsCacheServiceBean")
+        facetsCacheServiceBean = applicationContext.getBean("facetsCacheService")
         return facetsCacheServiceBean
     }
 
