@@ -4,14 +4,14 @@ var ColourByControl = L.Control.extend({
         collapsed: false
     },
 
-    onAdd: function (map) {
+    onAdd: function(map) {
         // create the control container with a particular class name
         var $controlToAdd = $('.colourbyTemplate').clone();
 
         var container = L.DomUtil.create('div', 'leaflet-control-layers');
         var $container = $(container);
 
-        $container.attr('id','colourByControl');
+        $container.attr('id', 'colourByControl');
         $container.attr('aria-haspopup', true);
         $container.html($controlToAdd.html());
 
@@ -25,12 +25,12 @@ var RecordLayerControl = L.Control.extend({
         collapsed: false
     },
 
-    onAdd: function (map) {
+    onAdd: function(map) {
         // create the control container with a particular class name
         var container = L.DomUtil.create('div', 'leaflet-control-layers');
         var $container = $(container);
 
-        $container.attr('id','recordLayerControl');
+        $container.attr('id', 'recordLayerControl');
         $('#mapLayerControls').prependTo($container);
 
         // Fix for Firefox select bug
@@ -137,7 +137,7 @@ OccurrenceMap.prototype.initialize = function() {
     self.map.addControl(self.drawControl);
 
     self.map.on('draw:created', function(e) {
-        //setup onclick event for self object
+        // setup onclick event for self object
         var layer = e.layer;
         addClickEventForVector(layer, self.query, self.map);
         generatePopup(layer, e.latlng, self.query, self.map);
