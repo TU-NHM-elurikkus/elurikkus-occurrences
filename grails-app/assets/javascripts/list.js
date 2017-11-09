@@ -10,7 +10,6 @@
 //= require ekko-lightbox-5.2.0
 //= require ala-charts
 //= require bootstrap-slider
-//= require bootstrap-slider
 //= require map.common
 //= require occurrenceMap
 //= require search
