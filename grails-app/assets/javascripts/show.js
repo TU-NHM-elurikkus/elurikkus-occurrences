@@ -1,8 +1,6 @@
 //= require record-view
 //= require ekko-lightbox-5.2.0
-//= require leafletPlugins
 //= require amplify
-//= require jquery_migration
 
 $(function() {
     // Lightbox
