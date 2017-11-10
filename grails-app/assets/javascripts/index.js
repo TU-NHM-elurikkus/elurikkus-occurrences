@@ -1,4 +1,3 @@
-//= require common
 //= require jquery.cookie
 //= require jquery.jsonp-2.4.0.min
 //= require jquery_migration
