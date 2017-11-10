@@ -406,7 +406,7 @@ $(document).ready(function() {
     $('a.multipleFacetsLink, a#downloadLink, a#alertsLink, .tooltips, .tooltip, span.dropDown a, ' +
       'div#customiseFacets > a, a.removeLink, .erk-button, .rawTaxonSumbit').tooltip();
 
-    // maultiple facets popup - sortable column heading links
+    // multiple facets popup - sortable column heading links
     $('a.fsort').live('click', function(e) {
         e.preventDefault();
         var fsort = $(this).data('sort');
@@ -523,8 +523,8 @@ function reloadWithParam(paramName, paramValue) {
     var paramList = [];
     var q = $.url().param('q'); // $.query.get('q')[0];
     var fqList = $.url().param('fq'); // $.query.get('fq');
-    var sort = $.url().param('sort');
-    var dir = $.url().param('dir');
+    var sort = $.url().param('sort') || BC_CONF["sortField"];
+    var dir = $.url().param('dir') || BC_CONF["sortDir"];
     var pageSize = $.url().param('pageSize');
     var lat = $.url().param('lat');
     var lon = $.url().param('lon');
@@ -589,6 +589,8 @@ function removeFacet(el) {
     var lon = $.url().param('lon');
     var rad = $.url().param('radius');
     var taxa = $.url().param('taxa');
+    var sort = $.url().param('sort') || BC_CONF["sortField"];
+    var dir = $.url().param('dir') || BC_CONF["sortDir"];
     var paramList = [];
 
     if(q) {
@@ -599,6 +601,9 @@ function removeFacet(el) {
     if(fqList && typeof fqList === 'string') {
         fqList = [fqList];
     }
+
+    paramList.push('sort=' + sort);
+    paramList.push('dir=' + dir);
 
     if(lat && lon && rad) {
         paramList.push('lat=' + lat);
@@ -639,6 +644,8 @@ function removeFilter(el) {
     var rad = $.url().param('radius');
     var taxa = $.url().param('taxa');
     var wkt = $.url().param('wkt');
+    var sort = $.url().param('sort') || BC_CONF["sortField"];
+    var dir = $.url().param('dir') || BC_CONF["sortDir"];
     var paramList = [];
 
     if(q) {
@@ -649,6 +656,9 @@ function removeFilter(el) {
     if(fqList && typeof fqList === 'string') {
         fqList = [fqList];
     }
+
+    paramList.push('sort=' + sort);
+    paramList.push('dir=' + dir);
 
     if(lat && lon && rad) {
         paramList.push('lat=' + lat);
@@ -992,7 +1002,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
 
                     // NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues
                     // Problematic URL http://biocache.ala.org.au/occurrences/search?q=lsid:urn:lsid:biodiversity.org.au:afd.taxon:b76f8dcf-fabd-4e48-939c-fd3cafc1887a&fq=geospatial_kosher:true&fq=state:%22Australian%20Capital%20Territory%22
-                    var link = BC_CONF.searchString + '&fq=' + fqParam;
+                    var link = BC_CONF.searchString + '&fq=' + fqParam + '&sort=' + BC_CONF.sortField + '&dir=' + BC_CONF.sortDir;
 
                     html +=
                         '<tr>' +
@@ -1000,7 +1010,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                                 '<input type="checkbox" name="fqs" class="fqs" value="' + fqParam + '" />' +
                             '</td>' +
                             '<td>' +
-                            '<a href="' + link + '">' +
+                                '<a href="' + link + '">' +
                                     label +
                                 '</a>' +
                             '</td>' +

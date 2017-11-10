@@ -333,7 +333,7 @@
                                 <option>0.4</option>
                                 <option>0.5</option>
                                 <option>0.6</option>
-                                <option >0.7</option>
+                                <option>0.7</option>
                                 <option>0.8</option>
                                 <option>0.9</option>
                                 <option>1</option>
@@ -463,9 +463,9 @@
         $('#wktFromMapBounds').click(function(e) {
             var b = occMap.map.getBounds();
             var wkt = "POLYGON ((" + b.getWest() + " " + b.getNorth() + ", " +
-                    b.getEast()  + " " + b.getNorth() + ", " +
-                    b.getEast()  + " " + b.getSouth() + ", " +
-                    b.getWest()  + " " + b.getSouth() + ", " +
+                    b.getEast() + " " + b.getNorth() + ", " +
+                    b.getEast() + " " + b.getSouth() + ", " +
+                    b.getWest() + " " + b.getSouth() + ", " +
                     b.getWest() + " " + b.getNorth() + "))";
             var url = "${g.createLink(uri:'/occurrences/search')}" + occMap.query + "&wkt=" + encodeURIComponent(wkt);
             window.location.href = url;
