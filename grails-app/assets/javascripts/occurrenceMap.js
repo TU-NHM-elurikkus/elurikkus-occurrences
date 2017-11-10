@@ -384,15 +384,31 @@ OccurrenceMap.prototype.addGridLegendItem = function() {
         );
 };
 
-function addLegendItem(name, red, green, blue, data) {
-    var label = name.split('.');
-    var nameLabel = label[label.length - 1];
-    var translatedLabel = $.i18n.prop('basis_of_record.' + nameLabel);
-    if(translatedLabel.startsWith('[')) {
-        translatedLabel = nameLabel;
+function addLegendItem(data, fieldName) {
+    var name = data.name;
+    var translatedLabel;
+
+    if(name) {
+        var label = name.split('.');
+        label = label[label.length - 1];
+
+        if(fieldName === 'country') {
+            translatedLabel = $.i18n.prop('country.' + label);
+        } else if(fieldName === 'rank') {
+            translatedLabel = $.i18n.prop('taxonomy.rank.' + label);
+            translatedLabel = translatedLabel.charAt(0).toUpperCase() + translatedLabel.slice(1);
+        } else {
+            translatedLabel = $.i18n.prop('facet.' + fieldName + '.' + label);
+        }
+
+        if(translatedLabel.startsWith('[')) {
+            translatedLabel = label;
+        }
+    } else {
+        translatedLabel = $.i18n.prop('general.value.missing');
     }
 
-    var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/; // e.g. 2001-02-31T12:00:00Z with year capture
+    var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/;  // e.g. 2001-02-31T12:00:00Z with year capture
     if(name.search(isoDateRegEx) > -1) {
         // convert full ISO date to YYYY-MM-DD format
         name = name.replace(isoDateRegEx, '$1');
@@ -403,7 +419,7 @@ function addLegendItem(name, red, green, blue, data) {
                 .append($('<input>')
                     .attr('type', 'checkbox')
                     .attr('checked', 'checked')
-                    .attr('id', name)
+                    .attr('id', name.replace(' ', '-'))
                     .attr('fq', data.fq)
                     .addClass('layerFacet')
                     .addClass('leaflet-control-layers-selector')
@@ -412,7 +428,7 @@ function addLegendItem(name, red, green, blue, data) {
             .append($('<td>')
                 .append($('<span>')
                     .addClass('legendColour')
-                    .attr('style', 'background-color:rgb(' + red + ',' + green + ',' + blue + ');')
+                    .attr('style', 'background-color:rgb(' + data.red + ',' + data.green + ',' + data.blue + ');')
                 )
                 .append($('<span>')
                     .addClass('legendItemName')
@@ -724,9 +740,7 @@ ColorMode.prototype.initialize = function() {
 
             function updateLegend(data) {
                 $.each(data, function(index, legendDef){
-                    var legItemName = legendDef.name ? legendDef.name : 'recordcore.record.value.unspecified';
-
-                    addLegendItem(legItemName, legendDef.red, legendDef.green, legendDef.blue, legendDef);
+                    addLegendItem(legendDef, self.facet);
                 });
             }
 
