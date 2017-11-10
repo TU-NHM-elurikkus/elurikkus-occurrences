@@ -1,6 +1,5 @@
 //= require jquery.cookie
 //= require jquery.jsonp-2.4.0.min
-//= require jquery_migration
 //= require jquery.autocomplete
 //= require leafletPlugins
 //= require purl
