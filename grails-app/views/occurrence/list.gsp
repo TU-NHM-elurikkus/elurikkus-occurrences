@@ -4,6 +4,9 @@
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}" />
 <g:set var="authService" bean="authService" />
 
+<g:set var="sortField" value="${params.sort ?: 'first_loaded_date'}" />
+<g:set var="sortDir" value="${params.dir ?: 'desc'}" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -59,20 +62,12 @@
                 disableLikeDislikeButton: "${authService.getUserId() ? false : true}",
                 addLikeDislikeButton: "${(grailsApplication.config.addLikeDislikeButton == false) ? false : true}",
                 addPreferenceButton: "${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains('ROLE_ADMIN') ? true : false) : false}",
-                // whatever this is
-                userRatingHelpText: `
-                    <div>
-                        <b>Up vote (<span class="fa fa-thumbs-o-up" aria-hidden="true"></span>) an image:</b>
-                        Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.
-                        <br /><br />
-                        <b>Down vote (<span class="fa fa-thumbs-o-down" aria-hidden="true"></span>) an image:</b>
-                        Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.
-                        <br />
-                    </div>
-                `,
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
                 getPreferredSpeciesListUrl:  "${grailsApplication.config.speciesList.baseURL}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
             };
+
+            BC_CONF["sortField"] = "${sortField}";
+            BC_CONF["sortDir"] = "${sortDir}";
 
             for(var field in BC_CONF_FIELDS) {
                 if(BC_CONF_FIELDS.hasOwnProperty(field)) {
@@ -234,7 +229,7 @@
         </g:elseif>
 
         <g:else>
-            <%--  first row (#searchInfoRow), contains customise facets button and number of results for query, etc.  --%>
+            <%-- first row (#searchInfoRow), contains customise facets button and number of results for query, etc.  --%>
             <div class="row" id="searchInfoRow">
                 <%-- Results column --%>
                 <div class="col">
@@ -530,7 +525,7 @@
                             </div>
 
                             <div class="inline-controls inline-controls--right">
-                                <g:set var="useDefault" value="${(!params.sort && !params.dir) ? true : false }" />
+                                <g:set var="useDefault" value="${!params.sort && !params.dir}" />
 
                                 <div class="inline-controls__group">
                                     <label for="per-page">
@@ -610,7 +605,7 @@
                                     omitLast="true"
                                     next="${message(code: 'general.paginate.next')}"
                                     prev="${message(code: 'general.paginate.prev')}&nbsp;"
-                                    params="${[taxa:params.taxa, q:params.q, fq:params.fq, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}"
+                                    params="${[taxa:params.taxa, q:params.q, fq:params.fq, sort:sortField, dir:sortDir, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}"
                                 />
                             </div>
                         </div>  <%-- end solrResults --%>

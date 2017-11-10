@@ -52,7 +52,6 @@ class OccurrenceTagLib {
      * @return
      */
     def formatFieldName(fieldName) {
-
         def _message = "facet.${fieldName.toLowerCase()}"
         def output = "${alatag.message(code: _message)}"
 
