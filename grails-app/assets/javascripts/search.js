@@ -1,4 +1,4 @@
-var BC_CONF;  // Populated by elurikkus.gsp inline script
+var BC_CONF; // Populated by elurikkus.gsp inline script
 
 // Jquery Document.onLoad equivalent
 $(document).ready(function() {
@@ -236,8 +236,8 @@ $(document).ready(function() {
             // use HTML template, see http://stackoverflow.com/a/1091493/249327
             var speciesPageUri = BC_CONF.bieWebappUrl + '/species/' + lsid;
             var speciesPageLink =
-                '<a href="' + speciesPageUri + '" title="Species page" target="BIE">' +  // TODO: Translate
-                    'view species page' +  // TODO: Translate
+                '<a href="' + speciesPageUri + '" title="Species page" target="BIE">' + // TODO: Translate
+                    'view species page' + // TODO: Translate
                 '</a>';
             $clone.find('a.erk-button').text(nameString).attr('href', speciesPageUri);
             $clone.find('.nameString').text(nameString);
@@ -311,7 +311,7 @@ $(document).ready(function() {
         $('#refineTaxaSearch_' + formNum).find(':input.rawTaxonCheckBox').each(function(i, el) {
             if($(el).is(':checked')) {
                 checkedFound = true;
-                return false;  // break loop
+                return false; // break loop
             }
         });
 
@@ -326,7 +326,7 @@ $(document).ready(function() {
     $('#loadMoreImages .erk-button').live('click', function(e) {
         e.preventDefault();
         $(this).addClass('disabled');
-        $(this).find('img').show();  // turn on spinner
+        $(this).find('img').show(); // turn on spinner
         var start = $('#imagesGrid').data('count');
         loadImages(start);
     });
@@ -353,7 +353,7 @@ $(document).ready(function() {
 
     $('#downloadFacet').live('click', function(e) {
         var facetName = $('#fullFacets').data('facet');
-        var facetQuery = BC_CONF.facetDownloadQuery.replace(/&quot;/g, '"')
+        var facetQuery = BC_CONF.facetDownloadQuery.replace(/&quot;/g, '"');
         window.location.href = BC_CONF.biocacheServiceUrl + '/occurrences/facets/download' +
             facetQuery +
             '&facets=' + facetName +
@@ -378,7 +378,7 @@ $(document).ready(function() {
         fq = fq.replace(/ OR $/, ''); // remove trailing OR
 
         if(fq.indexOf(' OR ') !== -1) {
-            fq = '(' + fq + ')';  // so that exclude (inverse) searches work
+            fq = '(' + fq + ')'; // so that exclude (inverse) searches work
         }
 
         if(checkedFound && selectedCount > maxSelected) {
@@ -498,7 +498,7 @@ $(document).ready(function() {
 
         var downloadUrl = $('#mapDownloadUrl').val() +
             BC_CONF.searchString +
-            '&extents=' + extents +  // need to retrieve the
+            '&extents=' + extents + // need to retrieve the
             '&format=' + $('#format').val() +
             '&dpi=' + dpi +
             '&pradiusmm=' + dotRadius +
@@ -523,8 +523,8 @@ function reloadWithParam(paramName, paramValue) {
     var paramList = [];
     var q = $.url().param('q'); // $.query.get('q')[0];
     var fqList = $.url().param('fq'); // $.query.get('fq');
-    var sort = $.url().param('sort') || BC_CONF["sortField"];
-    var dir = $.url().param('dir') || BC_CONF["sortDir"];
+    var sort = $.url().param('sort') || BC_CONF['sortField'];
+    var dir = $.url().param('dir') || BC_CONF['sortDir'];
     var pageSize = $.url().param('pageSize');
     var lat = $.url().param('lat');
     var lon = $.url().param('lon');
@@ -583,14 +583,14 @@ function reloadWithParam(paramName, paramValue) {
  */
 function removeFacet(el) {
     var facet = $(el).data('facet').replace(/\+/g, ' ');
-    var q = $.url().param('q');  // $.query.get('q')[0];
-    var fqList = $.url().param('fq');  // $.query.get('fq');
+    var q = $.url().param('q'); // $.query.get('q')[0];
+    var fqList = $.url().param('fq'); // $.query.get('fq');
     var lat = $.url().param('lat');
     var lon = $.url().param('lon');
     var rad = $.url().param('radius');
     var taxa = $.url().param('taxa');
-    var sort = $.url().param('sort') || BC_CONF["sortField"];
-    var dir = $.url().param('dir') || BC_CONF["sortDir"];
+    var sort = $.url().param('sort') || BC_CONF['sortField'];
+    var dir = $.url().param('dir') || BC_CONF['sortDir'];
     var paramList = [];
 
     if(q) {
@@ -636,16 +636,16 @@ function removeFacet(el) {
 }
 
 function removeFilter(el) {
-    var facet = $(el).data('facet').replace(/^\-/g, '');  // remove leading '-' for exclude searches
-    var q = $.url().param('q');  // $.query.get('q')[0];
-    var fqList = $.url().param('fq');  // $.query.get('fq');
+    var facet = $(el).data('facet').replace(/^\-/g, ''); // remove leading '-' for exclude searches
+    var q = $.url().param('q'); // $.query.get('q')[0];
+    var fqList = $.url().param('fq'); // $.query.get('fq');
     var lat = $.url().param('lat');
     var lon = $.url().param('lon');
     var rad = $.url().param('radius');
     var taxa = $.url().param('taxa');
     var wkt = $.url().param('wkt');
-    var sort = $.url().param('sort') || BC_CONF["sortField"];
-    var dir = $.url().param('dir') || BC_CONF["sortDir"];
+    var sort = $.url().param('sort') || BC_CONF['sortField'];
+    var dir = $.url().param('dir') || BC_CONF['sortDir'];
     var paramList = [];
 
     if(q) {
@@ -728,7 +728,7 @@ function loadDefaultCharts() {
  */
 function loadUserCharts() {
 
-    if(userChartConfig) {  // userCharts
+    if(userChartConfig) { // userCharts
         // load user charts
         $.ajax({
             dataType: 'json',
@@ -916,9 +916,9 @@ function loadMoreFacets(facetName, displayName, fsort, foffset) {
         }
     });
     $('#facetRefineForm').append(inputsHtml);
-    $('#fullFacets').data('facet', facetName);  // data attribute for storing facet field
-    $('#fullFacets').data('label', displayName);  // data attribute for storing facet display name
-    $('#indexCol a').html(displayName);  // table heading
+    $('#fullFacets').data('facet', facetName); // data attribute for storing facet field
+    $('#fullFacets').data('label', displayName); // data attribute for storing facet display name
+    $('#indexCol a').html(displayName); // table heading
 
     $('a.fsort').tooltip();
 
@@ -939,15 +939,15 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
         // so default facet sorting is used in initial loading
         jsonUri += '&fsort=' + fsort;
     }
-    jsonUri += '&callback=?';  // JSONP trigger
+    jsonUri += '&callback=?'; // JSONP trigger
 
     $.getJSON(jsonUri, function(data) {
 
         if(data.totalRecords && data.totalRecords > 0) {
             var hasMoreFacets = false;
             var html = '';
-            $('tr#loadingRow').remove();  // remove the loading message
-            $('tr#loadMore').remove();  // remove the load more records link
+            $('tr#loadingRow').remove(); // remove the loading message
+            $('tr#loadMore').remove(); // remove the load more records link
             if(replaceFacets) {
                 // remove any facet values in table
                 $('#fullFacets tr').not('tr.tableHead').not('#spinnerRow').remove();
@@ -966,7 +966,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
 
                     if(!label) {
                         label = $.i18n.prop('facet.absent');
-                        $('tr#facets-row-absent').remove();  // remove the absent row, as it is reinserted
+                        $('tr#facets-row-absent').remove(); // remove the absent row, as it is reinserted
                     } else if(label.indexOf('@') !== -1) {
                         label = label.substring(0, label.indexOf('@'));
                     } else if(facetName.indexOf('outlier_layer') !== -1 || (/^el\d+/).test(label)) {
@@ -1061,8 +1061,8 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                 $('#fullFacets tbody').append(loadMore);
             }
         } else {
-            $('tr#loadingRow').remove();  // remove the loading message
-            $('tr#loadMore').remove();  // remove the load more records link
+            $('tr#loadingRow').remove(); // remove the loading message
+            $('tr#loadMore').remove(); // remove the load more records link
             $('#spinnerRow').hide();
             $('#fullFacets tbody').append(
                 '<tr>' +

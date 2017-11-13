@@ -52,7 +52,7 @@ $(document).ready(function() {
                             if(element.uuid === data.userAssertions[i].relatedUuid && element.code === code) {
                                 bPreventAddingIssue = true;
                             }
-                        })
+                        });
                     }
                 }
 
@@ -612,13 +612,13 @@ function sendEmail(strEncoded) {
 }
 
 function toggleTests(btn) {
-    var iSpan = $(btn).find("span.fa-caret-square-o-up");
+    var iSpan = $(btn).find('span.fa-caret-square-o-up');
     if(iSpan.length) {
-        iSpan.removeClass("fa-caret-square-o-up");
-        iSpan.addClass("fa-caret-square-o-down");
+        iSpan.removeClass('fa-caret-square-o-up');
+        iSpan.addClass('fa-caret-square-o-down');
     } else {
-        iSpan = $(btn).find("span.fa-caret-square-o-down");
-        iSpan.removeClass("fa-caret-square-o-down");
-        iSpan.addClass("fa-caret-square-o-up");
+        iSpan = $(btn).find('span.fa-caret-square-o-down');
+        iSpan.removeClass('fa-caret-square-o-down');
+        iSpan.addClass('fa-caret-square-o-up');
     }
 }

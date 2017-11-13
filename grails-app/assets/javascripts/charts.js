@@ -3,8 +3,8 @@ var baseFacetChart = {
     collectionsUrl: 'http://no-default-collectory',
     biocacheServicesUrl: 'http://no-default-biocache/ws',
     biocacheWebappUrl: 'http://no-default-biocache',
-    chartsDiv: null,  // the container for the chart
-    chart: null,    // the google chart object
+    chartsDiv: null, // the container for the chart
+    chart: null, // the google chart object
     width: 600,
     height: 450,
     chartArea: { left: 0, top: 0, width: '100%', height: '100%' },
@@ -165,7 +165,7 @@ var baseFacetChart = {
                 if(Number(year) > lastYear) { lastYear = Number(year); }
                 dataMap[year] = obj.count;
             });
-            if(firstYear > lastYear) { return []; }  // no data
+            if(firstYear > lastYear) { return []; } // no data
             for(var y = firstYear; y <= lastYear; y++) {
                 transformedData.push({ label: String(y), count: dataMap[String(y)] || 0 });
             }
@@ -271,7 +271,7 @@ var baseFacetChart = {
         this.transformDataAfter(dataTable, $.extend(true, {}, this.googleChartOptions()));
 
         // setup a click handler - if requested
-        if(this.clickThru !== false) {  // defaults to true
+        if(this.clickThru !== false) { // defaults to true
             google.visualization.events.addListener(this.chart, 'select', function() {
 
                 // default facet value is the name selected
@@ -610,10 +610,10 @@ function loadAndDrawFacetCharts(options) {
     // the base url for getting the facet data
     var url = (options.biocacheServicesUrl === undefined) ? baseFacetChart.biocacheServicesUrl : options.biocacheServicesUrl,
 
-    // build the required facet set
+        // build the required facet set
         facets = options.charts.join('&facets='),
 
-    // calc the target div
+        // calc the target div
         chartsDiv = $('#' + (options.chartsDiv ? options.chartsDiv : baseFacetChart.chartsDiv));
 
     // show a message while requesting data
@@ -643,11 +643,11 @@ function loadAndDrawFacetCharts(options) {
 
 /** *** external services & links *****/
 // an instance of the collections app - used for name lookup services
-var collectionsUrl = 'http://collections.ala.org.au';  // should be overridden from config by the calling page
+var collectionsUrl = 'http://collections.ala.org.au'; // should be overridden from config by the calling page
 // an instance of the biocache web services app - used for facet and taxonomic breakdowns
-var biocacheServicesUrl = 'http://biocache.ala.org.au/ws';  // should be overridden from config by the calling page
+var biocacheServicesUrl = 'http://biocache.ala.org.au/ws'; // should be overridden from config by the calling page
 // an instance of a web app - used to display search results
-var biocacheWebappUrl = 'http://biocache.ala.org.au';  // should be overridden from config by the calling page
+var biocacheWebappUrl = 'http://biocache.ala.org.au'; // should be overridden from config by the calling page
 
 // defaults for taxa chart
 var taxonomyPieChartOptions = {
@@ -782,7 +782,7 @@ function buildGenericFacetChart(name, data, query, chartsDiv, chartOptions) {
         if(chartLabel === 'country') {
             opts.title = $.i18n.prop('charts.js.bycountry');
         } else {
-            opts.title = $.i18n.prop('charts.js.by') + ' ' + chartLabel;  // default title
+            opts.title = $.i18n.prop('charts.js.by') + ' ' + chartLabel; // default title
         }
     }
     var individualOptions = individualChartOptions[name] ? individualChartOptions[name] : {};
@@ -845,7 +845,7 @@ function buildGenericFacetChart(name, data, query, chartsDiv, chartOptions) {
     }
 
     // setup a click handler - if requested
-    if(chartOptions.clickThru !== false) {  // defaults to true
+    if(chartOptions.clickThru !== false) { // defaults to true
         google.visualization.events.addListener(chart, 'select', function() {
 
             // default facet value is the name selected
@@ -1193,9 +1193,9 @@ var taxonomyChart = {
                 '<div class="erk-link" id="recordsLink">' +
                     $.i18n.prop('charts.taxonPie.viewRecords') +
                 '</div>';
-            $recordsLink = $(linkDiv).appendTo($outerContainer);  // create it
+            $recordsLink = $(linkDiv).appendTo($outerContainer); // create it
             $recordsLink.click(function() {
-                thisChart.showRecords();  // called explicitly so we have the correct 'this' context
+                thisChart.showRecords(); // called explicitly so we have the correct 'this' context
             });
         }
 
@@ -1207,8 +1207,8 @@ var taxonomyChart = {
         }
 
         // setup a click handler - if requested
-        var clickThru = this.chartOptions.clickThru === undefined ? true : this.chartOptions.clickThru;  // default to true
-        var drillDown = this.chartOptions.drillDown === undefined ? true : this.chartOptions.drillDown;  // default to true
+        var clickThru = this.chartOptions.clickThru === undefined ? true : this.chartOptions.clickThru; // default to true
+        var drillDown = this.chartOptions.drillDown === undefined ? true : this.chartOptions.drillDown; // default to true
         if(clickThru || drillDown) {
             google.visualization.events.addListener(chart, 'select', function() {
 

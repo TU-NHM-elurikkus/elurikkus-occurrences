@@ -210,7 +210,7 @@ function loadExploreArea(EYA_CONF) {
             strokeWeight: 1,
             strokeColor: 'white',
             strokeOpacity: 0.5,
-            fillColor: '#222',  // '#2C48A6'
+            fillColor: '#222', // '#2C48A6'
             fillOpacity: 0.2,
             zIndex: -10
         });
@@ -528,7 +528,7 @@ function loadExploreArea(EYA_CONF) {
         });
     }
 
-    var sortOrder;  // Keep the last used ordering state for the right panel
+    var sortOrder; // Keep the last used ordering state for the right panel
 
     /**
      * Process the JSON data from an Species list AJAX request (species in area)
@@ -733,7 +733,7 @@ function loadExploreArea(EYA_CONF) {
     }
 
     function bookmarkedSearch(lat, lng, zoom1, group) {
-        EYA_CONF.radius = radiusForZoom[zoom1];  // set global var
+        EYA_CONF.radius = radiusForZoom[zoom1]; // set global var
         EYA_CONF.zoom = parseInt(zoom1);
         $('select#radius').val(EYA_CONF.radius); // update drop-down widget
         if(group) {
