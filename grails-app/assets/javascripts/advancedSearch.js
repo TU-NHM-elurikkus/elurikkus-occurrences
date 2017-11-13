@@ -35,9 +35,9 @@ $(document).ready(function() {
                     return {
                         value: dataItem.matchedNames[0],
                         data: dataItem
-                    }
+                    };
                 })
-            }
+            };
         },
         formatResult: function(suggestion, currentValue) {
             var acItem = suggestion.data;
@@ -79,7 +79,7 @@ $(document).ready(function() {
         $('tr#taxon_row_' + num).hide('slow'); // hide the row
         var query = $('#solrQuery').val(); // get the query text
         // TODO: Clean this code up!
-        query = query.replace(' OR lsid:' + lsid, '');  // remove potential OR'ed lsid
+        query = query.replace(' OR lsid:' + lsid, ''); // remove potential OR'ed lsid
         query = query.replace('lsid:' + lsid + ' OR ', ''); // remove potential OR'ed lsid
         query = query.replace('lsid:' + lsid, '').trimBools(); // reomve the LSID
         query = query.replace(/\(\)/g, ''); // remove left over braces ()

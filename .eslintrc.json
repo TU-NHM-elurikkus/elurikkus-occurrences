@@ -13,7 +13,8 @@
         "amplify": true,
         "google": true,
         "L": true,
-        "moment": true
+        "moment": true,
+        "Wkt": true
     },
     "extends": "eslint:recommended",
     "rules": {

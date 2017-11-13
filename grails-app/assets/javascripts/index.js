@@ -6,7 +6,7 @@
 //= require map.common
 //= require advancedSearch
 
-var MAP_VAR;  // Populated by index.gsp view
+var MAP_VAR; // Populated by index.gsp view
 
 $(document).ready(function() {
     var mapInit = false;

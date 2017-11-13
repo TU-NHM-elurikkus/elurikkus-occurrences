@@ -1,3 +1,6 @@
+var BC_CONF; // Populated by elurikkus.gsp inline script
+var MAP_VAR; // Populated by index.gsp view
+
 /*  Common map (Leaflet) functions */
 function addClickEventForVector(layer, query, map) {
     layer.on('click', function(e) {
