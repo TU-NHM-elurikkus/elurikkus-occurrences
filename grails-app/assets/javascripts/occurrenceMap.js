@@ -144,12 +144,12 @@ OccurrenceMap.prototype.initialize = function() {
         self.drawnItems.addLayer(layer);
     });
 
-    //add the default base layer
+    // add the default base layer
     self.map.addLayer(defaultBaseLayer);
 
-    L.control.coordinates({position:"bottomright", useLatLngOrder: true}).addTo(self.map); // coordinate plugin
+    L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(self.map); // coordinate plugin
 
-    self.layerControl = L.control.layers(self.baseLayers, self.overlays, {collapsed:true, position:'topleft'});
+    self.layerControl = L.control.layers(self.baseLayers, self.overlays, { collapsed: true, position: 'topleft' });
     self.layerControl.addTo(self.map);
 
     self.addQueryLayer();
@@ -160,9 +160,8 @@ OccurrenceMap.prototype.initialize = function() {
     L.Util.requestAnimFrame(self.map.invalidateSize, self.map, !1, self.map._container);
     L.Browser.any3d = false; // FF bug prevents selects working properly
 
-    $('.colour-by-control').click(function(e){
-
-        if($(this).parent().hasClass('leaflet-control-layers-expanded')){
+    $('.colour-by-control').click(function(e) {
+        if($(this).parent().hasClass('leaflet-control-layers-expanded')) {
             $(this).parent().removeClass('leaflet-control-layers-expanded');
             $('.colour-by-legend-toggle').show();
         } else {
@@ -179,17 +178,17 @@ OccurrenceMap.prototype.initialize = function() {
         return self.pointLookupClickRegister(e);
     }
 
-    $('#colourByControl,#recordLayerControl').mouseover(function(e){
+    $('#colourByControl,#recordLayerControl').mouseover(function(e) {
         self.map.dragging.disable();
         self.map.off('click', pointLookupClickRegister);
     });
 
-    $('#colourByControl,#recordLayerControl').mouseout(function(e){
+    $('#colourByControl,#recordLayerControl').mouseout(function(e) {
         self.map.dragging.enable();
         self.map.on('click', pointLookupClickRegister);
     });
 
-    $('.hideColourControl').click(function(e){
+    $('.hideColourControl').click(function(e) {
         $('#colourByControl').removeClass('leaflet-control-layers-expanded');
         $('.colour-by-legend-toggle').show();
         e.preventDefault();
@@ -197,25 +196,25 @@ OccurrenceMap.prototype.initialize = function() {
         return false;
     });
 
-    $( "#sizeslider" ).slider({
-        min:1,
-        max:6,
+    $('#sizeslider').slider({
+        min: 1,
+        max: 6,
         value: Number($('#sizeslider-val').text()),
         tooltip: 'hide'
-    }).on('slideStop', function(ev){
+    }).on('slideStop', function(ev) {
         self.uiOptions.pointSize = ev.value;
         $('#sizeslider-val').html(ev.value);
 
         self.addQueryLayer();
     });
 
-    $( "#opacityslider" ).slider({
+    $('#opacityslider').slider({
         min: 0.1,
         max: 1.0,
         step: 0.1,
         value: Number($('#opacityslider-val').text()),
         tooltip: 'hide'
-    }).on('slideStop', function(ev){
+    }).on('slideStop', function(ev) {
         var value = parseFloat(ev.value).toFixed(1); // prevent values like 0.30000000004 appearing
 
         self.uiOptions.opacity = value;
@@ -243,33 +242,32 @@ OccurrenceMap.prototype.initialize = function() {
     });
 
     self.fitMapToBounds(); // zoom map if points are contained within Australia
-    //drawCircleRadius(); // draw circle around lat/lon/radius searches
 
     // display vector from previous wkt search
     if(self.wkt) {
         var wkt = new Wkt.Wkt();
         wkt.read(self.wkt);
-        var wktObject = wkt.toObject({color: '#bada55'});
+        var wktObject = wkt.toObject({ color: '#bada55' });
         wktObject.on('click', pointLookupClickRegister);
         self.drawnItems.addLayer(wktObject);
 
-    } else if (isSpatialRadiusSearch()) {
+    } else if(isSpatialRadiusSearch()) {
         // draw circle onto map
-        var circle = L.circle([$.url().param('lat'), $.url().param('lon')], ($.url().param('radius') * 1000), {color: '#bada55'});
+        var circle = L.circle([$.url().param('lat'), $.url().param('lon')], ($.url().param('radius') * 1000), { color: '#bada55' });
         circle.on('click', pointLookupClickRegister);
         self.drawnItems.addLayer(circle);
     }
 
     self.map.on('draw:edited', function(e) {
-        //setup onclick event for self object
+        // setup onclick event for self object
         var layers = e.layers;
-        layers.eachLayer(function (layer) {
+        layers.eachLayer(function(layer) {
             addClickEventForVector(layer, self.query, self.map);
         });
     });
 
     self.map.on('click', pointLookupClickRegister);
-}
+};
 
 /**
  * A tile layer to map colouring the dots by the selected colour.
@@ -294,18 +292,18 @@ OccurrenceMap.prototype.addQueryLayer = function() {
     self.mode.initialize();
 
     return true;
-}
+};
 
 OccurrenceMap.prototype.clearLayers = function() {
     var self = this;
 
-    $.each(self.currentLayers, function(index, value){
+    $.each(self.currentLayers, function(index, value) {
         self.map.removeLayer(self.currentLayers[index]);
         self.layerControl.removeLayer(self.currentLayers[index]);
     });
 
     self.currentLayers = [];
-}
+};
 
 /**
  * Fudge to allow double clicks to propagate to map while allowing single clicks to be registered
@@ -316,14 +314,14 @@ OccurrenceMap.prototype.pointLookupClickRegister = function(e) {
 
     if(this.clickCount <= 1) {
         setTimeout(function() {
-            if (this.clickCount <= 1) {
+            if(this.clickCount <= 1) {
                 this.pointLookup(e);
             }
 
             this.clickCount = 0;
         }.bind(this), 400);
     }
-}
+};
 
 var ZOOM_TO_RADIUS = [
     800, 400, 200, 100, 50, 25, 20, 7.5, 3, 1.5,
@@ -343,20 +341,6 @@ OccurrenceMap.prototype.changeFacetColours = function() {
 
     return true;
 };
-
-// TODO: Is this used anywhere
-function showHideControls(el) {
-    var $this = this;
-    if($($this).hasClass('fa')) {
-        alert('activating');
-        $($this).hide();
-        $($this + ' table.controls').show();
-    } else {
-        alert('deactivating');
-        $($this).show();
-        $($this + ' table.controls').hide();
-    }
-}
 
 function addDefaultLegendItem(pointColour) {
     $('.legendTable')
@@ -408,7 +392,7 @@ function addLegendItem(data, fieldName) {
         translatedLabel = $.i18n.prop('general.value.missing');
     }
 
-    var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/;  // e.g. 2001-02-31T12:00:00Z with year capture
+    var isoDateRegEx = /^(\d{4})-\d{2}-\d{2}T.*/; // e.g. 2001-02-31T12:00:00Z with year capture
     if(name.search(isoDateRegEx) > -1) {
         // convert full ISO date to YYYY-MM-DD format
         name = name.replace(isoDateRegEx, '$1');
@@ -496,23 +480,23 @@ OccurrenceMap.prototype.formatPopupHtml = function(record) {
 OccurrenceMap.prototype.getRecordInfo = function() {
     // http://biocache.ala.org.au/ws/occurrences/c00c2f6a-3ae8-4e82-ade4-fc0220529032
     $.ajax({
-        url: this.props.biocacheServiceURL + "/occurrences/info" + this.query,
-        jsonp: "callback",
-        dataType: "jsonp",
+        url: this.props.biocacheServiceURL + '/occurrences/info' + this.query,
+        jsonp: 'callback',
+        dataType: 'jsonp',
         success: function(response) {
         }
     });
-}
+};
 
 /**
  * Format the display of a scientific name.
  * E.g. genus and below should be italicised
  */
 function formatSciName(name, rankId) {
-    var output = "";
+    var output = '';
 
-    if (rankId && rankId >= 6000) {
-        output = "<i>" + name + "</i>";
+    if(rankId && rankId >= 6000) {
+        output = '<i>' + name + '</i>';
     } else {
         output = name;
     }
@@ -524,35 +508,35 @@ function formatSciName(name, rankId) {
  */
 OccurrenceMap.prototype.fitMapToBounds = function() {
     // do webservice call to get max extent of WMS data
-    var jsonUrl = this.props.biocacheServiceURL + "/mapping/bounds.json" + this.query + "&callback=?";
+    var jsonUrl = this.props.biocacheServiceURL + '/mapping/bounds.json' + this.query + '&callback=?';
 
     $.getJSON(jsonUrl, function(data) {
-        if (data.length == 4) {
-            var sw = L.latLng(data[1],data[0]);
-            var ne = L.latLng(data[3],data[2]);
+        if(data.length === 4) {
+            var sw = L.latLng(data[1], data[0]);
+            var ne = L.latLng(data[3], data[2]);
             var dataBounds = L.latLngBounds(sw, ne);
             var mapBounds = this.map.getBounds();
 
-            if (mapBounds && mapBounds.contains(sw) && mapBounds.contains(ne) && dataBounds) {
+            if(mapBounds && mapBounds.contains(sw) && mapBounds.contains(ne) && dataBounds) {
                 // data bounds is smaller than the default map bounds/view, so zoom into fit data
                 this.map.fitBounds(dataBounds);
 
-                if (this.map.getZoom() > 15) {
+                if(this.map.getZoom() > 15) {
                     this.map.setZoom(15);
                 }
-            } else if (!mapBounds.contains(dataBounds) && !mapBounds.intersects(dataBounds)) {
+            } else if(!mapBounds.contains(dataBounds) && !mapBounds.intersects(dataBounds)) {
                 // if data is not present in the default map bounds/view, then zoom to data
                 this.map.fitBounds(dataBounds);
-                if (this.map.getZoom() > 3) {
+                if(this.map.getZoom() > 3) {
                     this.map.setZoom(3);
                 }
-            } else if (this.zoomOutsideScopedRegion) {
+            } else if(this.zoomOutsideScopedRegion) {
                 // if data is present in default map view but also outside that area, then zoom to data bounds
                 // as long as zoomOutsideScopedRegion is true, otherwise keep default zoom/bounds
 
                 // fitBounds is async so we set a one time only listener to detect change
                 this.map.once('zoomend', function() {
-                    if (this.map.getZoom() < 2) {
+                    if(this.map.getZoom() < 2) {
                         this.map.setView(L.latLng(0, 24), 2); // zoom level 2 and centered over africa
                     }
                 });
@@ -561,7 +545,7 @@ OccurrenceMap.prototype.fitMapToBounds = function() {
             this.map.invalidateSize();
         }
     }.bind(this));
-}
+};
 
 /**
  * Spatial searches from Explore Your Area - draw a circle representing
@@ -657,31 +641,31 @@ ColorMode.prototype.initialize = function() {
         var opacity = self.map.uiOptions.opacity;
         var outlineDots = self.map.uiOptions.outline;
 
-        var envProperty = "color:" + self.map.props.pointColour + ";nam:circle;size:" + pointSize + ";opacity:" + opacity;
+        var envProperty = 'color:' + self.map.props.pointColour + ';nam:circle;size:' + pointSize + ';opacity:' + opacity;
 
         if(self.facet) {
-            if(self.facet == "gridVariable"){
-                self.facet = "coordinate_uncertainty"
-                envProperty = "colormode:coordinate_uncertainty;name:circle;size:" + pointSize + ";opacity:1;cellfill:0xffccff;variablegrids:on"
+            if(self.facet === 'gridVariable') {
+                self.facet = 'coordinate_uncertainty';
+                envProperty = 'colormode:coordinate_uncertainty;name:circle;size:' + pointSize + ';opacity:1;cellfill:0xffccff;variablegrids:on';
             } else {
-                envProperty = "colormode:" + self.facet + ";name:circle;size:" + pointSize + ";opacity:1;"
+                envProperty = 'colormode:' + self.facet + ';name:circle;size:' + pointSize + ';opacity:1;';
             }
         }
 
         var gridSizeMap = {
-            1: 256, 2:128, 3: 64, 4:32, 5:16, 6:8
-        }
+            1: 256, 2: 128, 3: 64, 4: 32, 5: 16, 6: 8
+        };
 
-        layer = L.tileLayer.wms(self.map.props.mappingUrl + "/mapping/wms/reflect" + self.map.query + self.map.additionalFqs, {
+        layer = L.tileLayer.wms(self.map.props.mappingUrl + '/mapping/wms/reflect' + self.map.query + self.map.additionalFqs, {
             layers: 'ALA:occurrences',
             format: 'image/png',
             transparent: true,
-            bgcolor:"0x000000",
-            outline:outlineDots,
+            bgcolor: '0x000000',
+            outline: outlineDots,
             ENV: envProperty,
             opacity: opacity,
             GRIDDETAIL: gridSizeMap[pointSize],
-            STYLE: "opacity:" + opacity // for grid data
+            STYLE: 'opacity:' + opacity // for grid data
         });
 
         self.layer = layer;
@@ -695,20 +679,29 @@ ColorMode.prototype.initialize = function() {
         $('.layerFacet').click(function(e) {
             var controlIdx = 0;
             self.map.additionalFqs = '';
-            self.map.removeFqs = ''
+            self.map.removeFqs = '';
 
-            $('#colourByControl').find('.layerFacet').each(function(idx, layerInput){
-                var $input = $(layerInput), fq;
-                var include =  $input.is(':checked');
+            // In case of more than 20 legend items we need to add 'HQ=0' + HQ=id+1 for stuff to work
+            // TODO - Fix backend if anyone ever finds the bug that is causing this
+            var legendLength = $('#colourByControl').find('.layerFacet').length;
+            if(legendLength > 20) {
+                self.map.additionalFqs += '&HQ=0';
+                controlIdx += 1;
+            }
 
-                if(!include){
+            $('#colourByControl').find('.layerFacet').each(function(idx, layerInput) {
+                var $input = $(layerInput);
+                var fq;
+                var include = $input.is(':checked');
+
+                if(!include) {
                     self.map.additionalFqs = self.map.additionalFqs + '&HQ=' + controlIdx;
                     fq = $input.attr('fq');
                     // logic for facets with missing value is different from those with value
-                    if(fq && fq.startsWith('-')){
+                    if(fq && fq.startsWith('-')) {
                         // to ignore unknown or missing values, minus sign must be removed
-                        fq = fq.replace('-','');
-                    } else{
+                        fq = fq.replace('-', '');
+                    } else {
                         // for all other values minus sign has to be added
                         fq = '-' + fq;
                     }
@@ -716,7 +709,7 @@ ColorMode.prototype.initialize = function() {
                     // add fq to ensure the query in sync with dots displayed on map
                     self.map.removeFqs += '&fq=' + fq;
                 }
-                controlIdx = controlIdx + 1;
+                controlIdx += 1;
 
                 self.map.clearLayers();
                 reinitLayer();
@@ -727,19 +720,19 @@ ColorMode.prototype.initialize = function() {
     function initLegend() {
         $('.legendTable').html('');
 
-        if(!self.facet){
+        if(!self.facet) {
             addDefaultLegendItem(self.map.props.pointColour);
-        } else if (self.facet == 'grid') {
+        } else if(self.facet === 'grid') {
             self.map.addGridLegendItem();
         } else {
-            //update the legend
+            // update the legend
             var pageSize = 20;
             var pageNum = 0;
 
             var loadMoreButton = $('#legendLoadMore');
 
             function updateLegend(data) {
-                $.each(data, function(index, legendDef){
+                $.each(data, function(index, legendDef) {
                     addLegendItem(legendDef, self.facet);
                 });
             }
@@ -783,18 +776,18 @@ ColorMode.prototype.initialize = function() {
 
     reinitLayer();
     initLegend();
-}
+};
 
 ColorMode.prototype.click = function(e) {
     // TODO: Should just be a function
     var popup = new ColorMapPopup(this.map, e);
 
     popup.initialise();
-}
+};
 
 ColorMode.prototype.setOpacity = function(opacity) {
     this.layer.setOpacity(opacity);
-}
+};
 
 /* Taimeatlas mode: renders TA grid and allows querying occurrences by square */
 function TaimeatlasMode(map) {
@@ -838,7 +831,7 @@ var GRID_COLOR_MODES = (function() {
             var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
 
             return rgbToCSS(255, intensity, 0);
-        }
+        };
     }
 
     function logscale(counts) {
@@ -849,7 +842,7 @@ var GRID_COLOR_MODES = (function() {
             var intensity = Math.round(MIN_INTENSITY + (1 - frequency) * (MAX_INTENSITY - MIN_INTENSITY)).toString();
 
             return rgbToCSS(255, intensity, 0);
-        }
+        };
     }
 
     function quantile(counts, quantileNum) {
@@ -891,7 +884,7 @@ var GRID_COLOR_MODES = (function() {
             }
 
             return colors[quantile];
-        }
+        };
     }
 
     return {
@@ -906,10 +899,10 @@ TaimeatlasMode.prototype.queryCounts = function(callback) {
 
     $.getJSON(url, function(response) {
         callback(response[0].fieldResult.filter(function(square) {
-            return square.label != '';
+            return square.label !== '';
         }));
     });
-}
+};
 
 TaimeatlasMode.prototype.loadGeometry = function(counts, callback) {
     var idToCount = {};
@@ -929,7 +922,7 @@ TaimeatlasMode.prototype.loadGeometry = function(counts, callback) {
 
         callback(squares);
     });
-}
+};
 
 TaimeatlasMode.prototype.initialize = function() {
     var self = this;
@@ -1082,7 +1075,7 @@ MapPopup.prototype.showOccurrence = function(record) {
         this.$popupClone.find('a.recordLink').attr('href', this.map.props.contextPath + '/occurrences/' + record.raw.uuid);
         this.$popupClone.find('a.recordLink').attr('disabled', false);
     } else {
-        // missing record - disable "view record" button and display message
+        // missing record - disable 'view record' button and display message
         this.$popupClone.find('a.recordLink').attr('disabled', true).attr('href', 'javascript: void(0)');
         // insert into clone
         this.$popupClone.find('.recordSummary').html('<br>' + this.map.props.translations['search.recordNotFoundForId'] + ': <span style="white-space:nowrap;">' + recordUuid + '</span><br><br>');
@@ -1099,7 +1092,7 @@ MapPopup.prototype.switchOccurrence = function(idx) {
         var currentIdx = self.currentIdx;
 
         self.loadOccurrence(self.uuids[idx], function(data) {
-            if(self.currentIdx == currentIdx) {
+            if(self.currentIdx === currentIdx) {
                 self.showOccurrence(data);
                 self.changeIndex(idx);
                 self.map.map.spin(false);
@@ -1113,15 +1106,15 @@ MapPopup.prototype.switchOccurrence = function(idx) {
     } else {
         self.map.map.spin(false);
     }
-}
+};
 
 // Loads occurrence data
 MapPopup.prototype.loadOccurrence = function(uuid, callback) {
     $.getJSON(this.map.props.contextPath + '/proxy/occurrences/' + uuid + '.json', callback);
-}
+};
 
 MapPopup.prototype.loadMore = function(callback) {
-}
+};
 
 function ColorMapPopup(map, event) {
     MapPopup.call(this, map);
@@ -1141,9 +1134,9 @@ ColorMapPopup.prototype.initialise = function() {
     map.map.spin(true);
 
     $.ajax({
-        url: map.props.mappingUrl + "/occurrences/info" + mapQuery + map.removeFqs,
-        jsonp: "callback",
-        dataType: "jsonp",
+        url: map.props.mappingUrl + '/occurrences/info' + mapQuery + map.removeFqs,
+        jsonp: 'callback',
+        dataType: 'jsonp',
         timeout: 30000,
 
         data: {
@@ -1151,13 +1144,13 @@ ColorMapPopup.prototype.initialise = function() {
             lat: self.event.latlng.wrap().lat,
             lon: self.event.latlng.wrap().lng,
             radius: radius,
-            format: "json"
+            format: 'json'
         },
 
         success: function(response) {
             map.map.spin(false);
 
-            if (response.occurrences && response.occurrences.length > 0) {
+            if(response.occurrences && response.occurrences.length > 0) {
                 self.uuids = response.occurrences;
                 self.total = self.uuids.length;
 
@@ -1171,7 +1164,7 @@ ColorMapPopup.prototype.initialise = function() {
             map.map.spin(false);
         }
     });
-}
+};
 
 ColorMapPopup.prototype.getPopupRadius = function() {
     var radius = 0;
@@ -1180,27 +1173,27 @@ ColorMapPopup.prototype.getPopupRadius = function() {
 
     radius = ZOOM_TO_RADIUS[zoomLevel];
 
-    if (size >= 5 && size < 8){
-        radius = radius * 2;
+    if(size >= 5 && size < 8) {
+        radius *= 2;
     }
 
-    if (size >= 8){
-        radius = radius * 3;
+    if(size >= 8) {
+        radius *= 3;
     }
 
     return radius;
-}
+};
 
 ColorMapPopup.prototype.getViewAllLink = function() {
     var lat = this.event.latlng.lat;
     var lon = this.event.latlng.lng;
     var radius = this.getPopupRadius();
 
-    var occLookup = "&radius=" + radius + "&lat=" + lat + "&lon=" + lon;
+    var occLookup = '&radius=' + radius + '&lat=' + lat + '&lon=' + lon;
     var sanitizedQuery = this.map.query.replace(/&(?:lat|lon|radius)\=[\-\.0-9]+/g, '');
 
     return this.map.props.contextPath + '/occurrences/search' + sanitizedQuery + occLookup;
-}
+};
 
 function TaimeatlasMapPopup(map, event, feature) {
     MapPopup.call(this, map);
@@ -1217,9 +1210,6 @@ TaimeatlasMapPopup.prototype = Object.create(MapPopup.prototype);
 
 TaimeatlasMapPopup.prototype.initialise = function() {
     var self = this;
-    var map = self.map;
-
-    var popup = L.popup().setLatLng(self.event.latlng);
 
     self.loadPage(0, function(uuids) {
         self.uuids = uuids;
@@ -1228,7 +1218,7 @@ TaimeatlasMapPopup.prototype.initialise = function() {
         self.createElement();
         self.switchOccurrence(0);
     });
-}
+};
 
 TaimeatlasMapPopup.prototype.loadPage = function(page, callback) {
     var pageSize = 10;
@@ -1244,13 +1234,13 @@ TaimeatlasMapPopup.prototype.loadPage = function(page, callback) {
             return occ.uuid;
         }));
     });
-}
+};
 
 TaimeatlasMapPopup.prototype.getViewAllLink = function() {
     var fq = 'cl1008:"' + this.feature.properties.ruudu_kood + '"';
 
     return this.map.props.contextPath + '/occurrences/search' + this.map.query + '&fq=' + fq;
-}
+};
 
 TaimeatlasMapPopup.prototype.loadMore = function(callback) {
     var self = this;
@@ -1271,4 +1261,4 @@ TaimeatlasMapPopup.prototype.loadMore = function(callback) {
             self.loadMoreCallbacks = [];
         });
     }
-}
+};
