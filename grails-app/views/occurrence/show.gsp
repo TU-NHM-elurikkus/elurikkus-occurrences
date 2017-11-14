@@ -24,7 +24,7 @@
         </title>
 
         <g:if test="${grailsApplication.config.google.apikey}">
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
         </g:if>
         <g:else>
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
