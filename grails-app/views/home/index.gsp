@@ -19,7 +19,7 @@
         <asset:stylesheet src="index.css" />
         <asset:javascript src="index.js" />
 
-        <script async defer src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
+        <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
     </head>
 
     <body>
