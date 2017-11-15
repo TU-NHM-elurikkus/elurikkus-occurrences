@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="queryDisplay" value="${sr?.queryTitle?:searchRequestParams?.displayString?:''}" />
+<g:set var="queryDisplay" value="${sr?.queryTitle ?: searchRequestParams?.displayString ?: ''}" />
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}" />
 <g:set var="authService" bean="authService" />
 
@@ -13,6 +13,7 @@
         <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
+
         <title>
             <g:message code="search.heading.list" />
         </title>
@@ -48,12 +49,12 @@
                 skin: "${grailsApplication.config.skin.layout}",
                 defaultListView: "${grailsApplication.config.defaultListView}",
                 resourceName: "${grailsApplication.config.skin.orgNameLong}",
-                facetLimit: "${grailsApplication.config.facets.limit?:50}",
+                facetLimit: "${grailsApplication.config.facets.limit ?: 50}",
                 queryContext: "${grailsApplication.config.biocache.queryContext}",
                 selectedDataResource: "${selectedDataResource}",
-                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
+                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson() ?: '{}'}",
                 zoomOutsideScopedRegion: Boolean("${grailsApplication.config.map.zoomOutsideScopedRegion}"),
-                hasMultimedia: ${hasImages?:'false'}, // will be either true or false
+                hasMultimedia: ${hasImages ?: 'false'}, // will be either true or false
                 locale: "${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}",
                 imageServiceBaseUrl:"${grailsApplication.config.images.baseUrl}",
                 likeUrl: "${createLink(controller: 'imageClient', action: 'likeImage')}",
@@ -221,7 +222,7 @@
                         <g:message code="list.norecords" />
 
                         <span class="queryDisplay">
-                            ${raw(queryDisplay)?:params.q}
+                            ${raw(queryDisplay) ?: params.q}
                         </span>
                     </p>
                 </g:else>
@@ -533,7 +534,7 @@
                                     </label>
 
                                     <select id="per-page" name="per-page">
-                                        <g:set var="pageSizeVar" value="${params.pageSize?:params.max?:'20'}" />
+                                        <g:set var="pageSizeVar" value="${params.pageSize ?: params.max ?: '20'}" />
                                         <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
                                         <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
                                         <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>
@@ -556,7 +557,7 @@
                                         <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option03" />
                                         </option>
-                                        <option value="occurrence_date" <g:if test="${params.sort == 'occurrence_date'}">selected</g:if>>
+                                        <option value="occurrence_date" <g:if test="${useDefault || params.sort == 'occurrence_date'}">selected</g:if>>
                                             ${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401") : g.message(code:"list.sortwidgets.sort.option0402")}
                                         </option>
                                         <g:if test="${skin != 'avh'}">
@@ -564,7 +565,7 @@
                                                 <g:message code="list.sortwidgets.sort.option05" />
                                             </option>
                                         </g:if>
-                                        <option value="first_loaded_date" <g:if test="${useDefault || params.sort == 'first_loaded_date'}">selected</g:if>>
+                                        <option value="first_loaded_date" <g:if test="${params.sort == 'first_loaded_date'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option06" />
                                         </option>
                                         <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>>
