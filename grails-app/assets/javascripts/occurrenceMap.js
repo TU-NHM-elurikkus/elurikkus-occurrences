@@ -684,7 +684,7 @@ ColorMode.prototype.initialize = function() {
             // In case of more than 20 legend items we need to add 'HQ=0' + HQ=id+1 for stuff to work
             // TODO - Fix backend if anyone ever finds the bug that is causing this
             var legendLength = $('#colourByControl').find('.layerFacet').length;
-            if(legendLength > 20) {
+            if(legendLength >= 20) {
                 self.map.additionalFqs += '&HQ=0';
                 controlIdx += 1;
             }
