@@ -11,7 +11,7 @@
     <input type="text" id="solrQuery" name="q" style="position:absolute;left:-9999px;" value="${params.q}" />
     <input type="hidden" name="nameType" value="${grailsApplication.config.advancedTaxaField?:'matched_name_children'}" />
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title01" />
@@ -31,7 +31,7 @@
                 value="${params.text}"
             />
         </div>
-    </div>
+    </fieldset>
 
     <fieldset class="form-group">
         <legend class="col-form-legend erk-form-legend row">
@@ -62,7 +62,7 @@
         </g:each>
     </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title03" />
@@ -82,9 +82,9 @@
                 value=""
             />
         </div>
-    </div>
+    </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title04" />
@@ -106,9 +106,9 @@
                 </g:each>
             </select>
         </div>
-    </div>
+    </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title05" />
@@ -167,9 +167,9 @@
                 </g:each>
             </select>
         </div>
-    </div>
+    </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title06" />
@@ -192,9 +192,9 @@
                 </g:each>
             </select>
         </div>
-    </div>
+    </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <%-- Not sure what is going on here. --%>
         <%-- TODO: Paragraphs for the following section. --%>
         <g:set var="autoPlaceholder" value="start typing and select from the autocomplete drop-down list" />
@@ -221,10 +221,10 @@
                 </select>
             </div>
         </g:if>
-    </div>
+    </fieldset>
 
     <g:if test="${request.getAttribute("cl21") && request.getAttribute("cl21").size() > 1}">
-        <div class="form-group row">
+        <fieldset class="form-group row">
             <label class="col col-xl-2">
                 <abbr title="Integrated Marine and Coastal Regionalisation of Australia">
                     IMCRA
@@ -245,11 +245,11 @@
                     </g:each>
                 </select>
             </div>
-        </div>
+        </fieldset>
     </g:if>
 
     <g:if test="${request.getAttribute("cl959") && request.getAttribute("cl959").size() > 1}">
-        <div class="form-group row">
+        <fieldset class="form-group row">
             <label class="col col-xl-2">
                 <g:message code="advancedsearch.table06col05.title" />
             </label>
@@ -264,11 +264,11 @@
                     </g:each>
                 </select>
             </div>
-        </div>
+        </fieldset>
     </g:if>
 
     <g:if test="${request.getAttribute("type_status") && request.getAttribute("type_status").size() > 1}">
-        <div class="form-group row">
+        <fieldset class="form-group row">
             <legend class="col-form-legend erk-form-legend">
                 <span class="fa fa-info-circle"></span>
                 <g:message code="advancedsearch.title07" />
@@ -289,11 +289,11 @@
                     </option>
                 </g:each>
             </select>
-        </div>
+        </fieldset>
     </g:if>
 
     <g:if test="${request.getAttribute("basis_of_record") && request.getAttribute("basis_of_record").size() > 1}">
-        <div class="from-group row">
+        <fieldset class="from-group row">
             <legend class="col-form-legend erk-form-legend">
                 <span class="fa fa-info-circle"></span>
                 <g:message code="advancedsearch.title08" />
@@ -316,7 +316,7 @@
                     </g:each>
                 </select>
             </div>
-        </div>
+        </fieldset>
     </g:if>
 
     <fieldset class="from-group">
@@ -379,7 +379,7 @@
         </div>
     </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title10" />
@@ -402,9 +402,9 @@
                 <g:message code="advancedsearch.table10col01.des" />
             </small>
         </div>
-    </div>
+    </fieldset>
 
-    <div class="form-group row">
+    <fieldset class="form-group row">
         <label class="col col-xl-2">
             <g:message code="advancedsearch.table10col02.title" />
         </label>
@@ -422,7 +422,7 @@
                 <g:message code="advancedsearch.table10col02.des" />
             </small>
         </div>
-    </div>
+    </fieldset>
 
     <div class="row">
         <button

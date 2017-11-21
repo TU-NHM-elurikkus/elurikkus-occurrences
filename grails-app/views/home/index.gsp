@@ -235,7 +235,6 @@
                                     </p>
 
                                     <textarea
-                                        type="text"
                                         id="wktInput"
                                         class="wkt-panel__input"
                                     ></textarea>

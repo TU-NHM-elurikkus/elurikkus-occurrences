@@ -3,8 +3,8 @@
         TODO: Something about the semicolon.
     --%>
     <span class="active-filters__title">
-        <alatag:message code="search.filters.heading" />
-    </span>:
+        <alatag:message code="search.filters.heading" />:
+    </span>
 
     <g:each var="fq" in="${sr.activeFacetMap}">
         <g:if test="${fq.key}">

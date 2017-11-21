@@ -56,19 +56,19 @@
                             <g:message code="map.maplayercontrols.tr01td01.option01" />
                         </option>
 
-                        <option value="grid" ${(defaultColourBy == 'grid')?'selected=\"selected\"':''}>
+                        <option value="grid" ${(defaultColourBy == 'grid') ? 'selected' : ''}>
                             <g:message code="map.maplayercontrols.tr01td01.option02" />
                         </option>
 
-                        <option value="gridVariable" ${(defaultColourBy == 'gridVariable')?'selected=\"selected\"':''}>
+                        <option value="gridVariable" ${(defaultColourBy == 'gridVariable') ? 'selected' : ''}>
                             <g:message code="map.maplayercontrols.tr01td01.option03" />
                         </option>
 
-                        <option value="taimeatlasGrid" ${(defaultColourBy == 'taimeatlasGrid')? 'selected=\"selected\"' : ''}>
+                        <option value="taimeatlasGrid" ${(defaultColourBy == 'taimeatlasGrid') ? 'selected' : ''}>
                             <g:message code="map.maplayercontrols.mode.taimeatlas" />
                         </option>
 
-                        <option disabled role="separator">————————————</option>
+                        <option>————————————</option>
 
                         <g:set var="excludedFacets">
                             ${grailsApplication.config.facets.mapExclude?:""}.split(",")
@@ -77,7 +77,7 @@
                             <g:if test="${!excludedFacets.contains(facetResult.fieldName)}">
                                 <g:set var="defaultselected">
                                     <g:if test="${defaultColourBy && facetResult.fieldName == defaultColourBy}">
-                                        selected="selected"
+                                        selected
                                     </g:if>
                                 </g:set>
 
@@ -141,7 +141,7 @@
     </table>
 </div>
 
-<div id="leafletMap" class="span12" style="height:600px;"></div>
+<div id="leafletMap" class="col" style="height:600px;"></div>
 
 <div id="template" style="display:none">
     <div class="colourbyTemplate">
@@ -316,7 +316,7 @@
 
                             <select name="dpi" id="dpi">
                                 <option value="100">100</option>
-                                <option value="300" selected="true">300</option>
+                                <option value="300" selected>300</option>
                                 <option value="600">600</option>
                             </select>
                         </p>

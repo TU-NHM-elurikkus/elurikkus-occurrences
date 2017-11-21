@@ -224,7 +224,7 @@ $(document).ready(function() {
         var jsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json?q=lsid:' + lsid + '&' + BC_CONF.facetQueries +
             '&facets=raw_taxon_name&pageSize=0&flimit=' + maxFacets + queryContextParam + '&callback=?';
 
-        var $clone = $('#resultsReturned #template').clone();
+        var $clone = $('#resultsReturned #dropdown-template').clone();
         $clone.attr('id', ''); // remove the ID
         $clone.find('.taxaMenuContent').addClass('stopProp');
         // add unique IDs to some elements
