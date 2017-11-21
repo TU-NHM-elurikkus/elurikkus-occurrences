@@ -491,7 +491,7 @@
 </g:if>
 
 <div id="dataQuality" class="additionalData">
-    <a name="dataQualityReport"></a>
+    <a id="dataQualityReport"></a>
     <h3>
         <g:message code="show.dataquality.title" />
     </h3>

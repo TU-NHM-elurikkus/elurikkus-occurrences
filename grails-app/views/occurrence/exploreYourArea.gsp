@@ -49,7 +49,7 @@
             <div class="col-12">
                 <%-- SEARCH INPUT --%>
                 <div class="search-section">
-                    <form name="searchForm" id="searchForm" action="" method="GET">
+                    <form name="searchForm" id="searchForm">
                         <div
                             class="input-plus"
                             title="${message(code: 'eya.btn.search.tooltip')}"

@@ -173,35 +173,29 @@
                         <div class="inline-controls inline-controls--right">
                             <g:if test="${contacts && contacts.size()}">
                                 <div class="inline-controls__group">
-                                    <button
+                                    <a
                                         href="#contactCuratorView"
-                                        class="erk-button erk-button--light"
+                                        class="erk-button erk-button--light erk-button-link"
                                         id="showCurator"
-                                        role="button"
                                         data-toggle="modal"
                                         title="${message(code: 'show.showcontactcurator.title')}"
                                     >
-                                        <span id="contactCuratorSpan" href="#contactCuratorView" title="">
-                                            <span class="fa fa-envelope-o"></span>
-                                            <g:message code="show.showcontactcurator.label" />
-                                        </span>
-                                    </button>
+                                        <span class="fa fa-envelope-o"></span>
+                                        <g:message code="show.showcontactcurator.label" />
+                                    </a>
                                 </div>
                             </g:if>
 
                             <div class="inline-controls__group">
-                                <button
+                                <a
                                     id="showRawProcessed"
                                     data-toggle="modal"
                                     href="#processedVsRawView"
-                                    class="erk-button erk-button--light"
-                                    role="button"
+                                    class="erk-button erk-button--light erk-button-link"
                                     title="<g:message code='show.sidebar02.showrawprocessed.title' />"
                                 >
-                                    <span id="processedVsRawViewSpan" href="#processedVsRawView" title="">
-                                        <g:message code="show.sidebar02.showrawprocessed.label" />
-                                    </span>
-                                </button>
+                                    <g:message code="show.sidebar02.showrawprocessed.label" />
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -535,8 +529,8 @@
                                     </g:each>
                                 </table>
                             </g:if>
-                        </g:if>
-                    </div>
+                        </div>
+                    </g:if>
                 </div>
 
                 <div id="processedVsRawView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="processedVsRawViewLabel" aria-hidden="true">

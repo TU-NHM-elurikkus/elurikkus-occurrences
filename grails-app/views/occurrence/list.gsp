@@ -88,7 +88,7 @@
 
     <body class="occurrence-search">
         <div id="listHeader" class="page-header">
-            <h1 class="page-header__title" name="resultsTop">
+            <h1 class="page-header__title">
                 <g:message code="search.heading.list" />
             </h1>
 
@@ -234,10 +234,6 @@
             <div class="row" id="searchInfoRow">
                 <%-- Results column --%>
                 <div class="col">
-                    <%--- XXX ... XXX ---%>
-                    <a name="map" class="jumpTo"></a>
-                    <a name="list" class="jumpTo"></a>
-
                     <g:if test="${grailsApplication.config.useDownloadPlugin?.toBoolean()}">
                         <a
                             href="${g.createLink(uri: '/download')}?searchParams=${sr?.urlParameters?.encodeAsURL()}&targetUri=${(request.forwardURI)}"
@@ -252,7 +248,7 @@
                         </a>
                     </g:if>
 
-                    <section id="resultsReturned" class="search-section">
+                    <div id="resultsReturned" class="search-section">
                         <g:render template="sandboxUploadSourceLinks" model="[dataResourceUid: selectedDataResource]" plugin="elurikkus-biocache-hubs" />
 
                         <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm">
@@ -292,7 +288,7 @@
                         </g:if>
 
                         <%-- XXX XXX XXX jQuery template used for taxon drop-downs --%>
-                        <div class="btn-group invisible" id="template" style="display: none;">
+                        <div class="btn-group invisible" id="dropdown-template" style="display: none;">
                             <a
                                 class="erk-button erk-button--light"
                                 href=""
@@ -344,7 +340,7 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>  <%-- /#searchInfoRow --%>
 
@@ -668,7 +664,7 @@
                                 <%-- HTML template used by AJAX code --%>
                                 <div class="gallery-thumb-template" style="display: none;">
                                     <div class="gallery-thumb">
-                                        <a class="cbLink" rel="thumbs" href="" data-toggle="lightbox">
+                                        <a class="cbLink" href="" data-toggle="lightbox">
                                             <img
                                                 class="gallery-thumb__img"
                                                 src=""

@@ -17,13 +17,14 @@
                                         &nbsp;
                                     </th>
 
-                                    <th id="indexCol" width="80%">
+                                    <th id="indexCol">
                                         <a
                                             href="#index"
                                             class="fsort"
                                             data-sort="index"
                                             data-foffset="0"
                                             title="${message(code: 'general.list.sortBy.label')}"
+                                        >
                                         </a>
                                     </th>
 

@@ -484,6 +484,7 @@ function loadExploreArea(EYA_CONF) {
                     initialize();
                     loadRecordsLayer();
                 } else {
+                    // TODO Handle empty results response.
                     console.error(status);
                 }
             });

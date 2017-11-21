@@ -446,6 +446,7 @@ class OccurrenceTagLib {
      * @attr annotate REQUIRED
      * @attr path
      * @attr guid
+     * @attr idExtension
      */
     def occurrenceTableRow = { attrs, body ->
         String bodyText = (String) body()
@@ -454,13 +455,16 @@ class OccurrenceTagLib {
         def fieldCode = attrs.fieldCode
         def fieldName = attrs.fieldName
         def fieldNameIsMsgCode = attrs.fieldNameIsMsgCode
+        // prevent duplicate IDs in case the field is put out both as main row and DWC extra
+        def idExtension = attrs.idExtension
         def userDetails
 
         if (StringUtils.isNotBlank(bodyText)) {
             def link = (guid) ? "${path}${guid}" : ""
             def mb = new MarkupBuilder(out)
+            def nodeId = (idExtension) ? "${fieldCode}-${idExtension}" : "${fieldCode}"
 
-            mb.tr(id:"${fieldCode}") {
+            mb.tr(id: nodeId) {
                 td(class:"dwcLabel") {
                     if (fieldNameIsMsgCode) {
                         mkp.yield(alatag.message(code: "${fieldName}"))
@@ -518,7 +522,7 @@ class OccurrenceTagLib {
                         </span>
                     """
                 }
-                output += alatag.occurrenceTableRow(annotate:"true", section:"dataset", fieldCode:"${key}", fieldName:"<span class='dwc'>${label}</span>") {
+                output += alatag.occurrenceTableRow(annotate:"true", section:"dataset", fieldCode:"${key}", fieldName:"<span class='dwc'>${label}</span>", idExtension:"-extra-dwc") {
                     tagBody
                 }
             }
