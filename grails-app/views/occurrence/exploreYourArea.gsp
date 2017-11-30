@@ -128,9 +128,6 @@
                                     <th>
                                         <g:message code="eya.groupTable.header.group.label" />
                                     </th>
-                                    <th>
-                                        #
-                                    </th>
                                 </tr>
                             </thead>
 

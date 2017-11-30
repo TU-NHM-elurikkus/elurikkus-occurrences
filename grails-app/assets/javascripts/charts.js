@@ -896,8 +896,8 @@ function transformDecadeData(data) {
 }
 
 function transformMonthData(data) {
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        monthIdx;
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var monthIdx;
     $.each(data, function(i, obj) {
         monthIdx = parseInt(obj.label); // months values "01" need parsing to int
         obj.formattedLabel = months[monthIdx - 1];

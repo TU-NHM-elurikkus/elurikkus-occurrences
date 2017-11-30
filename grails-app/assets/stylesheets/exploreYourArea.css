@@ -27,8 +27,8 @@
     margin-bottom: 16px;
 }
 
-#taxaBox td, #taxaBox th {
-    padding: 1px 5px;
+.subGroupRow {
+    padding-left: 2em;
 }
 
 #taxaBox table {
@@ -36,28 +36,11 @@
 }
 
 #taxaBox th {
-    text-align: left;
-    line-height: 22px;
+    text-align: center;
 }
 
 #taxaBox thead tr {
     border-bottom: 2px solid #d9d9d9;
-}
-
-#taxaBox td.indent1 {
-    padding-left: 10px;
-}
-
-#taxaBox td.indent2 {
-    padding-left: 15px;
-}
-
-#taxaBox td.indent3 {
-    padding-left: 20px;
-}
-
-#taxaBox p {
-    margin-bottom: 5px;
 }
 
 #rightList {
@@ -108,15 +91,6 @@
 
 #taxa-level-0 {
     width: 100%;
-}
-
-#taxa-level-0 tbody{
-    padding-bottom: 3px!important;
-}
-
-#taxa-level-1 tbody td {
-    margin: 0;
-    padding: 0;
 }
 
 .activeRow {

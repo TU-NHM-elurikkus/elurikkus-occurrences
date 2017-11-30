@@ -9,6 +9,7 @@
         "node": true
     },
     "globals": {
+        "GLOBAL_LOCALE_CONF": true,
         "$": true,
         "amplify": true,
         "google": true,
