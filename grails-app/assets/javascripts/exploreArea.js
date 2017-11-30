@@ -672,7 +672,7 @@ function loadExploreArea(EYA_CONF) {
                 lat: $('#latitude').val(),
                 lon: $('#longitude').val(),
                 radius: $('#radius').val(),
-                fq: state.speciesGroup + ':' + state.taxonRank,
+                fq: state.taxonRank + ':' + state.speciesGroup,
                 start: newStart,
                 common: commonName,
                 sort: sortParam,
