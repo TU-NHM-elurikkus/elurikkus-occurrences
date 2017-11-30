@@ -6,7 +6,7 @@ function loadExploreArea(EYA_CONF) {
         speciesGroup: 'ALL_SPECIES'
     };
 
-    var geocoder, map, marker, circle, markerInfowindow, lastInfoWindow, taxon, taxonGuid;
+    var geocoder, map, marker, circle, markerInfowindow, lastInfoWindow, taxonGuid;
     var points = [];
     var infoWindows = [];
     var zoomForRadius = {
@@ -95,9 +95,6 @@ function loadExploreArea(EYA_CONF) {
             groupClicked(this);
         });
 
-        // By default action on page load - show the all species group (simulate a click)
-        // $('#taxa-level-0 tbody td:first').click();
-
         // register click event on "Search" button"
         $('#locationSearch').click(
             function(e) {
@@ -135,22 +132,6 @@ function loadExploreArea(EYA_CONF) {
                 e.preventDefault();
                 geocodeAddress();
             }
-        });
-
-        $('.indent0').live('click', function(e) {
-            $('#viewAllRecords').html(
-                '<span class="fa fa-list"></span>' +
-                '&nbsp;' +
-                $.i18n.prop('eya.searchform.viewAllRecords.label')
-            );
-        });
-
-        $('.indent1, .indent2, .indent3').live('click', function(e) {
-            $('#viewAllRecords').html(
-                '<span class="fa fa-list"></span>' +
-                '&nbsp;' +
-                $.i18n.prop('eya.searchform.viewSelectedRecords.label')
-            );
         });
 
         $('[data-toggle="tooltip"]').tooltip({
@@ -298,7 +279,11 @@ function loadExploreArea(EYA_CONF) {
     function loadRecordsLayer(retry) {
         if(!map && !retry) {
             // in case AJAX calls this function before map has initialised
-            setTimeout(function() { if(!points || points.length === 0) { loadRecordsLayer(true); } }, 2000);
+            setTimeout(function() {
+                if(!points || points.length === 0) {
+                    loadRecordsLayer(true);
+                }
+            }, 2000);
             return;
         } else if(!map) {
             return;
@@ -312,16 +297,13 @@ function loadExploreArea(EYA_CONF) {
             lat: $('#latitude').val(),
             lon: $('#longitude').val(),
             radius: $('#radius').val(),
-            fq: 'geospatial_kosher:true',
             qc: EYA_CONF.queryContext,
             zoom: zoom
         };
-        if(taxon) {
-            params.q = 'taxon_name:\"' + taxon + '\"';
-        } else {
-            params.group = state.speciesGroup;
+        if(state.speciesGroup !== 'ALL_SPECIES') {
+            params.fq = state.taxonRank + ':' + state.speciesGroup;
         }
-        // JQuery AJAX call
+
         $.getJSON(geoJsonUrl, params, loadNewGeoJsonData);
     }
 
@@ -499,11 +481,34 @@ function loadExploreArea(EYA_CONF) {
     function groupClicked(el) {
         // Change the global var speciesGroup
         state.speciesGroup = $(el).attr('data-taxon-name');
-        taxon = null; // clear any species click
+        state.taxonRank = $(el).attr('data-taxon-rank');
         taxonGuid = null;
-        $('#taxa-level-0 tr').removeClass('activeRow');
+
+        if($(el).attr('data-taxon-name') === 'ALL_SPECIES') {
+            $('#viewAllRecords').html(
+                '<span class="fa fa-list"></span>' +
+                '&nbsp;' +
+                $.i18n.prop('eya.searchform.viewAllRecords.label')
+            );
+        } else {
+            $('#viewAllRecords').html(
+                '<span class="fa fa-list"></span>' +
+                '&nbsp;' +
+                $.i18n.prop('eya.searchform.viewSelectedRecords.label')
+            );
+        }
+
+        // Hide all subgroups if main group is changed
+        if($(el).hasClass('mainGroup')) {
+            $('[data-parent-taxon]').css('visibility', 'collapse');
+            $('.mainGroup').removeClass('activeRow');
+            $('.mainGroup span').removeClass('fa-chevron-down').addClass('fa-chevron-right');
+            $(el).find('span').removeClass('fa-chevron-right').addClass('fa-chevron-down');
+            $('[data-parent-taxon="' + state.speciesGroup + '"]').css('visibility', 'visible');
+        }
+
+        $('[data-parent-taxon]').removeClass('activeRow');
         $(el).addClass('activeRow');
-        $('#taxa-level-1 tbody tr').addClass('activeRow');
         $('#rightList tbody').empty();
         // load records layer on map
         // update links to downloads and records list
@@ -512,15 +517,17 @@ function loadExploreArea(EYA_CONF) {
             loadRecordsLayer();
         }
         // AJAX...
-        var uri = EYA_CONF.biocacheServiceUrl + '/explore/group/' + state.speciesGroup + '.json?callback=?';
+        var uri = EYA_CONF.biocacheServiceUrl + '/explore/group/ALL_SPECIES.json?callback=?';
         var params = {
             lat: $('#latitude').val(),
             lon: $('#longitude').val(),
             radius: $('#radius').val(),
-            fq: 'geospatial_kosher:true',
             qc: EYA_CONF.queryContext,
             pageSize: 50
         };
+        if(state.speciesGroup !== 'ALL_SPECIES') {
+            params.fq = state.taxonRank + ':' + state.speciesGroup;
+        }
         $.getJSON(uri, params, function(data) {
             // process JSON data from request
             if(data) {
@@ -543,14 +550,12 @@ function loadExploreArea(EYA_CONF) {
             var infoTitle = $.i18n.prop('general.btn.viewSpecies');
             var recsTitle = $.i18n.prop('general.btn.viewRecords');
             // iterate over list of species from search
-            var i = 0;
-            data.forEach(function(taxon) {
+            data.forEach(function(taxon, i) {
                 // create new table row
                 var count = i + lastRow;
-                i++;
                 // add count
                 var tr =
-                    '<tr id="' + taxon.guid + '" data-taxon-name="' + taxon.name + '">' +
+                    '<tr id="' + taxon.guid + '" data-taxon-name="' + taxon.name + '" data-taxon-guid="">' +
                         '<td class="speciesIndex">' +
                             (count + 1) + '.' +
                         '</td>' +
@@ -582,9 +587,15 @@ function loadExploreArea(EYA_CONF) {
                             recsTitle +
                         '</a>' +
                     '</div>';
-                tr += speciesInfo;
-                // add number of records
-                tr += '</td><td class="rightCounts">' + taxon.count + ' </td></tr>';
+
+                tr +=
+                            speciesInfo +
+                        '</td>' +
+                        '<td class="rightCounts">' +
+                            taxon.count +
+                        '</td>' +
+                    '</tr>';
+
                 // write list item to page
                 $('#rightList tbody').append(tr);
             });
@@ -606,9 +617,12 @@ function loadExploreArea(EYA_CONF) {
         } else {
             // no spceies were found (either via paging or clicking on taxon group
             var text =
-                '<tr><td></td><td colspan="2">' +
-                    '[' + $.i18n.prop('eya.search.noSpecies') + ']' +
-                '</td></tr>';
+                '<tr>' +
+                    '<td></td>' +
+                    '<td colspan="2">' +
+                        '[' + $.i18n.prop('eya.search.noSpecies') + ']' +
+                    '</td>' +
+                '</tr>';
             $('#rightList tbody').append(text);
         }
 
@@ -617,10 +631,12 @@ function loadExploreArea(EYA_CONF) {
             if(this.id === 'loadMoreRow') {
                 return;
             }
-            var thisTaxon = $(this).attr('data-taxon-name');
+            // var thisTaxon = $(this).attr('data-taxon-name');
+            state.speciesGroup = $(this).attr('data-taxon-name');
+            state.taxonRank = 'species';
             var guid = $(this).attr('id');
             taxonGuid = guid;
-            taxon = thisTaxon; // global var so map can show just this taxon
+            // taxon = thisTaxon; // global var so map can show just this taxon
             $('#rightList tbody tr').removeClass('activeRow2'); // un-highlight previous current taxon
             // remove previous species info row
             $('#rightList tbody tr#info').detach();
@@ -651,12 +667,12 @@ function loadExploreArea(EYA_CONF) {
             }
 
             // AJAX...
-            var uri = EYA_CONF.biocacheServiceUrl + '/explore/group/' + state.speciesGroup + '.json?callback=?';
+            var uri = EYA_CONF.biocacheServiceUrl + '/explore/group/ALL_SPECIES.json?callback=?';
             var params = {
                 lat: $('#latitude').val(),
                 lon: $('#longitude').val(),
                 radius: $('#radius').val(),
-                fq: 'geospatial_kosher:true',
+                fq: state.speciesGroup + ':' + state.taxonRank,
                 start: newStart,
                 common: commonName,
                 sort: sortParam,
@@ -682,10 +698,10 @@ function loadExploreArea(EYA_CONF) {
     }
 
     /*
-     * Perform normal spatial searcj for spceies groups and species counts
+     * Perform normal spatial search for spceies groups and species counts
      */
     function loadGroups() {
-        var url = EYA_CONF.biocacheServiceUrl + '/explore/groups.json?callback=?';
+        var url = EYA_CONF.biocacheServiceUrl + '/explore/hierarchy.json?callback=?';
         var params = {
             lat: $('#latitude').val(),
             lon: $('#longitude').val(),
@@ -706,28 +722,44 @@ function loadExploreArea(EYA_CONF) {
      * Populate the spceies group column (via callback from AJAX)
      */
     function populateSpeciesGroups(data) {
-        if(data.length > 0) {
-            $('#taxa-level-0 tbody').empty(); // clear existing values
-            $.each(data, function(i, n) {
-                addGroupRow(n.name, n.speciesCount, n.level);
-            });
+        $('#taxa-level-0 tbody').empty(); // clear existing values
+        addGroupRow('ALL_SPECIES', '', '');
 
-            $('#taxa-level-0 tbody tr.activeRow').click();
+        data.forEach(function(n) {
+            addGroupRow(n.speciesGroup, n.common, n.taxonRank);
+            n.taxa.forEach(function(subTaxon) {
+                addSubGroupRow(subTaxon.name, subTaxon.common, subTaxon.taxonRank, n.speciesGroup);
+            });
+        });
+
+        $('[data-taxon-name="ALL_SPECIES"]').click();
+
+        function addGroupRow(taxonName, common, taxonRank) {
+            if(GLOBAL_LOCALE_CONF.locale !== 'et') {
+                common = taxonName;
+            }
+            if(taxonName === 'ALL_SPECIES') {
+                common = $.i18n.prop('eya.search.allSpecies');
+            }
+
+            var h =
+                '<tr class="mainGroup" data-taxon-name="' + taxonName + '" data-taxon-rank="' + taxonRank + '">' +
+                    '<td>' +
+                        '<span class="fa fa-chevron-right"></span>&nbsp;' + common +
+                    '</td>' +
+                '</tr>';
+            $('#taxa-level-0 tbody').append(h);
         }
 
-        function addGroupRow(taxonName, count, indent) {
-            var label = taxonName;
-            if(taxonName === 'ALL_SPECIES') {
-                label = $.i18n.prop('eya.search.allSpecies');
+        function addSubGroupRow(taxonName, common, taxonRank, parentTaxon) {
+            if(GLOBAL_LOCALE_CONF.locale !== 'et') {
+                common = taxonName;
             }
-            var row_class = 'class="indent' + indent;
-            row_class += (taxonName === state.speciesGroup) ? ' activeRow' : ''; // highlight active taxonName
             var h =
-                '<tr ' + row_class + '" title="' + $.i18n.prop('eya.group.help') + '" data-taxon-name="' + taxonName + '">' +
-                    '<td class="indent' + indent + '">' +
-                        label +
+                '<tr data-taxon-name="' + taxonName + '" data-taxon-rank="' + taxonRank + '" data-parent-taxon="' + parentTaxon + '" style="visibility:collapse;">' +
+                    '<td class="subGroupRow">' +
+                        common +
                     '</td>' +
-                    '<td>' + count + '</td>' +
                 '</tr>';
             $('#taxa-level-0 tbody').append(h);
         }
