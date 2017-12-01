@@ -114,7 +114,7 @@
 
                 <a href="${g.createLink(uri: '/search')}#spatial-search" class="page-header-links__link">
                     <span class="fa fa-search"></span>
-                    <g:message code="home.index.navigator05" />
+                    <g:message code="general.spatialSearch" />
                 </a>
             </div>
 

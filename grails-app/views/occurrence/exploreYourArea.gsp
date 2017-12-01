@@ -40,7 +40,7 @@
                 </a>
                 <a class="page-header-links__link" href="${request.contextPath}/search?#spatial-search">
                     <span class="fa fa-search"></span>
-                    <g:message code="general.searchByPolygon" />
+                    <g:message code="general.spatialSearch" />
                 </a>
             </div>
         </div>

@@ -70,7 +70,7 @@
                 </li>
                 <li class="nav-item">
                     <a id="t5" href="#tab-spatial-search" data-toggle="tab" class="nav-link">
-                        <g:message code="home.index.navigator05" />
+                        <g:message code="general.spatialSearch" />
                     </a>
                 </li>
             </ul>
