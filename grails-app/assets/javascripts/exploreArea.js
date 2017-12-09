@@ -68,8 +68,7 @@ function loadExploreArea(EYA_CONF) {
         } else {
             attemptGeolocation();
         }
-
-    }); // end onLoad event
+    });
 
     // var proj900913 = new OpenLayers.Projection("EPSG:900913");
     // var proj4326 = new OpenLayers.Projection("EPSG:4326");
@@ -504,7 +503,12 @@ function loadExploreArea(EYA_CONF) {
             $('.mainGroup').removeClass('activeRow');
             $('.mainGroup span').removeClass('fa-chevron-down').addClass('fa-chevron-right');
             $(el).find('span').removeClass('fa-chevron-right').addClass('fa-chevron-down');
-            $('[data-parent-taxon="' + state.speciesGroup + '"]').css('visibility', 'visible');
+
+            var subRows = $('[data-parent-taxon="' + state.speciesGroup + '"]');
+            subRows.css('visibility', 'visible');
+
+            // Get species counts
+            populateTaxonRowCounts(subRows);
         }
 
         $('[data-parent-taxon]').removeClass('activeRow');
@@ -533,6 +537,30 @@ function loadExploreArea(EYA_CONF) {
             if(data) {
                 processSpeciesJsonData(data);
             }
+        });
+    }
+
+    function populateTaxonRowCounts(rows) {
+        rows.each(function(index, row) {
+            var taxonQuery = '';
+            if(row.dataset.taxonName !== 'ALL_SPECIES') {
+                taxonQuery = row.dataset.taxonRank + ':"' + row.dataset.taxonName + '"';
+            }
+            var url = EYA_CONF.contextPath + '/proxy/explore/counts/group/ALL_SPECIES/';
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                cache: true,
+                data: {
+                    'lat': $('#latitude').val(),
+                    'lon': $('#longitude').val(),
+                    'radius': $('#radius').val(),
+                    'fq': taxonQuery,
+                },
+                success: function(data) {
+                    $(row.children[1]).html(data[1]);
+                },
+            });
         });
     }
 
@@ -732,6 +760,10 @@ function loadExploreArea(EYA_CONF) {
             });
         });
 
+        // Get species counts
+        var mainRows = $('.mainGroup');
+        populateTaxonRowCounts(mainRows);
+
         $('[data-taxon-name="ALL_SPECIES"]').click();
 
         function addGroupRow(taxonName, common, taxonRank) {
@@ -747,6 +779,9 @@ function loadExploreArea(EYA_CONF) {
                     '<td>' +
                         '<span class="fa fa-chevron-right"></span>&nbsp;' + common +
                     '</td>' +
+                    '<td class="speciesCount">' +
+                        '##' +
+                    '</td>' +
                 '</tr>';
             $('#taxa-level-0 tbody').append(h);
         }
@@ -759,6 +794,9 @@ function loadExploreArea(EYA_CONF) {
                 '<tr data-taxon-name="' + taxonName + '" data-taxon-rank="' + taxonRank + '" data-parent-taxon="' + parentTaxon + '" style="visibility:collapse;">' +
                     '<td class="subGroupRow">' +
                         common +
+                    '</td>' +
+                    '<td class="speciesCount">' +
+                        '##' +
                     '</td>' +
                 '</tr>';
             $('#taxa-level-0 tbody').append(h);

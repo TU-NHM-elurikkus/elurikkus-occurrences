@@ -6,7 +6,7 @@ dataSource {
     password = "password"
     logSql = false
     dbCreate = "update"
-    url = "jdbc:mysql://localhost:3306/collectory?autoReconnect=true&connectTimeout=0"
+    url = "jdbc:mysql://localhost:3306/collectory"
     properties {
         maxActive = 50
         maxIdle = 25
@@ -20,6 +20,11 @@ dataSource {
         testOnBorrow = true
         testOnReturn = true
         testWhileIdle = true
+
+        dbProperties {
+            autoReconnect = false
+            connectTimeout = 60000
+        }
     }
 }
 
