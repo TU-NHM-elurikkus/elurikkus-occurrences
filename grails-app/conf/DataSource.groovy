@@ -8,6 +8,8 @@ dataSource {
     dbCreate = "update"
     url = "jdbc:mysql://localhost:3306/collectory"
     properties {
+        pooled = true
+
         maxActive = 50
         maxIdle = 25
         minIdle = 5
