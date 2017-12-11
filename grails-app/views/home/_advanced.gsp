@@ -267,7 +267,7 @@
         </fieldset>
     </g:if>
 
-    <fieldset class="from-group">
+    <fieldset class="form-group">
         <legend class="col-form-legend erk-form-legend">
             <span class="fa fa-info-circle"></span>
             <g:message code="advancedsearch.title09" />
