@@ -575,7 +575,7 @@ function loadExploreArea(EYA_CONF) {
         // process JSON data
         if(data.length > 0) {
             var lastRow = $('#rightList tbody tr').length;
-            var infoTitle = $.i18n.prop('general.btn.viewSpecies');
+            var infoTitle = $.i18n.prop('eya.speciesTable.viewSpecies');
             var recsTitle = $.i18n.prop('general.btn.viewRecords');
             // iterate over list of species from search
             data.forEach(function(taxon, i) {
