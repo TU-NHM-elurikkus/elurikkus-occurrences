@@ -48,6 +48,7 @@ grails.project.dependency.resolution = {
         compile ":elurikkus-biocache-hubs:1.5.1-SNAPSHOT"
         compile ":jquery:1.11.1"
         compile ":shiro:1.2.1"  // Authentication support
+        compile "org.grails.plugins:jdbc-pool:7.0.47"
 
         runtime ":hibernate:3.6.10.19"
     }
