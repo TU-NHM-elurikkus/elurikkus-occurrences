@@ -2,6 +2,7 @@
 //= require jquery.jsonp-2.4.0.min
 //= require jquery.autocomplete
 //= require leafletPlugins
+//= require google-mutant
 //= require purl
 //= require map.common
 //= require advancedSearch
@@ -77,11 +78,19 @@ function initialiseMap() {
     // initialise map
     MAP_VAR.map = L.map('leafletMap', {
         center: [MAP_VAR.defaultLatitude, MAP_VAR.defaultLongitude],
-        zoomControl: true,
+        zoomControl: false,
         zoom: MAP_VAR.defaultZoom,
         minZoom: 1,
         scrollWheelZoom: false
     });
+
+    L.control.zoom({
+        position: 'topleft',
+        zoomInTitle: $.i18n.prop('advancedsearch.js.map.zoomin'),
+        zoomOutTitle: $.i18n.prop('advancedsearch.js.map.zoomout')
+    }).addTo(MAP_VAR.map);
+
+    drawI18N();
 
     // add edit drawing toolbar
     // Initialise the FeatureGroup to store editable layers
@@ -89,7 +98,7 @@ function initialiseMap() {
     MAP_VAR.map.addLayer(MAP_VAR.drawnItems);
 
     // Initialise the draw control and pass it the FeatureGroup of editable layers
-    MAP_VAR.drawControl = new L.Control.Draw({
+    var drawControls = new L.Control.Draw({
         edit: {
             featureGroup: MAP_VAR.drawnItems
         },
@@ -120,7 +129,7 @@ function initialiseMap() {
         }
     });
 
-    MAP_VAR.map.addControl(MAP_VAR.drawControl);
+    MAP_VAR.map.addControl(drawControls);
 
     MAP_VAR.map.on('draw:created', function(e) {
         // setup onclick event for this object
@@ -144,11 +153,22 @@ function initialiseMap() {
     // add the default base layer
     MAP_VAR.map.addLayer(defaultBaseLayer);
 
+    // Google map layers
+    var roadLayer = L.gridLayer.googleMutant({ type: 'roadmap' });
+    var terrainLayer = L.gridLayer.googleMutant({ type: 'terrain' });
+    var hybridLayer = L.gridLayer.googleMutant({ type: 'satellite' });
+
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(MAP_VAR.map); // coordinate plugin
 
-    MAP_VAR.layerControl = L.control.layers(MAP_VAR.baseLayers, MAP_VAR.overlays, { collapsed: true, position: 'topleft' });
+    var baseLayers = {};
+    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Minimal')] = defaultBaseLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Road')] = roadLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Terrain')] = terrainLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Satellite')] = hybridLayer;
+
+    MAP_VAR.layerControl = L.control.layers(baseLayers, {}, { collapsed: true, position: 'topleft' });
+
     MAP_VAR.layerControl.addTo(MAP_VAR.map);
 
     L.Util.requestAnimFrame(MAP_VAR.map.invalidateSize, MAP_VAR.map, !1, MAP_VAR.map._container);
-    L.Browser.any3d = false; // FF bug prevents selects working properly
 }

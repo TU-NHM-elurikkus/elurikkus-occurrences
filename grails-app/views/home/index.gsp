@@ -20,6 +20,7 @@
         <asset:javascript src="index.js" />
 
         <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
+
     </head>
 
     <body>
@@ -258,7 +259,7 @@
             </div>
         </div>
 
-        <asset:deferredScripts/>
+        <asset:deferredScripts />
 
         <g:javascript>
             function validateBatchForm(inputID) {
@@ -283,23 +284,6 @@
                 defaultLatitude: "${grailsApplication.config.map.defaultLatitude ?: '58.3735'}",
                 defaultLongitude: "${grailsApplication.config.map.defaultLongitude ?: '26.7161'}",
                 defaultZoom: 7,
-                overlays: {
-                    <g:if test="${grailsApplication.config.map.overlay.url}">
-                        "${grailsApplication.config.map.overlay.name?:'overlay'}" : L.tileLayer.wms("${grailsApplication.config.map.overlay.url}", {
-                            layers: 'ALA:ucstodas',
-                            format: 'image/png',
-                            transparent: true,
-                            attribution: "${grailsApplication.config.map.overlay.name?:'overlay'}"
-                        })
-                    </g:if>
-                },
-                baseLayers: {
-                    "Minimal": defaultBaseLayer,
-                    //"Night view" : L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr}),
-                    "Road":  new L.Google('ROADMAP'),
-                    "Terrain": new L.Google('TERRAIN'),
-                    "Satellite": new L.Google('HYBRID')
-                },
                 layerControl : null,
             };
         </g:javascript>

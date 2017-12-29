@@ -89,15 +89,18 @@ OccurrenceMap.prototype.initialize = function() {
         minZoom: 1,
         scrollWheelZoom: false,
 
-        zoomControl: true,
+        zoomControl: false,
 
         fullscreenControl: true,
         fullscreenControlOptions: {
-            position: 'topleft'
+            position: 'topleft',
+            title: $.i18n.prop('advancedsearch.js.map.fullscreen')
         },
 
         worldCopyJump: true
     });
+
+    drawI18N();
 
     // add edit drawing toolbar
     // Initialise the FeatureGroup to store editable layers
@@ -110,6 +113,7 @@ OccurrenceMap.prototype.initialize = function() {
             featureGroup: self.drawnItems
         },
         draw: {
+            circlemarker: false,
             polyline: false,
             rectangle: {
                 shapeOptions: {
@@ -134,13 +138,22 @@ OccurrenceMap.prototype.initialize = function() {
             }
         }
     });
+
+    L.control.zoom({
+        position: 'topleft',
+        zoomInTitle: $.i18n.prop('advancedsearch.js.map.zoomin'),
+        zoomOutTitle: $.i18n.prop('advancedsearch.js.map.zoomout')
+    }).addTo(self.map);
+
     self.map.addControl(self.drawControl);
 
     self.map.on('draw:created', function(e) {
         // setup onclick event for self object
         var layer = e.layer;
+        var center = typeof layer.getLatLng === 'function' ? layer.getLatLng() : layer.getBounds().getCenter();
+
         addClickEventForVector(layer, self.query, self.map);
-        generatePopup(layer, e.latlng, self.query, self.map);
+        generatePopup(layer, center, self.query, self.map);
         self.drawnItems.addLayer(layer);
     });
 
@@ -158,7 +171,6 @@ OccurrenceMap.prototype.initialize = function() {
     self.map.addControl(new ColourByControl());
 
     L.Util.requestAnimFrame(self.map.invalidateSize, self.map, !1, self.map._container);
-    L.Browser.any3d = false; // FF bug prevents selects working properly
 
     $('.colour-by-control').click(function(e) {
         if($(this).parent().hasClass('leaflet-control-layers-expanded')) {
@@ -665,6 +677,7 @@ ColorMode.prototype.initialize = function() {
             ENV: envProperty,
             opacity: opacity,
             GRIDDETAIL: gridSizeMap[pointSize],
+            uppercase: true,
             STYLE: 'opacity:' + opacity // for grid data
         });
 
