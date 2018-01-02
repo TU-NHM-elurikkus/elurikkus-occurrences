@@ -162,10 +162,10 @@ function initialiseMap() {
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(MAP_VAR.map); // coordinate plugin
 
     var baseLayers = {};
-    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Minimal')] = defaultBaseLayer;
-    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Road')] = roadLayer;
-    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Terrain')] = terrainLayer;
-    baseLayers[$.i18n.prop('advancedsearch.js.map.draw.layers.Satellite')] = hybridLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Minimal')] = defaultBaseLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Road')] = roadLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Terrain')] = terrainLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Satellite')] = hybridLayer;
 
     MAP_VAR.layerControl = L.control.layers(baseLayers, {}, { collapsed: true, position: 'topleft' });
 
