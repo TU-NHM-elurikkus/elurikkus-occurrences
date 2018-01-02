@@ -3,7 +3,6 @@
 //= require jquery.autocomplete
 //= require leafletPlugins
 //= require es6-promise
-//= require google-mutant
 //= require purl
 //= require map.common
 //= require advancedSearch
@@ -154,22 +153,11 @@ function initialiseMap() {
     // add the default base layer
     MAP_VAR.map.addLayer(defaultBaseLayer);
 
-    // Google map layers
-    var roadLayer = L.gridLayer.googleMutant({ type: 'roadmap' });
-    var terrainLayer = L.gridLayer.googleMutant({ type: 'terrain' });
-    var hybridLayer = L.gridLayer.googleMutant({ type: 'satellite' });
-
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(MAP_VAR.map); // coordinate plugin
 
-    var baseLayers = {};
-    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Minimal')] = defaultBaseLayer;
-    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Road')] = roadLayer;
-    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Terrain')] = terrainLayer;
-    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Satellite')] = hybridLayer;
+    var baseLayers = getBaseLayers();
 
-    MAP_VAR.layerControl = L.control.layers(baseLayers, {}, { collapsed: true, position: 'topleft' });
-
-    MAP_VAR.layerControl.addTo(MAP_VAR.map);
+    L.control.layers(baseLayers, {}, { collapsed: true, position: 'bottomleft' }).addTo(MAP_VAR.map);
 
     L.Util.requestAnimFrame(MAP_VAR.map.invalidateSize, MAP_VAR.map, !1, MAP_VAR.map._container);
 }

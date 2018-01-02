@@ -1,3 +1,6 @@
+//= require google-mutant
+//= require tile.stamen-v1.3.0
+
 var BC_CONF; // Populated by elurikkus.gsp inline script
 var MAP_VAR; // Populated by index.gsp view
 
@@ -142,4 +145,21 @@ function drawI18N() {
     L.drawLocal.edit.toolbar.actions.clearAll.text = $.i18n.prop('leaflet.draw.edit.toolbar.actions.clearAll.text');
     L.drawLocal.edit.toolbar.actions.clearAll.title = $.i18n.prop('leaflet.draw.edit.toolbar.actions.clearAll.title');
     L.drawLocal.edit.handlers.remove.tooltip.text = $.i18n.prop('leaflet.draw.edit.handlers.remove.tooltip.text');
+}
+
+function getBaseLayers() {
+    // Google map layers
+    var roadLayer = L.gridLayer.googleMutant({ type: 'roadmap' });
+    var terrainLayer = L.gridLayer.googleMutant({ type: 'terrain' });
+    var hybridLayer = L.gridLayer.googleMutant({ type: 'satellite' });
+    var blackWhiteLayer = new L.StamenTileLayer('toner');
+
+    var baseLayers = {};
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Minimal')] = defaultBaseLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Road')] = roadLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Terrain')] = terrainLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Satellite')] = hybridLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.BlackWhite')] = blackWhiteLayer;
+
+    return baseLayers;
 }
