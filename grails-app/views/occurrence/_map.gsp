@@ -204,18 +204,6 @@
             "${grailsApplication.config.map.defaultLongitude?:'25.56'}",
         ],
         defaultZoom : "${grailsApplication.config.map.defaultZoom?:'4'}",
-        overlays : {
-            <g:if test="${grailsApplication.config.map.overlay.url}">
-                //example WMS layer
-                "${grailsApplication.config.map.overlay.name?:'overlay'}" : L.tileLayer.wms("${grailsApplication.config.map.overlay.url}", {
-                    layers: 'ALA:ucstodas',
-                    format: 'image/png',
-                    transparent: true,
-                    attribution: "${grailsApplication.config.map.overlay.name?:'overlay'}"
-                })
-            </g:if>
-        },
-        baseLayer: defaultBaseLayer,
         zoomOutsideScopedRegion: ${(grailsApplication.config.map.zoomOutsideScopedRegion == false || grailsApplication.config.map.zoomOutsideScopedRegion == "false") ? false : true},
         pointColour: "${grailsApplication.config.map.pointColour}",
         contextPath: "${request.contextPath}",

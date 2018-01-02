@@ -20,6 +20,7 @@
         <asset:javascript src="index.js" />
 
         <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
+        <script src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
 
     </head>
 

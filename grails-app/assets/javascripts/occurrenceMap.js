@@ -46,17 +46,13 @@ var RecordLayerControl = L.Control.extend({
 
 // props :: {
 //      mappingUrl, query, queryDisplayString,
-//      defaultZoom, overlays, baseLayer, zoomOutsideScopdRegions, pointColour,
+//      defaultZoom, overlays, zoomOutsideScopdRegions, pointColour,
 //      contextPath, translations, biocacheServiceURL, wkt
 // }
 function OccurrenceMap(query, props) {
     this.map = null;
     this.query = query;
     this.props = props;
-
-    this.baseLayers = {
-        'Minimal': props.baseLayer,
-    };
 
     this.layerControl = null;
     this.currentLayers = [];
@@ -162,7 +158,8 @@ OccurrenceMap.prototype.initialize = function() {
 
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(self.map); // coordinate plugin
 
-    self.layerControl = L.control.layers(self.baseLayers, self.overlays, { collapsed: true, position: 'topleft' });
+    var baseLayers = getBaseLayers();
+    self.layerControl = L.control.layers(baseLayers, {}, { collapsed: true, position: 'bottomleft' });
     self.layerControl.addTo(self.map);
 
     self.addQueryLayer();
