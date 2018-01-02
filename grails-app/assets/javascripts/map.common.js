@@ -16,7 +16,9 @@ function generatePopup(layer, latlng, query, map) {
         params = getParamsForCircle(layer, query);
     } else {
         var wkt = new Wkt.Wkt();
-        wkt.fromObject(layer);
+        var geojson = layer.toGeoJSON();
+        var geostr = JSON.stringify(geojson);
+        wkt.read(geostr);
         params = getParamsforWKT(wkt.write(), query);
     }
 
@@ -30,12 +32,16 @@ function generatePopup(layer, latlng, query, map) {
 
     var recordsLink = BC_CONF.contextPath + '/occurrences/search' + params + '#map';
 
+    var coordsStr = latlng.lat + '-' + latlng.lng;
+    var speciesID = 'speciesCount-' + coordsStr;
+    var occurrenceID = 'occurrenceCount-' + coordsStr;
+
     L.popup()
-        .setLatLng([latlng.lat, latlng.lng])
+        .setLatLng(latlng)
         .setContent(
-            $.i18n.prop('advancedsearch.js.map.popup.speciescount') + ': <b id="speciesCountDiv">calculating...</b>' +
+            $.i18n.prop('advancedsearch.js.map.popup.speciescount') + ': <b id="' + speciesID + '">calculating...</b>' +
             '<br />' +
-            $.i18n.prop('advancedsearch.js.map.popup.occurrencecount') + ': <b id="occurrenceCountDiv">calculating...</b>' +
+            $.i18n.prop('advancedsearch.js.map.popup.occurrencecount') + ': <b id="' + occurrenceID + '">calculating...</b>' +
             '<br />' +
             '<a id="showOnlyTheseRecords" href="' + recordsLink + '">' +
                 '<span class="fa fa-search"></span> ' +
@@ -44,23 +50,23 @@ function generatePopup(layer, latlng, query, map) {
         )
         .openOn(map);
 
-    getSpeciesCountInArea(params);
-    getOccurrenceCountInArea(params);
+    getSpeciesCountInArea(params, speciesID);
+    getOccurrenceCountInArea(params, occurrenceID);
 }
 
-function getSpeciesCountInArea(params) {
+function getSpeciesCountInArea(params, speciesID) {
     $.getJSON(BC_CONF.biocacheServiceUrl + '/occurrence/facets.json' + params + '&facets=taxon_name&callback=?',
         function(data) {
-            document.getElementById('speciesCountDiv').innerHTML = data.length ? data[0].count : 0;
+            document.getElementById(speciesID).innerHTML = data.length ? data[0].count : 0;
         });
 }
 
-function getOccurrenceCountInArea(params) {
+function getOccurrenceCountInArea(params, occurrenceID) {
     $.getJSON(BC_CONF.biocacheServiceUrl + '/occurrences/search.json' + params + '&pageSize=0&facet=off&callback=?',
         function(data) {
             var occurrenceCount = data.totalRecords;
 
-            document.getElementById('occurrenceCountDiv').innerHTML = occurrenceCount;
+            document.getElementById(occurrenceID).innerHTML = occurrenceCount;
         });
 }
 
@@ -103,4 +109,37 @@ function drawWktObj(wktString) {
             MAP_VAR.map.panTo(wktObject.getLatLng());
         }
     }
+}
+
+/**
+ Translations for leaflet-draw library
+ */
+function drawI18N() {
+    L.drawLocal.draw.toolbar.actions.title = $.i18n.prop('leaflet.draw.actions.title');
+    L.drawLocal.draw.toolbar.actions.text = $.i18n.prop('leaflet.draw.actions.text');
+    L.drawLocal.draw.toolbar.finish.title = $.i18n.prop('leaflet.draw.finish.title');
+    L.drawLocal.draw.toolbar.finish.text = $.i18n.prop('leaflet.draw.finish.text');
+    L.drawLocal.draw.toolbar.undo.title = $.i18n.prop('leaflet.draw.undo.title');
+    L.drawLocal.draw.toolbar.undo.text = $.i18n.prop('leaflet.draw.undo.text');
+    L.drawLocal.draw.toolbar.buttons.polygon = $.i18n.prop('leaflet.draw.buttons.polygon');
+    L.drawLocal.draw.toolbar.buttons.rectangle = $.i18n.prop('leaflet.draw.buttons.rectangle');
+    L.drawLocal.draw.toolbar.buttons.circle = $.i18n.prop('leaflet.draw.buttons.circle');
+    L.drawLocal.draw.handlers.polygon.tooltip.start = $.i18n.prop('leaflet.draw.polygon.tooltip.start');
+    L.drawLocal.draw.handlers.polygon.tooltip.cont = $.i18n.prop('leaflet.draw.polygon.tooltip.cont');
+    L.drawLocal.draw.handlers.polygon.tooltip.end = $.i18n.prop('leaflet.draw.polygon.tooltip.end');
+    L.drawLocal.draw.handlers.rectangle.tooltip.start = $.i18n.prop('leaflet.draw.rectangle.tooltip.start');
+    L.drawLocal.draw.handlers.simpleshape.tooltip.end = $.i18n.prop('leaflet.draw.simpleshape.tooltip.end');
+    L.drawLocal.draw.handlers.circle.tooltip.start = $.i18n.prop('leaflet.draw.circle.tooltip.start');
+    L.drawLocal.draw.handlers.circle.radius = $.i18n.prop('leaflet.draw.circle.radius');
+    L.drawLocal.edit.toolbar.buttons.edit = $.i18n.prop('leaflet.draw.edit.toolbar.buttons.edit');
+    L.drawLocal.edit.toolbar.actions.save.text = $.i18n.prop('leaflet.draw.edit.toolbar.actions.save.text');
+    L.drawLocal.edit.toolbar.actions.save.title = $.i18n.prop('leaflet.draw.edit.toolbar.actions.save.title');
+    L.drawLocal.edit.toolbar.actions.cancel.title = $.i18n.prop('leaflet.draw.edit.toolbar.actions.cancel.title');
+    L.drawLocal.edit.toolbar.actions.cancel.text = $.i18n.prop('leaflet.draw.edit.toolbar.actions.cancel.text');
+    L.drawLocal.edit.handlers.edit.tooltip.text = $.i18n.prop('leaflet.draw.edit.handlers.edit.tooltip.text');
+    L.drawLocal.edit.handlers.edit.tooltip.subtext = $.i18n.prop('leaflet.draw.edit.handlers.edit.tooltip.subtext');
+    L.drawLocal.edit.toolbar.buttons.remove.remove = $.i18n.prop('leaflet.draw.edit.toolbar.buttons.remove.remove');
+    L.drawLocal.edit.toolbar.actions.clearAll.text = $.i18n.prop('leaflet.draw.edit.toolbar.actions.clearAll.text');
+    L.drawLocal.edit.toolbar.actions.clearAll.title = $.i18n.prop('leaflet.draw.edit.toolbar.actions.clearAll.title');
+    L.drawLocal.edit.handlers.remove.tooltip.text = $.i18n.prop('leaflet.draw.edit.handlers.remove.tooltip.text');
 }
