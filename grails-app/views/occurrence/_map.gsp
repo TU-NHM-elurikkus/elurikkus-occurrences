@@ -71,7 +71,7 @@
                         <option>————————————</option>
 
                         <g:set var="excludedFacets">
-                            ${grailsApplication.config.facets.mapExclude?:""}.split(",")
+                            ${grailsApplication.config.facets.mapExclude ?: ""}.split(",")
                         </g:set>
                         <g:each var="facetResult" in="${facets}">
                             <g:if test="${!excludedFacets.contains(facetResult.fieldName)}">
@@ -177,13 +177,6 @@
 
 
 <script>
-    var defaultBaseLayer = L.tileLayer("${grailsApplication.config.map.minimal.url}", {
-        attribution: "${raw(grailsApplication.config.map.minimal.attr)}",
-        subdomains: "${grailsApplication.config.map.minimal.subdomains}",
-        mapid: "${grailsApplication.config.map.mapbox?.id?:''}",
-        token: "${grailsApplication.config.map.mapbox?.token?:''}"
-    });
-
     var translations = {
         'record.catalogNumber.label': "${g.message(code: 'record.catalogNumber.label')}",
         'record.fieldNumber.label': "${g.message(code: 'record.fieldNumber.label')}",
@@ -200,10 +193,10 @@
         mappingUrl : "${mappingUrl}",
         queryDisplayString : "${queryDisplayString}",
         center: [
-            "${grailsApplication.config.map.defaultLatitude?:'58.67'}",
-            "${grailsApplication.config.map.defaultLongitude?:'25.56'}",
+            "${grailsApplication.config.map.defaultLatitude ?: '58.67'}",
+            "${grailsApplication.config.map.defaultLongitude ?: '25.56'}",
         ],
-        defaultZoom : "${grailsApplication.config.map.defaultZoom?:'4'}",
+        defaultZoom : "${grailsApplication.config.map.defaultZoom ?: '4'}",
         zoomOutsideScopedRegion: ${(grailsApplication.config.map.zoomOutsideScopedRegion == false || grailsApplication.config.map.zoomOutsideScopedRegion == "false") ? false : true},
         pointColour: "${grailsApplication.config.map.pointColour}",
         contextPath: "${request.contextPath}",
