@@ -153,12 +153,16 @@ OccurrenceMap.prototype.initialize = function() {
         self.drawnItems.addLayer(layer);
     });
 
-    // add the default base layer
-    self.map.addLayer(defaultBaseLayer);
-
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(self.map); // coordinate plugin
 
     var baseLayers = getBaseLayers();
+
+    // add the default base layer
+    var storedLayerName = localStorage.getItem('defaultMapLayer');
+    var defaultLayerName = storedLayerName ? storedLayerName : $.i18n.prop('advancedsearch.js.map.layers.Minimal');
+    var defaultBaseLayer = baseLayers[defaultLayerName];
+    self.map.addLayer(defaultBaseLayer);
+
     self.layerControl = L.control.layers(baseLayers, {}, { collapsed: true, position: 'bottomleft' });
     self.layerControl.addTo(self.map);
 
@@ -276,6 +280,7 @@ OccurrenceMap.prototype.initialize = function() {
     });
 
     self.map.on('click', pointLookupClickRegister);
+    self.map.on('baselayerchange', onBaseLayerChange);
 };
 
 /**

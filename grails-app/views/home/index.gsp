@@ -3,7 +3,7 @@
 
 <g:set var="hubDisplayName" value="${grailsApplication.config.skin.orgNameLong}" />
 <g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocache.baseUrl}" />
-<g:set var="serverName" value="${grailsApplication.config.serverName?:grailsApplication.config.biocache.baseUrl}" />
+<g:set var="serverName" value="${grailsApplication.config.serverName ?: grailsApplication.config.biocache.baseUrl}" />
 
 <!DOCTYPE html>
 <html>
@@ -267,13 +267,6 @@
                 $('#' + inputID).val(inputText);
                 return inputText.length !== 0;
             }
-
-            var defaultBaseLayer = L.tileLayer("${grailsApplication.config.map.minimal.url}", {
-                attribution: "${raw(grailsApplication.config.map.minimal.attr)}",
-                subdomains: "${grailsApplication.config.map.minimal.subdomains}",
-                mapid: "${grailsApplication.config.map.mapbox?.id?:''}",
-                token: "${grailsApplication.config.map.mapbox?.token?:''}"
-            });
 
             // Global var to store map config
             var MAP_VAR = {

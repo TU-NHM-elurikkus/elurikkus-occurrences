@@ -149,17 +149,27 @@ function drawI18N() {
 
 function getBaseLayers() {
     // Google map layers
+    var minimalBaseLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, imagery &copy; <a href="https://carto.com/attribution">CartoDB</a>',
+        subdomains: 'abcd',
+        mapid: '',
+        token: ''
+    });
     var roadLayer = L.gridLayer.googleMutant({ type: 'roadmap' });
     var terrainLayer = L.gridLayer.googleMutant({ type: 'terrain' });
     var hybridLayer = L.gridLayer.googleMutant({ type: 'satellite' });
     var blackWhiteLayer = new L.StamenTileLayer('toner');
 
     var baseLayers = {};
-    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Minimal')] = defaultBaseLayer;
+    baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Minimal')] = minimalBaseLayer;
     baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Road')] = roadLayer;
     baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Terrain')] = terrainLayer;
     baseLayers[$.i18n.prop('advancedsearch.js.map.layers.Satellite')] = hybridLayer;
     baseLayers[$.i18n.prop('advancedsearch.js.map.layers.BlackWhite')] = blackWhiteLayer;
 
     return baseLayers;
+}
+
+function onBaseLayerChange(e) {
+    localStorage.setItem('defaultMapLayer', e.name);
 }

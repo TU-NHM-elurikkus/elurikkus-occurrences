@@ -150,14 +150,19 @@ function initialiseMap() {
         });
     });
 
+    var baseLayers = getBaseLayers();
+
     // add the default base layer
+    var storedLayerName = localStorage.getItem('defaultMapLayer');
+    var defaultLayerName = storedLayerName ? storedLayerName : $.i18n.prop('advancedsearch.js.map.layers.Minimal');
+    var defaultBaseLayer = baseLayers[defaultLayerName];
     MAP_VAR.map.addLayer(defaultBaseLayer);
 
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(MAP_VAR.map); // coordinate plugin
 
-    var baseLayers = getBaseLayers();
-
     L.control.layers(baseLayers, {}, { collapsed: true, position: 'bottomleft' }).addTo(MAP_VAR.map);
 
     L.Util.requestAnimFrame(MAP_VAR.map.invalidateSize, MAP_VAR.map, !1, MAP_VAR.map._container);
+
+    MAP_VAR.map.on('baselayerchange', onBaseLayerChange);
 }
