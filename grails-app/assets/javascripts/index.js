@@ -2,7 +2,6 @@
 //= require jquery.jsonp-2.4.0.min
 //= require jquery.autocomplete
 //= require leafletPlugins
-//= require es6-promise
 //= require purl
 //= require map.common
 //= require advancedSearch

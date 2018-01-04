@@ -1,3 +1,4 @@
+//= require es6-promise
 //= require google-mutant
 //= require tile.stamen-v1.3.0
 
