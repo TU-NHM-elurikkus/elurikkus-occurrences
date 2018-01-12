@@ -159,7 +159,14 @@ OccurrenceMap.prototype.initialize = function() {
 
     // add the default base layer
     var storedLayerName = localStorage.getItem('defaultMapLayer');
-    var defaultLayerName = storedLayerName ? storedLayerName : $.i18n.prop('advancedsearch.js.map.layers.Minimal');
+
+    var defaultLayerName;
+    if(storedLayerName in baseLayers) {
+        defaultLayerName = storedLayerName;
+    } else {
+        defaultLayerName = $.i18n.prop('advancedsearch.js.map.layers.Minimal');
+    }
+
     var defaultBaseLayer = baseLayers[defaultLayerName];
     self.map.addLayer(defaultBaseLayer);
 
