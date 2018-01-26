@@ -560,9 +560,6 @@ class OccurrenceTagLib {
     /**
      * Outputs occurrences table (HTML) to the search page.
      *
-     * Hard-coded list of columns
-     * scientificName, vernacularName, year
-     *
      * @attr occurrences REQUIRED
      */
     def formatOccurrencesTable = { attrs ->
