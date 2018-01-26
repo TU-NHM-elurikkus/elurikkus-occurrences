@@ -133,7 +133,12 @@ var occurrencesTableHandler = {};
 
         this.updateTable(this.columnsWidths);
     }.bind(this);
+
+    this.run = function() {
+        // TODO Explain.
+        setTimeout(this.initialise, 1000);
+    }.bind(this)
 }).apply(occurrencesTableHandler);
 
 window.addEventListener('resize', occurrencesTableHandler.resizeThrottler, false);
-document.addEventListener('DOMContentLoaded', occurrencesTableHandler.initialise);
+document.addEventListener('DOMContentLoaded', occurrencesTableHandler.run);
