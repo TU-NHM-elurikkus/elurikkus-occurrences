@@ -4,6 +4,10 @@
  * TO SEE
  */
 
+/*
+*= require elurikkus-search-table
+*/
+
 .subnavlist {
     max-height: 4.2rem;
     overflow-y: scroll;
@@ -82,21 +86,6 @@
     font-weight: bold;
 }
 
-/* RESULTS TABLE */
-#results .rowA {
-    color: #555;
-    margin: .5rem 0;
-    font-weight: bold;
-}
-
-/* RESULTS TABLE */
-#results .rowB {
-    color: #222;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #DDD;
-    margin-bottom: 0;
-}
-
 .slider-handle.hide {
     display: none;
 }
@@ -112,10 +101,6 @@
 
 .search-info-column {
     margin-bottom: 1rem;
-}
-
-.search-results {
-    clear: both;
 }
 
 #customiseFiltersButton {
