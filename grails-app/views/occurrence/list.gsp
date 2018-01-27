@@ -589,9 +589,10 @@
                             <div id="results" class="search-results">
                                 <g:set var="startList" value="${System.currentTimeMillis()}" />
 
-                                <g:each var="occurrence" in="${sr.occurrences}">
-                                    <alatag:formatListRecordRow occurrence="${occurrence}" />
-                                </g:each>
+                                <%-- SEARCH RESULTS TABLE --%>
+                                <table id="search-results-table" class="search-results-table">
+                                    <alatag:formatOccurrencesTable occurrences="${sr.occurrences}" />
+                                </table>
                             </div>
 
                             <div id="searchNavBar" class="pagination">

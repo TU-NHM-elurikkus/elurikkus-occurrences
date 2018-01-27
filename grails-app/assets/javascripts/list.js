@@ -11,3 +11,4 @@
 //= require map.common
 //= require occurrenceMap
 //= require charts
+//= require list-table

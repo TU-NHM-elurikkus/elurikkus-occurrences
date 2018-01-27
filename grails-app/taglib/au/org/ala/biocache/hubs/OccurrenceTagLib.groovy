@@ -539,12 +539,87 @@ class OccurrenceTagLib {
     }
 
     /**
+     * Provides custom formatting per occurrence property (key).
+     *
+     * @attr value REQUIRED
+     * @attr key REQUIRED
+     * @return formatted value
+     */
+    def formatValue = { value, key ->
+        if(key == 'eventDate') {
+            return g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
+        } else if(key == 'collectors' && value.size() > 2) {
+            return value[0..1].join(', ') + ', ...'
+        } else if(key == 'collectors') {
+            return value[0..-1].join(', ') // XXX funny
+        } else {
+            return value
+        }
+    }
+
+    /**
+     * Outputs occurrences table (HTML) to the search page.
+     *
+     * @attr occurrences REQUIRED
+     */
+    def formatOccurrencesTable = { attrs ->
+        def occurrences = attrs.occurrences
+        def mb = new MarkupBuilder(out)
+        // TODO Move to config.
+        def columns = [
+            'eventDate',
+            'scientificName',
+            'vernacularName',
+            'collectors',
+            'country',
+            'dataProviderName'
+        ]
+        // TODO Move to config.
+        def priorityColumns = [
+            'eventDate',
+            'scientificName',
+            'vernacularName'
+        ]
+
+        // Table header.
+        mb.thead() {
+            tr(class: 'search-results-row') {
+                columns.each { column ->
+                    def properties = ['data-priority-col': priorityColumns.contains(column)]
+
+                    th(class: 'search-results-header', *:properties) {
+                        mkp.yieldUnescaped(g.message(code:"listtable.${column}"))
+                    }
+                }
+            }
+        }
+
+        // Table body.
+        mb.tbody() {
+            occurrences.toArray().each { occurrence ->
+                tr(class: 'search-results-row') {
+                    columns.each { column ->
+                        def properties = ['data-priority-col': priorityColumns.contains(columns)]
+
+                        td(class: 'search-results-cell', *:properties) {
+                            try {
+                                mkp.yieldUnescaped(formatValue(occurrence.get(column), column))
+                            } catch(Exception e) {
+                                // no nothing
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Output a row (occurrence record) in the search results "Records" tab
      *
      * @attr occurrence REQUIRED
      */
     def formatListRecordRow = { attrs ->
-
         def occurrence = attrs.occurrence
         def mb = new MarkupBuilder(out)
         def outputResultsLabel = { label, value, test ->
