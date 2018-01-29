@@ -558,6 +558,30 @@ class OccurrenceTagLib {
     }
 
     /**
+     * Returns column name with row_ prefix, if a name without said prefix has
+     * not been found.
+     *
+     * @attr columns REQUIRED
+     * @attr allColumns REQUIRED
+     * @return array of column names
+     */
+    def getColumnsNames = { columns, allColumns ->
+        def parsedColumns = []
+
+        columns.each { column ->
+            def rawKey = "raw_" + column
+
+            if(allColumns.contains(column)) {
+                parsedColumns.push(column)
+            } else if(allColumns.contains(rawKey)) {
+                parsedColumns.push(rawKey)
+            }
+        }
+
+        return parsedColumns
+    }
+
+    /**
      * Outputs occurrences table (HTML) to the search page.
      *
      * @attr occurrences REQUIRED
@@ -565,26 +589,30 @@ class OccurrenceTagLib {
     def formatOccurrencesTable = { attrs ->
         def occurrences = attrs.occurrences
         def mb = new MarkupBuilder(out)
-        // TODO Move to config.
-        def columns = [
-            'eventDate',
-            'scientificName',
-            'vernacularName',
-            'collectors',
-            'country',
-            'dataProviderName'
-        ]
-        // TODO Move to config.
-        def priorityColumns = [
-            'eventDate',
-            'scientificName',
-            'vernacularName'
-        ]
+        def allColumns = []
+
+        occurrences.toArray().each {
+            it.names().each {
+                if(!allColumns.contains(it)) {
+                    allColumns.push(it)
+                }
+            }
+        }
+
+        def normalColumns = getColumnsNames(
+            ['eventDate', 'scientificName', 'vernacularName', 'locality', 'collectors', 'country'],
+            allColumns
+        )
+
+        def priorityColumns = getColumnsNames(
+            ['eventDate', 'scientificName', 'locality'],
+            allColumns
+        )
 
         // Table header.
         mb.thead() {
             tr(class: 'search-results-row') {
-                columns.each { column ->
+                normalColumns.each { column ->
                     def properties = ['data-priority-col': priorityColumns.contains(column)]
 
                     th(class: 'search-results-header', *:properties) {
@@ -598,21 +626,22 @@ class OccurrenceTagLib {
         mb.tbody() {
             occurrences.toArray().each { occurrence ->
                 tr(class: 'search-results-row') {
-                    columns.each { column ->
-                        def properties = ['data-priority-col': priorityColumns.contains(columns)]
+                    normalColumns.each { column ->
+                        def properties = ['data-priority-col': priorityColumns.contains(normalColumns)]
 
                         td(class: 'search-results-cell', *:properties) {
                             try {
-                                def value = occurrence.get(column)
+                                def value = formatValue(occurrence.get(column), column)
 
-                                if(column == 'scientificName') {
+                                if(column == 'scientificName' || column == 'raw_scientificName') {
                                     // Record view link.
                                     a(
-                                        href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
-                                        value ? value : g.message(code:'formatListRecordRow.viewRecord')
+                                        href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
+                                        title: value,
+                                        value ? value : g.message(code: 'formatListRecordRow.viewRecord')
                                     )
                                 } else {
-                                    mkp.yieldUnescaped(formatValue(value, column))
+                                    div(title: value, value)
                                 }
                             } catch(Exception e) {
                                 // no nothing

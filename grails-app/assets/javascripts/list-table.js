@@ -129,7 +129,7 @@ var occurrencesTableHandler = {};
         );
 
         // TODO Explain.
-        table.classList.add('search-results-table--stretch');
+        table.classList.add('search-results-table--ready');
 
         this.updateTable(this.columnsWidths);
     }.bind(this);
