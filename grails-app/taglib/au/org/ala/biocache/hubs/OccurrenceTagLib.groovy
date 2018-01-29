@@ -603,7 +603,17 @@ class OccurrenceTagLib {
 
                         td(class: 'search-results-cell', *:properties) {
                             try {
-                                mkp.yieldUnescaped(formatValue(occurrence.get(column), column))
+                                def value = occurrence.get(column)
+
+                                if(column == 'scientificName') {
+                                    // Record view link.
+                                    a(
+                                        href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
+                                        value ? value : g.message(code:'formatListRecordRow.viewRecord')
+                                    )
+                                } else {
+                                    mkp.yieldUnescaped(formatValue(value, column))
+                                }
                             } catch(Exception e) {
                                 // no nothing
                             }
