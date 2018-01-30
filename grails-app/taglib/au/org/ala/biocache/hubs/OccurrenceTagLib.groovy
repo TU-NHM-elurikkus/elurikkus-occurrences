@@ -600,7 +600,7 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'locality', 'collectors', 'country'],
+            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'locality', 'collectors', 'country'],
             allColumns
         )
 
