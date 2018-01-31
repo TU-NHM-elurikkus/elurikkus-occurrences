@@ -539,21 +539,45 @@ class OccurrenceTagLib {
     }
 
     /**
-     * Provides custom formatting per occurrence property (key).
+     * Format and build HTML for occurrence properties.
      *
-     * @attr value REQUIRED
+     * @attr occurrence REQUIRED
      * @attr key REQUIRED
-     * @return formatted value
+     * @attr builder REQUIRED
      */
-    def formatValue = { value, key ->
+    def formatValue = { occurrence, key, builder ->
+        def value = occurrence.get(key)
+
         if(key == 'eventDate') {
-            return g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
+            def formatted = g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
+
+            builder.div(title: formatted, formatted)
         } else if(key == 'collectors' && value.size() > 2) {
-            return value[0..1].join(', ') + ', ...'
+            def formatted = value[0..1].join(', ') + ', ...'
+
+            builder.div(title: formatted, formatted)
         } else if(key == 'collectors') {
-            return value[0..-1].join(', ') // XXX funny
+            def formatted = value[0..-1].join(', ')
+
+            builder.div(title: formatted, formatted)
+        } else if(key == 'scientificName' || key == 'raw_scientificName') {
+            builder.a(
+                href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
+                title: value,
+                value ? value : g.message(code: 'formatListRecordRow.viewRecord')
+            )
+        } else if(key == 'multimedia') {
+            value.each { type ->
+                if(type == 'Image') {
+                    builder.span(class: 'fa fa-image', title: g.message(code: 'listtable.hasImage'))
+                } else if(type == 'Sound') {
+                    builder.span(class: 'fa fa-music', title: g.message(code: 'listtable.hasSound'))
+                } else if(type == 'Video') {
+                    builder.span(class: 'fa fa-video-camera', title: g.message(code: 'listtable.hasVideo'))
+                }
+            }
         } else {
-            return value
+            builder.div(title: value, value)
         }
     }
 
@@ -600,7 +624,7 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'locality', 'collectors', 'country'],
+            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality', 'collectors', 'multimedia'],
             allColumns
         )
 
@@ -631,18 +655,7 @@ class OccurrenceTagLib {
 
                         td(class: 'search-results-cell', *:properties) {
                             try {
-                                def value = formatValue(occurrence.get(column), column)
-
-                                if(column == 'scientificName' || column == 'raw_scientificName') {
-                                    // Record view link.
-                                    a(
-                                        href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
-                                        title: value,
-                                        value ? value : g.message(code: 'formatListRecordRow.viewRecord')
-                                    )
-                                } else {
-                                    div(title: value, value)
-                                }
+                                formatValue(occurrence, column, mb)
                             } catch(Exception e) {
                                 // no nothing
                             }
