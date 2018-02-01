@@ -551,15 +551,15 @@ class OccurrenceTagLib {
         if(key == 'eventDate') {
             def formatted = g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
 
-            builder.div(title: formatted, formatted)
+            builder.span(title: formatted, formatted)
         } else if(key == 'collectors' && value.size() > 2) {
             def formatted = value[0..1].join(', ') + ', ...'
 
-            builder.div(title: formatted, formatted)
+            builder.span(title: formatted, formatted)
         } else if(key == 'collectors') {
             def formatted = value[0..-1].join(', ')
 
-            builder.div(title: formatted, formatted)
+            builder.span(title: formatted, formatted)
         } else if(key == 'scientificName' || key == 'raw_scientificName') {
             builder.a(
                 href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
@@ -577,7 +577,7 @@ class OccurrenceTagLib {
                 }
             }
         } else {
-            builder.div(title: value, value)
+            builder.span(title: value, value)
         }
     }
 

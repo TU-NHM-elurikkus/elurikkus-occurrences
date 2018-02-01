@@ -1,4 +1,4 @@
-var occurrencesTableHandler = {};
+var occTableHandler = {};
 
 (function() {
     this.resizeThrottler = function() {
@@ -106,7 +106,8 @@ var occurrencesTableHandler = {};
         var container = document.getElementById('results');
         var table = document.getElementById('search-results-table');
         var rows = table.getElementsByTagName('tr');
-        var columnsToShow = this.countFittingColumns(this.columnWidths,
+
+        var columnsToShow = this.countFittingColumns(columnWidths,
             container.clientWidth);
 
         this.updateColumns(rows, columnsToShow);
@@ -116,29 +117,24 @@ var occurrencesTableHandler = {};
         var table = document.getElementById('search-results-table');
         var rows = table.getElementsByTagName('tr');
         /**
-         * We can get column widths from any of the rows, so the first one will
-         * do just fine.
+         * We can get column widths from any of the rows, but we use the header
+         * show because these cells also contain column configuration data.
          */
         var cells = this.arrayFromNodes(rows[0].children);
 
         this.columnWidths = this.getColumnWidths(cells);
-        this.tableWidth = this.columnWidths.reduce(
-            function(accumulatedValue, currentValue) {
-                return accumulatedValue + currentValue;
-            }
-        );
 
         // TODO Explain.
         table.classList.add('search-results-table--ready');
 
-        this.updateTable(this.columnsWidths);
+        this.updateTable(this.columnWidths);
     }.bind(this);
 
     this.run = function() {
         // TODO Explain.
         setTimeout(this.initialise, 1000);
     }.bind(this)
-}).apply(occurrencesTableHandler);
+}).apply(occTableHandler);
 
-window.addEventListener('resize', occurrencesTableHandler.resizeThrottler, false);
-document.addEventListener('DOMContentLoaded', occurrencesTableHandler.run);
+window.addEventListener('resize', occTableHandler.resizeThrottler, false);
+document.addEventListener('DOMContentLoaded', occTableHandler.run);
