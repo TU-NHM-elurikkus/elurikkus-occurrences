@@ -629,7 +629,7 @@ class OccurrenceTagLib {
         )
 
         def priorityColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'locality'],
+            ['eventDate', 'scientificName', 'multimedia'],
             allColumns
         )
 

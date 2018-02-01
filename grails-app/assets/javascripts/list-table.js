@@ -36,31 +36,30 @@ var occTableHandler = {};
     };
 
     /**
-     * Calculates the number of columns which can visibly fit into available
-     * width.
+     * Calculates indexes of columns which must be hidden for the table to fit
+     * into its container.
      *
-     * @param {array} colWidths - Array of all column widths.
-     * @param {number} width - Available width in pixels.
-     * @returns {number} - Count of columns that can be set visible.
+     * @param {array} lesserCols - Indexes of cols that will be removed first.
+     * @param {array} colWidths - Widths of all columns.
+     * @param {number} maxWidth - Available width.
+     * @returns {array}
      */
-    this.countFittingColumns = function(colWidths, maxWidth) {
-        var width = 0;
-        // Unless we'll learn otherwise, we can show all columns.
-        var columnsCount = colWidths.length;
+    this.getOverflowingColumns = function(lesserCols, colWidths, maxWidth) {
+        var tableWidth = colWidths.reduce(function(a, b) {
+            return a + b;
+        });
+        var overflowingWidth = tableWidth - maxWidth;
+        var widthAccumulator = 0;
+        var columns = []; // Overflowing column indexes.
 
-        for(var i = 0; i < colWidths.length; i++) {
-            width += colWidths[i];
-
-            if(width >= maxWidth) {
-                columnsCount = i;
-
-                break;
-            } else {
-                continue;
+        [].concat(lesserCols).reverse().forEach(function(i) {
+            if(widthAccumulator < overflowingWidth) {
+                widthAccumulator += colWidths[i];
+                columns.push(i);
             }
-        }
+        });
 
-        return columnsCount;
+        return columns;
     };
 
     /**
@@ -83,34 +82,37 @@ var occTableHandler = {};
      * Update visibility of table columns. Iterates over rows.
      *
      * @param {HTMLCollection|NodeList} rows - Table rows.
-     * @param {number} columnsToShow.
+     * @param {array} columnsToHide - Indexes of columns that will be hidden.
      */
-    this.updateColumns = function(rows, columnsToShow) {
+    this.updateColumns = function(rows, columnsToHide) {
         var self = this;
 
-        // Temporary solution till prioritisation is done.
-        if(columnsToShow > 1) {
-            self.arrayFromNodes(rows).forEach(function(row) {
-                var cells = self.arrayFromNodes(row.children);
-                var cellsToShow = cells.slice(0, columnsToShow);
-                var cellsToHide = cells.slice(columnsToShow);
-
-                self.updateCells(cellsToShow, true)
-                self.updateCells(cellsToHide, false)
+        self.arrayFromNodes(rows).forEach(function(row) {
+            var cells = self.arrayFromNodes(row.children);
+            var cellsToShow = cells.filter(function(cell, index) {
+                return columnsToHide.indexOf(index) === -1;
             });
-        }
-    }.bind(this);
+            var cellsToHide = cells.filter(function(cell, index) {
+                return columnsToHide.indexOf(index) !== -1;
+            });
+
+            self.updateCells(cellsToShow, true)
+            self.updateCells(cellsToHide, false)
+        });
+    }
 
     // The main method for updating the table to show & hide columns.
     this.updateTable = function(columnWidths) {
         var container = document.getElementById('results');
         var table = document.getElementById('search-results-table');
         var rows = table.getElementsByTagName('tr');
+        var columnsToHide = this.getOverflowingColumns(
+            this.lesserColIndexes,
+            columnWidths,
+            container.clientWidth
+        );
 
-        var columnsToShow = this.countFittingColumns(columnWidths,
-            container.clientWidth);
-
-        this.updateColumns(rows, columnsToShow);
+        this.updateColumns(rows, columnsToHide);
     };
 
     this.initialise = function() {
@@ -121,10 +123,20 @@ var occTableHandler = {};
          * show because these cells also contain column configuration data.
          */
         var cells = this.arrayFromNodes(rows[0].children);
+        // Columns we can remove when necessary.
+        this.lesserColIndexes = cells.map(function(cell, index) {
+            if(cell.dataset.priorityCol === "false") {
+                return index;
+            } else {
+                return null;
+            }
+        }).filter(function(i) {
+            return i !== null;
+        });
 
         this.columnWidths = this.getColumnWidths(cells);
 
-        // TODO Explain.
+        // Makes the table visible and stretches it to use all available width.
         table.classList.add('search-results-table--ready');
 
         this.updateTable(this.columnWidths);
