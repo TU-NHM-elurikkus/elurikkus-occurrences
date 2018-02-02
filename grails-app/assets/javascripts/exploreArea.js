@@ -700,13 +700,17 @@ function loadExploreArea(EYA_CONF) {
                 lat: $('#latitude').val(),
                 lon: $('#longitude').val(),
                 radius: $('#radius').val(),
-                fq: state.taxonRank + ':' + state.speciesGroup,
                 start: newStart,
                 common: commonName,
                 sort: sortParam,
                 pageSize: 50,
                 qc: EYA_CONF.queryContext
             };
+
+            if(state.speciesGroup !== 'ALL_SPECIES') {
+                params.fq = state.taxonRank + ':' + state.speciesGroup;
+            }
+
             $('#loadMoreRow').detach(); // delete it
             $.getJSON(uri, params, function(data) {
                 // process JSON data from request
