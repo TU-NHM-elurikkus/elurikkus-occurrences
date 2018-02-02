@@ -642,8 +642,13 @@ class OccurrenceTagLib {
             tr(class: 'search-results-row') {
                 normalColumns.each { column ->
                     def properties = ['data-priority-col': priorityColumns.contains(column)]
+                    def styleClass = 'search-results-header'
 
-                    th(class: 'search-results-header', *:properties) {
+                    if(column == 'individualCount') {
+                        styleClass += ' search-results-header--center'
+                    }
+
+                    th(class: styleClass, *:properties) {
                         mkp.yieldUnescaped(g.message(code:"listtable.${column}"))
                     }
                 }

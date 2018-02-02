@@ -1,13 +1,17 @@
 var occTableHandler = {};
 
 (function() {
+    this.hideOverflowingColumns = true;
+
     this.resizeThrottler = function() {
         var self = this;
 
         if(!self.resizeTimeout) {
             self.resizeTimeout = setTimeout(function() {
                 self.resizeTimeout = null;
-                self.updateTable(self.columnWidths);
+                if(self.hideOverflowingColumns) {
+                    self.updateTable(self.columnWidths);
+                }
             }, 333);
         }
     }.bind(this);
@@ -112,7 +116,41 @@ var occTableHandler = {};
             container.clientWidth
         );
 
+        if(columnsToHide.length) {
+            this.setExpansionBtnVisibility(true);
+        } else {
+            this.setExpansionBtnVisibility(false);
+        }
+
         this.updateColumns(rows, columnsToHide);
+    };
+
+    this.setExpansionBtnVisibility = function(setVisible) {
+        var button = document.getElementById('search-results-expand-btn');
+
+        if(setVisible) {
+            button.classList.remove('search-results-expand-btn--hidden');
+        } else {
+            button.classList.add('search-results-expand-btn--hidden');
+        }
+    };
+
+    this.toggleTableExpansion = function() {
+        var table = document.getElementById('search-results-table');
+        var rows = table.getElementsByTagName('tr');
+        var icon = document.getElementById('search-results-expand-btn-icon');
+
+        if(this.hideOverflowingColumns) {
+            this.hideOverflowingColumns = false;
+            this.updateColumns(rows, []);
+            icon.classList.remove('fa-angle-right');
+            icon.classList.add('fa-angle-left');
+        } else {
+            this.hideOverflowingColumns = true;
+            this.updateTable(this.columnWidths);
+            icon.classList.remove('fa-angle-left');
+            icon.classList.add('fa-angle-right');
+        }
     };
 
     this.initialise = function() {

@@ -1,8 +1,28 @@
 /* Occurrence search results table container */
 .search-results {
-    clear: both;
+    margin: 0 -.5rem;
     overflow: hidden;
     overflow-x: auto;
+}
+
+.search-results-expand-btn {
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    position: absolute;
+    right: 5px;
+    padding: 0 .5em;
+    height: 2em;
+    top: 50%;
+}
+
+.search-results-expand-btn--hidden {
+    display: none;
+}
+
+.search-results-expand-btn__icon {
+    color: #666;
+    font-weight: bold;
 }
 
 /* Occurrence search results table */
@@ -24,6 +44,10 @@
 .search-results-header {
     padding: .25rem .5rem;
     color: #555;
+}
+
+.search-results-header--center {
+    text-align: center;
 }
 
 .search-results-cell {
