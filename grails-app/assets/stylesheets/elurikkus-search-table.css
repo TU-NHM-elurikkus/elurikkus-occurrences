@@ -37,3 +37,11 @@
 .search-results-cell--hidden {
     display: none;
 }
+
+.search-results-cell__taxon {
+    font-style: italic;
+}
+
+.search-results-cell__count {
+    text-align: center;
+}

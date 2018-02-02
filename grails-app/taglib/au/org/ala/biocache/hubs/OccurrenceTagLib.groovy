@@ -564,6 +564,7 @@ class OccurrenceTagLib {
             builder.a(
                 href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
                 title: value,
+                class: 'search-results-cell__taxon',
                 value ? value : g.message(code: 'formatListRecordRow.viewRecord')
             )
         } else if(key == 'multimedia') {
@@ -576,6 +577,8 @@ class OccurrenceTagLib {
                     builder.span(class: 'fa fa-video-camera', title: g.message(code: 'listtable.hasVideo'))
                 }
             }
+        } else if(key == 'individualCount') {
+            builder.div(class: 'search-results-cell__count', title: value, value)
         } else {
             builder.span(title: value, value)
         }
@@ -624,12 +627,13 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality', 'collectors', 'multimedia'],
+            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality',
+            'collectors', 'multimedia', 'basisOfRecord'],
             allColumns
         )
 
         def priorityColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'multimedia'],
+            ['eventDate', 'scientificName'],
             allColumns
         )
 
