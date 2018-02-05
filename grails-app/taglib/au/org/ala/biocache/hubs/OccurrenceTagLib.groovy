@@ -579,6 +579,14 @@ class OccurrenceTagLib {
             }
         } else if(key == 'individualCount') {
             builder.div(class: 'search-results-cell__count', title: value, value)
+        } else if(key == 'locality') {
+            def parts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
+
+            parts.removeAll([null])
+
+            def formatted = parts.join(', ')
+
+            builder.span(title: formatted, formatted)
         } else {
             builder.span(title: value, value)
         }
@@ -628,7 +636,7 @@ class OccurrenceTagLib {
 
         def normalColumns = getColumnsNames(
             ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality',
-            'collectors', 'multimedia', 'basisOfRecord'],
+            'collectors', 'multimedia', 'basisOfRecord', 'institutionName', 'dataResourceName'],
             allColumns
         )
 
