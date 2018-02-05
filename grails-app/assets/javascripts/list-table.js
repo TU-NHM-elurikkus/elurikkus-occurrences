@@ -9,9 +9,7 @@ var occTableHandler = {};
         if(!self.resizeTimeout) {
             self.resizeTimeout = setTimeout(function() {
                 self.resizeTimeout = null;
-                if(self.hideOverflowingColumns) {
-                    self.updateTable(self.columnWidths);
-                }
+                self.updateTable(self.columnWidths);
             }, 333);
         }
     }.bind(this);
@@ -122,7 +120,9 @@ var occTableHandler = {};
             this.setExpansionBtnVisibility(false);
         }
 
-        this.updateColumns(rows, columnsToHide);
+        if(this.hideOverflowingColumns) {
+            this.updateColumns(rows, columnsToHide);
+        }
     };
 
     this.setExpansionBtnVisibility = function(setVisible) {

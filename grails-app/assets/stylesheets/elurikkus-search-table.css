@@ -10,7 +10,7 @@
     border-radius: 4px;
     border: 1px solid #ddd;
     position: absolute;
-    right: 5px;
+    right: -30px;
     padding: 0 .5em;
     height: 2em;
     top: 50%;
@@ -68,4 +68,9 @@
 
 .search-results-cell__count {
     text-align: center;
+}
+
+/* XXX */
+#tab-records {
+    position: relative;
 }
