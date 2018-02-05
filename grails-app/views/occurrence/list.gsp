@@ -595,6 +595,23 @@
                                 </table>
                             </div>
 
+                            <%--
+                               Button to expand or contract search resutls table to control the visibility
+                               of overflowing columns. Hidden by default.
+                            --%>
+                            <button
+                                id="search-results-expand-btn"
+                                class="search-results-expand-btn search-results-expand-btn--hidden"
+                                title="${message(code: 'listtable.expandbutton.title')}"
+                                onclick="occTableHandler.toggleTableExpansion()"
+                            >
+                                <span
+                                    id="search-results-expand-btn-icon"
+                                    class="search-results-expand-btn__icon fa fa-angle-right"
+                                >
+                                </span>
+                            </button>
+
                             <div id="searchNavBar" class="pagination">
                                 <g:paginate
                                     total="${sr.totalRecords}"

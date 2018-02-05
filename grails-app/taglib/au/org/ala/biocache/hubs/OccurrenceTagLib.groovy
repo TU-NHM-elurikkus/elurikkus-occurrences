@@ -564,6 +564,7 @@ class OccurrenceTagLib {
             builder.a(
                 href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
                 title: value,
+                class: 'search-results-cell__taxon',
                 value ? value : g.message(code: 'formatListRecordRow.viewRecord')
             )
         } else if(key == 'multimedia') {
@@ -576,6 +577,16 @@ class OccurrenceTagLib {
                     builder.span(class: 'fa fa-video-camera', title: g.message(code: 'listtable.hasVideo'))
                 }
             }
+        } else if(key == 'individualCount') {
+            builder.div(class: 'search-results-cell__count', title: value, value)
+        } else if(key == 'locality') {
+            def parts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
+
+            parts.removeAll([null])
+
+            def formatted = parts.join(', ')
+
+            builder.span(title: formatted, formatted)
         } else {
             builder.span(title: value, value)
         }
@@ -624,12 +635,13 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality', 'collectors', 'multimedia'],
+            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality',
+            'collectors', 'multimedia', 'basisOfRecord', 'institutionName', 'dataResourceName'],
             allColumns
         )
 
         def priorityColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'multimedia'],
+            ['eventDate', 'scientificName'],
             allColumns
         )
 
@@ -638,8 +650,13 @@ class OccurrenceTagLib {
             tr(class: 'search-results-row') {
                 normalColumns.each { column ->
                     def properties = ['data-priority-col': priorityColumns.contains(column)]
+                    def styleClass = 'search-results-header'
 
-                    th(class: 'search-results-header', *:properties) {
+                    if(column == 'individualCount') {
+                        styleClass += ' search-results-header--center'
+                    }
+
+                    th(class: styleClass, *:properties) {
                         mkp.yieldUnescaped(g.message(code:"listtable.${column}"))
                     }
                 }

@@ -1,8 +1,28 @@
 /* Occurrence search results table container */
 .search-results {
-    clear: both;
+    margin: 0 -.5rem;
     overflow: hidden;
     overflow-x: auto;
+}
+
+.search-results-expand-btn {
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    position: absolute;
+    right: -30px;
+    padding: 0 .5em;
+    height: 2em;
+    top: 50%;
+}
+
+.search-results-expand-btn--hidden {
+    display: none;
+}
+
+.search-results-expand-btn__icon {
+    color: #666;
+    font-weight: bold;
 }
 
 /* Occurrence search results table */
@@ -26,6 +46,10 @@
     color: #555;
 }
 
+.search-results-header--center {
+    text-align: center;
+}
+
 .search-results-cell {
     padding: .25rem .5rem;
     white-space: nowrap;
@@ -36,4 +60,17 @@
 
 .search-results-cell--hidden {
     display: none;
+}
+
+.search-results-cell__taxon {
+    font-style: italic;
+}
+
+.search-results-cell__count {
+    text-align: center;
+}
+
+/* XXX */
+#tab-records {
+    position: relative;
 }
