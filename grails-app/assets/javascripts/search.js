@@ -1097,6 +1097,11 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
  */
 function initTableModalLinks() {
     var table = document.getElementById('search-results-table');
+
+    if(!table) {
+        return;
+    }
+
     var thumbAnchors = table.getElementsByClassName('thumbnail-anchor');
 
     Array.prototype.slice.call(thumbAnchors).forEach(function(thumb) {

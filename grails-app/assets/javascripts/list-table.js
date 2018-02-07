@@ -31,9 +31,9 @@ var occTableHandler = {};
      * @param {HTMLCollection|NodeList} cells - Cells of a table row, any row.
      * @returns {array} - Array of cell widths in pixels.
      */
-    this.getColumnWidths = function(cells) {
+    this.getColumnWidths = function(cells, horisontalSeparator) {
         return this.arrayFromNodes(cells).map(function(cell, index) {
-            return cell.clientWidth;
+            return cell.clientWidth + horisontalSeparator;
         });
     };
 
@@ -145,16 +145,26 @@ var occTableHandler = {};
             this.updateColumns(rows, []);
             icon.classList.remove('fa-angle-right');
             icon.classList.add('fa-angle-left');
+            table.classList.add('search-results-table--expanded');
         } else {
             this.hideOverflowingColumns = true;
             this.updateTable(this.columnWidths);
             icon.classList.remove('fa-angle-left');
             icon.classList.add('fa-angle-right');
+            table.classList.remove('search-results-table--expanded');
         }
     };
 
     this.initialise = function() {
         var table = document.getElementById('search-results-table');
+
+        if(!table) {
+            window.removeEventListener('resize',
+                occTableHandler.resizeThrottler, false);
+
+            return;
+        }
+
         var rows = table.getElementsByTagName('tr');
         /**
          * We can get column widths from any of the rows, but we use the header
@@ -172,7 +182,7 @@ var occTableHandler = {};
             return i !== null;
         });
 
-        this.columnWidths = this.getColumnWidths(cells);
+        this.columnWidths = this.getColumnWidths(cells, 8);
 
         // Makes the table visible and stretches it to use all available width.
         table.classList.add('search-results-table--ready');
