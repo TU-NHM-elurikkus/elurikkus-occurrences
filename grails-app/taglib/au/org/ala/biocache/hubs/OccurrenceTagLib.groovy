@@ -600,7 +600,28 @@ class OccurrenceTagLib {
             builder.td(class: style, *:properties) {
                 value.each { type ->
                     if(type == 'Image') {
-                        span(class: 'fa fa-image', title: g.message(code: 'listtable.hasImage'))
+                        // We are going to set up image icons that will be built into Lightbox thumbnails by javascript.
+                        // To avoid waste data stored in these nodes, we'll set up only occurrence properties that will
+                        // be needed for creating thumbnails.
+                        def truncatedOccurrence = new groovy.json.JsonBuilder({
+                            'uuid' occurrence.uuid
+                            'largeImageUrl' occurrence.largeImageUrl
+                            'raw_scientificName' occurrence.raw_scientificName
+                            'image' occurrence.image
+                            'smallImageUrl' occurrence.smallImageUrl
+                            'typeStatus' occurrence.typeStatus
+                            'institutionName' occurrence.institutionName
+                            'collector' occurrence.collector
+                            'eventDate' occurrence.eventDate
+                            'dataResourceName' occurrence.dataResourceName
+                        })
+
+                        span(
+                            class: 'fa fa-image thumbnail-anchor', // This will become a thumbnail.
+                            title: g.message(code: 'listtable.hasImage'),
+                            *:['data-occurrence': truncatedOccurrence],
+                            '' // MarkupBuilder doesn't close tags if their content is absent. So, we give it content.
+                        )
                     } else if(type == 'Sound') {
                         span(class: 'fa fa-music', title: g.message(code: 'listtable.hasSound'))
                     } else if(type == 'Video') {

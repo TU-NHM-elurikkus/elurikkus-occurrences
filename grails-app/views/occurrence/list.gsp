@@ -679,7 +679,11 @@
                                      </button>
                                  </div>
 
-                                <%-- HTML template used by AJAX code --%>
+                                <%--
+                                    XXX
+                                    HTML template used by AJAX code.
+                                    This one is for gallery thumbnails.
+                                --%>
                                 <div class="gallery-thumb-template" style="display: none;">
                                     <div class="gallery-thumb">
                                         <a class="cbLink" href="" data-toggle="lightbox">
@@ -691,6 +695,17 @@
                                             <div class="gallery-thumb__footer"></div>
                                         </a>
                                     </div>
+                                </div>
+
+                                <%--
+                                    XXX
+                                    HTML template used by AJAX code.
+                                    This one is for image icons in search resutls table.
+                                --%>
+                                <div class="gallery-icon-template" style="display: none;">
+                                    <a class="cbLink" href="" data-toggle="lightbox">
+                                        <span class="fa fa-image"></span>
+                                    </a>
                                 </div>
                             </div>
                         </g:if>

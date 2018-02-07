@@ -126,3 +126,8 @@
     background-color: #3dc8d3;
     color: #fff;
 }
+
+/* Lightbox thumbnail link */
+.cbLink:hover {
+    text-decoration: none;
+}

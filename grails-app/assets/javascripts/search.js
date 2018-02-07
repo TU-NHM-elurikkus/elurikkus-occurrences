@@ -514,6 +514,8 @@ $(document).ready(function() {
         $('#downloadMap').modal('hide');
         window.open(downloadUrl);
     });
+
+    initTableModalLinks();
 }); // end JQuery document ready
 
 /**
@@ -805,6 +807,74 @@ function loadImagesInTab() {
     loadImages(0);
 }
 
+function createThumbnails(occurrences, templateClassName) {
+    var count = 0;
+    var thumbs = [];
+
+    $.each(occurrences, function(i, el) {
+        count++;
+        if(el.image) {
+            // clone template div & populate with metadata
+            var $ImgConTmpl = $('.' + templateClassName).clone();
+
+            $ImgConTmpl.removeClass(templateClassName).removeClass('invisible');
+
+            var link = $ImgConTmpl.find('a.cbLink');
+            link.addClass('thumbImage tooltips');
+            link.attr('title', $.i18n.prop('gallery.thumbnail.viewImage'));
+            link.attr('data-occurrenceuid', el.uuid);
+            link.attr('data-image-id', el.largeImageUrl);
+            link.attr('data-scientific-name', el.raw_scientificName);
+            link.attr('data-gallery', 'main-gallery');
+            link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
+
+            $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
+
+            // brief metadata
+            var briefHtml = el.raw_scientificName;
+            var br = '<br />';
+            if(el.typeStatus) {
+                briefHtml += br + el.typeStatus;
+            }
+            if(el.institutionName) { briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName; }
+            $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
+
+            // detail metadata
+            var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
+
+            if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
+            if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
+            if(el.eventDate) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.date') + ':</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
+
+            leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.source') + ':</b> ';
+            if(el.institutionName) {
+                leftDetail += el.institutionName;
+            } else {
+                leftDetail += el.dataResourceName;
+            }
+            leftDetail += '</div>';
+
+            var rightDetail =
+                '<div>' +
+                '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
+                $.i18n.prop('gallery.modal.viewRecord') +
+                '</a>' +
+                '</div>';
+
+            var detailHtml = leftDetail + rightDetail;
+
+            link.attr('data-footer', detailHtml);
+
+            thumbs.push($ImgConTmpl.html());
+        }
+    });
+
+    return {
+        data: thumbs,
+        count: count
+    }
+}
+
 function loadImages(start) {
     start = (start) ? start : 0;
     var imagesJsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' +
@@ -823,64 +893,11 @@ function loadImages(start) {
                 $('#imagesGrid').html('');
             }
 
-            var count = 0;
+            var thumbnailsData = createThumbnails(data.occurrences, 'gallery-thumb-template');
+            var count = thumbnailsData.count;
 
-            $.each(data.occurrences, function(i, el) {
-                count++;
-                if(el.image) {
-                    // clone template div & populate with metadata
-                    var $ImgConTmpl = $('.gallery-thumb-template').clone();
-
-                    $ImgConTmpl.removeClass('gallery-thumb-template').removeClass('invisible');
-
-                    var link = $ImgConTmpl.find('a.cbLink');
-                    link.addClass('thumbImage tooltips');
-                    link.attr('title', 'click to enlarge');
-                    link.attr('data-occurrenceuid', el.uuid);
-                    link.attr('data-image-id', el.largeImageUrl);
-                    link.attr('data-scientific-name', el.raw_scientificName);
-                    link.attr('data-gallery', 'main-gallery');
-                    link.attr('data-remote', BC_CONF.hostName + el.image.replace('/data', '/'));
-
-                    $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
-                    // brief metadata
-                    var briefHtml = el.raw_scientificName;
-                    var br = '<br />';
-                    if(el.typeStatus) {
-                        briefHtml += br + el.typeStatus;
-                    }
-                    if(el.institutionName) { briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName; }
-                    $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
-
-                    // detail metadata
-                    var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
-
-                    if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
-                    if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
-                    if(el.eventDate) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.date') + ':</b> ' + moment(el.eventDate).format('YYYY-MM-DD'); }
-
-                    leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.source') + ':</b> ';
-                    if(el.institutionName) {
-                        leftDetail += el.institutionName;
-                    } else {
-                        leftDetail += el.dataResourceName;
-                    }
-                    leftDetail += '</div>';
-
-                    var rightDetail =
-                        '<div>' +
-                            '<a href="' + BC_CONF.contextPath + '/occurrences/' + el.uuid + '">' +
-                                $.i18n.prop('gallery.modal.viewRecord') +
-                            '</a>' +
-                        '</div>';
-
-                    var detailHtml = leftDetail + rightDetail;
-
-                    link.attr('data-footer', detailHtml);
-
-                    // write to DOM
-                    $('#imagesGrid').append($ImgConTmpl.html());
-                }
+            thumbnailsData.data.forEach(function(thumb) {
+                $('#imagesGrid').append(thumb);
             });
 
             if(count + start < data.totalRecords) {
@@ -890,7 +907,6 @@ function loadImages(start) {
             } else {
                 $('#loadMoreImages').hide();
             }
-
         }
     }).always(function() {
         $('#loadMoreImages img').hide();
@@ -1073,5 +1089,27 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     '<td></td>' +
                 '</tr>');
         }
+    });
+}
+
+/**
+ * Sets up Lightbox thumbnails using data stored in static image icons.
+ */
+function initTableModalLinks() {
+    var table = document.getElementById('search-results-table');
+
+    if(!table) {
+        return;
+    }
+
+    var thumbAnchors = table.getElementsByClassName('thumbnail-anchor');
+
+    Array.prototype.slice.call(thumbAnchors).forEach(function(thumb) {
+        var occurrence = JSON.parse(thumb.dataset.occurrence);
+        var thumbnailData = createThumbnails([occurrence], 'gallery-icon-template');
+        var doc = new DOMParser().parseFromString(thumbnailData.data[0], 'text/html');
+        var newThumb = doc.getElementsByClassName('cbLink')[0];
+
+        thumb.replaceWith(newThumb);
     });
 }

@@ -157,6 +157,14 @@ var occTableHandler = {};
 
     this.initialise = function() {
         var table = document.getElementById('search-results-table');
+
+        if(!table) {
+            window.removeEventListener('resize',
+                occTableHandler.resizeThrottler, false);
+
+            return;
+        }
+
         var rows = table.getElementsByTagName('tr');
         /**
          * We can get column widths from any of the rows, but we use the header
