@@ -539,60 +539,6 @@ class OccurrenceTagLib {
     }
 
     /**
-     * Format and build HTML for occurrence properties.
-     *
-     * @attr occurrence REQUIRED
-     * @attr key REQUIRED
-     * @attr builder REQUIRED
-     */
-    def formatValue = { occurrence, key, builder ->
-        def value = occurrence.get(key)
-
-        if(key == 'eventDate') {
-            def formatted = g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
-
-            builder.span(title: formatted, formatted)
-        } else if(key == 'collectors' && value.size() > 2) {
-            def formatted = value[0..1].join(', ') + ', ...'
-
-            builder.span(title: formatted, formatted)
-        } else if(key == 'collectors') {
-            def formatted = value[0..-1].join(', ')
-
-            builder.span(title: formatted, formatted)
-        } else if(key == 'scientificName' || key == 'raw_scientificName') {
-            builder.a(
-                href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
-                title: value,
-                class: 'search-results-cell__taxon',
-                value ? value : g.message(code: 'formatListRecordRow.viewRecord')
-            )
-        } else if(key == 'multimedia') {
-            value.each { type ->
-                if(type == 'Image') {
-                    builder.span(class: 'fa fa-image', title: g.message(code: 'listtable.hasImage'))
-                } else if(type == 'Sound') {
-                    builder.span(class: 'fa fa-music', title: g.message(code: 'listtable.hasSound'))
-                } else if(type == 'Video') {
-                    builder.span(class: 'fa fa-video-camera', title: g.message(code: 'listtable.hasVideo'))
-                }
-            }
-        } else if(key == 'individualCount') {
-            builder.div(class: 'search-results-cell__count', title: value, value)
-        } else if(key == 'locality') {
-            def parts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
-
-            parts.removeAll([null])
-
-            def formatted = parts.join(', ')
-
-            builder.span(title: formatted, formatted)
-        } else {
-            builder.span(title: value, value)
-        }
-    }
-
-    /**
      * Returns column name with row_ prefix, if a name without said prefix has
      * not been found.
      *
@@ -614,6 +560,67 @@ class OccurrenceTagLib {
         }
 
         return parsedColumns
+    }
+
+    /**
+     * Format and build HTML for occurrence properties.
+     *
+     * @attr occurrence REQUIRED
+     * @attr key REQUIRED
+     * @attr builder REQUIRED
+     */
+
+    def formatCell = { builder, properties, occurrence, key ->
+        def value = occurrence.get(key)
+        def style = 'search-results-cell'
+
+        if(key == 'eventDate') {
+            def formatted = g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
+
+            builder.td(class: "${style} search-results-cell--date", title: formatted, *:properties, formatted)
+        } else if(key == 'collectors' && value.size() > 2) {
+            def formatted = value[0..1].join(', ') + ', ...'
+
+            builder.td(class: style, title: formatted, *:properties, formatted)
+        } else if(key == 'collectors') {
+            def formatted = value[0..-1].join(', ')
+
+            builder.td(class: style, title: formatted, *:properties, formatted)
+        } else if(key == 'scientificName' || key == 'raw_scientificName') {
+            def formatted = value ? value : g.message(code: 'formatListRecordRow.viewRecord')
+
+            builder.td(class: "${style} search-results-cell--taxon", title: formatted, *:properties) {
+                a(
+                    href: g.createLink(url: "${request.contextPath}/occurrences/${occurrence.uuid}"),
+                    title: value,
+                    formatted
+                )
+            }
+        } else if(key == 'multimedia') {
+            builder.td(class: style, *:properties) {
+                value.each { type ->
+                    if(type == 'Image') {
+                        span(class: 'fa fa-image', title: g.message(code: 'listtable.hasImage'))
+                    } else if(type == 'Sound') {
+                        span(class: 'fa fa-music', title: g.message(code: 'listtable.hasSound'))
+                    } else if(type == 'Video') {
+                        span(class: 'fa fa-video-camera', title: g.message(code: 'listtable.hasVideo'))
+                    }
+                }
+            }
+        } else if(key == 'individualCount') {
+            builder.td(class: "${style} search-results-cell--count", *:properties, title: value, value)
+        } else if(key == 'locality') {
+            def parts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
+
+            parts.removeAll([null])
+
+            def formatted = parts.join(', ')
+
+            builder.td(class: style, title: formatted, *:properties, formatted)
+        } else {
+            builder.td(class: style, title: value, *:properties, value)
+        }
     }
 
     /**
@@ -653,7 +660,11 @@ class OccurrenceTagLib {
                     def styleClass = 'search-results-header'
 
                     if(column == 'individualCount') {
-                        styleClass += ' search-results-header--center'
+                        styleClass += ' search-results-cell--count'
+                    }
+
+                    if(column == 'eventDate') {
+                        styleClass += ' search-results-cell--date'
                     }
 
                     th(class: styleClass, *:properties) {
@@ -670,12 +681,10 @@ class OccurrenceTagLib {
                     normalColumns.each { column ->
                         def properties = ['data-priority-col': priorityColumns.contains(normalColumns)]
 
-                        td(class: 'search-results-cell', *:properties) {
-                            try {
-                                formatValue(occurrence, column, mb)
-                            } catch(Exception e) {
-                                // no nothing
-                            }
+                        try {
+                            formatCell(mb, properties, occurrence, column)
+                        } catch(Exception e) {
+                            td(class: 'search-results-cell', '')
                         }
                     }
                 }
