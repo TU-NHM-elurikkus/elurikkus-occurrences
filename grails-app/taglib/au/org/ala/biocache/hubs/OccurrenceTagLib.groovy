@@ -629,13 +629,21 @@ class OccurrenceTagLib {
         } else if(key == 'individualCount') {
             builder.td(class: "${style} search-results-cell--count", *:properties, title: value, value)
         } else if(key == 'locality') {
-            def parts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
+            def contentParts = [ occurrence.municipality, occurrence.locality ]
+            def tooltipParts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
 
-            parts.removeAll([null])
+            contentParts.removeAll([null])
+            tooltipParts.removeAll([null])
 
-            def formatted = parts.join(', ')
+            // In case we have only country, don't hide it in content.
+            if(contentParts.size() == 0) {
+                contentParts = tooltipParts;
+            }
 
-            builder.td(class: style, title: formatted, *:properties, formatted)
+            def formattedContent = contentParts.join(', ')
+            def formattedTooltip = tooltipParts.join(', ')
+
+            builder.td(class: style, title: formattedTooltip, *:properties, formattedContent)
         } else {
             builder.td(class: style, title: value, *:properties, value)
         }
