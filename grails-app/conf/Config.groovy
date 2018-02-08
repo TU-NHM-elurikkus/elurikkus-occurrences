@@ -196,3 +196,18 @@ log4j = {
            "au.org.ala.biocache.hubs",
            "au.org.ala.biocache.hubs.OccurrenceTagLib"
 }
+
+/******************************************************************************\
+ * SEARCH RESULTS
+\******************************************************************************/
+// Table display
+table.displayDynamicProperties = false
+
+// Table columns and order
+table.columns = ['eventDate', 'scientificName', 'vernacularName',
+    'individualCount', 'raw_sex', 'behavior', 'lifeStage', 'catalogNumber',
+    'locality', 'collectors', 'multimedia', 'basisOfRecord', 'institutionName',
+    'dataResourceName']
+
+// Table columns that will not be hidden
+table.priorityColumns = ['eventDate' , 'scientificName']

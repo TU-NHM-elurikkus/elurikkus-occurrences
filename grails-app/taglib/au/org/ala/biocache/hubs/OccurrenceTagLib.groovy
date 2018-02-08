@@ -663,14 +663,12 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'raw_sex', 'behavior', 'lifeStage',
-            'catalogNumber', 'locality', 'collectors', 'multimedia', 'basisOfRecord', 'institutionName',
-            'dataResourceName'],
+            grailsApplication.config.table.columns,
             allColumns
         )
 
         def priorityColumns = getColumnsNames(
-            ['eventDate', 'scientificName'],
+            grailsApplication.config.table.priorityColumns,
             allColumns
         )
 
