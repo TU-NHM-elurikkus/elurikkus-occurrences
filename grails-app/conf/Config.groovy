@@ -200,9 +200,6 @@ log4j = {
 /******************************************************************************\
  * SEARCH RESULTS
 \******************************************************************************/
-// Table display
-table.displayDynamicProperties = false
-
 // Table columns and order
 table.columns = ['eventDate', 'scientificName', 'vernacularName',
     'individualCount', 'raw_sex', 'behavior', 'lifeStage', 'catalogNumber',
