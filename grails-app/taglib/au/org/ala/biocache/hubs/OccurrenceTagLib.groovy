@@ -663,8 +663,9 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality',
-            'collectors', 'multimedia', 'basisOfRecord', 'institutionName', 'dataResourceName'],
+            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'raw_sex', 'behavior', 'lifeStage',
+            'catalogNumber', 'locality', 'collectors', 'multimedia', 'basisOfRecord', 'institutionName',
+            'dataResourceName'],
             allColumns
         )
 
