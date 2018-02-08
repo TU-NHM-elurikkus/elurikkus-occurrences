@@ -594,7 +594,7 @@ class OccurrenceTagLib {
                 )
             }
         } else if(key == 'multimedia') {
-            builder.td(class: style, *:properties) {
+            builder.td(class: "${style} search-results-cell--multimedia", *:properties) {
                 value.each { type ->
                     if(type == 'Image') {
                         // We are going to set up image icons that will be built into Lightbox thumbnails by javascript.

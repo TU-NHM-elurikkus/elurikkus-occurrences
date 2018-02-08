@@ -81,6 +81,10 @@
     padding: 2px 1px;
 }
 
+.search-results-cell--multimedia {
+    color: #777;
+}
+
 /* XXX */
 #tab-records {
     position: relative;
