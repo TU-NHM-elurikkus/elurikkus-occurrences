@@ -117,9 +117,9 @@ function loadExploreArea(EYA_CONF) {
 
         // catch the link for "View all records"
         $('#viewAllRecords').on('click', function(e) {
-            var params = 'q=*:*&lat=' + $('#latitude').val() + '&lon=' + $('#longitude').val() + '&radius=' + $('#radius').val();
+            var params = 'lat=' + $('#latitude').val() + '&lon=' + $('#longitude').val() + '&radius=' + $('#radius').val();
             if(state.speciesGroup !== 'ALL_SPECIES') {
-                params += '&fq=species_group:' + state.speciesGroup;
+                params += '&q=text:' + state.speciesGroup;
             }
 
             document.location.href = EYA_CONF.contextPath + '/occurrences/search?' + params;
