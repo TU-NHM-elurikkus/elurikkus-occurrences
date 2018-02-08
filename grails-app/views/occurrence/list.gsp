@@ -597,11 +597,11 @@
 
                             <%--
                                Button to expand or contract search resutls table to control the visibility
-                               of overflowing columns. Hidden by default.
+                               of overflowing columns.
                             --%>
                             <button
                                 id="search-results-expand-btn"
-                                class="search-results-expand-btn search-results-expand-btn--hidden"
+                                class="search-results-expand-btn"
                                 title="${message(code: 'listtable.expandbutton.title')}"
                                 onclick="occTableHandler.toggleTableExpansion()"
                             >

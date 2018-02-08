@@ -114,24 +114,8 @@ var occTableHandler = {};
             container.clientWidth
         );
 
-        if(columnsToHide.length) {
-            this.setExpansionBtnVisibility(true);
-        } else {
-            this.setExpansionBtnVisibility(false);
-        }
-
         if(this.hideOverflowingColumns) {
             this.updateColumns(rows, columnsToHide);
-        }
-    };
-
-    this.setExpansionBtnVisibility = function(setVisible) {
-        var button = document.getElementById('search-results-expand-btn');
-
-        if(setVisible) {
-            button.classList.remove('search-results-expand-btn--hidden');
-        } else {
-            button.classList.add('search-results-expand-btn--hidden');
         }
     };
 

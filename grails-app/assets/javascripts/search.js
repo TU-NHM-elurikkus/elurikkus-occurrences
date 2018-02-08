@@ -455,8 +455,6 @@ $(document).ready(function() {
 
         if($.trim($(el).html()) === '') {
             $('#heading_' + name).hide();
-        } else if(wasShown) {
-            $(el).prev().find('a').click();
         }
     });
 

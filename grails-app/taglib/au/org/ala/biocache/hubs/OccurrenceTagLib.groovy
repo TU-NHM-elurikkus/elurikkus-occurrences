@@ -33,9 +33,6 @@ class OccurrenceTagLib {
     static namespace = 'alatag'     // namespace for headers and footers
     static rangePattern = ~/\[\d+(\.\d+)? TO \d+(\.\d+)?\]/
 
-    def maxDynamicProperties = 8
-    def maxDynamicPropertyLength = 25
-
     /**
      * Formats the display of dynamic facet names in Sandbox (facet options popup)
      *
@@ -587,7 +584,7 @@ class OccurrenceTagLib {
 
             builder.td(class: style, title: formatted, *:properties, formatted)
         } else if(key == 'scientificName' || key == 'raw_scientificName') {
-            def formatted = value ? value : g.message(code: 'formatListRecordRow.viewRecord')
+            def formatted = value ? value : g.message(code: 'listtable.viewRecord')
 
             builder.td(class: "${style} search-results-cell--taxon", title: formatted, *:properties) {
                 a(
@@ -597,7 +594,7 @@ class OccurrenceTagLib {
                 )
             }
         } else if(key == 'multimedia') {
-            builder.td(class: style, *:properties) {
+            builder.td(class: "${style} search-results-cell--multimedia", *:properties) {
                 value.each { type ->
                     if(type == 'Image') {
                         // We are going to set up image icons that will be built into Lightbox thumbnails by javascript.
@@ -632,13 +629,21 @@ class OccurrenceTagLib {
         } else if(key == 'individualCount') {
             builder.td(class: "${style} search-results-cell--count", *:properties, title: value, value)
         } else if(key == 'locality') {
-            def parts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
+            def contentParts = [ occurrence.municipality, occurrence.locality ]
+            def tooltipParts = [ occurrence.country, occurrence.municipality, occurrence.locality ]
 
-            parts.removeAll([null])
+            contentParts.removeAll([null])
+            tooltipParts.removeAll([null])
 
-            def formatted = parts.join(', ')
+            // In case we have only country, don't hide it in content.
+            if(contentParts.size() == 0) {
+                contentParts = tooltipParts;
+            }
 
-            builder.td(class: style, title: formatted, *:properties, formatted)
+            def formattedContent = contentParts.join(', ')
+            def formattedTooltip = tooltipParts.join(', ')
+
+            builder.td(class: style, title: formattedTooltip, *:properties, formattedContent)
         } else {
             builder.td(class: style, title: value, *:properties, value)
         }
@@ -663,13 +668,12 @@ class OccurrenceTagLib {
         }
 
         def normalColumns = getColumnsNames(
-            ['eventDate', 'scientificName', 'vernacularName', 'individualCount', 'catalogNumber', 'locality',
-            'collectors', 'multimedia', 'basisOfRecord', 'institutionName', 'dataResourceName'],
+            grailsApplication.config.table.columns,
             allColumns
         )
 
         def priorityColumns = getColumnsNames(
-            ['eventDate', 'scientificName'],
+            grailsApplication.config.table.priorityColumns,
             allColumns
         )
 
@@ -709,146 +713,6 @@ class OccurrenceTagLib {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    /**
-     * Output a row (occurrence record) in the search results "Records" tab
-     *
-     * @attr occurrence REQUIRED
-     */
-    def formatListRecordRow = { attrs ->
-        def occurrence = attrs.occurrence
-        def mb = new MarkupBuilder(out)
-        def outputResultsLabel = { label, value, test ->
-            if (test) {
-                mb.span(class:'resultValue') {
-                    span(class:'resultsLabel') {
-                        mkp.yieldUnescaped(label)
-                    }
-                    mkp.yieldUnescaped(value)
-                }
-            }
-        }
-
-        def outputDynamicResultsLabel = { label, value, test ->
-            if (test) {
-                mb.span(class:'resultValue') {
-                    span(class:'resultsLabel') {
-                        mkp.yieldUnescaped(formatDynamicLabel(label))
-                    }
-                    span(class:'resultsValue'){
-                        mkp.yieldUnescaped(value)
-                    }
-                }
-            }
-        }
-
-        mb.div(class:'recordRow', id:occurrence.uuid ) {
-            p(class:'rowA') {
-                if (occurrence.taxonRank && occurrence.scientificName) {
-                    span(style:'text-transform: capitalize', g.message(code:"taxonomy.rank.${occurrence.taxonRank}", default: occurrence.taxonRank))
-                    mkp.yieldUnescaped(":&nbsp;")
-                    span(class:'occurrenceNames') {
-                        mkp.yieldUnescaped(alatag.formatSciName(rankId:occurrence.taxonRankID?:'6000', name:"${occurrence.scientificName}"))
-                    }
-                } else if(occurrence.raw_scientificName){
-                    span(class:'occurrenceNames', occurrence.raw_scientificName)
-                }
-
-                if (occurrence.vernacularName || occurrence.raw_vernacularName) {
-                    mkp.yieldUnescaped("&nbsp;|&nbsp;")
-                    span(class:'occurrenceNames', occurrence.vernacularName?:occurrence.raw_vernacularName)
-                }
-
-                span(class:'eventAndLocation') {
-                    if (occurrence.eventDate) {
-                        outputResultsLabel(
-                            "${g.message(code:'record.eventDate.label')}: ",
-                            g.formatDate(date: new Date(occurrence.eventDate), format:"yyyy-MM-dd"),
-                            true
-                        )
-                    } else if (occurrence.year) {
-                        outputResultsLabel(
-                            "${g.message(code:'recordcore.occurrencedatelabel.04')}: ",
-                            occurrence.year,
-                            true
-                        )
-                    }
-                    if (occurrence.stateProvince) {
-                        outputResultsLabel(
-                            "${g.message(code:'recordcore.geospatial.state')}: ",
-                            alatag.message(code:occurrence.stateProvince),
-                           true
-                        )
-                    } else if (occurrence.country) {
-                        outputResultsLabel(
-                            "${g.message(code:'recordcore.geospatial.country')}: ",
-                            "${occurrence.country}",
-                            true
-                        )
-                    }
-                }
-
-                // display dynamic fields
-                if(grailsApplication.config.table.displayDynamicProperties.toBoolean()) {
-                    span(class: 'dynamicValues') {
-                        def count = 0
-                        occurrence.miscStringProperties.each { key, value ->
-                            if (count < maxDynamicProperties) {
-                                if(value && value.length < maxDynamicPropertyLength) {
-                                    outputDynamicResultsLabel(key + ": ", value, true)
-                                }
-                                count++
-                            }
-                        }
-                        occurrence.miscIntProperties.each { key, value ->
-                            if (count < maxDynamicProperties) {
-                                outputDynamicResultsLabel(key + ": ", value, true)
-                                count++
-                            }
-                        }
-                        occurrence.miscDoubleProperties.each { key, value ->
-                            if (count < maxDynamicProperties) {
-                                outputDynamicResultsLabel(key + ": ", value, true)
-                                count++
-                            }
-                        }
-                    }
-                }
-            }
-            p(class:'rowB') {
-                outputResultsLabel(
-                    "${g.message(code:'recordcore.dataset.Institution')}: ",
-                    alatag.message(code:occurrence.institutionName),
-                    occurrence.institutionName
-                )
-                outputResultsLabel(
-                    "${g.message(code:'recordcore.dataset.Collection')}: ",
-                    alatag.message(code:occurrence.collectionName),
-                    occurrence.collectionName
-                )
-                outputResultsLabel(
-                    "${g.message(code:'recordcore.dataset.dataResource')}: ",
-                    alatag.message(code:occurrence.dataResourceName),
-                    !occurrence.collectionName && occurrence.dataResourceName
-                )
-                outputResultsLabel(
-                    "${g.message(code:'recordcore.dataset.basisOfRecord')}: ",
-                    alatag.message(code:occurrence.basisOfRecord),
-                    occurrence.basisOfRecord
-                )
-                outputResultsLabel(
-                    "${g.message(code:'recordcore.dataset.catalogueNumber')}: ",
-                    "${occurrence.raw_collectionCode ? occurrence.raw_collectionCode + ':' : ''}${occurrence.raw_catalogNumber}",
-                    occurrence.raw_catalogNumber
-                )
-                a(
-                    href: g.createLink(url:"${request.contextPath}/occurrences/${occurrence.uuid}"),
-                    class: "occurrenceLink",
-                    g.message(code:'formatListRecordRow.viewRecord')
-                )
             }
         }
     }
