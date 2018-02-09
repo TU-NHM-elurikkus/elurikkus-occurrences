@@ -21,10 +21,19 @@
     margin-top: 10px;
 }
 
-#taxaBox #leftList {
-    width: 33%;
-    float: left;
+#taxaBox {
+    height: 100%; /* perhaps not needed */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#leftList {
+    flex: 1;
     margin-bottom: 16px;
+}
+
+#leftList td:last-child {
+    padding-right: 6px;
 }
 
 .subGroupRow {
@@ -32,28 +41,24 @@
 }
 
 #taxaBox table {
-    border-top: 2px solid #d9d9d9;
+    width: 100%;
 }
 
 #taxaBox th {
     text-align: center;
 }
 
-#taxaBox thead tr {
+.taxa-table-header {
+    border-top: 2px solid #d9d9d9;
     border-bottom: 2px solid #d9d9d9;
 }
 
 #rightList {
-    float: right;
-    width: 66%;
-    padding: 0;
-    margin: 0;
+    flex: 2;
     margin-bottom: 16px;
-}
-
-#rightList table {
-    border: none;
-    width: 100%;
+    padding: 0;
+    background-color: transparent;
+    min-width: 14rem;
 }
 
 #rightList tbody {
@@ -65,32 +70,26 @@
 }
 
 #rightList .speciesIndex {
-    width: 5%;
+    padding: 0 6px;
 }
 
 #rightList .rightCounts {
-    padding-right: 1em;
-    width: 5%;
+    padding-right: 6px;
 }
 
 #rightList #right-count {
-    float: right;
-    margin-right: 24px;
+    width: 20%;
+    padding-right: 6px;
 }
 
-#rightListHeader {
-    height: 28px;
-    border-bottom: 2px solid #d9d9d9;
-    border-top: 2px solid #d9d9d9;
+#species-info a {
+    display: inline-block;
 }
 
-#rightListHeader button, #rightListHeader span {
-    height: 100%;
-    vertical-align: middle;
-}
-
-#taxa-level-0 {
-    width: 100%;
+.right-list-table-container {
+    height: 490px; /* Same height as the adjacent map */
+    overflow-x: hidden;
+    overflow-y: auto !important;
 }
 
 .activeRow {
@@ -132,16 +131,10 @@ button#download {
 
 /* Your Localtion scrollable table from: http://www.imaputz.com/cssStuff/bigFourVersion.html */
 .tableContainer {
-    /*	clear: both;*/
-    height: 484px;
+    height: 486px;
     overflow: hidden;
     overflow: auto !important;
     background-color: transparent;
-}
-
-.tableContainer table {
-    float: left;
-    border-bottom: 2px solid #d9d9d9;
 }
 
 .fixedHeader tr {

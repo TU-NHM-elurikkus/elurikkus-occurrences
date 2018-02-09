@@ -81,7 +81,7 @@ function loadExploreArea(EYA_CONF) {
 
     function registerEventHandlers() {
         // Register events for the species_group column
-        $('#taxa-level-0 tbody tr').live('mouseover mouseout', function(event) {
+        $('#leftList tbody tr').live('mouseover mouseout', function(event) {
             // mouse hover on groups
             if(event.type === 'mouseover') {
                 $(this).addClass('hoverRow');
@@ -667,11 +667,11 @@ function loadExploreArea(EYA_CONF) {
             // taxon = thisTaxon; // global var so map can show just this taxon
             $('#rightList tbody tr').removeClass('activeRow2'); // un-highlight previous current taxon
             // remove previous species info row
-            $('#rightList tbody tr#info').detach();
+            $('#rightList tbody tr#species-info').detach();
             var info = $(this).find('.speciesInfo').html();
             // copy contents of species into a new (tmp) row
             if(info) {
-                $(this).after('<tr id="info"><td><td>' + info + '<td></td></tr>');
+                $(this).after('<tr id="species-info"><td><td>' + info + '<td></td></tr>');
             }
             // hide previous selected spceies info box
             $(this).addClass('activeRow2'); // highloght current taxon
@@ -680,7 +680,7 @@ function loadExploreArea(EYA_CONF) {
         });
 
         // Register onClick for "load more species" link & sort headers
-        $('#loadMoreSpecies, #rightListHeader button').off().click(function(e) {
+        $('#loadMoreSpecies, #right-table-header button').off().click(function(e) {
             if(this.id !== 'loadMoreSpecies') {
                 $('#rightList tbody').empty();
                 sortOrder = $(this).data('sort') ? $(this).data('sort') : 'index';
@@ -754,7 +754,7 @@ function loadExploreArea(EYA_CONF) {
      * Populate the spceies group column (via callback from AJAX)
      */
     function populateSpeciesGroups(data) {
-        $('#taxa-level-0 tbody').empty(); // clear existing values
+        $('#leftList tbody').empty(); // clear existing values
         addGroupRow('ALL_SPECIES', '', '');
 
         data.forEach(function(n) {
@@ -787,7 +787,7 @@ function loadExploreArea(EYA_CONF) {
                         '##' +
                     '</td>' +
                 '</tr>';
-            $('#taxa-level-0 tbody').append(h);
+            $('#leftList tbody').append(h);
         }
 
         function addSubGroupRow(taxonName, common, taxonRank, parentTaxon) {
@@ -803,7 +803,7 @@ function loadExploreArea(EYA_CONF) {
                         '##' +
                     '</td>' +
                 '</tr>';
-            $('#taxa-level-0 tbody').append(h);
+            $('#leftList tbody').append(h);
         }
     }
 
