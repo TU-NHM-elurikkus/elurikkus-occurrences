@@ -181,4 +181,10 @@ var occTableHandler = {};
 }).apply(occTableHandler);
 
 window.addEventListener('resize', occTableHandler.resizeThrottler, false);
-document.addEventListener('DOMContentLoaded', occTableHandler.run);
+
+// When records tab is activated, initialize the table.
+$(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    if(e.target.getAttribute('href') === '#tab-records') {
+        occTableHandler.run();
+    }
+})
