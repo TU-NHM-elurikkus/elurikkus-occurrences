@@ -123,6 +123,9 @@
                 <option value="">
                     <g:message code="advancedsearch.table05col01.option01.label" />
                 </option>
+                <option value="*">
+                    <g:message code="advancedsearch.matchAnything" />
+                </option>
             </select>
         </div>
     </fieldset>

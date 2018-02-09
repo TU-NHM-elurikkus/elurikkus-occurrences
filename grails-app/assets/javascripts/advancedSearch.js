@@ -270,6 +270,12 @@ function fillInstitutionCollectionDropdown() {
                 optGroup += '</optgroup>';
                 selectContent += optGroup;
             });
+
+            selectContent += '' +
+                '<option value="*">' +
+                    $.i18n.prop('advancedsearch.matchAnything') +
+                '</option>';
+
             $("#institution_collection").empty().append(selectContent);
         }
     });
