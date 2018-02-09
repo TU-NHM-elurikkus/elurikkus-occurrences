@@ -123,48 +123,9 @@
                 <option value="">
                     <g:message code="advancedsearch.table05col01.option01.label" />
                 </option>
-
-                <%-- ToDo: This select should be dynamic --%>
-                <g:each var="inst" in="${request.getAttribute("institution_uid")}">
-                    <g:if test="${StringUtils.startsWith(inst.key, 'in')}">
-                        <optgroup label="${message(code: inst.value)}">
-                            <option value="${inst.key}">
-                                <g:message code="advancedsearch.table05col01.option02.label" />
-                            </option>
-
-                            <g:each var="coll" in="${request.getAttribute('collection_uid')}">
-                                <g:if test="${inst.key == 'in4' && StringUtils.startsWith(coll.value, 'TAM')}">
-                                    <option value="${coll.key}">
-                                        ${coll.value}
-                                    </option>
-                                </g:if>
-
-                                <g:elseif test="${inst.key == 'in5' && coll.value == 'TALL'}">
-                                    <option value="${coll.key}">
-                                        ${coll.value}
-                                    </option>
-                                </g:elseif>
-
-                                <g:elseif test="${inst.key == 'in6' && (coll.value == 'EAA' || coll.value == 'TAAM')}">
-                                    <option value="${coll.key}">
-                                        ${coll.value}
-                                    </option>
-                                </g:elseif>
-
-                                <g:elseif test="${inst.key == 'in7' && StringUtils.startsWith(coll.value, 'TU')}">
-                                    <option value="${coll.key}">
-                                        ${coll.value}
-                                    </option>
-                                </g:elseif>
-                            </g:each>
-                        </optgroup>
-                    </g:if>
-                    <g:else>
-                        <option value="${inst.key}">
-                            <g:message code="${inst.value}" />
-                        </option>
-                    </g:else>
-                </g:each>
+                <option value="*">
+                    <g:message code="advancedsearch.matchAnything" />
+                </option>
             </select>
         </div>
     </fieldset>
@@ -193,27 +154,6 @@
             </select>
         </div>
     </fieldset>
-
-    <g:if test="${request.getAttribute("cl959") && request.getAttribute("cl959").size() > 1}">
-        <fieldset class="form-group">
-            <label class="col col-xl-2">
-                <g:message code="advancedsearch.table06col05.title" />
-            </label>
-
-            <div class="col-sm-7 col-md-9 col-lg-9 col-xl-6">
-                <select class="lga erk-select" name="lga" id="lga">
-                    <option value="">
-                        <g:message code="advancedsearch.table06col05.option.label" />
-                    </option>
-                    <g:each var="region" in="${request.getAttribute("cl959").sort()}">
-                        <option value="${region.key}">
-                            ${region.value}
-                        </option>
-                    </g:each>
-                </select>
-            </div>
-        </fieldset>
-    </g:if>
 
     <g:if test="${request.getAttribute("type_status") && request.getAttribute("type_status").size() > 1}">
         <fieldset class="form-group">

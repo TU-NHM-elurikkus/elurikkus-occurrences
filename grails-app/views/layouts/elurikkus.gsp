@@ -20,6 +20,7 @@
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
                 bieWebappUrl: "${grailsApplication.config.bie.baseUrl}",
                 bieWebServiceUrl: "${grailsApplication.config.bieService.baseUrl}",
+                collectoryUrl: "${grailsApplication.config.collections.baseUrl}",
                 autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
                 contextPath: "${request.contextPath}",
                 locale: "${RequestContextUtils.getLocale(request)}",

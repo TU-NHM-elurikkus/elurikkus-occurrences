@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    fillInstitutionCollectionDropdown();
     // catch onHashChange event and trigger actions...
     $(window).on('hashchange', function(e) {
         var hash = window.location.hash.replace(/^#/, '');
@@ -242,6 +243,43 @@ $(document).ready(function() {
         trigger: 'hover'
     });
 }); // end document ready
+
+function fillInstitutionCollectionDropdown() {
+    $.ajax({
+        url: BC_CONF.collectoryUrl + '/ws/lookup/institution',
+        success: function(data) {
+            var selectContent = '' +
+                '<option value="">' +
+                    $.i18n.prop('advancedsearch.table05col01.option01.label') +
+                '</option>';
+
+            var optGroup;
+            data.forEach(function(inst) {
+                optGroup = '<optgroup label="' + inst.name + '">';
+                optGroup += '' +
+                    '<option value="' + inst.uid + '">' +
+                        $.i18n.prop('advancedsearch.table05col01.option02.label') +
+                    '</option>';
+
+                inst.collections.forEach(function(coll) {
+                    optGroup += '' +
+                        '<option value="' + coll[0] + '">' +
+                            coll[1] +
+                        '</option>';
+                });
+                optGroup += '</optgroup>';
+                selectContent += optGroup;
+            });
+
+            selectContent += '' +
+                '<option value="*">' +
+                    $.i18n.prop('advancedsearch.matchAnything') +
+                '</option>';
+
+            $("#institution_collection").empty().append(selectContent);
+        }
+    });
+}
 
 function selectChange(fieldName, fieldValue) {
     if(fieldValue && fieldValue.indexOf(' ') > -1) {
