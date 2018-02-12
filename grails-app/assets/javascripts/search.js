@@ -885,8 +885,6 @@ function loadImages(start) {
         '&dir=' + BC_CONF.sortDir +
         '&callback=?';
 
-    console.log(imagesJsonUri);
-
     $.getJSON(imagesJsonUri, function(data) {
         if(data.occurrences) {
             if(start === 0) {
