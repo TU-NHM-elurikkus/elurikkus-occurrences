@@ -881,8 +881,8 @@ function loadImages(start) {
         '&facet=false' +
         '&pageSize=20' +
         '&start=' + start +
-        '&sort=identification_qualifier_s' +
-        '&dir=asc' +
+        '&sort=' + BC_CONF.sortField +
+        '&dir=' + BC_CONF.sortDir +
         '&callback=?';
 
     $.getJSON(imagesJsonUri, function(data) {
