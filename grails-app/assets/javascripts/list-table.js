@@ -141,15 +141,19 @@ var occTableHandler = {};
 
     this.initialise = function() {
         var table = document.getElementById('search-results-table');
+        var rows;
 
-        if(!table) {
+        try {
+            rows = table.getElementsByTagName('tr');
+        } catch(err) {}
+
+        if(!rows) {
             window.removeEventListener('resize',
                 occTableHandler.resizeThrottler, false);
 
             return;
         }
 
-        var rows = table.getElementsByTagName('tr');
         /**
          * We can get column widths from any of the rows, but we use the header
          * show because these cells also contain column configuration data.
@@ -183,7 +187,7 @@ var occTableHandler = {};
 window.addEventListener('resize', occTableHandler.resizeThrottler, false);
 
 // When records tab is activated, initialize the table.
-$(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     if(e.target.getAttribute('href') === '#tab-records') {
         occTableHandler.run();
     }
