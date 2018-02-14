@@ -587,8 +587,6 @@
                             </div>
 
                             <div id="results" class="search-results">
-                                <g:set var="startList" value="${System.currentTimeMillis()}" />
-
                                 <%-- SEARCH RESULTS TABLE --%>
                                 <table id="search-results-table" class="search-results-table">
                                     <alatag:formatOccurrencesTable occurrences="${sr.occurrences}" />
