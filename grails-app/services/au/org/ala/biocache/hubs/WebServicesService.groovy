@@ -389,9 +389,12 @@ class WebServicesService implements ApplicationContextAware {
             conn.setReadTimeout(50000)
             def json = conn.content.text
             return JSON.parse(json)
-        } catch (Exception e) {
-            def error = "Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}"
-            log.error error
+        } catch(FileNotFoundException e) {
+            // most likely a server restart, so just log it and return empty results
+            log.info "Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}"
+            return JSON.parse("{}")
+        } catch(Exception e) {
+            log.error "Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}"
             throw new RestClientException(error)
         }
     }
