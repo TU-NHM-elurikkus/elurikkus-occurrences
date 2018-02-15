@@ -1108,6 +1108,6 @@ function initTableModalLinks() {
         var doc = new DOMParser().parseFromString(thumbnailData.data[0], 'text/html');
         var newThumb = doc.getElementsByClassName('cbLink')[0];
 
-        thumb.replaceWith(newThumb);
+        thumb.parentNode.replaceChild(newThumb, thumb);
     });
 }
