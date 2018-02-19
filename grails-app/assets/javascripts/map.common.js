@@ -187,6 +187,7 @@ function setStoredMapLayer(layerName) {
         localStorage.setItem('defaultMapLayer', layerName);
     } catch(e) {
         // localStorage not available
+    }
 }
 
 function onBaseLayerChange(e) {
