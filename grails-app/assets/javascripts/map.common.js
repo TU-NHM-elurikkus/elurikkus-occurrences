@@ -172,12 +172,12 @@ function getBaseLayers() {
 }
 
 function getStoredMapLayer() {
-    var storedLayerName = '';
+    var storedLayerName;
     try {
         storedLayerName = localStorage.getItem('defaultMapLayer');
     } catch(e) {
         // localStorage not available
-        storedLayerName = $.i18n.prop('advancedsearch.js.map.layers.Minimal')
+        storedLayerName = $.i18n.prop('advancedsearch.js.map.layers.Minimal');
     }
     return storedLayerName;
 }
@@ -187,7 +187,6 @@ function setStoredMapLayer(layerName) {
         localStorage.setItem('defaultMapLayer', layerName);
     } catch(e) {
         // localStorage not available
-    }    console.log("set defaultMapLayer: " + layerName);
 }
 
 function onBaseLayerChange(e) {
