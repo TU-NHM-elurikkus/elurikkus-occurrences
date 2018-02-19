@@ -115,7 +115,7 @@ class OccurrenceTagLib {
         }  else if (rec.kingdom) {
             name = rec.kingdom
         } else {
-            name = g.message(code:"record.noNameSupplied")
+            name = g.message(code: "record.noNameSupplied")
         }
 
         out << name
@@ -144,7 +144,7 @@ class OccurrenceTagLib {
                         .replaceAll(':', ': ')
                         .replaceAll(
                             'occurrence_year',
-                            alatag.message(code: 'facet.occurrence_year', default:'occurrence_year')
+                            alatag.message(code: 'facet.occurrence_year', default: 'occurrence_year')
                         )
 
                     mkp.yieldUnescaped(fqLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
@@ -184,9 +184,9 @@ class OccurrenceTagLib {
         def linkTitle = g.message(code: 'facets.results.filterBy', args: [fieldDisplayName])
 
         def addCounts = { count ->
-            mb.span(class:"facetCount") {
+            mb.span(class: "facetCount") {
                 mkp.yieldUnescaped(" (")
-                mkp.yield(g.formatNumber(number: "${count}", format:"#,###,###"))
+                mkp.yield(g.formatNumber(number: "${count}", format: "#,###,###"))
                 mkp.yieldUnescaped(")")
             }
         }
@@ -199,7 +199,7 @@ class OccurrenceTagLib {
             facetResult.fieldResult.putAt(0, lastEl)
         }
 
-        mb.ul(class:'facets nano-content erk-ulist') {
+        mb.ul(class: 'facets nano-content erk-ulist') {
             facetResult.fieldResult.each { fieldResult ->
 
                 if(fieldResult.count > 0) {
@@ -355,20 +355,20 @@ class OccurrenceTagLib {
         groupedAssertions.each { assertion ->
 
             mb.li(id: assertion?.usersAssertionUuid) {
-                mkp.yield(alatag.message(code: "${assertion.name}", default :"${assertion.name}"))
+                mkp.yield(alatag.message(code: "${assertion.name}", default: "${assertion.name}"))
 
                 if (assertion.assertionByUser) {
                     br()
                     strong() {
                         mkp.yield(" (added by you")
                         if (assertion.users?.size() > 1) {
-                            mkp.yield(" and ${assertion.users.size() - 1} other user${(assertion.users.size() > 2) ? 's':''})")
+                            mkp.yield(" and ${assertion.users.size() - 1} other user${(assertion.users.size() > 2) ? 's' : ''})")
                         } else {
                             mkp.yield(")")
                         }
                     }
                 } else {
-                    mkp.yield(" (added by ${assertion.users?.size()} user${(assertion.users?.size() > 1) ? 's':''})")
+                    mkp.yield(" (added by ${assertion.users?.size()} user${(assertion.users?.size() > 1) ? 's' : ''})")
                 }
             }
         }
@@ -383,11 +383,11 @@ class OccurrenceTagLib {
         def mb = new MarkupBuilder(out)
         mb.a(
                 href: "#",
-                class:"dataQualityHelpLink",
-                "data-toggle":"popover",
-                "data-code": attrs.code?:""
+                class: "dataQualityHelpLink",
+                "data-toggle": "popover",
+                "data-code": attrs.code ?: ""
         ) {
-            i(class:"icon-question-sign", "")
+            i(class: "icon-question-sign", "")
         }
         //def html = "&nbsp;<a href='#' class='dataQualityHelpLink' data-toggle='popover' data-code='${code}'><i class='icon-question-sign'></i></a>"
         //out << html
@@ -462,14 +462,14 @@ class OccurrenceTagLib {
             def nodeId = (idExtension) ? "${fieldCode}-${idExtension}" : "${fieldCode}"
 
             mb.tr(id: nodeId) {
-                td(class:"dwcLabel") {
+                td(class: "dwcLabel") {
                     if (fieldNameIsMsgCode) {
                         mkp.yield(alatag.message(code: "${fieldName}"))
                     } else {
                         mkp.yieldUnescaped(formatFieldName(fieldName))
                     }
                 }
-                td(class:"value") {
+                td(class: "value") {
                     if (link) {
                         a(href: link) {
                             mkp.yieldUnescaped(bodyText)
@@ -494,12 +494,12 @@ class OccurrenceTagLib {
         def compareRecord = attrs.compareRecord
         Map fieldsMap = attrs.fieldsMap
         def group = attrs.group
-        def exclude = attrs.exclude?:''
+        def exclude = attrs.exclude ?: ''
         def output = ""
 
         compareRecord.get(group).each { cr ->
             def key = cr.name
-            def label = alatag.message(code:"recordcore.dynamic.${key}", default:"${key}") ?: alatag.camelCaseToHuman(text: key) ?: StringUtils.capitalize(key)
+            def label = alatag.message(code: "recordcore.dynamic.${key}", default: "${key}") ?: alatag.camelCaseToHuman(text: key) ?: StringUtils.capitalize(key)
             // only output fields not already included (by checking fieldsMap Map) && not in excluded list
             if (!fieldsMap.containsKey(key) && !StringUtils.containsIgnoreCase(exclude, key)) {
                 def tagBody
@@ -519,7 +519,7 @@ class OccurrenceTagLib {
                         </span>
                     """
                 }
-                output += alatag.occurrenceTableRow(annotate:"true", section:"dataset", fieldCode:"${key}", fieldName:"<span class='dwc'>${label}</span>", idExtension:"-extra-dwc") {
+                output += alatag.occurrenceTableRow(annotate: "true", section: "dataset", fieldCode: "${key}", fieldName: "<span class='dwc'>${label}</span>", idExtension: "-extra-dwc") {
                     tagBody
                 }
             }
@@ -572,7 +572,7 @@ class OccurrenceTagLib {
         def style = 'search-results-cell'
 
         if(key == 'eventDate') {
-            def formatted = g.formatDate(date: new Date(value), format:"yyyy-MM-dd")
+            def formatted = g.formatDate(date: new Date(value), format: "yyyy-MM-dd")
 
             builder.td(class: "${style} search-results-cell--date", title: formatted, *:properties, formatted)
         } else if(key == 'collectors' && value.size() > 2) {
@@ -644,6 +644,16 @@ class OccurrenceTagLib {
             def formattedTooltip = tooltipParts.join(', ')
 
             builder.td(class: style, title: formattedTooltip, *:properties, formattedContent)
+        } else if(key == "speciesListUid") {
+            def listNames = []
+            value.each { listUid ->
+                def listName = g.message(message: "listtable.specieslist.${listUid}")
+                if (listName) {
+                    listNames.push(listName)
+                }
+            }
+            def formatted = listNames[0..-1].join(', ')
+            builder.td(class: style, title: formatted, *:properties, formatted)
         } else {
             builder.td(class: style, title: value, *:properties, value)
         }
@@ -693,7 +703,7 @@ class OccurrenceTagLib {
                     }
 
                     th(class: styleClass, *:properties) {
-                        mkp.yieldUnescaped(g.message(code:"listtable.${column}"))
+                        mkp.yieldUnescaped(g.message(code: "listtable.${column}"))
                     }
                 }
             }
@@ -718,7 +728,7 @@ class OccurrenceTagLib {
     }
 
     /**
-     * Alternative to g.message(code:'foo.bar')
+     * Alternative to g.message(code: 'foo.bar')
      *
      * @see org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
      *
@@ -756,7 +766,7 @@ class OccurrenceTagLib {
      * Display the logged in user (display name)
      */
     def loggedInUserDisplayname = { attrs ->
-        out << (authService?.displayName?:authService?.email)
+        out << (authService?.displayName ?: authService?.email)
     }
 
     /**
@@ -809,7 +819,7 @@ class OccurrenceTagLib {
      * @attr level
      */
     def logMsg = { attrs ->
-        log."${attrs.level?:'info'}" attrs.msg
+        log."${attrs.level ?: 'info'}" attrs.msg
     }
 
     /**
@@ -854,7 +864,7 @@ class OccurrenceTagLib {
     /**
      * Output the meta tags (HTML head section) for the build meta data in application.properties
      * E.g.
-     * <meta name="svn.revision" content="${g.meta(name:'svn.revision')}" />
+     * <meta name="svn.revision" content="${g.meta(name: 'svn.revision')}" />
      * etc.
      *
      * Updated to use properties provided by build-info plugin
@@ -864,11 +874,11 @@ class OccurrenceTagLib {
         def metaList = ['app.version', 'app.grails.version', 'build.date', 'scm.version', 'environment.BUILD_NUMBER', 'environment.BUILD_ID', 'environment.BUILD_TAG', 'environment.GIT_BRANCH', 'environment.GIT_COMMIT']
         def mb = new MarkupBuilder(out)
 
-        mb.meta(name:'grails.env', content: "${Environment.current}")
+        mb.meta(name: 'grails.env', content: "${Environment.current}")
         metaList.each {
-            mb.meta(name:it, content: g.meta(name:it))
+            mb.meta(name: it, content: g.meta(name: it))
         }
-        mb.meta(name:'java.version', content: "${System.getProperty('java.version')}")
+        mb.meta(name: 'java.version', content: "${System.getProperty('java.version')}")
     }
 
     /**
