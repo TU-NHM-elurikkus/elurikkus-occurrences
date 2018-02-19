@@ -330,11 +330,11 @@ class OccurrenceController {
         Map radiusToZoomLevelMap = grailsApplication.config.exploreYourArea.zoomLevels // zoom levels for the various radius sizes
 
         [
-                latitude: params.latitude?:grailsApplication.config.exploreYourArea.lat,
-                longitude: params.longitude?:grailsApplication.config.exploreYourArea.lng,
+                latitude: params.latitude?:grailsApplication.config.default.location.latitude,
+                longitude: params.longitude?:grailsApplication.config.default.location.longitude,
                 radius: radius,
                 zoom: radiusToZoomLevelMap.get(radius),
-                location: grailsApplication.config.exploreYourArea.location,
+                location: grailsApplication.config.default.location.address,
                 speciesPageUrl: grailsApplication.config.bie.baseUrl + "/species/"
         ]
     }

@@ -6,11 +6,11 @@ class ExploreController {
         Map radiusToZoomLevelMap = grailsApplication.config.exploreYourArea.zoomLevels
 
         render("view": "/occurrence/exploreYourArea", model: [
-            latitude: params.latitude ?: grailsApplication.config.exploreYourArea.lat,
-            longitude: params.longitude ?: grailsApplication.config.exploreYourArea.lng,
+            latitude: params.latitude ?: grailsApplication.config.default.location.latitude,
+            longitude: params.longitude ?: grailsApplication.config.default.location.longitude,
             radius: radius,
             zoom: radiusToZoomLevelMap.get(radius),
-            location: grailsApplication.config.exploreYourArea.location,
+            location: grailsApplication.config.default.location.address,
             speciesPageUrl: grailsApplication.config.bie.baseUrl + "/species/"
         ])
     }
