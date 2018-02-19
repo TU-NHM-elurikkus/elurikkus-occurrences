@@ -172,7 +172,7 @@ function getBaseLayers() {
 }
 
 function getStoredMapLayer() {
-    var storedLayerName;
+    var storedLayerName = '';
     try {
         storedLayerName = localStorage.getItem('defaultMapLayer');
     } catch(e) {
@@ -187,7 +187,7 @@ function setStoredMapLayer(layerName) {
         localStorage.setItem('defaultMapLayer', layerName);
     } catch(e) {
         // localStorage not available
-    }
+    }    console.log("set defaultMapLayer: " + layerName);
 }
 
 function onBaseLayerChange(e) {

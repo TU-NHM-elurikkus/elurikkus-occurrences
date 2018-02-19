@@ -152,7 +152,7 @@ function initialiseMap() {
     var baseLayers = getBaseLayers();
 
     // add the default base layer
-    var storedLayerName = getLocalMapLayer();
+    var storedLayerName = getStoredMapLayer();
 
     var defaultLayerName;
     if(storedLayerName in baseLayers) {
