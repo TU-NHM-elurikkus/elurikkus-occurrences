@@ -171,6 +171,24 @@ function getBaseLayers() {
     return baseLayers;
 }
 
+function getStoredMapLayer() {
+    var storedLayerName;
+    try {
+        storedLayerName = localStorage.getItem('defaultMapLayer');
+    } catch(e) {
+        // localStorage not available
+        storedLayerName = $.i18n.prop('advancedsearch.js.map.layers.Minimal');
+    }
+    return storedLayerName;
+}
+
+function setStoredMapLayer(layerName) {
+    try {
+        localStorage.setItem('defaultMapLayer', layerName);
+    } catch(e) {
+        // localStorage not available
+}
+
 function onBaseLayerChange(e) {
-    localStorage.setItem('defaultMapLayer', e.name);
+    setStoredMapLayer(e.name)
 }
