@@ -2,11 +2,12 @@ var occTableHandler = {};
 
 (function() {
     this.hideOverflowingColumns = true;
+    this.columnWidths = null;
 
     this.resizeThrottler = function() {
         var self = this;
 
-        if(!self.resizeTimeout) {
+        if(!self.resizeTimeout && self.columnWidths) {
             self.resizeTimeout = setTimeout(function() {
                 self.resizeTimeout = null;
                 self.updateTable(self.columnWidths);
@@ -188,7 +189,11 @@ window.addEventListener('resize', occTableHandler.resizeThrottler, false);
 
 // When records tab is activated, initialize the table.
 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-    if(e.target.getAttribute('href') === '#tab-records') {
+    var columnWidths = occTableHandler.columnWidths;
+
+    if(e.target.getAttribute('href') === '#tab-records' && !columnWidths) {
         occTableHandler.run();
+    } else if(columnWidths) {
+        occTableHandler.updateTable(columnWidths);
     }
 })
