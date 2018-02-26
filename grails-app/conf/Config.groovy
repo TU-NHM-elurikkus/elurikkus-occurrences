@@ -203,7 +203,7 @@ log4j = {
 // Table columns and order
 table.columns = [
     "eventDate", "scientificName", "vernacularName", "individualCount", "sex", "behavior", "lifeStage", "catalogNumber",
-    "locality", "collectors", "multimedia", "basisOfRecord", "speciesListUid", "institutionName", "dataResourceName"
+    "locality", "collectors", "multimedia", "speciesListUid", "basisOfRecord", "institutionName", "dataResourceName"
 ]
 
 // Table columns that will not be hidden
