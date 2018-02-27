@@ -153,7 +153,14 @@ class OccurrenceTagLib {
                         "${year} - ${year10}"
                     })
                 } else {
-                    mkp.yieldUnescaped(alatag.message(code: fqLabel, default: fqLabel).replaceFirst(':', ': '))
+                    def facet = fqLabel.split(":")[0]
+                    def label = alatag.message(code: "facet.${item.key}", default: facet)
+                    def value = item.value.value
+
+                    // Trim surrounding quotation marks, if present.
+                    value = value.startsWith("\"") & value.endsWith("\"") ? value[1..-2] : value
+
+                    mkp.yieldUnescaped("${label}: ${value}")
                 }
             }
 
