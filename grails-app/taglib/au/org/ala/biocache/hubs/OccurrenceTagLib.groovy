@@ -131,16 +131,18 @@ class OccurrenceTagLib {
      */
     def currentFilterItem = { attrs ->
         def item = attrs.item
+        def exclude = item.value.displayName.startsWith('-')
+        def excludeLabel = alatag.message(code: "search.filters.exclude")
+        def prefix = exclude ? "<span class='active-filters-prefix'>[${excludeLabel}]</span> " : ""
         def filterLabel = item.value.displayName.replaceFirst(/^\-/, "") // remove leading "-" for exclude searches
-        def preFix = (item.value.displayName.startsWith('-')) ? "<span class='excludeFq'>[exclude]</span> " : ""
-        def fqLabel = preFix + filterLabel
+        def fqLabel = filterLabel
 
         def mb = new MarkupBuilder(out)
 
         mb.span (class: "${attrs.cssClass} tooltips active-filters__filter") {
             span(class: "active-filters__label") {
                 if (item.key.contains("occurrence_year")) {
-                    fqLabel = fqLabel
+                    fqLabel = prefix + fqLabel
                         .replaceAll(':', ': ')
                         .replaceAll(
                             'occurrence_year',
@@ -154,11 +156,8 @@ class OccurrenceTagLib {
                     })
                 } else {
                     def facet = fqLabel.split(":")[0]
-                    def label = alatag.message(code: "facet.${item.key}", default: facet)
+                    def label = prefix + alatag.message(code: "facet.${item.key}", default: facet)
                     def value = item.value.value
-
-                    // Trim surrounding quotation marks, if present.
-                    value = value.startsWith("\"") & value.endsWith("\"") ? value[1..-2] : value
 
                     mkp.yieldUnescaped("${label}: ${value}")
                 }
