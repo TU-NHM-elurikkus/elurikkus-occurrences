@@ -135,31 +135,30 @@ class OccurrenceTagLib {
         def excludeLabel = alatag.message(code: "search.filters.exclude")
         def prefix = exclude ? "<span class='active-filters-prefix'>[${excludeLabel}]</span> " : ""
         def filterLabel = item.value.displayName.replaceFirst(/^\-/, "") // remove leading "-" for exclude searches
-        def fqLabel = filterLabel
-
         def mb = new MarkupBuilder(out)
 
         mb.span (class: "${attrs.cssClass} tooltips active-filters__filter") {
             span(class: "active-filters__label") {
                 if (item.key.contains("occurrence_year")) {
-                    fqLabel = prefix + fqLabel
+                    filterLabel = prefix + filterLabel
                         .replaceAll(':', ': ')
                         .replaceAll(
                             'occurrence_year',
                             alatag.message(code: 'facet.occurrence_year', default: 'occurrence_year')
                         )
 
-                    mkp.yieldUnescaped(fqLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
+                    mkp.yieldUnescaped(filterLabel.replaceAll(/(\d{4})\-.*?Z/) { all, year ->
                         def year10 = year?.toInteger() + 10
 
                         "${year} - ${year10}"
                     })
                 } else {
-                    def facet = fqLabel.split(":")[0]
+                    // We can't translate it before it gets here, so although ugly, this will have to do.
+                    def facet = filterLabel.split(":")[0]
                     def label = prefix + alatag.message(code: "facet.${item.key}", default: facet)
-                    def value = item.value.value
+                    def values = item.value.value.split(" OR ${item.key}:").join(", ")
 
-                    mkp.yieldUnescaped("${label}: ${value}")
+                    mkp.yieldUnescaped("${item.key}: ${values}")
                 }
             }
 
