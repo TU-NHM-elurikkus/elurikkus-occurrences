@@ -158,7 +158,7 @@ class OccurrenceTagLib {
                     def label = prefix + alatag.message(code: "facet.${item.key}", default: facet)
                     def values = item.value.value.split(" OR ${item.key}:").join(", ")
 
-                    mkp.yieldUnescaped("${item.key}: ${values}")
+                    mkp.yieldUnescaped("${label}: ${values}")
                 }
             }
 
