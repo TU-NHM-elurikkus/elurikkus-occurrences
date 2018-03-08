@@ -1,3 +1,4 @@
+<%@ page import="groovy.json.JsonSlurper" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <g:set var="fieldsMap" value="${[:]}" />
@@ -13,19 +14,6 @@
         <!-- Data Provider -->
         <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="dataProvider" fieldName="${message(code: 'recordcore.dataset.dataProvider')}">
             ${fieldsMap.put("dataProviderName", true)}
-            <%--
-                We will disable the data provider link for now. That page needs an update.
-                TODO: Update data provider page and re-enable this link.
-            <g:if test="${record.processed.attribution.dataProviderUid && collectionsWebappContext}">
-                ${fieldsMap.put("dataProviderUid", true)}
-                <a href="${collectionsWebappContext}/public/show/${record.processed.attribution.dataProviderUid}">
-                    ${record.processed.attribution.dataProviderName}
-                </a>
-            </g:if>
-            <g:else>
-                ${record.processed.attribution.dataProviderName}
-            </g:else>
-            --%>
             ${record.processed.attribution.dataProviderName}
         </alatag:occurrenceTableRow>
 
@@ -128,19 +116,14 @@
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="occurrenceID" fieldName="${message(code: 'recordcore.dataset.occurrenceID')}">
             ${fieldsMap.put("occurrenceID", true)}
             <g:if test="${record.processed.occurrence.occurrenceID && record.raw.occurrence.occurrenceID}">
-                <%-- links removed as per issue #6 (github)  --%>
-                <%--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"><a href="${record.processed.occurrence.occurrenceID}" target="_blank"></g:if>--%>
                 ${record.processed.occurrence.occurrenceID}
-                <%--<g:if test="${StringUtils.startsWith(record.processed.occurrence.occurrenceID,'http://')}"></a></g:if>--%>
                 <br />
                 <span class="originalValue">
                     <g:message code="recordcore.label.suppliedas" /> "${record.raw.occurrence.occurrenceID}"
                 </span>
             </g:if>
             <g:else>
-                <%--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"><a href="${record.raw.occurrence.occurrenceID}" target="_blank"></g:if>--%>
                 ${record.raw.occurrence.occurrenceID}
-                <%--<g:if test="${StringUtils.startsWith(record.raw.occurrence.occurrenceID,'http://')}"></a></g:if>--%>
             </g:else>
         </alatag:occurrenceTableRow>
 
@@ -186,13 +169,13 @@
         </alatag:occurrenceTableRow>
 
         <!-- Identified Date -->
-        <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="identifierDate"  fieldNameIsMsgCode="true" fieldName="${message(code: 'recordcore.dataset.identifierDate')}">
+        <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="identifierDate" fieldNameIsMsgCode="true" fieldName="${message(code: 'recordcore.dataset.identifierDate')}">
             ${fieldsMap.put("identifierDate", true)}
             ${record.raw.identification.dateIdentified}
         </alatag:occurrenceTableRow>
 
         <!-- Identifier Role -->
-        <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="identifierRole"  fieldNameIsMsgCode="true" fieldName="${message(code: 'recordcore.dataset.identifierRole')}">
+        <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="identifierRole" fieldNameIsMsgCode="true" fieldName="${message(code: 'recordcore.dataset.identifierRole')}">
             ${fieldsMap.put("identifierRole", true)}
             ${record.raw.identification.identifierRole}
         </alatag:occurrenceTableRow>
@@ -226,7 +209,7 @@
             <g:set var="proRecordedBy" value="${record.processed.occurrence[recordedByField]}" />
 
             <g:if test="${record.processed.occurrence[recordedByField] && record.raw.occurrence[recordedByField] && record.processed.occurrence[recordedByField] == record.raw.occurrence[recordedByField]}">
-                    ${proRecordedBy}
+                ${proRecordedBy}
             </g:if>
             <g:elseif test="${record.processed.occurrence[recordedByField] && record.raw.occurrence[recordedByField]}">
                 ${proRecordedBy}
@@ -341,6 +324,15 @@
             ${fieldsMap.put("lifeStage", true)}
             ${record.raw.occurrence.lifeStage}
         </alatag:occurrenceTableRow>
+
+        <g:if test="${record.processed.occurrence.basisOfRecord == 'HumanObservation'}">
+            <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="breeding" fieldName="${message(code: 'recordcore.dataset.breeding')}">
+                ${fieldsMap.put("breeding", true)}
+                <g:set var="jsonSlurper" value="${new JsonSlurper()}" />
+                <g:set var="object" value="${jsonSlurper.parseText(record.raw.occurrence.dynamicProperties ?: '{}')}" />
+                ${object.breeding}
+            </alatag:occurrenceTableRow>
+        </g:if>
 
         <!-- Rights -->
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="rights" fieldName="${message(code: 'recordcore.dataset.rights')}">
@@ -586,7 +578,7 @@
                 [<g:message code="recordcore.tr01" />]
             </g:else>
 
-            <g:if test="${classification.taxonRank && rawClassification.taxonRank  && (classification.taxonRank.toLowerCase() != rawClassification.taxonRank.toLowerCase())}">
+            <g:if test="${classification.taxonRank && rawClassification.taxonRank && (classification.taxonRank.toLowerCase() != rawClassification.taxonRank.toLowerCase())}">
                 <br />
                 <span class="originalValue">
                     <g:message code="recordcore.label.suppliedas" /> "${rawClassification.taxonRank}"
@@ -880,9 +872,7 @@
                 ${fieldsMap.put("stateProvince", true)}
                 <g:set var="stateValue" value="${record.processed.location.stateProvince ? record.processed.location.stateProvince : record.raw.location.stateProvince}" />
                 <g:if test="${stateValue}">
-                    <%--<a href="${bieWebappContext}/regions/aus_states/${stateValue}">--%>
-                        ${stateValue}
-                    <%--</a>--%>
+                    ${stateValue}
                 </g:if>
                 <g:if test="${record.processed.location.stateProvince && record.raw.location.stateProvince && (record.processed.location.stateProvince.toLowerCase() != record.raw.location.stateProvince.toLowerCase())}">
                     <br />
@@ -1174,81 +1164,3 @@
         </table>
     </div>
 </g:if>
-
-<%--
-    TODO Default links in this section are not very useful.
-    Keeping this section disabled until we figure out what do with the links.
-    Perhaps links to areas in the Regions module would be useful.
---%>
-
-<%--
-<div id="outlierInformation" class="additionalData">
-    <g:if test="${contextualSampleInfo}">
-        <h3 id="contextualSampleInfo">
-            <g:message code="show.outlierinformation.02.title01" />
-        </h3>
-        <table class="layerIntersections table table-sm table-bordered ">
-            <tbody>
-                <g:each in="${contextualSampleInfo}" var="sample" status="vs">
-                    <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != contextualSampleInfo.get(vs - 1).classification1 && vs != contextualSampleInfo.size() - 1))}">
-                        <tr class="sectionName">
-                            <td colspan="2">
-                                ${sample.classification1}
-                            </td>
-                        </tr>
-                    </g:if>
-                    <g:set var="fn">
-                        <a href='${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${sample.layerName}' title="${message(code: 'show.outlierinformation.02.label')}">
-                            ${sample.layerDisplayName}
-                        </a>
-                    </g:set>
-                    <alatag:occurrenceTableRow
-                        annotate="false"
-                        section="contextual"
-                        fieldCode="${sample.layerName}"
-                        fieldName="${fn}"
-                    >
-                        ${sample.value}
-                    </alatag:occurrenceTableRow>
-                </g:each>
-            </tbody>
-        </table>
-    </g:if>
-
-    <g:if test="${environmentalSampleInfo}">
-        <h3 id="environmentalSampleInfo">
-            <g:message code="show.outlierinformation.02.title02" />
-        </h3>
-        <table class="layerIntersections table table-sm table-bordered" >
-            <tbody>
-                <g:each in="${environmentalSampleInfo}" var="sample" status="vs">
-                    <g:if test="${sample.classification1 && (vs == 0 || (sample.classification1 != environmentalSampleInfo.get(vs - 1).classification1 && vs != environmentalSampleInfo.size() - 1))}">
-                        <tr class="sectionName">
-                            <td colspan="2">
-                                ${sample.classification1}
-                            </td>
-                        </tr>
-                    </g:if>
-                    <g:set var="fn">
-                        <a
-                            href='${grailsApplication.config.layersservice.url}/layers/view/more/${sample.layerName}'
-                            title="${message(code: 'show.outlierinformation.02.label')}"
-                            target="_blank"
-                        >
-                            ${sample.layerDisplayName}
-                        </a>
-                    </g:set>
-                    <alatag:occurrenceTableRow
-                        annotate="false"
-                        section="contextual"
-                        fieldCode="${sample.layerName}"
-                        fieldName="${fn}"
-                    >
-                        ${sample.value} ${(sample.units && !StringUtils.containsIgnoreCase(sample.units,'dimensionless')) ? sample.units : ''}
-                    </alatag:occurrenceTableRow>
-                </g:each>
-            </tbody>
-        </table>
-    </g:if>
-</div>
---%>
