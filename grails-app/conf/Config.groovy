@@ -175,26 +175,32 @@ log4j = {
         info "stdout"
     }
 
-    error  "org.codehaus.groovy.grails.web.servlet",        // controllers
-           "org.codehaus.groovy.grails.web.pages",          // GSP
-           "org.codehaus.groovy.grails.web.sitemesh",       // layouts
-           "org.codehaus.groovy.grails.web.mapping.filter", // URL mapping
-           "org.codehaus.groovy.grails.web.mapping",        // URL mapping
-           "org.codehaus.groovy.grails.commons",            // core / classloading
-           "org.codehaus.groovy.grails.plugins",            // plugins
-           "org.codehaus.groovy.grails.orm.hibernate",      // hibernate integration
-           "org.springframework",
-           "org.hibernate",
-           "net.sf.ehcache.hibernate"
-    info   "grails.app"
-    debug  "grails.app.controllers",
-           "grails.app.services",
-           //"grails.app.taglib",
-           "grails.web.pages",
-           //"grails.app",
-           "au.org.ala.cas",
-           "au.org.ala.biocache.hubs",
-           "au.org.ala.biocache.hubs.OccurrenceTagLib"
+    error(
+        "org.codehaus.groovy.grails.web.servlet",        // controllers
+        "org.codehaus.groovy.grails.web.pages",          // GSP
+        "org.codehaus.groovy.grails.web.sitemesh",       // layouts
+        "org.codehaus.groovy.grails.web.mapping.filter", // URL mapping
+        "org.codehaus.groovy.grails.web.mapping",        // URL mapping
+        "org.codehaus.groovy.grails.commons",            // core / classloading
+        "org.codehaus.groovy.grails.plugins",            // plugins
+        "org.codehaus.groovy.grails.orm.hibernate",      // hibernate integration
+        "org.springframework",
+        "org.hibernate",
+        "net.sf.ehcache.hibernate"
+    )
+    info(
+        "grails.app"
+    )
+    debug(
+        "grails.app.controllers",
+        "grails.app.services",
+        //"grails.app.taglib",
+        "grails.web.pages",
+        //"grails.app",
+        "au.org.ala.cas",
+        "au.org.ala.biocache.hubs",
+        "au.org.ala.biocache.hubs.OccurrenceTagLib"
+    )
 }
 
 /******************************************************************************\
@@ -202,8 +208,9 @@ log4j = {
 \******************************************************************************/
 // Table columns and order
 table.columns = [
-    "eventDate", "scientificName", "vernacularName", "individualCount", "sex", "behavior", "lifeStage", "catalogNumber",
-    "locality", "collectors", "multimedia", "speciesListUid", "basisOfRecord", "institutionName", "dataResourceName"
+    "eventDate", "scientificName", "vernacularName", "individualCount", "sex", "behavior", "lifeStage", "breeding",
+    "catalogNumber", "locality", "collectors", "multimedia", "speciesListUid", "basisOfRecord", "institutionName",
+    "dataResourceName"
 ]
 
 // Table columns that will not be hidden
