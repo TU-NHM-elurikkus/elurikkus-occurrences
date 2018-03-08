@@ -75,7 +75,6 @@
 
         <g:if test="${record}">
             <g:if test="${record.raw}">
-                <%-- WIP --%>
                 <div class="page-header">
                     <h1 class="page-header__title">
                         <g:message code="show.occurrenceRecord" />:
@@ -149,7 +148,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6 col-md-5">
+                    <%-- XXX This element is hidden, but not removed, for debugging purposes. --%>
+                    <div id="data-quality-summary" class="col-sm-6 col-md-5" style="display: none;">
                         <g:if test="${record.systemAssertions && record.processed.attribution.provenance != 'Draft'}">
                             <a href="#dataQuality" class="float-left">
                                 <g:message code="show.dataquality.title" />
@@ -202,17 +202,20 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-5 col-lg-3">
-                        <g:render template="recordSidebar" />
-                    </div>
+                    <g:if test="${alatag.showSidebar(record: record)}">
+                        <div class="col-sm-5 col-lg-3">
+                            <g:render template="recordSidebar" />
+                        </div>
+                    </g:if>
 
-                    <div class="col-sm-7 col-lg-9 occurrence-table-container">
+                    <div class="col occurrence-table-container">
                         <g:render template="recordCore" />
                     </div>
                 </div>
 
                 <g:if test="${hasExpertDistribution}">
-                    <div id="hasExpertDistribution"  class="additionalData" style="clear:both;padding-top: 20px;">
+                    <%-- XXX This element is hidden, but not removed, for debugging purposes. --%>
+                    <div id="hasExpertDistribution"  class="additionalData" style="clear:both;padding-top: 20px; display: none;">
                         <h2>
                             <g:message code="show.hasexpertdistribution.title" />
                             <a id="expertReport" href="#expertReport">

@@ -351,8 +351,8 @@
             ${record.processed.location.decimalLatitude},${record.processed.location.decimalLongitude}
         </g:else>
     </g:set>
-    <div class="sidebar">
 
+    <div class="sidebar">
         <%-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> --%>
         <script type="text/javascript">
             $(document).ready(function() {
@@ -490,7 +490,8 @@
     </div>
 </g:if>
 
-<div id="dataQuality" class="additionalData">
+<%-- XXX This element is hidden, but not removed, for debugging purposes. --%>
+<div id="dataQuality" class="additionalData" style="display: none;">
     <a id="dataQualityReport"></a>
     <h3>
         <g:message code="show.dataquality.title" />
