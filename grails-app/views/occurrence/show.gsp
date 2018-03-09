@@ -202,11 +202,9 @@
                 </div>
 
                 <div class="row">
-                    <g:if test="${alatag.showSidebar(record: record)}">
-                        <div class="col-sm-5 col-lg-3">
-                            <g:render template="recordSidebar" />
-                        </div>
-                    </g:if>
+                    <div class="col-sm-5 col-lg-3">
+                        <g:render template="recordSidebar" />
+                    </div>
 
                     <div class="col occurrence-table-container">
                         <g:render template="recordCore" />

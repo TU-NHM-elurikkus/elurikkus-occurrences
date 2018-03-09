@@ -274,8 +274,8 @@
                 mappingUrl: "${mappingUrl}",
                 query: "${searchString}",
                 queryDisplayString: "${queryDisplayString}",
-                defaultLatitude: "${grailsApplication.config.map.defaultLatitude ?: '58.3735'}",
-                defaultLongitude: "${grailsApplication.config.map.defaultLongitude ?: '26.7161'}",
+                defaultLatitude: "${grailsApplication.config.map.defaultLatitude}",
+                defaultLongitude: "${grailsApplication.config.map.defaultLongitude}",
                 defaultZoom: 7,
                 layerControl : null,
             };

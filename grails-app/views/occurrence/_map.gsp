@@ -193,8 +193,8 @@
         mappingUrl : "${mappingUrl}",
         queryDisplayString : "${queryDisplayString}",
         center: [
-            "${grailsApplication.config.map.defaultLatitude ?: '58.67'}",
-            "${grailsApplication.config.map.defaultLongitude ?: '25.56'}",
+            "${grailsApplication.config.map.defaultLatitude}",
+            "${grailsApplication.config.map.defaultLongitude}",
         ],
         defaultZoom : "${grailsApplication.config.map.defaultZoom ?: '4'}",
         zoomOutsideScopedRegion: ${(grailsApplication.config.map.zoomOutsideScopedRegion == false || grailsApplication.config.map.zoomOutsideScopedRegion == "false") ? false : true},

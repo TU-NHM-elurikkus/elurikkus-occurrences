@@ -29,7 +29,7 @@ class OccurrenceTagLib {
 
     //static defaultEncodeAs = 'html'
     //static encodeAsForTags = [tagName: 'raw']
-    static returnObjectForTags = ['getLoggerReasons', 'message', 'showSidebar']
+    static returnObjectForTags = ['getLoggerReasons', 'message']
     static namespace = 'alatag'     // namespace for headers and footers
     static rangePattern = ~/\[\d+(\.\d+)? TO \d+(\.\d+)?\]/
 
@@ -905,18 +905,5 @@ class OccurrenceTagLib {
             email = email.replaceAll("@", strEncodedAtSign)
             out << "<a href='#' class='link under' onclick=\"return sendEmail('${email}')\">${body()}</a>"
         }
-    }
-
-    /**
-     * Test whether or not sidebar should be shown.
-     *
-     * @attrs record
-     * @return boolean
-     */
-    def showSidebar = { attrs ->
-        def record = attrs.record
-        def truthy = record.images && record.processed.location.decimalLatitude && record.processed.location.decimalLongitude
-
-        return truthy
     }
 }
