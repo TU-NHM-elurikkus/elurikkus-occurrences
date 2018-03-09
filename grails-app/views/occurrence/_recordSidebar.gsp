@@ -342,46 +342,59 @@
     </div>
 </g:if>
 
-<g:if test="${record.processed.location.decimalLatitude && record.processed.location.decimalLongitude}">
-    <g:set var="latLngStr">
-        <g:if test="${clubView && record.raw.location.decimalLatitude && record.raw.location.decimalLatitude != record.processed.location.decimalLatitude}">
-            ${record.raw.location.decimalLatitude},${record.raw.location.decimalLongitude}
-        </g:if>
-        <g:else>
-            ${record.processed.location.decimalLatitude},${record.processed.location.decimalLongitude}
-        </g:else>
-    </g:set>
+<g:set var="latLngStr">
+    <g:if test="${clubView && record.raw.location.decimalLatitude && record.raw.location.decimalLatitude != record.processed.location.decimalLatitude}">
+        ${record.raw.location.decimalLatitude},${record.raw.location.decimalLongitude}
+    </g:if>
+    <g:elseif test="${record.processed.location.decimalLatitude && record.processed.location.decimalLongitude}">
+        ${record.processed.location.decimalLatitude},${record.processed.location.decimalLongitude}
+    </g:elseif>
+</g:set>
 
-    <div class="sidebar">
-        <%-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> --%>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var latlng = new google.maps.LatLng(${latLngStr.trim()});
-                var myOptions = {
-                    zoom: 5,
-                    center: latlng,
-                    scrollwheel: false,
-                    scaleControl: true,
-                    streetViewControl: false,
-                    mapTypeControl: true,
-                    mapTypeControlOptions: {
-                        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                        mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.TERRAIN ]
-                    },
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
+<g:set var="mapCenter">
+    <g:if test="${latLngStr.trim()}">
+        ${latLngStr.trim()}
+    </g:if>
+    <g:else>
+        ${grailsApplication.config.map.defaultLatitude},${grailsApplication.config.map.defaultLongitude}
+    </g:else>
+</g:set>
 
-                var map = new google.maps.Map(document.getElementById("occurrenceMap"), myOptions);
+<div class="sidebar">
+    <%-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> --%>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var hasMarker = Boolean(${latLngStr.trim()});
+            var markerLatLng = hasMarker ? new google.maps.LatLng(${latLngStr.trim()}) : null;
+            var centerLatLng = new google.maps.LatLng(${mapCenter});
+            var myOptions = {
+                zoom: 6,
+                center: centerLatLng,
+                scrollwheel: false,
+                scaleControl: true,
+                streetViewControl: false,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.TERRAIN ]
+                },
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
 
+            var map = new google.maps.Map(document.getElementById("occurrenceMap"), myOptions);
+
+            if(hasMarker) {
                 var marker = new google.maps.Marker({
-                    position: latlng,
+                    position: markerLatLng,
                     map: map,
                     title: "${message(code: 'show.occurrencemap.marker')}"
                 });
+            }
 
-                <g:if test="${record.processed.location.coordinateUncertaintyInMeters}">
+            <g:if test="${record.processed.location.coordinateUncertaintyInMeters}">
                 var radius = parseInt('${record.processed.location.coordinateUncertaintyInMeters}');
-                if (!isNaN(radius)) {
+
+                if(!isNaN(radius)) {
                     // Add a Circle overlay to the map.
                     circle = new google.maps.Circle({
                         map: map,
@@ -395,17 +408,16 @@
                     // bind circle to marker
                     circle.bindTo('center', marker, 'position');
                 }
-                </g:if>
-            });
-        </script>
+            </g:if>
+        });
+    </script>
 
-        <h3>
-            <g:message code="show.occurrencemap.title" />
-        </h3>
+    <h3>
+        <g:message code="show.occurrencemap.title" />
+    </h3>
 
-        <div id="occurrenceMap" class="google-maps"></div>
-    </div>
-</g:if>
+    <div id="occurrenceMap" class="google-maps"></div>
+</div>
 
 <g:if test="${record.images}">
     <div class="sidebar">
