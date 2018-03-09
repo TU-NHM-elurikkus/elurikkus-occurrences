@@ -215,3 +215,14 @@ table.columns = [
 
 // Table columns that will not be hidden
 table.priorityColumns = ["eventDate" , "scientificName"]
+
+/**
+ * MAP
+ */
+map.defaultLatitude = 58.8
+map.defaultLongitude = 24.5
+map.defaultZoom = 6
+map.defaultFacetMapColourBy = basis_of_record
+map.pointColour = "df4a21"
+map.zoomOutsideScopedRegion = true
+map.height = 600
