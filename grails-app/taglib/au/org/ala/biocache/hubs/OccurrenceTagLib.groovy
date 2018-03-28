@@ -573,11 +573,20 @@ class OccurrenceTagLib {
      */
 
     def formatCell = { builder, properties, occurrence, key ->
-        def value = occurrence.get(key)
+        def value = occurrence.get(key, "")
         def style = 'search-results-cell'
 
         if(key == 'eventDate') {
-            def formatted = g.formatDate(date: new Date(value), format: "yyyy-MM-dd")
+            def formatted = ""
+            if(!occurrence.assertions.contains("incompleteCollectionDate")) {
+                formatted = g.formatDate(date: new Date(value), format: "yyyy-MM-dd")
+            } else if(occurrence.year || occurrence.month) {
+                formatted += occurrence.get("year", "0000")
+                if(occurrence.month) {
+                    formatted += "-"
+                    formatted += occurrence.get("month", "00")
+                }
+            }
 
             builder.td(class: "${style} search-results-cell--date", title: formatted, *:properties, formatted)
         } else if(key == 'collectors' && value.size() > 2) {
@@ -719,7 +728,7 @@ class OccurrenceTagLib {
             occurrences.toArray().each { occurrence ->
                 tr(class: 'search-results-row') {
                     normalColumns.each { column ->
-                        def properties = ['data-priority-col': priorityColumns.contains(normalColumns)]
+                        def properties = ['data-priority-col': priorityColumns.contains(column)]
 
                         try {
                             formatCell(mb, properties, occurrence, column)
