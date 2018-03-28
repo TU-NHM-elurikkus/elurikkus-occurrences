@@ -139,11 +139,13 @@ class OccurrenceController {
                         remove = k
                     }
                 }
-                if (remove) searchResults?.activeFacetMap?.remove(remove)
+                if(remove) {
+                    searchResults?.activeFacetMap?.remove(remove)
+                }
             }
 
             def hasImages = postProcessingService.resultsHaveImages(searchResults)
-            if(grailsApplication.config.alwaysshow.imagetab.toBoolean()){
+            if(grailsApplication.config.alwaysshow.imagetab.toBoolean()) {
                 hasImages = true
             }
 

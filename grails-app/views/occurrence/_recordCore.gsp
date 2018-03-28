@@ -425,18 +425,28 @@
 
         <alatag:occurrenceTableRow annotate="true" section="event" fieldCode="occurrenceDate" fieldName="${occurrenceDateLabel}">
             ${fieldsMap.put("eventDate", true)}
-            <g:if test="${!record.processed.event.eventDate && record.raw.event.eventDate && !record.raw.event.year && !record.raw.event.month && !record.raw.event.day}">
-                [<g:message code="recordcore.occurrencedatelabel.03" />]
+
+            <g:if test="${!record.processed.event.eventDate && (record.processed.event.year || record.processed.event.month || record.processed.event.day)}">
+                [<g:message code="recordcore.occurrencedatelabel.02" />]
             </g:if>
+            <g:elseif test="${!record.processed.event.eventDate && record.raw.event.eventDate && !record.raw.event.year && !record.raw.event.month && !record.raw.event.day}">
+                [<g:message code="recordcore.occurrencedatelabel.03" />]
+            </g:elseif>
 
             <g:if test="${record.processed.event.eventDate}">
                 <span class="isoDate">${record.processed.event.eventDate}</span>
             </g:if>
 
             <g:if test="${!record.processed.event.eventDate && (record.processed.event.year || record.processed.event.month || record.processed.event.day)}">
-                <g:message code="recordcore.occurrencedatelabel.04" />: ${record.processed.event.year},
-                <g:message code="recordcore.occurrencedatelabel.05" />: ${record.processed.event.month},
-                <g:message code="recordcore.occurrencedatelabel.06" />: ${record.processed.event.day}
+                <g:if test="${record.processed.event.year}">
+                    <g:message code="recordcore.occurrencedatelabel.04" />: ${record.processed.event.year}
+                </g:if>
+                <g:if test="${record.processed.event.month}">
+                    <g:message code="recordcore.occurrencedatelabel.05" />: ${record.processed.event.month}
+                </g:if>
+                <g:if test="${record.processed.event.day}">
+                    <g:message code="recordcore.occurrencedatelabel.06" />: ${record.processed.event.day}
+                </g:if>
             </g:if>
 
             <g:if test="${record.processed.event.eventDate && record.raw.event.eventDate && record.raw.event.eventDate != record.processed.event.eventDate}">
