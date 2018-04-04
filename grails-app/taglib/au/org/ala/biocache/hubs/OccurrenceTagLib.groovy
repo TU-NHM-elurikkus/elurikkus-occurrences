@@ -222,7 +222,7 @@ class OccurrenceTagLib {
                                 span(class: "facet-item") {
                                     if(fieldResult.label) {
                                         // Get translated facet value. If there's no match, default to the value itself.
-                                        mkp.yield(alatag.message(code: "facet." + fieldName + "." + fieldResult.label, default: fieldResult.label))
+                                        mkp.yield(alatag.message(code: "facet.${fieldName}.${fieldResult.label}", default: fieldResult.label))
                                     } else {
                                         mkp.yield(alatag.message(code: "facet.absent"))
                                     }
@@ -253,12 +253,12 @@ class OccurrenceTagLib {
 
                         }
                     } else {
-                        def label = alatag.message(code: facetResult.fieldName + "." + fieldResult.label) ?: alatag.message(code: fieldResult.label)
+                        def label = alatag.message(code: "${facetResult.fieldName}.${fieldResult.label}") ?: alatag.message(code: fieldResult.label)
                         def href = "?${queryParam}&fq=${facetResult.fieldName}:"
                         if (isRangeFilter(fieldResult.label)) {
-                            href = href + "${fieldResult.label?.encodeAsURL()}"
+                            href += "${fieldResult.label?.encodeAsURL()}"
                         } else {
-                            href = href + "%22${fieldResult.label?.encodeAsURL()}%22"
+                            href += "%22${fieldResult.label?.encodeAsURL()}%22"
                         }
                         li(class: 'erk-ulist__item') {
                             a(href: href,
