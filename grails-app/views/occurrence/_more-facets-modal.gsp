@@ -45,19 +45,6 @@
                             </thead>
 
                             <tbody class="scrollContent">
-                                <%-- What is this hiden row for? Though seems like a hack - somewhere it is popped or is it? --%>
-                                <tr style="display: none;">
-                                    <td>
-                                        <input type="checkbox" name="fqs" class="fqs" value="" />
-                                    </td>
-
-                                    <td>
-                                        <a href=""></a>
-                                    </td>
-
-                                    <td style="text-align: right; border-right-style: none;"></td>
-                                </tr>
-
                                 <tr id="spinnerRow">
                                     <td colspan="3" style="text-align: center;">
                                         <%-- TODO translation --%>
