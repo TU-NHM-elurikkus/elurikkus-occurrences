@@ -3,3 +3,7 @@
 *= require jquery.autocomplete
 *= require searchMap
 */
+
+#clearAll {
+    margin-left: 10px;
+}

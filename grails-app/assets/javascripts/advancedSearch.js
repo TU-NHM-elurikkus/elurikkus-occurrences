@@ -248,7 +248,7 @@ function fillInstitutionCollectionDropdown() {
     $.ajax({
         url: BC_CONF.collectoryUrl + '/ws/lookup/institution',
         success: function(data) {
-            var selectContent = '' +
+            var selectContent =
                 '<option value="">' +
                     $.i18n.prop('advancedsearch.table05col01.option01.label') +
                 '</option>';
@@ -256,13 +256,13 @@ function fillInstitutionCollectionDropdown() {
             var optGroup;
             data.forEach(function(inst) {
                 optGroup = '<optgroup label="' + inst.name + '">';
-                optGroup += '' +
+                optGroup +=
                     '<option value="' + inst.uid + '">' +
                         $.i18n.prop('advancedsearch.table05col01.option02.label') +
                     '</option>';
 
                 inst.collections.forEach(function(coll) {
-                    optGroup += '' +
+                    optGroup +=
                         '<option value="' + coll[0] + '">' +
                             coll[1] +
                         '</option>';
@@ -271,12 +271,12 @@ function fillInstitutionCollectionDropdown() {
                 selectContent += optGroup;
             });
 
-            selectContent += '' +
+            selectContent +=
                 '<option value="*">' +
                     $.i18n.prop('advancedsearch.matchAnything') +
                 '</option>';
 
-            $("#institution_collection").empty().append(selectContent);
+            $('#institution_collection').empty().append(selectContent);
         }
     });
 }

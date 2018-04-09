@@ -1,5 +1,4 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 
 <form
     id="advancedSearchForm"
@@ -101,7 +100,7 @@
                 </option>
                 <g:each var="group" in="${request.getAttribute("species_group")}">
                     <option value="${group.key}">
-                        <g:message code="${group.value}" />
+                        <g:message code="facet.species_group.${group.value}" default="${message(code: group.value)}" />
                     </option>
                 </g:each>
             </select>
@@ -313,15 +312,11 @@
     </fieldset>
 
     <div class="row">
-        <button
-            type="submit"
-            class="erk-button erk-button--dark"
-        >
+        <button type="submit" class="erk-button erk-button--dark">
             <span class="fa fa-search"></span>
             <g:message code="advancedsearch.button.submit" />
         </button>
 
-        &nbsp;&nbsp;
         <input
             type="reset"
             value="${message(code: 'advancedsearch.button.clearAll')}"

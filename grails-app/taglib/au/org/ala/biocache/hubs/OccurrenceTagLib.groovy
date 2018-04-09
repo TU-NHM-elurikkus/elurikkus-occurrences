@@ -220,7 +220,9 @@ class OccurrenceTagLib {
                                     mkp.yieldUnescaped("&nbsp;")
                                 }
                                 span(class: "facet-item") {
-                                    if(fieldResult.label) {
+                                    if (fieldName == "rank") {
+                                        mkp.yield(alatag.message(code: "taxonomy.rank.${fieldResult.label}"))
+                                    } else if (fieldResult.label) {
                                         // Get translated facet value. If there's no match, default to the value itself.
                                         mkp.yield(alatag.message(code: "facet.${fieldName}.${fieldResult.label}", default: fieldResult.label))
                                     } else {
@@ -229,9 +231,7 @@ class OccurrenceTagLib {
 
                                     addCounts(fieldResult.count)
                                 }
-
                             }
-
                         }
                     } else if (facetResult.fieldName.startsWith("occurrence_") && facetResult.fieldResult && facetResult.fieldResult.size() > 1) {
                         // decade date range a special case

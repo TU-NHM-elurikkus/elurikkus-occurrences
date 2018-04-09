@@ -958,7 +958,6 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
     $.getJSON(jsonUri, function(data) {
 
         if(data.totalRecords && data.totalRecords > 0) {
-            var hasMoreFacets = false;
             var html = '';
             $('tr#loadingRow').remove(); // remove the loading message
             $('tr#loadMore').remove(); // remove the load more records link
@@ -967,39 +966,25 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                 $('#fullFacets tr').not('tr.tableHead').not('#spinnerRow').remove();
             }
 
-            $.each(data.facetResults[0].fieldResult, function(i, el) {
+            var facetValues = data.facetResults[0].fieldResult;
+            facetValues.forEach(function(el, i) {
                 if(el.count > 0) {
-                    var code;
-                    var encodeFq = true; // Not sure what the point of this is.
-                    // surround with quotes: fq value if contains spaces but not for range queries
-                    var fqEsc = ((el.label.indexOf(' ') !== -1 || el.label.indexOf(',') !== -1 || el.label.indexOf('lsid') !== -1) && el.label.indexOf('[') !== 0)
-                        ? '"' + el.label + '"'
-                        : el.label; // .replace(/:/g,"\\:")
-
                     var label = (el.displayLabel) ? el.displayLabel : el.label;
+                    var code;
 
                     if(!label) {
-                        label = $.i18n.prop('facet.absent');
+                        code = 'facet.absent';
                         $('tr#facets-row-absent').remove(); // remove the absent row, as it is reinserted
-                    } else if(label.indexOf('@') !== -1) {
-                        label = label.substring(0, label.indexOf('@'));
-                    } else if(facetName.indexOf('outlier_layer') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('facet.layer.' + label);
-                    } else if(facetName.indexOf('geospatial_kosher') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('facet.geospatial_kosher.' + label);
-                    } else if(facetName.indexOf('user_assertions') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('facet.assertions.' + label);
-                    } else if(facetName.indexOf('duplicate_type') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('facet.duplication.' + label);
-                    } else if(facetName.indexOf('taxonomic_issue') !== -1 || (/^el\d+/).test(label)) {
-                        label = $.i18n.prop('facet.taxonomic_issue' + label);
+                    } else if(facetName === 'rank') {
+                        code = 'taxonomy.rank.' + label;
                     } else {
-                        code = facetName + '.' + label;
-                        if(code in $.i18n.map) {
-                            label = $.i18n.prop(code);
-                        } else if(label in $.i18n.map) {
-                            label = $.i18n.prop(label);
-                        }
+                        code = 'facet.' + facetName + '.' + label;
+                    }
+
+                    if(code in $.i18n.map) {
+                        label = $.i18n.prop(code);
+                    } else if(label in $.i18n.map) {
+                        label = $.i18n.prop(label);
                     }
 
                     facetName = facetName.replace(/_RNG$/, ''); // remove range version if present
@@ -1008,10 +993,12 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
 
                     if(el.fq) {
                         fqParam = encodeURIComponent(el.fq);
-                    } else if(encodeFq) {
-                        fqParam = facetName + ':' + encodeURIComponent(fqEsc);
                     } else {
-                        fqParam = facetName + ':' + fqEsc;
+                        // surround with quotes: fq value if contains spaces but not for range queries
+                        var fqEsc = ((el.label.indexOf(' ') !== -1 || el.label.indexOf(',') !== -1 || el.label.indexOf('lsid') !== -1) && el.label.indexOf('[') !== 0)
+                            ? '"' + el.label + '"'
+                            : el.label; // .replace(/:/g,"\\:")
+                        fqParam = facetName + ':' + encodeURIComponent(fqEsc);
                     }
 
                     // NC: 2013-01-16 I changed the link so that the search string is uri encoded so that " characters do not cause issues
@@ -1033,10 +1020,6 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                             '</td>' +
                         '</tr>';
                 }
-
-                if(i >= facetLimit - 1) {
-                    hasMoreFacets = true;
-                }
             });
 
             $('#fullFacets tbody').append(html);
@@ -1045,6 +1028,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             $('#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
             $('#fullFacets td:last-child, #fullFacets th:last-child').css('border-right', 'none');
 
+            var hasMoreFacets = facetValues.length > facetLimit;
             if(hasMoreFacets) {
                 var offsetInt = Number(foffset);
                 var flimitInt = Number(facetLimit);
