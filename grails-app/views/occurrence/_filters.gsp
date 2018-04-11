@@ -8,21 +8,15 @@
         <button id="selectAll" class="erk-link-button">
             <g:message code="list.facetcheckboxes.navigator01" />
         </button>
-
-        &nbsp;|&nbsp;
-
+        |
         <button id="selectNone" class="erk-link-button">
             <g:message code="list.facetcheckboxes.navigator02" />
         </button>
-
-        &nbsp;|&nbsp;
-
+        |
         <button id="updateFacetOptions" class="erk-link-button">
             <g:message code="list.facetcheckboxes.button.updatefacetoptions" />
         </button>
-
-        &nbsp;|&nbsp;
-
+        |
         <button id="resetFacetOptions" class="erk-link-button">
             <g:message code="list.facetcheckboxes.button.resetfacetoptions" />
         </button>
@@ -30,8 +24,6 @@
 
     <div class="search-filter-menu--facets">
         <%-- iterate over the groupedFacets, checking the default facets for each entry --%>
-        <g:set var="count" value="0" />
-
         <g:each var="group" in="${groupedFacets}">
             <g:if test="${defaultFacets.find { key, value -> group.value.any { it == key} }}">
                 <div class="search-filter-menu--facets--facet"> <%-- TEST --%>
@@ -41,8 +33,6 @@
 
                     <g:each in="${group.value}" var="fieldValue">
                         <g:if test="${defaultFacets.containsKey(fieldValue)}">
-                            <g:set var="count" value="${count + 1}" />
-
                             <div class="search-filter-checkbox">
                                 <label class="search-filter-checkbox__label">
                                     <input

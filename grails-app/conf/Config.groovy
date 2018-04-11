@@ -50,6 +50,14 @@ skin.fluidLayout = true // true or false
 chartsBgColour = "#FFFFFF"
 
 facets.defaultSelected = ""
+facets.hide = [
+    "raw_taxon_name", "rank", "name_match_metric", "species_group", "common_name", "species_subgroup",  // Taxon
+    "identification_qualifier_s", "taxonomic_issue",  // Identification
+    "state", "cl1010", "cl1009", "cl1008", "elevation_d_rng", "coordinate_uncertainty", "location_id", "geospatial_kosher",  // Location
+    "occurrence_decade_i",  // Occurrence
+    "occurrence_status_s", // Record
+    "data_provider", "data_resource"  // Attribution
+]
 
 /******************************************************************************\
  *  MISC
@@ -189,14 +197,10 @@ log4j = {
         "net.sf.ehcache.hibernate"
     )
     info(
-        "grails.app"
-    )
-    debug(
+        "grails.app",
         "grails.app.controllers",
         "grails.app.services",
-        //"grails.app.taglib",
         "grails.web.pages",
-        //"grails.app",
         "au.org.ala.cas",
         "au.org.ala.biocache.hubs",
         "au.org.ala.biocache.hubs.OccurrenceTagLib"

@@ -49,6 +49,10 @@
     padding: 4px 8px;
 }
 
+.search-filter-menu--buttons button {
+    margin: 0 4px;
+}
+
 .search-filter-menu--facets {
     display: flex;
     flex-wrap: wrap;

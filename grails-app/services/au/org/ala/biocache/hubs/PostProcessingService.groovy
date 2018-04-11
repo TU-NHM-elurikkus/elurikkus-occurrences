@@ -143,7 +143,7 @@ class PostProcessingService {
         List orderedFacets = []
         List facetsToInclude = grailsApplication.config.facets?.include?.split(',') ?: []
         List facetsToExclude = grailsApplication.config.facets?.exclude?.split(',') ?: []
-        List facetsToHide = grailsApplication.config.facets?.hide?.split(',') ?: []
+        List facetsToHide = grailsApplication.config.facets.hide
         List customOrder = grailsApplication.config.facets?.customOrder?.split(',') ?: []
         List allFacets = new ArrayList(defaultFacets)
         allFacets.addAll(facetsToInclude)
