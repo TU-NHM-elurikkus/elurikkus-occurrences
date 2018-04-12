@@ -113,8 +113,6 @@
     </div>
 </g:if>
 
-<div class="clearfix"></div>
-
 <div class="sidebar-general-info">
     <div class="sidebar-general-info__item">
         <a href="#userAnnotationsDiv" id="userAnnotationsNav" style="display:none;">
@@ -444,10 +442,7 @@
                         }"
                         target="_blank"
                     >
-                        <img
-                            src="${image.alternativeFormats.largeImageUrl}"
-                            class="occurrence-images__image"
-                        />
+                        <img src="${image.alternativeFormats.largeImageUrl}" class="sidebar-media" />
                     </a>
                 </div>
             </g:each>
@@ -471,10 +466,33 @@
                 </g:else>
             </g:set>
 
-            <audio controls class="audio-player">
+            <audio controls class="sidebar-media">
                 <source src="${soundURL}">
                 <g:message code="show.soundsheader.notSupported" />
             </audio>
+        </div>
+
+        <g:if test="${record.raw.occurrence.rights}">
+            <br />
+            <cite>
+                <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights}
+            </cite>
+        </g:if>
+    </div>
+</g:if>
+
+<g:set var="videos" value="${record.processed.occurrence.videos}" />
+<g:if test="${videos}">
+    <div class="sidebar">
+        <h3>
+            <g:message code="show.videosheader.title" />
+        </h3>
+        <div>
+            <g:set var="videoURL">${videos.get(0).replaceAll("/data/", "")}</g:set>
+
+            <video src="${videoURL}" class="sidebar-media" preload="metadata" controls>
+                <g:message code="show.videosheader.notSupported" />
+            </video>
         </div>
 
         <g:if test="${record.raw.occurrence.rights}">

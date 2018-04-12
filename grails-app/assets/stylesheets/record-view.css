@@ -1,4 +1,4 @@
-.audio-player {
+.sidebar-media {
     width: 100%;
 }
 
@@ -70,10 +70,6 @@ td.noStripe {
 
 .occurrence-images__image-container {
     margin-bottom: 10px;
-}
-
-.occurrence-images__image {
-    width: 100%;
 }
 
 .modal-dialog--wide {
