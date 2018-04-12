@@ -488,7 +488,7 @@
             <g:message code="show.videosheader.title" />
         </h3>
         <div>
-            <g:set var="videoURL">${videos.get(0).replaceAll("/data/", "")}</g:set>
+            <g:set var="videoURL">${videos.get(0).replaceAll("/data/", "/")}</g:set>
 
             <video src="${videoURL}" class="sidebar-media" preload="metadata" controls>
                 <g:message code="show.videosheader.notSupported" />
