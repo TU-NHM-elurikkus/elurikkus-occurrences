@@ -509,7 +509,11 @@ class OccurrenceTagLib {
             if (!fieldsMap.containsKey(key) && !StringUtils.containsIgnoreCase(exclude, key)) {
                 def tagBody
 
-                if (cr.processed && cr.raw && cr.processed == cr.raw) {
+                if (key == "videos") {
+                    def videos = Eval.me(cr.processed.replaceAll("/data/", "/"))
+                    videos = videos.collect { "<a href='${it}'>${it}</a>" }
+                    tagBody = videos.join("<br />")
+                } else if (cr.processed && cr.raw && cr.processed == cr.raw) {
                     tagBody = cr.processed
                 } else if (!cr.raw && cr.processed) {
                     tagBody = cr.processed
@@ -524,7 +528,9 @@ class OccurrenceTagLib {
                         </span>
                     """
                 }
-                output += alatag.occurrenceTableRow(annotate: "true", section: "dataset", fieldCode: "${key}", fieldName: "<span class='dwc'>${label}</span>", idExtension: "-extra-dwc") {
+                output += alatag.occurrenceTableRow(
+                    annotate: "true", section: "dataset", fieldCode: "${key}",
+                    fieldName: "<span class='dwc'>${label}</span>", idExtension: "-extra-dwc") {
                     tagBody
                 }
             }

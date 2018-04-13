@@ -332,7 +332,7 @@
             </a>
         </p>
 
-        <button class="erk-button erk-button--light" id="viewDraftButton" >
+        <button class="erk-button erk-button--light" id="viewDraftButton">
             <span id="viewDraftSpan" title="View Draft">
                 <g:message code="show.button.viewdraftbutton.label" />
             </span>
