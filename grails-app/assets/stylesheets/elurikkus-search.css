@@ -22,7 +22,7 @@
 }
 
 .search-filter-menu {
-    font-size: 12px; /* XXX */
+    font-size: 13px;
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
     width: 100vw;
     max-width: 44rem;
@@ -50,7 +50,7 @@
 }
 
 .search-filter-menu--buttons button {
-    margin: 0 4px;
+    margin: 4px 4px;
 }
 
 .search-filter-menu--facets {
@@ -63,12 +63,12 @@
     padding: 4px 8px;
 }
 
-.search-filter-checkbox__label {
-    margin: 0;
+.search-filter-checkbox {
+    height: 1.2rem;
 }
 
-.search-filter-checkbox__label__input {
-    height: 1.2rem;
+.search-filter-checkbox__label {
+    margin: 0;
 }
 
 /**
