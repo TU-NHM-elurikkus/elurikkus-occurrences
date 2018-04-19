@@ -38,6 +38,7 @@ class OccurrenceController {
         HumanObservation: "observation",
         LivingSpecimen: "livingspecimen",
         PreservedSpecimen: "specimen",
+        Literature: "referencebased",
         Occurrence: "referencebased"
     ]
 
