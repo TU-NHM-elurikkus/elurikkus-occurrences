@@ -161,8 +161,6 @@ $(document).ready(function() {
 
     // user selectable facets...
     $('#updateFacetOptions').click(function(e) {
-        e.preventDefault();
-
         var selectedFacets = [];
 
         // iterate over seleted facet options
@@ -179,12 +177,10 @@ $(document).ready(function() {
         } else {
             alert('Please select at least one filter category to display');
         }
-
     });
 
     // reset facet options to default values (clear cookie)
     $('#resetFacetOptions').click(function(e) {
-        e.preventDefault();
         $.removeCookie('user_facets');
         document.location.reload(true);
     });
@@ -192,26 +188,41 @@ $(document).ready(function() {
     // load stored prefs from cookie
     var userFacets = $.cookie('user_facets');
     if(userFacets) {
-        $(':input.search-filter-checkbox__label__input').removeAttr('checked');
         var facetList = userFacets.split(',');
-        for(var i in facetList) {
-            if(typeof facetList[i] === 'string') {
-                var thisFacet = facetList[i];
-                $(':input.search-filter-checkbox__label__input[value="' + thisFacet + '"]').attr('checked', 'checked');
-            }
-        }
-    } //  note removed else that did page refresh by triggering cookie update code.
+        loadGivenFacets(facetList);
+    }
 
     // select all and none buttons
     $('#selectNone').click(function(e) {
-        e.preventDefault();
         $(':input.search-filter-checkbox__label__input').removeAttr('checked');
     });
 
-    // XXX BLOODY HELL
     $('#selectAll').click(function(e) {
-        e.preventDefault();
         $(':input.search-filter-checkbox__label__input').attr('checked', 'checked');
+    });
+
+    $('#observationFacets').click(function(e) {
+        var observationFacets = [
+            'taxon_name', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom', 'common_name',
+            'identified_by',
+            'cl1007', 'cl1012',
+            'collectors', 'raw_sex', 'life_stage', 'beahvior', 'breeding', 'month', 'year',
+            'basis_of_record', 'multimedia',
+            'dataset_name'
+        ];
+        loadGivenFacets(observationFacets);
+    });
+
+    $('#specimenFacets').click(function(e) {
+        var specimenFacets = [
+            'taxon_name', 'genus', 'family', 'order', 'class', 'phylum', 'kingdom', 'common_name',
+            'identified_by', 'type_status',
+            'country', 'cl1007', 'cl1008', 'geospatial_kosher',
+            'collectors', 'rightsholder', 'year', 'month', 'occurrence_decade_i',
+            'basis_of_record', 'multimedia',
+            'collection_name', 'institution_name', 'data_provider', 'dataset_name'
+        ];
+        loadGivenFacets(specimenFacets);
     });
 
     // taxa search - show included synonyms with popup to allow user to refine to a single name
@@ -285,11 +296,11 @@ $(document).ready(function() {
             // $('#rawTaxonSearchForm').append(synList);
             // position it under the drop down
             // $('#refineTaxaSearch_'+i).position({
-                // my: 'right top',
-                // at: 'right bottom',
-                // of: $(el), // or this
-                // offset: '0 -1',
-                // collision: 'none'
+            //     my: 'right top',
+            //     at: 'right bottom',
+            //     of: $(el), // or this
+            //     offset: '0 -1',
+            //     collision: 'none'
             // });
             // $('#refineTaxaSearch_'+i).hide();
         });
@@ -515,6 +526,13 @@ $(document).ready(function() {
 
     initTableModalLinks();
 }); // end JQuery document ready
+
+function loadGivenFacets(facetList) {
+    $(':input.search-filter-checkbox__label__input').removeAttr('checked');
+    $(':input.search-filter-checkbox__label__input').filter(function() {
+        return facetList.indexOf($(this)[0].id) > -1;
+    }).attr('checked', 'checked');
+}
 
 /**
  * Catch sort drop-down and build GET URL manually

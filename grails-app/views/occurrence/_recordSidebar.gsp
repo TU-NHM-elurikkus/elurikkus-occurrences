@@ -507,16 +507,9 @@
 <g:if test="${record.raw.lastModifiedTime && record.processed.lastModifiedTime}">
     <%-- XXX --%>
     <div class="sidebar" style="margin-top: 10px;font-size: 12px; color: #555;">
-        <g:set var="rawLastModifiedString" value="${record.raw.lastModifiedTime.substring(0,10)}" />
-        <g:set var="processedLastModifiedString" value="${record.processed.lastModifiedTime.substring(0,10)}" />
-
-        <%-- XXX --%>
-        <p style="margin-bottom:20px;">
-            <g:message code="show.sidebar05.p01" />: ${rawLastModifiedString}
-            <br />
-            <g:message code="show.sidebar05.p02" />: ${processedLastModifiedString}
-            <br />
-        </p>
+        <g:message code="show.sidebar05.p01" />: ${record.raw.lastModifiedTime.replaceAll("T", " ").replaceAll("Z", "")}
+        <br />
+        <g:message code="show.sidebar05.p02" />: ${record.processed.lastModifiedTime.replaceAll("T", " ").replaceAll("Z", "")}
     </div>
 </g:if>
 
