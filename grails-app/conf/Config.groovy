@@ -52,10 +52,9 @@ chartsBgColour = "#FFFFFF"
 facets.defaultSelected = ""
 facets.hide = [
     "raw_taxon_name", "rank", "name_match_metric", "species_group", "common_name", "species_subgroup",  // Taxon
-    "identification_qualifier_s", "taxonomic_issue",  // Identification
+    "taxonomic_issue",  // Identification
     "state", "cl1010", "cl1009", "cl1008", "elevation_d_rng", "coordinate_uncertainty", "location_id", "geospatial_kosher",  // Location
     "occurrence_decade_i",  // Occurrence
-    "occurrence_status_s", // Record
     "data_provider", "data_resource"  // Attribution
 ]
 
@@ -218,7 +217,7 @@ table.columns = [
 ]
 
 // Table columns that will not be hidden
-table.priorityColumns = ["eventDate" , "scientificName"]
+table.priorityColumns = ["eventDate", "scientificName"]
 
 /**
  * MAP

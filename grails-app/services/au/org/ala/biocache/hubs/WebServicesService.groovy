@@ -38,6 +38,7 @@ class WebServicesService implements ApplicationContextAware {
 
     def JSONObject fullTextSearch(SpatialSearchRequestParams requestParams) {
         def url = "${grailsApplication.config.biocache.baseUrl}/occurrences/search?${requestParams.getEncodedParams()}"
+        println url
         getJsonElements(url)
     }
 

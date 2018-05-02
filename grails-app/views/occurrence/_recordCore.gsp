@@ -148,12 +148,18 @@
             <g:elseif test="${record.processed.occurrence.basisOfRecord}">
                 <g:message code="${record.processed.occurrence.basisOfRecord}" />
             </g:elseif>
-            <g:elseif test="${! record.raw.occurrence.basisOfRecord}">
+            <g:elseif test="${!record.raw.occurrence.basisOfRecord}">
                 <g:message code="recordcore.label.recordbasisempty" />
             </g:elseif>
             <g:else>
                 <g:message code="${record.raw.occurrence.basisOfRecord}" />
             </g:else>
+        </alatag:occurrenceTableRow>
+
+        <!-- Occurrence type -->
+        <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="occurrenceType" fieldName="${message(code: 'recordcore.dataset.occurrenceType')}">
+            ${fieldsMap.put("type", true)}
+            <g:message code="facet.occurrence_type.${record.raw.miscProperties.type}" default="${record.raw.miscProperties.type}" />
         </alatag:occurrenceTableRow>
 
         <!-- Preparations -->
@@ -205,26 +211,15 @@
 
             <g:set var="recordedByField" value="${recordedByField.trim()}" />
             ${fieldsMap.put(recordedByField, true)}
+
             <g:set var="rawRecordedBy" value="${record.raw.occurrence[recordedByField]}" />
             <g:set var="proRecordedBy" value="${record.processed.occurrence[recordedByField]}" />
 
-            <g:if test="${record.processed.occurrence[recordedByField] && record.raw.occurrence[recordedByField] && record.processed.occurrence[recordedByField] == record.raw.occurrence[recordedByField]}">
+            <g:if test="${proRecordedBy}">
                 ${proRecordedBy}
             </g:if>
-            <g:elseif test="${record.processed.occurrence[recordedByField] && record.raw.occurrence[recordedByField]}">
-                ${proRecordedBy}
-                <g:if test="${proRecordedBy != rawRecordedBy}">
-                    <br />
-                    <span class="originalValue">
-                        <g:message code="recordcore.label.suppliedas" /> "${rawRecordedBy}"
-                    </span>
-                </g:if>
-            </g:elseif>
-            <g:elseif test="${record.processed.occurrence[recordedByField]}">
-                ${proRecordedBy}
-            </g:elseif>
-            <g:elseif test="${record.raw.occurrence[recordedByField]}">
-                ${rawRecordedBy}
+            <g:elseif test="${rawRecordedBy}">
+                <g:message code="recordcore.label.suppliedas" /> "${rawRecordedBy}"
             </g:elseif>
         </alatag:occurrenceTableRow>
 
@@ -317,6 +312,16 @@
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="individualCount" fieldName="${message(code: 'recordcore.dataset.individualCount')}">
             ${fieldsMap.put("individualCount", true)}
             ${record.raw.occurrence.individualCount}
+        </alatag:occurrenceTableRow>
+
+        <!-- Organism quantity -->
+        <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="organismQuantity" fieldName="${message(code: 'recordcore.dataset.organismQuantity')}">
+            ${fieldsMap.put("organismQuantity", true)}
+            ${fieldsMap.put("organismQuantityType", true)}
+            ${record.raw.occurrence.organismQuantity}
+            <g:if test="${record.raw.miscProperties.organismQuantityType}">
+                (${record.raw.miscProperties.organismQuantityType})
+            </g:if>
         </alatag:occurrenceTableRow>
 
         <!-- Life stage -->
@@ -1157,19 +1162,21 @@
             </g:if>
 
             <g:each in="${record.raw.miscProperties.sort()}" var="entry">
-                <g:set var="label">
-                    <g:message code="recordcore.dynamic.${entry.key}" default="${entry.key}" />
-                </g:set>
-                <alatag:occurrenceTableRow annotate="true" section="misc" fieldCode="${entry.key}" fieldName="${label}">
-                    <g:if test="${StringUtils.startsWith(entry.value, 'http')}">
-                        <a href="${entry.value}" target="_blank">
-                            ${entry.value}
-                        </a>
-                    </g:if>
-                    <g:else>
-                        <g:message code="recordcore.dynamic.${entry.value}" default="${entry.value}" />
-                    </g:else>
-                </alatag:occurrenceTableRow>
+                <g:if test="${!fieldsMap.containsKey(entry.key)}">
+                    <g:set var="label">
+                        <g:message code="recordcore.dynamic.${entry.key}" default="${entry.key}" />
+                    </g:set>
+                    <alatag:occurrenceTableRow annotate="true" section="misc" fieldCode="${entry.key}" fieldName="${label}">
+                        <g:if test="${StringUtils.startsWith(entry.value, 'http')}">
+                            <a href="${entry.value}" target="_blank">
+                                ${entry.value}
+                            </a>
+                        </g:if>
+                        <g:else>
+                            <g:message code="recordcore.dynamic.${entry.value}" default="${entry.value}" />
+                        </g:else>
+                    </alatag:occurrenceTableRow>
+                </g:if>
             </g:each>
         </table>
     </div>

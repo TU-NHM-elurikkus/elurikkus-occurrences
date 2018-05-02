@@ -155,10 +155,11 @@ class OccurrenceTagLib {
                 } else {
                     // We can't translate it before it gets here, so although ugly, this will have to do.
                     def facet = filterLabel.split(":")[0]
-                    def label = prefix + alatag.message(code: "facet.${item.key}", default: facet)
-                    def values = item.value.value.split(" OR ${item.key}:").join(", ")
-
-                    mkp.yieldUnescaped("${label}: ${values}")
+                    def labelCode = "facet.${item.key}".replaceAll(" ", "_")
+                    def label = prefix + alatag.message(code: labelCode, default: facet)
+                    def values = item.value.value.split(" OR ${item.key}:").join(", ").replaceAll("\"", "")
+                    def valueCode = "${labelCode}.${values}".replaceAll(" ", "_")
+                    mkp.yieldUnescaped("${label}: \"${alatag.message(code: valueCode, default: values)}\"")
                 }
             }
 
@@ -224,7 +225,8 @@ class OccurrenceTagLib {
                                         mkp.yield(alatag.message(code: "taxonomy.rank.${fieldResult.label}"))
                                     } else if (fieldResult.label) {
                                         // Get translated facet value. If there's no match, default to the value itself.
-                                        mkp.yield(alatag.message(code: "facet.${fieldName}.${fieldResult.label}", default: fieldResult.label))
+                                        def mesagePath = "facet.${fieldName}.${fieldResult.label}".replaceAll(" ", "_")
+                                        mkp.yield(alatag.message(code: mesagePath, default: fieldResult.label))
                                     } else {
                                         mkp.yield(alatag.message(code: "facet.absent"))
                                     }
