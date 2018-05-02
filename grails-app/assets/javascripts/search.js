@@ -998,12 +998,15 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
                     } else {
                         code = 'facet.' + facetName + '.' + label;
                     }
+                    code = code.replace(/ /g, '_');
 
                     if(code in $.i18n.map) {
                         label = $.i18n.prop(code);
-                    } else if(label in $.i18n.map) {
-                        label = $.i18n.prop(label);
-                    }
+                    } else {
+                        code = label.replace(/ /g, '_');
+                        if(code in $.i18n.map) {
+                            label = $.i18n.prop(code);
+                    }}
 
                     facetName = facetName.replace(/_RNG$/, ''); // remove range version if present
 
