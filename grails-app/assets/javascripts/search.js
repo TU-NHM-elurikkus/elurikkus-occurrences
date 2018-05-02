@@ -1049,7 +1049,7 @@ function loadFacetsContent(facetName, fsort, foffset, facetLimit, replaceFacets)
             $('#fullFacets tr:last td').css('border-bottom', '1px solid #CCCCCC');
             $('#fullFacets td:last-child, #fullFacets th:last-child').css('border-right', 'none');
 
-            var hasMoreFacets = facetValues.length > facetLimit;
+            var hasMoreFacets = facetValues.length >= facetLimit; // Because sometimes 100 and sometimes 101
             if(hasMoreFacets) {
                 var offsetInt = Number(foffset);
                 var flimitInt = Number(facetLimit);
