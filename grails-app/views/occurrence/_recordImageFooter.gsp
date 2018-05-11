@@ -38,13 +38,6 @@
     <br />
 </g:if>
 
-<g:if test="${grailsApplication.config.skin.useAlaImageService.toBoolean()}">
-    <a href="${grailsApplication.config.images.metadataUrl}${image.filePath}" target="_blank">
-        <g:message code="show.sidebar.occurrenceimages.navigator01" />
-    </a>
-</g:if>
-<g:else>
-    <a href="${image.alternativeFormats.imageUrl}" target="_blank">
-        <g:message code="show.sidebar.occurrenceimages.navigator02" />
-    </a>
-</g:else>
+<a href="${image.alternativeFormats.imageUrl}" target="_blank">
+    <g:message code="show.sidebar.occurrenceimages.navigator02" />
+</a>

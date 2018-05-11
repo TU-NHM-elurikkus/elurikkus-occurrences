@@ -27,6 +27,13 @@ class WebServicesService implements ApplicationContextAware {
 
     public static final String ENVIRONMENTAL = "Environmental"
     public static final String CONTEXTUAL = "Contextual"
+
+    public static final String BIE_SERVICE_BACKEND_URL = "${grailsApplication.config.bieService.internal.url}"
+    public static final String BIOCACHE_SERVICE_BACKEND_URL = "${grailsApplication.config.biocacheService.internal.url}"
+    public static final String COLLECTORY_BACKEND_URL = "${grailsApplication.config.collectory.internal.url}"
+    public static final String LAYERS_SERVICE_BACKEND_URL = "${grailsApplication.config.layersService.internal.url}"
+    public static final String LOGGER_SERVICE_BACKEND_URL = "${grailsApplication.config.loggerService.internal.url}/service"
+
     def grailsApplication, facetsCacheServiceBean
 
     Map cachedGroupedFacets = [:] // keep a copy in case method throws an exception and then blats the saved version
@@ -37,17 +44,17 @@ class WebServicesService implements ApplicationContextAware {
     }
 
     def JSONObject fullTextSearch(SpatialSearchRequestParams requestParams) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/occurrences/search?${requestParams.getEncodedParams()}"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/search?${requestParams.getEncodedParams()}"
         getJsonElements(url)
     }
 
     def JSONObject cachedFullTextSearch(SpatialSearchRequestParams requestParams) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/occurrences/search?${requestParams.getEncodedParams()}"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/search?${requestParams.getEncodedParams()}"
         getJsonElements(url)
     }
 
     def JSONObject getRecord(String id, Boolean hasClubView) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/occurrence/${id.encodeAsURL()}"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrence/${id.encodeAsURL()}"
         if (hasClubView) {
             url += "?apiKey=${grailsApplication.config.biocache.apiKey ?: ''}"
         }
@@ -55,12 +62,12 @@ class WebServicesService implements ApplicationContextAware {
     }
 
     def JSONObject getCompareRecord(String id) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/occurrence/compare?uuid=${id.encodeAsURL()}"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrence/compare?uuid=${id.encodeAsURL()}"
         getJsonElements(url)
     }
 
     def JSONArray getMapLegend(String queryString) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/mapping/legend?${queryString}"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/mapping/legend?${queryString}"
         JSONArray json = getJsonElements(url)
         def facetName
         Map facetLabelsMap = [:]
@@ -84,12 +91,12 @@ class WebServicesService implements ApplicationContextAware {
     }
 
     def JSONArray getUserAssertions(String id) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/occurrences/${id.encodeAsURL()}/assertions"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/${id.encodeAsURL()}/assertions"
         getJsonElements(url)
     }
 
     def JSONArray getQueryAssertions(String id) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/occurrences/${id.encodeAsURL()}/assertionQueries"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/${id.encodeAsURL()}/assertionQueries"
         getJsonElements(url)
     }
 
@@ -106,27 +113,27 @@ class WebServicesService implements ApplicationContextAware {
                 uuid = record.processed.occurrence.associatedOccurrences
             }
 
-            def url = "${grailsApplication.config.biocache.baseUrl}/duplicates/${uuid.encodeAsURL()}"
+            def url = "${BIOCACHE_SERVICE_BACKEND_URL}/duplicates/${uuid.encodeAsURL()}"
             getJsonElements(url)
         }
     }
 
     @Cacheable("longTermCache")
     def JSONArray getDefaultFacets() {
-        def url = "${grailsApplication.config.biocache.baseUrl}/search/facets"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/search/facets"
         getJsonElements(url)
     }
 
     @Cacheable("longTermCache")
     def JSONArray getErrorCodes() {
-        def url = "${grailsApplication.config.biocache.baseUrl}/assertions/user/codes"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/assertions/user/codes"
         getJsonElements(url)
     }
 
     @Cacheable("longTermCache")
     def Map getGroupedFacets() {
         log.info "Getting grouped facets"
-        def url = "${grailsApplication.config.biocache.baseUrl}/search/grouped/facets"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/search/grouped/facets"
 
         if (grailsApplication.config.biocache.groupedFacetsUrl) {
             // some hubs use a custom JSON url
@@ -186,7 +193,7 @@ class WebServicesService implements ApplicationContextAware {
                 apiKey: grailsApplication.config.biocache.apiKey
         ]
 
-        postFormData(grailsApplication.config.biocache.baseUrl + "/occurrences/assertions/add", postBody)
+        postFormData(BIOCACHE_SERVICE_BACKEND_URL + "/occurrences/assertions/add", postBody)
     }
 
     /**
@@ -203,31 +210,31 @@ class WebServicesService implements ApplicationContextAware {
                 apiKey: grailsApplication.config.biocache.apiKey
         ]
 
-        postFormData(grailsApplication.config.biocache.baseUrl + "/occurrences/assertions/delete", postBody)
+        postFormData(BIOCACHE_SERVICE_BACKEND_URL + "/occurrences/assertions/delete", postBody)
     }
 
     @Cacheable("collectoryCache")
     def JSONObject getCollectionInfo(String id) {
-        def url = "${grailsApplication.config.collections.baseUrl}/lookup/summary/${id.encodeAsURL()}"
+        def url = "${COLLECTORY_BACKEND_URL}/lookup/summary/${id.encodeAsURL()}"
         getJsonElements(url)
     }
 
     @Cacheable("collectoryCache")
     def JSONArray getCollectionContact(String id){
-        def url = "${grailsApplication.config.collections.baseUrl}/ws/collection/${id.encodeAsURL()}/contact.json"
+        def url = "${COLLECTORY_BACKEND_URL}/ws/collection/${id.encodeAsURL()}/contact.json"
         getJsonElements(url)
     }
 
     @Cacheable("collectoryCache")
     def JSONArray getDataresourceContact(String id){
-        def url = "${grailsApplication.config.collections.baseUrl}/ws/dataResource/${id.encodeAsURL()}/contact.json"
+        def url = "${COLLECTORY_BACKEND_URL}/ws/dataResource/${id.encodeAsURL()}/contact.json"
         getJsonElements(url)
     }
 
     @Cacheable("longTermCache")
     def Map getLayersMetaData() {
         Map layersMetaMap = [:]
-        def url = "${grailsApplication.config.layersservice.baseUrl}/layers"
+        def url = "${LAYERS_SERVICE_BACKEND_URL}/layers"
 
         try {
             def jsonArray = getJsonElements(url)
@@ -272,7 +279,8 @@ class WebServicesService implements ApplicationContextAware {
 
         List encodedQueries = taxaQueries.collect { it.encodeAsURL() } // URL encode params
 
-        def url = grailsApplication.config.bieService.baseUrl + "/guid/batch?q=" + encodedQueries.join("&q=")
+        // def url = BIE_SERVICE_BACKEND_URL + "/guid/batch?q=" + encodedQueries.join("&q=")
+        def url = "${BIE_SERVICE_BACKEND_URL}/guid/batch?q=${encodedQueries.join("&q=")}"
         JSONObject guidsJson = getJsonElements(url)
 
         taxaQueries.each { key ->
@@ -297,14 +305,14 @@ class WebServicesService implements ApplicationContextAware {
 
     @Cacheable("longTermCache")
     def JSONArray getLoggerReasons() {
-        def url = "${grailsApplication.config.logger.baseUrl}/logger/reasons"
+        def url = "${LOGGER_SERVICE_BACKEND_URL}/logger/reasons"
         def jsonObj = getJsonElements(url)
         jsonObj.findAll { !it.deprecated } // skip deprecated reason codes
     }
 
     @Cacheable("longTermCache")
     def JSONArray getLoggerSources() {
-        def url = "${grailsApplication.config.logger.baseUrl}/logger/sources"
+        def url = "${LOGGER_SERVICE_BACKEND_URL}/logger/sources"
         try {
             getJsonElements(url)
         } catch (Exception ex) {
@@ -340,7 +348,7 @@ class WebServicesService implements ApplicationContextAware {
      * @return
      */
     List getDynamicFacets(String query) {
-        def url = "${grailsApplication.config.biocache.baseUrl}/upload/dynamicFacets?q=${query}"
+        def url = "${BIOCACHE_SERVICE_BACKEND_URL}/upload/dynamicFacets?q=${query}"
         JSONArray facets = getJsonElements(url)
         def dfs = []
         facets.each {
@@ -395,7 +403,7 @@ class WebServicesService implements ApplicationContextAware {
             return JSON.parse("{}")
         } catch(Exception e) {
             log.error "Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}"
-            throw new RestClientException(error)
+            throw new RestClientException(e)
         }
     }
 
