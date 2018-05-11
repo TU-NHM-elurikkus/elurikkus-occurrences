@@ -316,7 +316,7 @@ class ProxyController {
 
     private String getProxyURL(HttpServletRequest httpServletRequest, String pathInfo) {
         // Set the protocol to HTTP
-        String stringProxyURL = grailsApplication.config.biocache.baseUrl
+        String stringProxyURL = grailsApplication.config.biocacheService.internal.url
         // String stringProxyURL = (grailsApplication.config.proxy.proxyScheme?:'http://') + getProxyHostAndPort()
         // String proxyPath = grailsApplication.config.proxy.proxyPath
         // Check if we are proxying to a path other that the document root
