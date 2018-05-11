@@ -28,13 +28,18 @@ class WebServicesService implements ApplicationContextAware {
     public static final String ENVIRONMENTAL = "Environmental"
     public static final String CONTEXTUAL = "Contextual"
 
-    public static final String BIE_SERVICE_BACKEND_URL = "${grailsApplication.config.bieService.internal.url}"
-    public static final String BIOCACHE_SERVICE_BACKEND_URL = "${grailsApplication.config.biocacheService.internal.url}"
-    public static final String COLLECTORY_BACKEND_URL = "${grailsApplication.config.collectory.internal.url}"
-    public static final String LAYERS_SERVICE_BACKEND_URL = "${grailsApplication.config.layersService.internal.url}"
-    public static final String LOGGER_SERVICE_BACKEND_URL = "${grailsApplication.config.loggerService.internal.url}/service"
-
     def grailsApplication, facetsCacheServiceBean
+
+    String BIE_SERVICE_BACKEND_URL, BIOCACHE_SERVICE_BACKEND_URL, COLLECTORY_BACKEND_URL, LAYERS_SERVICE_BACKEND_URL, LOGGER_SERVICE_BACKEND_URL
+
+    @PostConstruct
+    def init() {
+        BIE_SERVICE_BACKEND_URL = grailsApplication.config.bieService.internal.url
+        BIOCACHE_SERVICE_BACKEND_URL = grailsApplication.config.biocacheService.internal.url
+        COLLECTORY_BACKEND_URL = grailsApplication.config.collectory.internal.url
+        LAYERS_SERVICE_BACKEND_URL = grailsApplication.config.layersService.internal.url
+        LOGGER_SERVICE_BACKEND_URL = "${grailsApplication.config.loggerService.internal.url}/service"
+    }
 
     Map cachedGroupedFacets = [:] // keep a copy in case method throws an exception and then blats the saved version
 
