@@ -35,17 +35,17 @@
             <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}" />
             var BC_CONF_FIELDS = {
                 contextPath: "${request.contextPath}",
-                hostName: "${grailsApplication.config.serverName}",
-                serverName: "${grailsApplication.config.serverName}${request.contextPath}",
+                hostName: "${grailsApplication.config.serverRoot}",
+                serverName: "${grailsApplication.config.serverRoot}${request.contextPath}",
                 searchString: "${searchString}", //  JSTL var can contain double quotes // .encodeAsJavaScript()
                 facetQueries: "${fqParams.encodeAsURL()}",
                 facetDownloadQuery: "${searchString}${fqParamsSingleQ}",
                 queryString: "${queryDisplay.encodeAsJavaScript()}",
-                bieWebappUrl: "${grailsApplication.config.bie.baseUrl}",
-                bieWebServiceUrl: "${grailsApplication.config.bieService.baseUrl}",
+                bieWebappUrl: "${grailsApplication.config.bie.ui.url}",
+                bieWebServiceUrl: "${grailsApplication.config.bieService.ui.url}",
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
-                collectoryUrl: "${grailsApplication.config.collectory.baseUrl}",
-                alertsUrl: "${grailsApplication.config.alerts.baseUrl}",
+                collectoryUrl: "${grailsApplication.config.collectory.ui.url}",
+                alertsUrl: "${grailsApplication.config.alerts.ui.url}",
                 skin: "${grailsApplication.config.skin.layout}",
                 defaultListView: "${grailsApplication.config.defaultListView}",
                 resourceName: "${grailsApplication.config.skin.orgNameLong}",
@@ -56,7 +56,7 @@
                 zoomOutsideScopedRegion: Boolean("${grailsApplication.config.map.zoomOutsideScopedRegion}"),
                 hasMultimedia: ${hasImages ?: 'false'}, // will be either true or false
                 locale: "${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}",
-                imageServiceBaseUrl:"${grailsApplication.config.images.baseUrl}",
+                imageServiceBaseUrl:"${grailsApplication.config.images.baseUrl}", // unused and unneeded
                 likeUrl: "${createLink(controller: 'imageClient', action: 'likeImage')}",
                 dislikeUrl: "${createLink(controller: 'imageClient', action: 'dislikeImage')}",
                 userRatingUrl: "${createLink(controller: 'imageClient', action: 'userRating')}",
@@ -64,7 +64,7 @@
                 addLikeDislikeButton: "${(grailsApplication.config.addLikeDislikeButton == false) ? false : true}",
                 addPreferenceButton: "${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains('ROLE_ADMIN') ? true : false) : false}",
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
-                getPreferredSpeciesListUrl:  "${grailsApplication.config.speciesList.baseURL}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
+                getPreferredSpeciesListUrl:  "${grailsApplication.config.lists.ui.url}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
             };
 
             BC_CONF["sortField"] = "${sortField}";

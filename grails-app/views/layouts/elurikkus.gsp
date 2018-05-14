@@ -18,14 +18,14 @@
         <g:javascript>
             var BC_CONF = {
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
-                bieWebappUrl: "${grailsApplication.config.bie.baseUrl}",
-                bieWebServiceUrl: "${grailsApplication.config.bieService.baseUrl}",
-                collectoryUrl: "${grailsApplication.config.collections.baseUrl}",
+                bieWebappUrl: "${grailsApplication.config.bie.ui.url}",
+                bieWebServiceUrl: "${grailsApplication.config.bieService.ui.url}",
+                collectoryUrl: "${grailsApplication.config.collectory.ui.url}",
                 autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
                 contextPath: "${request.contextPath}",
                 locale: "${RequestContextUtils.getLocale(request)}",
                 queryContext: "${grailsApplication.config.biocache.queryContext}",
-                bieIndexUrl: "${grailsApplication.config.ala.baseURL}/bie-index"
+                bieIndexUrl: "${grailsApplication.config.bieService.ui.url}"
             };
         </g:javascript>
 

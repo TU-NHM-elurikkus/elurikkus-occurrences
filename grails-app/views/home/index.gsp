@@ -2,8 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <g:set var="hubDisplayName" value="${grailsApplication.config.skin.orgNameLong}" />
-<g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocache.baseUrl}" />
-<g:set var="serverName" value="${grailsApplication.config.serverName ?: grailsApplication.config.biocache.baseUrl}" />
+<g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocacheService.ui.url}" />
+<g:set var="serverName" value="${grailsApplication.config.serverRoot}" />
 
 <!DOCTYPE html>
 <html>

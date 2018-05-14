@@ -849,8 +849,9 @@ class OccurrenceTagLib {
      * biocache.ajax.useProxy config var to see whether or not to use the proxy
      */
     def getBiocacheAjaxUrl = { attrs ->
-        String url = grailsApplication.config.biocache.baseUrl
-        Boolean useProxy = grailsApplication.config.biocache.ajax.useProxy.toBoolean() // will convert String 'true' to boolean true
+        String url = grailsApplication.config.biocacheService.ui.url
+        // toBoolean: will convert String 'true' to boolean true
+        Boolean useProxy = grailsApplication.config.biocache.ajax.useProxy.toBoolean()
         log.debug "useProxy = ${useProxy}"
 
         if (useProxy) {
