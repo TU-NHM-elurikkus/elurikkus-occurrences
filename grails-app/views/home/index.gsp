@@ -19,8 +19,7 @@
         <asset:stylesheet src="index.css" />
         <asset:javascript src="index.js" />
 
-        <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false"></script>
-
+        <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false&key=${grailsApplication.config.google.apikey}"></script>
     </head>
 
     <body>
