@@ -369,7 +369,6 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                                 class="erk-button erk-button--light dropdown-toggle tooltips text-nowrap"
-                                title="${message(code: 'search.filter.title')}"
                             >
                                 <g:message code="search.filter.customise.label" />
                                 <span class="caret"></span>
