@@ -347,7 +347,7 @@ class ProxyController {
     }
 
     private String getProxyHostAndPort() {
-        String biocacheServiceUrl = grailsApplication.config.biocache.baseUrl
+        String biocacheServiceUrl = grailsApplication.config.biocacheService.ui.url
         def hostAndPort = (biocacheServiceUrl =~ /:\/\/(.*?)\//)[0][1]
 //        def proxyPort = grailsApplication.config.proxy.proxyPort?:80
 //        String hostAndPort = "${grailsApplication.config.proxy.proxyHost}"

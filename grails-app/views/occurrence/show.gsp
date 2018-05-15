@@ -2,11 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <g:set var="recordId" value="${alatag.getRecordId(record: record)}" />
-<g:set var="collectionsWebappContext" value="${grailsApplication.config.collections.baseUrl}" />
+<g:set var="collectionsWebappContext" value="${grailsApplication.config.collectory.ui.url}" />
 <g:set var="taxaLinks" value="${grailsApplication.config.skin.taxaLinks}" />
 <g:set var="dwcExcludeFields" value="${grailsApplication.config.dwc.exclude}" />
 <g:set var="biocacheService" value="${alatag.getBiocacheAjaxUrl()}" />
-<g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.baseUrl}" />
+<g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.ui.url}" />
 <g:set var="sensitiveDatasetRaw" value="${grailsApplication.config.sensitiveDataset?.list?:''}" />
 <g:set var="sensitiveDatasets" value="${sensitiveDatasetRaw?.split(',')}" />
 <g:set var="userDisplayName" value="${alatag.loggedInUserDisplayname()}" />
@@ -312,7 +312,7 @@
                             <ul>
                                 <g:each in="${metadataForOutlierLayers}" var="layerMetadata">
                                     <li>
-                                        <a href="${grailsApplication.config.layersservice.baseUrl}/layers/view/more/${layerMetadata.name}">
+                                        <a href="${grailsApplication.config.layersService.ui.url}/layers/view/more/${layerMetadata.name}">
                                             ${layerMetadata.displayname} - ${layerMetadata.source}
                                         </a>
                                         <br />

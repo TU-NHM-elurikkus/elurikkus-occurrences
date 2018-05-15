@@ -11,7 +11,7 @@ class ExploreController {
             radius: radius,
             zoom: radiusToZoomLevelMap.get(radius),
             location: grailsApplication.config.default.location.address,
-            speciesPageUrl: grailsApplication.config.bie.baseUrl + "/species/"
+            speciesPageUrl: grailsApplication.config.bie.ui.url + "/species/"
         ])
     }
 }
