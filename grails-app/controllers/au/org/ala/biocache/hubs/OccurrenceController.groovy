@@ -74,7 +74,7 @@ class OccurrenceController {
         List taxaQueries = (ArrayList<String>) params.list("taxa") // will be list for even one instance
 
         if (grailsApplication.config.skin.useAlaBie?.toBoolean() &&
-                grailsApplication.config.bie.baseUrl && taxaQueries && taxaQueries[0]) {
+                grailsApplication.config.bie.ui.url && taxaQueries && taxaQueries[0]) {
             // check for list with empty string
             // taxa query - attempt GUID lookup
             List guidsForTaxa = webServicesService.getGuidsForTaxa(taxaQueries)
@@ -338,7 +338,7 @@ class OccurrenceController {
                 radius: radius,
                 zoom: radiusToZoomLevelMap.get(radius),
                 location: grailsApplication.config.default.location.address,
-                speciesPageUrl: grailsApplication.config.bie.baseUrl + "/species/"
+                speciesPageUrl: grailsApplication.config.bie.ui.url + "/species/"
         ]
     }
 

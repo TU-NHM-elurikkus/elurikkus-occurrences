@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocache.baseUrl}" />
+<g:set var="biocacheServiceUrl" value="${grailsApplication.config.biocacheService.ui.url}" />
 <g:set var="queryContext" value="${grailsApplication.config.biocache.queryContext}" />
 
 <!DOCTYPE html>

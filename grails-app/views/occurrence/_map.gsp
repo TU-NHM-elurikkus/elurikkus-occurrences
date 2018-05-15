@@ -8,7 +8,7 @@
         <div id="spatialPortalBtn" class="erk-button erk-button--light" style="margin-bottom: 2px;">
             <a id="spatialPortalLink"
                 class="tooltips"
-                href="${grailsApplication.config.spatial.baseUrl}${spatialPortalLink}${spatialPortalUrlParams}"
+                href="${grailsApplication.config.spatial.ui.url}${spatialPortalLink}${spatialPortalUrlParams}"
                 title="Continue analysis in ALA Spatial Portal"
             >
                 <span class="fa fa-map-marker"></span>&nbsp;&nbsp;
