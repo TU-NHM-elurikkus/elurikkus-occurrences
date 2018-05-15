@@ -1111,8 +1111,9 @@ function initTableModalLinks() {
         var occurrence = JSON.parse(thumb.dataset.occurrence);
         var thumbnailData = createThumbnails([occurrence], 'gallery-icon-template');
         var doc = new DOMParser().parseFromString(thumbnailData.data[0], 'text/html');
-        var newThumb = doc.getElementsByClassName('cbLink')[0];
-
-        thumb.parentNode.replaceChild(newThumb, thumb);
+        if(doc) {
+            var newThumb = doc.getElementsByClassName('cbLink')[0];
+            thumb.parentNode.replaceChild(newThumb, thumb);
+        }
     });
 }
