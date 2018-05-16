@@ -28,7 +28,10 @@ $(document).ready(function() {
         serviceUrl: BC_CONF.bieIndexUrl + '/search/auto.json',
         dataType: 'jsonp',
         paramName: 'q',
-        params: { limit: 10 },
+        params: {
+            limit: 10,
+            fq: "scientificName:*"
+        },
         minChars: 3,
         transformResult: function(response) {
             return {
