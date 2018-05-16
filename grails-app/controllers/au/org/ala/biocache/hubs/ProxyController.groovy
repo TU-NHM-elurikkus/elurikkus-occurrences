@@ -312,6 +312,7 @@ class ProxyController {
             outputStreamClientResponse.write(intNextByte);
         }
         outputStreamClientResponse.flush()
+        outputStreamClientResponse.close()
     }
 
     private String getProxyURL(HttpServletRequest httpServletRequest, String pathInfo) {
