@@ -1,43 +1,39 @@
-<g:if test="${record.raw.occurrence.photographer || image.metadata?.creator}">
-    <cite>
-        <g:message code="show.sidebar.image.creator" />: ${record.raw.occurrence.photographer ?: image.metadata?.creator}
-    </cite>
+<div>
+    <g:if test="${mediaObj.metadata?.title}">
+        <b>
+            ${mediaObj.metadata?.title}
+            <br />
+        </b>
+    </g:if>
+    <g:if test="${mediaObj.metadata?.license}">
+        <span>
+            <b>
+                <g:message code="recordcore.dynamic.license" />:
+            </b>
+            ${mediaObj.metadata?.license}
+            <br />
+        </span>
+    </g:if>
+    <g:if test="${mediaObj.metadata?.rightsHolder}">
+        <span>
+            <b>
+                <g:message code="recordcore.dynamic.rightsholder" />:
+            </b>
+            ${mediaObj.metadata?.rightsHolder}
+            <br />
+        </span>
+    </g:if>
+    <g:if test="${mediaObj.metadata?.creator}">
+        <span>
+            <b>
+                <g:message code="media.createdBy.label" />:
+            </b>
+            ${mediaObj.metadata?.creator}
+            <br />
+        </span>
+    </g:if>
+</div>
 
-    <br />
-</g:if>
-
-<g:if test="${record.raw.occurrence.rights || image.metadata?.rights}">
-    <cite>
-        <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights ?: image.metadata?.rights}
-    </cite>
-
-    <br />
-</g:if>
-
-<g:if test="${record.raw.occurrence.rightsholder || image.metadata?.rightsholder}">
-    <cite>
-        <g:message code="recordcore.dynamic.rightsholder" />: ${record.raw.occurrence.rightsholder ?: image.metadata?.rightsholder}
-    </cite>
-
-    <br />
-</g:if>
-
-<g:if test="${record.raw.miscProperties.rightsHolder}">
-    <cite>
-        <g:message code="recordcore.dynamic.rightsholder" />: ${record.raw.miscProperties.rightsHolder}
-    </cite>
-
-    <br />
-</g:if>
-
-<g:if test="${image.metadata?.license}">
-    <cite>
-        <g:message code="recordcore.dynamic.license" />: ${image.metadata?.license}
-    </cite>
-
-    <br />
-</g:if>
-
-<a href="${image.alternativeFormats.imageUrl}" target="_blank">
+<a href="${mediaObj.alternativeFormats.imageUrl}" target="_blank">
     <g:message code="show.sidebar.occurrenceimages.navigator02" />
 </a>

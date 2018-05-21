@@ -612,7 +612,15 @@
                 </li>
             </ul>
 
-            <div id="verifyRecordModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="loginOrFlagLabel" aria-hidden="true">
+            <div id="verifyRecordModal"
+                 class="modal fade"
+                 data-backdrop="static"
+                 data-keyboard="false"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="loginOrFlagLabel"
+                 aria-hidden="true"
+            >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -680,7 +688,11 @@
                                 <button class="erk-button erk-button--light cancelVerify"  data-dismiss="modal">
                                     <g:message code="show.btn.cancel" />
                                 </button>
-                                <img src="${request.contextPath}/assets/spinner.gif" id="verifySpinner" class="verifySpinner hide" alt="spinner icon" />
+                                <img src="${request.contextPath}/assets/spinner.gif"
+                                     id="verifySpinner"
+                                     class="verifySpinner hide"
+                                     alt="spinner icon"
+                                />
                             </div>
                         </div>
 

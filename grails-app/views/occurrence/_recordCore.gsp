@@ -320,7 +320,7 @@
             ${fieldsMap.put("organismQuantityType", true)}
             ${record.raw.occurrence.organismQuantity}
             <g:if test="${record.raw.miscProperties.organismQuantityType}">
-                (${record.raw.miscProperties.organismQuantityType})
+                (<g:message code="recordcore.dataset.organismQuantityType.${record.raw.miscProperties.organismQuantityType}" default="${record.raw.miscProperties.organismQuantityType}"/>)
             </g:if>
         </alatag:occurrenceTableRow>
 
