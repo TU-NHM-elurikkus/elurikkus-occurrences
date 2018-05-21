@@ -323,23 +323,6 @@
     </div>
 </g:if> --%>
 
-<g:if test="${record.processed.attribution.provenance && record.processed.attribution.provenance == 'Draft'}">
-    <div class="sidebar">
-        <p class="grey-bg" style="padding:5px; margin-top:15px; margin-bottom:10px;">
-            <g:message code="show.sidebar01.p" />
-            <a href="http://volunteer.ala.org.au/">
-                <g:message code="show.sidebar01.volunteer.navigator" />
-            </a>
-        </p>
-
-        <button class="erk-button erk-button--light" id="viewDraftButton">
-            <span id="viewDraftSpan" title="View Draft">
-                <g:message code="show.button.viewdraftbutton.label" />
-            </span>
-        </button>
-    </div>
-</g:if>
-
 <g:set var="latLngStr">
     <g:if test="${clubView && record.raw.location.decimalLatitude && record.raw.location.decimalLatitude != record.processed.location.decimalLatitude}">
         ${record.raw.location.decimalLatitude},${record.raw.location.decimalLongitude}
@@ -435,7 +418,7 @@
                             render(
                                 template: 'recordImageFooter',
                                 model: [
-                                    'image': image,
+                                    'mediaObj': image,
                                     'record': record
                                 ]
                             )
@@ -455,58 +438,99 @@
         <h3 id="soundsHeader">
             <g:message code="show.soundsheader.title" />
         </h3>
-        <div>
-            <g:set var="soundURLFormats" value="${record.sounds.get(0)?.alternativeFormats}" />
-            <g:set var="soundURL">
-                <g:if test="${soundURLFormats?.'audio/mpeg'}">
-                    ${soundURLFormats.'audio/mpeg'}
+
+        <g:each in="${record.sounds}" var="soundObj">
+            <div>
+                <div>
+                    <g:set var="soundURL">
+                        ${soundObj.alternativeFormats?.values()?.toArray()[0]}
+                    </g:set>
+
+                    <audio controls class="sidebar-media">
+                        <source src="${soundURL}">
+                        <g:message code="show.soundsheader.notSupported" />
+                    </audio>
+                </div>
+
+                <g:if test="${soundObj.metadata?.title}">
+                    <cite class="sidebar-citation">
+                        ${soundObj.metadata?.title}
+                        <br />
+                    </cite>
                 </g:if>
-                <g:else>
-                    ${soundURLFormats?.values()?.toArray()[0]}
-                </g:else>
-            </g:set>
-
-            <audio controls class="sidebar-media">
-                <source src="${soundURL}">
-                <g:message code="show.soundsheader.notSupported" />
-            </audio>
-        </div>
-
-        <g:if test="${record.raw.occurrence.rights}">
-            <br />
-            <cite>
-                <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights}
-            </cite>
-        </g:if>
+                <g:if test="${soundObj.metadata?.license}">
+                    <cite class="sidebar-citation">
+                        <g:message code="recordcore.dynamic.license" />: ${soundObj.metadata?.license}
+                        <br />
+                    </cite>
+                </g:if>
+                <g:if test="${soundObj.metadata?.rightsHolder}">
+                    <cite class="sidebar-citation">
+                        <g:message code="recordcore.dynamic.rightsholder" />: ${soundObj.metadata?.rightsHolder}
+                        <br />
+                    </cite>
+                </g:if>
+                <g:if test="${soundObj.metadata?.creator}">
+                    <cite class="sidebar-citation">
+                        <g:message code="media.createdBy.label" />: ${soundObj.metadata?.creator}
+                        <br />
+                    </cite>
+                </g:if>
+            </div>
+        </g:each>
     </div>
 </g:if>
 
-<g:set var="videos" value="${record.processed.occurrence.videos}" />
-<g:if test="${videos}">
+<g:if test="${record.videos}">
     <div class="sidebar">
         <h3>
             <g:message code="show.videosheader.title" />
         </h3>
-        <div>
-            <g:set var="videoURL">${videos.get(0).replaceAll("/data/", "/")}</g:set>
 
-            <video src="${videoURL}" class="sidebar-media" preload="metadata" controls>
-                <g:message code="show.videosheader.notSupported" />
-            </video>
-        </div>
+        <g:each in="${record.videos}" var="videoObj">
+            <div>
+                <div>
+                    <g:set var="videoURL">
+                        ${videoObj.alternativeFormats?.values()?.toArray()[0]}
+                    </g:set>
 
-        <g:if test="${record.raw.occurrence.rights}">
-            <br />
-            <cite>
-                <g:message code="recordcore.dataset.rights" />: ${record.raw.occurrence.rights}
-            </cite>
-        </g:if>
+                    <video src="${videoURL}" class="sidebar-media" preload="metadata" controls>
+                        <g:message code="show.videosheader.notSupported" />
+                    </video>
+                </div>
+
+                <g:if test="${videoObj.metadata?.title}">
+                    <cite class="sidebar-citation">
+                        ${videoObj.metadata?.title}
+                        <br />
+                    </cite>
+                </g:if>
+                <g:if test="${videoObj.metadata?.license}">
+                    <cite class="sidebar-citation">
+                        <g:message code="recordcore.dynamic.license" />: ${videoObj.metadata?.license}
+                        <br />
+                    </cite>
+                </g:if>
+                <g:if test="${videoObj.metadata?.rightsHolder}">
+                    <cite class="sidebar-citation">
+                        <g:message code="recordcore.dynamic.rightsholder" />: ${videoObj.metadata?.rightsHolder}
+                        <br />
+                    </cite>
+                </g:if>
+                <g:if test="${videoObj.metadata?.creator}">
+                    <cite class="sidebar-citation">
+                        <g:message code="media.createdBy.label" />: ${videoObj.metadata?.creator}
+                        <br />
+                    </cite>
+                </g:if>
+            </div>
+        </g:each>
     </div>
 </g:if>
 
 <g:if test="${record.raw.lastModifiedTime && record.processed.lastModifiedTime}">
     <%-- XXX --%>
-    <div class="sidebar" style="margin-top: 10px;font-size: 12px; color: #555;">
+    <div class="sidebar sidebar-citation">
         <g:message code="show.sidebar05.p01" />: ${record.raw.lastModifiedTime.replaceAll("T", " ").replaceAll("Z", "")}
         <br />
         <g:message code="show.sidebar05.p02" />: ${record.processed.lastModifiedTime.replaceAll("T", " ").replaceAll("Z", "")}

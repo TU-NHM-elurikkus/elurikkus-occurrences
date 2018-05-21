@@ -11,16 +11,16 @@
                 <table class="table table-sm table-bordered">
                     <thead>
                         <tr>
-                            <th>
+                            <th style="width:15%">
                                 <g:message code="show.processedvsrawview.table.th01" />
                             </th>
-                            <th>
+                            <th style="width:25%">
                                 <g:message code="show.processedvsrawview.table.th02" />
                             </th>
-                            <th>
+                            <th style="width:30%">
                                 <g:message code="show.processedvsrawview.table.th03" />
                             </th>
-                            <th>
+                            <th style="width:30%">
                                 <g:message code="show.processedvsrawview.table.th04" />
                             </th>
                         </tr>

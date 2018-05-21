@@ -409,18 +409,22 @@ class OccurrenceTagLib {
         def map = attrs.map
         def mb = new MarkupBuilder(out)
 
+        // ToDo: when new items are needed in this array, move it to config
+        String[] compareExclude = ["associatedMedia", "images", "sounds", "videos"]
+
         map.each { group ->
             if (group.value) {
                 group.value.eachWithIndex() { field, i ->
                     mb.tr() {
                         if (i == 0) {
-                            td(class: "noStripe", rowspan: "${group.value.length()}") {
+                            td(class: "noStripe compare-table__cell--break", rowspan: "${group.value.length()}") {
                                 b(group.key)
                             }
+                        } else if(!compareExclude.contains(field.name)) {
+                            td(alatag.camelCaseToHuman(text: field.name))
+                            td(field.raw, class: "compare-table__cell--break")
+                            td(field.processed, class: "compare-table__cell--break")
                         }
-                        td(alatag.camelCaseToHuman(text: field.name))
-                        td(field.raw, class: "compare-table__cell--break")
-                        td(field.processed, class: "compare-table__cell--break")
                     }
                 }
             }
@@ -504,26 +508,30 @@ class OccurrenceTagLib {
         def exclude = attrs.exclude ?: ''
         def output = ""
 
+        /* Current translation logic for dynamically formatted values:
+            label: recordcore.dynamic.${key}
+            value: recordcore.dynamic.${key}.${value.toLowerCase().replace(' ', '_')}
+        */
         compareRecord.get(group).each { cr ->
             def key = cr.name
-            def label = alatag.message(code: "recordcore.dynamic.${key}", default: "${key}") ?: alatag.camelCaseToHuman(text: key) ?: StringUtils.capitalize(key)
+            def keyCode = "recordcore.dynamic.${key}"
+            def label = alatag.message(code: keyCode, default: "${key}") ?: alatag.camelCaseToHuman(text: key) ?: StringUtils.capitalize(key)
             // only output fields not already included (by checking fieldsMap Map) && not in excluded list
             if (!fieldsMap.containsKey(key) && !StringUtils.containsIgnoreCase(exclude, key)) {
                 def tagBody
+                def processed = cr.processed ?: ""
+                // alatag.message logic loses some translations and returns default then. Don't see the need to debug this though
+                def transProcessed = processed ? g.message(code: "${keyCode}.${processed.toLowerCase().replaceAll(' ', '_')}", default: processed) : ""
 
-                if (key == "videos") {
-                    def videos = Eval.me(cr.processed.replaceAll("/data/", "/"))
-                    videos = videos.collect { "<a href='${it}'>${it}</a>" }
-                    tagBody = videos.join("<br />")
-                } else if (cr.processed && cr.raw && cr.processed == cr.raw) {
-                    tagBody = cr.processed
-                } else if (!cr.raw && cr.processed) {
-                    tagBody = cr.processed
-                } else if (cr.raw && !cr.processed) {
+                if (processed && cr.raw && processed == cr.raw) {
+                    tagBody = transProcessed
+                } else if (!cr.raw && processed) {
+                    tagBody = transProcessed
+                } else if (cr.raw && !processed) {
                     tagBody = cr.raw
                 } else {
                     tagBody = """
-                        ${cr.processed}
+                        ${transProcessed}
                         <br />
                         <span class="originalValue">
                             ${g.message(code: 'recordcore.label.suppliedas')} "${cr.raw}"
