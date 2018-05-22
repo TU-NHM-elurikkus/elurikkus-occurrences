@@ -427,6 +427,8 @@
                     >
                         <img src="${image.alternativeFormats.largeImageUrl}" class="sidebar-media" />
                     </a>
+
+                    <g:render template="mediaMetadata" model="${['mediaObj': image, 'record': record]}" />
                 </div>
             </g:each>
         </div>
@@ -441,41 +443,16 @@
 
         <g:each in="${record.sounds}" var="soundObj">
             <div>
-                <div>
-                    <g:set var="soundURL">
-                        ${soundObj.alternativeFormats?.values()?.toArray()[0]}
-                    </g:set>
+                <g:set var="soundURL">
+                    ${soundObj.alternativeFormats?.values()?.toArray()[0]}
+                </g:set>
 
-                    <audio controls class="sidebar-media">
-                        <source src="${soundURL}">
-                        <g:message code="show.soundsheader.notSupported" />
-                    </audio>
-                </div>
+                <audio controls class="sidebar-media">
+                    <source src="${soundURL}">
+                    <g:message code="show.soundsheader.notSupported" />
+                </audio>
 
-                <g:if test="${soundObj.metadata?.title}">
-                    <cite class="sidebar-citation">
-                        ${soundObj.metadata?.title}
-                        <br />
-                    </cite>
-                </g:if>
-                <g:if test="${soundObj.metadata?.license}">
-                    <cite class="sidebar-citation">
-                        <g:message code="recordcore.dynamic.license" />: ${soundObj.metadata?.license}
-                        <br />
-                    </cite>
-                </g:if>
-                <g:if test="${soundObj.metadata?.rightsHolder}">
-                    <cite class="sidebar-citation">
-                        <g:message code="recordcore.dynamic.rightsholder" />: ${soundObj.metadata?.rightsHolder}
-                        <br />
-                    </cite>
-                </g:if>
-                <g:if test="${soundObj.metadata?.creator}">
-                    <cite class="sidebar-citation">
-                        <g:message code="media.createdBy.label" />: ${soundObj.metadata?.creator}
-                        <br />
-                    </cite>
-                </g:if>
+                <g:render template="mediaMetadata" model="${['mediaObj': soundObj, 'record': record]}" />
             </div>
         </g:each>
     </div>
@@ -489,40 +466,15 @@
 
         <g:each in="${record.videos}" var="videoObj">
             <div>
-                <div>
-                    <g:set var="videoURL">
-                        ${videoObj.alternativeFormats?.values()?.toArray()[0]}
-                    </g:set>
+                <g:set var="videoURL">
+                    ${videoObj.alternativeFormats?.values()?.toArray()[0]}
+                </g:set>
 
-                    <video src="${videoURL}" class="sidebar-media" preload="metadata" controls>
-                        <g:message code="show.videosheader.notSupported" />
-                    </video>
-                </div>
+                <video src="${videoURL}" class="sidebar-media" preload="metadata" controls>
+                    <g:message code="show.videosheader.notSupported" />
+                </video>
 
-                <g:if test="${videoObj.metadata?.title}">
-                    <cite class="sidebar-citation">
-                        ${videoObj.metadata?.title}
-                        <br />
-                    </cite>
-                </g:if>
-                <g:if test="${videoObj.metadata?.license}">
-                    <cite class="sidebar-citation">
-                        <g:message code="recordcore.dynamic.license" />: ${videoObj.metadata?.license}
-                        <br />
-                    </cite>
-                </g:if>
-                <g:if test="${videoObj.metadata?.rightsHolder}">
-                    <cite class="sidebar-citation">
-                        <g:message code="recordcore.dynamic.rightsholder" />: ${videoObj.metadata?.rightsHolder}
-                        <br />
-                    </cite>
-                </g:if>
-                <g:if test="${videoObj.metadata?.creator}">
-                    <cite class="sidebar-citation">
-                        <g:message code="media.createdBy.label" />: ${videoObj.metadata?.creator}
-                        <br />
-                    </cite>
-                </g:if>
+                <g:render template="mediaMetadata" model="${['mediaObj': videoObj, 'record': record]}" />
             </div>
         </g:each>
     </div>
