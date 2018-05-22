@@ -1,10 +1,4 @@
 <div>
-    <g:if test="${mediaObj.metadata?.title}">
-        <b>
-            ${mediaObj.metadata?.title}
-            <br />
-        </b>
-    </g:if>
     <g:if test="${mediaObj.metadata?.license}">
         <span>
             <b>
@@ -26,7 +20,7 @@
     <g:if test="${mediaObj.metadata?.creator}">
         <span>
             <b>
-                <g:message code="media.createdBy.label" />:
+                <g:message code="file.createdBy.label" />:
             </b>
             ${mediaObj.metadata?.creator}
             <br />
