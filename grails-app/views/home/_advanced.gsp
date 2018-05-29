@@ -3,7 +3,7 @@
 <form
     id="advancedSearchForm"
     name="advancedSearchForm"
-    class="container-fluid"
+    class="container-fluid advanced-search-form"
     action="${request.contextPath}/advancedSearch"
     method="POST"
 >
@@ -16,20 +16,18 @@
             <g:message code="advancedsearch.title01" />
         </legend>
 
-        <label for="text" class="col col-xl-2">
+        <label for="text">
             <g:message code="advancedsearch.table01col01.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
-            <input
-                type="text"
-                id="text"
-                name="text"
-                class="dataset form-control"
-                placeholder=""
-                value="${params.text}"
-            />
-        </div>
+        <input
+            type="text"
+            id="text"
+            name="text"
+            class="dataset advanced-search-form__control"
+            placeholder=""
+            value="${params.text}"
+        />
     </fieldset>
 
     <fieldset class="form-group">
@@ -40,16 +38,16 @@
 
         <g:each in="${1..4}" var="i">
             <div class="form-group">
-                <label for="taxa_${i}" class="col col-xl-2">
+                <label for="taxa_${i}">
                     <g:message code="advancedsearch.table02col01.title" />
                 </label>
 
-                <div class="col col-sm-10 col-md-9 col-xl-6">
+                <div>
                     <input
                         type="text"
                         id="taxa_${i}"
                         name="taxonText"
-                        class="taxon-autocomplete form-control"
+                        class="taxon-autocomplete advanced-search-form__control"
                         placeholder="${message(code: 'advancedsearch.ac.placeholder')}&hellip;"
                         title="${message(code: 'advancedsearch.ac.title')}"
                         data-toggle="tooltip"
@@ -67,20 +65,18 @@
             <g:message code="advancedsearch.title03" />
         </legend>
 
-        <label class="col col-xl-2">
+        <label>
             <g:message code="advancedsearch.table03col01.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
-            <input
-                type="text"
-                id="raw_taxon_name"
-                name="raw_taxon_name"
-                class="dataset form-control"
-                placeholder=""
-                value=""
-            />
-        </div>
+        <input
+            type="text"
+            id="raw_taxon_name"
+            name="raw_taxon_name"
+            class="dataset advanced-search-form__control"
+            placeholder=""
+            value=""
+        />
     </fieldset>
 
     <fieldset class="form-group">
@@ -89,22 +85,20 @@
             <g:message code="advancedsearch.title04" />
         </legend>
 
-        <label class="col col-xl-2">
+        <label>
             <g:message code="advancedsearch.table04col01.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
-            <select class="species_group erk-select" name="species_group" id="species_group">
-                <option value="">
-                    <g:message code="advancedsearch.table04col01.option.label" />
+        <select class="species_group advanced-search-form__control" name="species_group" id="species_group">
+            <option value="">
+                <g:message code="advancedsearch.table04col01.option.label" />
+            </option>
+            <g:each var="group" in="${request.getAttribute("species_group")}">
+                <option value="${group.key}">
+                    <g:message code="facet.species_group.${group.value}" default="${message(code: group.value)}" />
                 </option>
-                <g:each var="group" in="${request.getAttribute("species_group")}">
-                    <option value="${group.key}">
-                        <g:message code="facet.species_group.${group.value}" default="${message(code: group.value)}" />
-                    </option>
-                </g:each>
-            </select>
-        </div>
+            </g:each>
+        </select>
     </fieldset>
 
     <fieldset class="form-group">
@@ -113,20 +107,18 @@
             <g:message code="advancedsearch.title05" />
         </legend>
 
-        <label class="col col-xl-2">
+        <label>
             <g:message code="advancedsearch.table05col01.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
-            <select class="institution_uid collection_uid erk-select" name="institution_collection" id="institution_collection">
-                <option value="">
-                    <g:message code="advancedsearch.table05col01.option01.label" />
-                </option>
-                <option value="*">
-                    <g:message code="advancedsearch.matchAnything" />
-                </option>
-            </select>
-        </div>
+        <select class="institution_uid collection_uid advanced-search-form__control" name="institution_collection" id="institution_collection">
+            <option value="">
+                <g:message code="advancedsearch.table05col01.option01.label" />
+            </option>
+            <option value="*">
+                <g:message code="advancedsearch.matchAnything" />
+            </option>
+        </select>
     </fieldset>
 
     <fieldset class="form-group">
@@ -135,23 +127,21 @@
             <g:message code="advancedsearch.title06" />
         </legend>
 
-        <label class="col col-xl-2">
+        <label>
             <g:message code="advancedsearch.table06col01.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
-            <select class="country erk-select" name="country" id="country">
-                <option value="">
-                    <g:message code="advancedsearch.table06col01.option.label" />
-                </option>
+        <select class="country advanced-search-form__control" name="country" id="country">
+            <option value="">
+                <g:message code="advancedsearch.table06col01.option.label" />
+            </option>
 
-                <g:each var="country" in="${request.getAttribute("country")}">
-                    <option value="${country.key}">
-                        <g:message code="${country.value}" default="${country.key}" />
-                    </option>
-                </g:each>
-            </select>
-        </div>
+            <g:each var="country" in="${request.getAttribute("country")}">
+                <option value="${country.key}">
+                    <g:message code="${country.value}" default="${country.key}" />
+                </option>
+            </g:each>
+        </select>
     </fieldset>
 
     <g:if test="${request.getAttribute("type_status") && request.getAttribute("type_status").size() > 1}">
@@ -161,11 +151,11 @@
                 <g:message code="advancedsearch.title07" />
             </legend>
 
-            <label class="col col-xl-2">
+            <label>
                 <g:message code="advancedsearch.table07col01.title" />
             </label>
 
-            <select class="type_status erk-select" name="type_status" id="type_status">
+            <select class="type_status advanced-search-form__control" name="type_status" id="type_status">
                 <option value="">
                     <g:message code="advancedsearch.table07col01.option.label" />
                 </option>
@@ -186,23 +176,21 @@
                 <g:message code="advancedsearch.title08" />
             </legend>
 
-            <label class="col col-xl-2">
+            <label>
                 <g:message code="advancedsearch.table08col01.title" />
             </label>
 
-            <div class="col col-sm-10 col-md-9 col-xl-6">
-                <select class="basis_of_record erk-select" name="basis_of_record" id="basis_of_record">
-                    <option value="">
-                        <g:message code="advancedsearch.table08col01.option.label" />
-                    </option>
+            <select class="basis_of_record advanced-search-form__control" name="basis_of_record" id="basis_of_record">
+                <option value="">
+                    <g:message code="advancedsearch.table08col01.option.label" />
+                </option>
 
-                    <g:each var="bor" in="${request.getAttribute("basis_of_record")}">
-                        <option value="${bor.key}">
-                            <g:message code="${bor.value}" />
-                        </option>
-                    </g:each>
-                </select>
-            </div>
+                <g:each var="bor" in="${request.getAttribute("basis_of_record")}">
+                    <option value="${bor.key}">
+                        <g:message code="${bor.value}" />
+                    </option>
+                </g:each>
+            </select>
         </fieldset>
     </g:if>
 
@@ -214,55 +202,49 @@
 
         <g:if test="${request.getAttribute("data_resource_uid") && request.getAttribute("data_resource_uid").size() > 1}">
             <div class="form-group">
-                <label class="col col-xl-2">
+                <label>
                     <g:message code="advancedsearch.dataset.col.label" />
                 </label>
 
-                <div class="col col-sm-10 col-md-9 col-xl-6">
-                    <select class="dataset erk-select" name="dataset" id="dataset">
-                        <option value="">
-                            <g:message code="advancedsearch.dataset.option.label" />
-                        </option>
-                        <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
-                            <option value="${region.key}">${region.value}</option>
-                        </g:each>
-                    </select>
-                </div>
+                <select class="dataset advanced-search-form__control" name="dataset" id="dataset">
+                    <option value="">
+                        <g:message code="advancedsearch.dataset.option.label" />
+                    </option>
+                    <g:each var="region" in="${request.getAttribute("data_resource_uid").sort({it.value})}">
+                        <option value="${region.key}">${region.value}</option>
+                    </g:each>
+                </select>
             </div>
         </g:if>
 
         <div class="form-group">
-            <label class="col col-xl-2">
+            <label>
                 <g:message code="advancedsearch.table09col01.title" />
             </label>
 
-            <div class="col col-sm-10 col-md-9 col-xl-6">
-                <input
-                    type="text"
-                    id="catalogue_number"
-                    name="catalogue_number"
-                    class="dataset form-control"
-                    placeholder=""
-                    value=""
-                />
-            </div>
+            <input
+                type="text"
+                id="catalogue_number"
+                name="catalogue_number"
+                class="dataset advanced-search-form__control"
+                placeholder=""
+                value=""
+            />
         </div>
 
         <div class="form-group">
-            <label class="col col-xl-2">
+            <label>
                 <g:message code="advancedsearch.table09col02.title" />
             </label>
 
-            <div class="col col-sm-10 col-md-9 col-xl-6">
-                <input
-                    type="text"
-                    id="occurrence_id"
-                    name="occurrence_id"
-                    class="dataset form-control"
-                    placeholder=""
-                    value=""
-                />
-            </div>
+            <input
+                type="text"
+                id="occurrence_id"
+                name="occurrence_id"
+                class="dataset advanced-search-form__control"
+                placeholder=""
+                value=""
+            />
         </div>
     </fieldset>
 
@@ -272,16 +254,16 @@
             <g:message code="advancedsearch.title10" />
         </legend>
 
-        <label class="col col-xl-2">
+        <label>
             <g:message code="advancedsearch.table10col01.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
+        <div>
             <input
                 type="text"
                 id="startDate"
                 name="start_date"
-                class="occurrence_date form-control"
+                class="occurrence_date advanced-search-form__control"
                 placeholder=""
                 value=""
             />
@@ -292,16 +274,16 @@
     </fieldset>
 
     <fieldset class="form-group">
-        <label class="col col-xl-2">
+        <label>
             <g:message code="advancedsearch.table10col02.title" />
         </label>
 
-        <div class="col col-sm-10 col-md-9 col-xl-6">
+        <div>
             <input
                 type="text"
                 id="endDate"
                 name="end_date"
-                class="occurrence_date form-control"
+                class="occurrence_date advanced-search-form__control"
                 placeholder=""
                 value=""
             />
@@ -311,7 +293,7 @@
         </div>
     </fieldset>
 
-    <div class="row">
+    <div>
         <button type="submit" class="erk-button erk-button--dark">
             <span class="fa fa-search"></span>
             <g:message code="advancedsearch.button.submit" />
