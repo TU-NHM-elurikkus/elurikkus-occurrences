@@ -53,7 +53,7 @@
                                     name="email"
                                     id="email"
                                     value="${request.remoteUser}"
-                                    class="form-control"
+                                    class="erk-form-control"
                                 />
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                     name="filename"
                                     id="filename"
                                     value="${message(code: 'download.form.fileName.value')}"
-                                    class="form-control"
+                                    class="erk-form-control"
                                 />
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             </label>
 
                             <div class="col">
-                                <select name="reasonTypeId" id="reasonTypeId" class="erk-select">
+                                <select name="reasonTypeId" id="reasonTypeId" class="erk-form-control">
                                     <option value="">
                                         <g:message code="download.form.reason.placeholder"/>
                                     </option>

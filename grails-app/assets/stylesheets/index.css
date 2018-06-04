@@ -13,9 +13,3 @@
     max-width: 800px;
     margin-left: 0;
 }
-
-.advanced-search-form__control {
-    display: block;
-    min-height: 30px;
-    width: 100%;
-}
