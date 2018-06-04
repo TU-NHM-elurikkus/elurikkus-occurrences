@@ -263,177 +263,187 @@
 <div id="downloadMap" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="downloadsMapLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="downloadMapForm">
-                <div class="modal-header">
-                    <h3 id="downloadsMapLabel">
-                        <g:message code="map.downloadmap.title" />
-                    </h3>
-                </div>
+            <div class="modal-header">
+                <h3 id="downloadsMapLabel">
+                    <g:message code="map.downloadmap.title" />
+                </h3>
+            </div>
 
-                <div class="modal-body">
+            <div class="modal-body">
+                <form id="downloadMapForm">
                     <input id="mapDownloadUrl" type="hidden" value="${alatag.getBiocacheAjaxUrl()}/webportal/wms/image" />
 
-                    <fieldset>
-                        <p>
-                            <label for="format">
-                                <g:message code="map.downloadmap.field01.label" />
-                            </label>
+                    <fieldset class="form-group">
+                        <label for="format">
+                            <g:message code="map.downloadmap.field01.label" />
+                        </label>
 
-                            <select name="format" id="format">
-                                <option value="jpg">
-                                    <g:message code="map.downloadmap.field01.option01" />
-                                </option>
+                        <select name="format" id="format" class="erk-form-control">
+                            <option value="jpg">
+                                <g:message code="map.downloadmap.field01.option01" />
+                            </option>
 
-                                <option value="png">
-                                    <g:message code="map.downloadmap.field01.option02" />
-                                </option>
-                            </select>
-                        </p>
-
-                        <p>
-                            <label for="dpi">
-                                <g:message code="map.downloadmap.field02.label" />
-                            </label>
-
-                            <select name="dpi" id="dpi">
-                                <option value="100">100</option>
-                                <option value="300" selected>300</option>
-                                <option value="600">600</option>
-                            </select>
-                        </p>
-
-                        <p>
-                            <label for="pradiusmm">
-                                <g:message code="map.downloadmap.field03.label" />
-                            </label>
-
-                            <select name="pradiusmm" id="pradiusmm">
-                                <option>0.1</option>
-                                <option selected>0.2</option>
-                                <option>0.3</option>
-                                <option>0.4</option>
-                                <option>0.5</option>
-                                <option>0.6</option>
-                                <option>0.7</option>
-                                <option>0.8</option>
-                                <option>0.9</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                            </select>
-                        </p>
-
-                        <p>
-                            <label for="popacity">
-                                <g:message code="map.maplayercontrols.tr01td03.label" />
-                            </label>
-
-                            <select name="popacity" id="popacity">
-                                <option>1</option>
-                                <option selected>0.9</option>
-                                <option>0.8</option>
-                                <option>0.7</option>
-                                <option>0.6</option>
-                                <option>0.5</option>
-                                <option>0.4</option>
-                                <option>0.3</option>
-                                <option>0.2</option>
-                                <option>0.1</option>
-                            </select>
-                        </p>
-
-                        <p id="colourPickerWrapper">
-                            <label for="pcolour">
-                                <g:message code="map.downloadmap.field05.label" />
-                            </label>
-
-                            <input type="color" name="pcolour" id="pcolour" value="#0D00FB">
-                        </p>
-
-                        <p>
-                            <label for="widthmm">
-                                <g:message code="map.downloadmap.field06.label" />
-                            </label>
-
-                            <input type="text" name="widthmm" id="widthmm" value="150" />
-                        </p>
-
-                        <p>
-                            <label for="scale_on">
-                                <g:message code="map.downloadmap.field07.label" />
-                            </label>
-
-                            <input type="radio" name="scale" value="on" id="scale_on" checked="checked" />
-                            <g:message code="general.bool.true" /> &nbsp;
-
-                            <input type="radio" name="scale" value="off" />
-                            <g:message code="general.bool.false" />
-                        </p>
-
-                        <p>
-                            <label for="outline">
-                                <g:message code="map.downloadmap.field08.label" />
-                            </label>
-
-                            <input type="radio" name="outline" value="true" id="outline" checked="checked" />
-                            <g:message code="general.bool.true" /> &nbsp;
-
-                            <input type="radio" name="outline" value="false" />
-                            <g:message code="general.bool.false" />
-                        </p>
-
-                        <p>
-                            <label for="baselayer">
-                                <g:message code="map.downloadmap.layer.label" />
-                            </label>
-                            <select name="baselayer" id="baselayer">
-                                <option value="world" selected>
-                                    <g:message code="map.downloadmap.layer.world" />
-                                </option>
-
-                                <option value="maakonnad_intersected_for_real">
-                                    <g:message code="map.downloadmap.layer.counties" />
-                                </option>
-
-                                <option value="omavalitsused">
-                                    <g:message code="map.downloadmap.layer.localGovernment" />
-                                </option>
-                            </select>
-                        </p>
-
-                        <p>
-                            <label for="fileName">
-                                <g:message code="map.downloadmap.fileName.label" />
-                            </label>
-
-                            <input
-                                id="fileName"
-                                type="text"
-                                name="fileName"
-                                value="${message(code: 'map.downloadmap.fileName.value')}"
-                            />
-                        </p>
+                            <option value="png">
+                                <g:message code="map.downloadmap.field01.option02" />
+                            </option>
+                        </select>
                     </fieldset>
-                </div>
 
-                <div class="modal-footer">
-                    <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
-                        <g:message code="general.btn.close" />
-                    </button>
+                    <fieldset class="form-group">
+                        <label for="dpi">
+                            <g:message code="map.downloadmap.field02.label" />
+                        </label>
 
-                    <button id="submitDownloadMap" class="erk-button erk-button--light">
-                        <span class="fa fa-download"></span>
-                        <g:message code="general.btn.download.label" />
-                    </button>
-                </div>
-            </form>
+                        <select name="dpi" id="dpi" class="erk-form-control">
+                            <option value="100">100</option>
+                            <option value="300" selected>300</option>
+                            <option value="600">600</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="pradiusmm">
+                            <g:message code="map.downloadmap.field03.label" />
+                        </label>
+
+                        <select name="pradiusmm" id="pradiusmm" class="erk-form-control">
+                            <option>0.1</option>
+                            <option selected>0.2</option>
+                            <option>0.3</option>
+                            <option>0.4</option>
+                            <option>0.5</option>
+                            <option>0.6</option>
+                            <option>0.7</option>
+                            <option>0.8</option>
+                            <option>0.9</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="popacity">
+                            <g:message code="map.maplayercontrols.tr01td03.label" />
+                        </label>
+
+                        <select name="popacity" id="popacity" class="erk-form-control">
+                            <option>1</option>
+                            <option selected>0.9</option>
+                            <option>0.8</option>
+                            <option>0.7</option>
+                            <option>0.6</option>
+                            <option>0.5</option>
+                            <option>0.4</option>
+                            <option>0.3</option>
+                            <option>0.2</option>
+                            <option>0.1</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset id="colourPickerWrapper" class="form-group">
+                        <label for="pcolour">
+                            <g:message code="map.downloadmap.field05.label" />
+                        </label>
+
+                        <input
+                            type="color"
+                            name="pcolour"
+                            id="pcolour"
+                            value="#0D00FB"
+                            class="erk-form-control">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="widthmm">
+                            <g:message code="map.downloadmap.field06.label" />
+                        </label>
+
+                        <input
+                            type="text"
+                            name="widthmm"
+                            id="widthmm"
+                            value="150"
+                            class="erk-form-control"/>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="scale_on">
+                            <g:message code="map.downloadmap.field07.label" />
+                        </label>
+
+                        <input type="radio" name="scale" value="on" id="scale_on" checked="checked" />
+                        <g:message code="general.bool.true" /> &nbsp;
+
+                        <input type="radio" name="scale" value="off" />
+                        <g:message code="general.bool.false" />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="outline">
+                            <g:message code="map.downloadmap.field08.label" />
+                        </label>
+
+                        <input type="radio" name="outline" value="true" id="outline" checked="checked" />
+                        <g:message code="general.bool.true" /> &nbsp;
+
+                        <input type="radio" name="outline" value="false" />
+                        <g:message code="general.bool.false" />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="baselayer">
+                            <g:message code="map.downloadmap.layer.label" />
+                        </label>
+
+                        <select name="baselayer" id="baselayer" class="erk-form-control">
+                            <option value="world" selected>
+                                <g:message code="map.downloadmap.layer.world" />
+                            </option>
+
+                            <option value="maakonnad_intersected_for_real">
+                                <g:message code="map.downloadmap.layer.counties" />
+                            </option>
+
+                            <option value="omavalitsused">
+                                <g:message code="map.downloadmap.layer.localGovernment" />
+                            </option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="fileName">
+                            <g:message code="map.downloadmap.fileName.label" />
+                        </label>
+
+                        <input
+                            id="fileName"
+                            type="text"
+                            name="fileName"
+                            value="${message(code: 'map.downloadmap.fileName.value')}"
+                            class="erk-form-control"
+                        />
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="erk-button erk-button--light" data-dismiss="modal" aria-hidden="true">
+                    <g:message code="general.btn.close" />
+                </button>
+
+                <button id="submitDownloadMap" class="erk-button erk-button--light">
+                    <span class="fa fa-download"></span>
+                    <g:message code="general.btn.download.label" />
+                </button>
+            </div>
         </div>
     </div>
 </div>

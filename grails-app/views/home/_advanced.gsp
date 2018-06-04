@@ -24,7 +24,7 @@
             type="text"
             id="text"
             name="text"
-            class="dataset advanced-search-form__control"
+            class="dataset erk-form-control"
             placeholder=""
             value="${params.text}"
         />
@@ -47,7 +47,7 @@
                         type="text"
                         id="taxa_${i}"
                         name="taxonText"
-                        class="taxon-autocomplete advanced-search-form__control"
+                        class="taxon-autocomplete erk-form-control"
                         placeholder="${message(code: 'advancedsearch.ac.placeholder')}&hellip;"
                         title="${message(code: 'advancedsearch.ac.title')}"
                         data-toggle="tooltip"
@@ -73,7 +73,7 @@
             type="text"
             id="raw_taxon_name"
             name="raw_taxon_name"
-            class="dataset advanced-search-form__control"
+            class="dataset erk-form-control"
             placeholder=""
             value=""
         />
@@ -89,7 +89,7 @@
             <g:message code="advancedsearch.table04col01.title" />
         </label>
 
-        <select class="species_group advanced-search-form__control" name="species_group" id="species_group">
+        <select class="species_group erk-form-control" name="species_group" id="species_group">
             <option value="">
                 <g:message code="advancedsearch.table04col01.option.label" />
             </option>
@@ -111,7 +111,7 @@
             <g:message code="advancedsearch.table05col01.title" />
         </label>
 
-        <select class="institution_uid collection_uid advanced-search-form__control" name="institution_collection" id="institution_collection">
+        <select class="institution_uid collection_uid erk-form-control" name="institution_collection" id="institution_collection">
             <option value="">
                 <g:message code="advancedsearch.table05col01.option01.label" />
             </option>
@@ -131,7 +131,7 @@
             <g:message code="advancedsearch.table06col01.title" />
         </label>
 
-        <select class="country advanced-search-form__control" name="country" id="country">
+        <select class="country erk-form-control" name="country" id="country">
             <option value="">
                 <g:message code="advancedsearch.table06col01.option.label" />
             </option>
@@ -155,7 +155,7 @@
                 <g:message code="advancedsearch.table07col01.title" />
             </label>
 
-            <select class="type_status advanced-search-form__control" name="type_status" id="type_status">
+            <select class="type_status erk-form-control" name="type_status" id="type_status">
                 <option value="">
                     <g:message code="advancedsearch.table07col01.option.label" />
                 </option>
@@ -180,7 +180,7 @@
                 <g:message code="advancedsearch.table08col01.title" />
             </label>
 
-            <select class="basis_of_record advanced-search-form__control" name="basis_of_record" id="basis_of_record">
+            <select class="basis_of_record erk-form-control" name="basis_of_record" id="basis_of_record">
                 <option value="">
                     <g:message code="advancedsearch.table08col01.option.label" />
                 </option>
@@ -206,7 +206,7 @@
                     <g:message code="advancedsearch.dataset.col.label" />
                 </label>
 
-                <select class="dataset advanced-search-form__control" name="dataset" id="dataset">
+                <select class="dataset erk-form-control" name="dataset" id="dataset">
                     <option value="">
                         <g:message code="advancedsearch.dataset.option.label" />
                     </option>
@@ -226,7 +226,7 @@
                 type="text"
                 id="catalogue_number"
                 name="catalogue_number"
-                class="dataset advanced-search-form__control"
+                class="dataset erk-form-control"
                 placeholder=""
                 value=""
             />
@@ -241,7 +241,7 @@
                 type="text"
                 id="occurrence_id"
                 name="occurrence_id"
-                class="dataset advanced-search-form__control"
+                class="dataset erk-form-control"
                 placeholder=""
                 value=""
             />
@@ -263,7 +263,7 @@
                 type="text"
                 id="startDate"
                 name="start_date"
-                class="occurrence_date advanced-search-form__control"
+                class="occurrence_date erk-form-control"
                 placeholder=""
                 value=""
             />
@@ -283,7 +283,7 @@
                 type="text"
                 id="endDate"
                 name="end_date"
-                class="occurrence_date advanced-search-form__control"
+                class="occurrence_date erk-form-control"
                 placeholder=""
                 value=""
             />
