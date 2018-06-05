@@ -450,11 +450,15 @@ $(document).ready(function() {
         amplify.store('search-facets-state-' + name, true);
 
         $('#group_' + name).slideToggle(600, function() {
-
             if($('#group_' + name).is(':visible')) {
                 amplify.store('search-facets-state-' + name, true);
             } else {
                 amplify.store('search-facets-state-' + name, null);
+            }
+
+            // Resize occurrence table.
+            if(occTableHandler) {
+                occTableHandler.resizeThrottler();
             }
         });
     });
@@ -525,6 +529,7 @@ $(document).ready(function() {
     });
 
     initTableModalLinks();
+    initFiltersContainer();
 }); // end JQuery document ready
 
 function loadGivenFacets(facetList) {
@@ -1116,4 +1121,8 @@ function initTableModalLinks() {
             thumb.parentNode.replaceChild(newThumb, thumb);
         }
     });
+}
+
+function initFiltersContainer() {
+    filtersContainer.init();
 }

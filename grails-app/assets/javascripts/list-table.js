@@ -121,6 +121,7 @@ var occTableHandler = {};
     };
 
     this.toggleTableExpansion = function() {
+        var container = document.getElementById('results');
         var table = document.getElementById('search-results-table');
         var rows = table.getElementsByTagName('tr');
         var icon = document.getElementById('search-results-expand-btn-icon');
@@ -131,12 +132,14 @@ var occTableHandler = {};
             icon.classList.remove('fa-angle-right');
             icon.classList.add('fa-angle-left');
             table.classList.add('search-results-table--expanded');
+            container.classList.add('search-results--overflowing');
         } else {
             this.hideOverflowingColumns = true;
             this.updateTable(this.columnWidths);
             icon.classList.remove('fa-angle-left');
             icon.classList.add('fa-angle-right');
             table.classList.remove('search-results-table--expanded');
+            container.classList.remove('search-results--overflowing');
         }
     };
 
@@ -196,4 +199,4 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     } else if(columnWidths) {
         occTableHandler.updateTable(columnWidths);
     }
-})
+});
