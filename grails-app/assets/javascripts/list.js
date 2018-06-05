@@ -12,3 +12,4 @@
 //= require occurrenceMap
 //= require charts
 //= require list-table
+//= require filters-container

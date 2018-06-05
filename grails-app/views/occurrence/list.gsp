@@ -351,16 +351,20 @@
                     <div class="row">
                         <div class="col">
                             <p>
-                                <span class="fa fa-info-circle"></span>
-                                <alatag:message code="search.filter.customise.title" />
+                                <button type="button" onclick="filtersContainer.toggle()" class="filters-container-btn">
+                                    <span class="fa fa-filter"></span>
+                                    <alatag:message code="search.filter.customise.title" />
+                                </button>
                             </p>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row results-row">
                 <%-- Filters --%>
-                <div class="col-sm-4 col-md-5 col-lg-3 order-sm-2">
-                    <div class="card card-body filters-container">
+                <div id="filters-container" class="filters-container filters-container--collapsed">
+                    <div id="filters-card" class="card card-body">
                         <div id="filters-selection" class="dropdown">
                             <button
                                 type="button"
@@ -381,11 +385,8 @@
                     </div>
                 </div>
 
-                <%-- Buttons --%>
-                <div class="col-sm-8 col-md-7 col-lg-9"></div>
-
                 <%-- Search results --%>
-                <div class="col-sm-8 col-md-7 col-lg-9 order-sm-2">
+                <div class="results-container">
                     <g:if test="${grailsApplication.config.skin.useAlaSpatialPortal?.toBoolean()}">
                         <div
                             id="alert"
