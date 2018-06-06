@@ -260,7 +260,7 @@
 
         <div>
             <input
-                type="text"
+                type="date"
                 id="startDate"
                 name="start_date"
                 class="occurrence_date erk-form-control"
@@ -280,7 +280,7 @@
 
         <div>
             <input
-                type="text"
+                type="date"
                 id="endDate"
                 name="end_date"
                 class="occurrence_date erk-form-control"
