@@ -586,29 +586,33 @@
                                 </div>
                             </div>
 
-                            <div id="results" class="search-results">
-                                <%-- SEARCH RESULTS TABLE --%>
-                                <table id="search-results-table" class="search-results-table">
-                                    <alatag:formatOccurrencesTable occurrences="${sr.occurrences}" />
-                                </table>
-                            </div>
+                            <div class="search-results-container">
+                                <div id="results" class="search-results">
+                                    <%-- SEARCH RESULTS TABLE --%>
+                                    <table id="search-results-table" class="search-results-table">
+                                        <alatag:formatOccurrencesTable occurrences="${sr.occurrences}" />
+                                    </table>
+                                </div>
 
-                            <%--
-                               Button to expand or contract search resutls table to control the visibility
-                               of overflowing columns.
-                            --%>
-                            <button
-                                id="search-results-expand-btn"
-                                class="search-results-expand-btn"
-                                title="${message(code: 'listtable.expandbutton.title')}"
-                                onclick="occTableHandler.toggleTableExpansion()"
-                            >
-                                <span
-                                    id="search-results-expand-btn-icon"
-                                    class="search-results-expand-btn__icon fa fa-angle-right"
-                                >
-                                </span>
-                            </button>
+                                <%--
+                                   Button to expand or contract search resutls table to control the visibility
+                                   of overflowing columns.
+                                --%>
+                                <div class="search-results-control">
+                                    <button
+                                        id="search-results-expand-btn"
+                                        class="search-results-expand-btn"
+                                        title="${message(code: 'listtable.expandbutton.title')}"
+                                        onclick="occTableHandler.toggleTableExpansion()"
+                                    >
+                                        <span
+                                            id="search-results-expand-btn-icon"
+                                            class="search-results-expand-btn__icon fa fa-angle-right"
+                                        >
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
 
                             <div id="searchNavBar" class="pagination">
                                 <g:paginate
