@@ -8,18 +8,32 @@
     overflow-x: auto;
 }
 
+.search-results-control {
+    height: 100%;
+    top: 0;
+    position: absolute;
+    right: -28px;
+    width: 1rem;
+}
+
 .search-results-expand-btn {
     background: #fff;
     border-radius: 4px;
     border: 1px solid #ddd;
-    position: absolute;
-    right: -30px;
+    position: absolute; /* In case sticky position is not supported. */
+    position: -webkit-sticky;
+    position: sticky;
     padding: 0 6px;
     height: 2rem;
     width: 1.25rem;
     font-size: 1.25rem;
     line-height: 0;
-    top: 50%;
+    top: 1.25rem;
+    cursor: pointer;
+}
+
+.search-results-expand-btn:hover {
+    border-color: #888;
 }
 
 .search-results-expand-btn__icon {
@@ -86,6 +100,10 @@
 
 .search-results-cell--multimedia {
     color: #777;
+}
+
+.search-results-container {
+    position: relative;
 }
 
 /* XXX */
