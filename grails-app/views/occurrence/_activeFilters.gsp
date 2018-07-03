@@ -18,7 +18,7 @@
 
         <span class="active-filters__filter">
             <span class="active-filters__label">
-                Spatial filter: ${spatialType[0]}
+                <g:message code="search.filters.spatial.other" /> ${spatialType[0]}
             </span>
 
             <a href="${alatag.getQueryStringForWktRemove()}">
@@ -30,7 +30,7 @@
         <%-- WHAT IS THIS? --%>
         <span class="active-filters__filter">
             <span class="active-filters__label">
-                Spatial filter: CIRCLE
+                <g:message code="search.filters.spatial.circle" />
             </span>
 
             <a href="${alatag.getQueryStringForRadiusRemove()}">
