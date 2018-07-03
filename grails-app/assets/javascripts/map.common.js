@@ -13,18 +13,25 @@ function addClickEventForVector(layer, query, map) {
 }
 
 function generatePopup(layer, latlng, query, map) {
-    var params = '';
+    var geomParams = '';
 
     if($.isFunction(layer.getRadius)) {
         // circle
-        params = getParamsForCircle(layer, query);
+        geomParams = getParamsForCircle(layer, query);
     } else {
         var wkt = new Wkt.Wkt();
         var geojson = layer.toGeoJSON();
         var geostr = JSON.stringify(geojson);
+
         wkt.read(geostr);
-        params = getParamsforWKT(wkt.write(), query);
+
+        geomParams = getParamsForWKT(wkt.write(), query);
     }
+
+    var baseCountParams = getParamsForObject(getExistingParams(query), true);
+    var baseLinkParams = getParamsForObject(getExistingParams(query), false);
+    var countParams = '?' + baseCountParams + geomParams;
+    var linkParams = '?' + baseLinkParams + geomParams;
 
     if(!latlng) {
         if($.isFunction(layer.getBounds)) {
@@ -34,7 +41,7 @@ function generatePopup(layer, latlng, query, map) {
         }
     }
 
-    var recordsLink = BC_CONF.contextPath + '/occurrences/search' + params + '#map';
+    var recordsLink = BC_CONF.contextPath + '/occurrences/search' + linkParams + '#map';
 
     var coordsStr = latlng.lat + '-' + latlng.lng;
     var speciesID = 'speciesCount-' + coordsStr;
@@ -54,8 +61,8 @@ function generatePopup(layer, latlng, query, map) {
         )
         .openOn(map);
 
-    getSpeciesCountInArea(params, speciesID);
-    getOccurrenceCountInArea(params, occurrenceID);
+    getSpeciesCountInArea(countParams, speciesID);
+    getOccurrenceCountInArea(countParams, occurrenceID);
 }
 
 function getSpeciesCountInArea(params, speciesID) {
@@ -74,27 +81,52 @@ function getOccurrenceCountInArea(params, occurrenceID) {
         });
 }
 
-function getParamsforWKT(wkt, query) {
-    return '?' + getExistingParams(query) + '&wkt=' + encodeURI(wkt.replace(' ', '+'));
+function getParamsForWKT(wkt, query) {
+    return '&wkt=' + encodeURI(wkt.replace(' ', '+'));
 }
 
 function getParamsForCircle(circle, query) {
     var latlng = circle.getLatLng();
     var radius = Math.round((circle.getRadius() / 1000) * 10) / 10; // convert to km (from m) and round to 1 decmial place
-    return '?' + getExistingParams(query) + '&radius=' + radius + '&lat=' + latlng.lat + '&lon=' + latlng.lng;
+
+    return '&radius=' + radius + '&lat=' + latlng.lat + '&lon=' + latlng.lng;
+}
+
+function getParamsForObject(paramsObj, joinValues) {
+    var params = Object.keys(paramsObj).map(function(key) {
+        var value = paramsObj[key]; // TODO Encode.
+
+        if(joinValues && Array.isArray(value)) {
+            // Join values of a param.
+            value = '(' + value.map(encodeURI).join('+AND+') + ')';
+        } else if(Array.isArray(value)) {
+            // HACK XXX Extend param value to include instances of itself, with different values.
+            value = value.map(encodeURI).join('&' + key + '=');
+        } else {
+            value = encodeURI(value);
+        }
+
+        return key + '=' + value;
+    });
+
+    return params.join('&');
 }
 
 function getExistingParams(query) {
     var paramsObj = $.url(query).param();
+
     if(!paramsObj.q) {
         paramsObj.q = '*:*';
     }
+
     delete paramsObj.wkt;
     delete paramsObj.lat;
     delete paramsObj.lon;
     delete paramsObj.radius;
+
     paramsObj.qc = BC_CONF.queryContext;
-    return $.param(paramsObj);
+
+    return paramsObj;
 }
 
 function drawWktObj(wktString) {
