@@ -874,21 +874,46 @@ class OccurrenceTagLib {
      */
     def getQueryStringForWktRemove = { attr ->
         def paramsCopy = params.clone()
+
         paramsCopy.remove("wkt")
         paramsCopy.remove("action")
         paramsCopy.remove("controller")
-        def queryString = WebUtils.toQueryString(paramsCopy)
-        out << queryString
+
+        out << getQueryString(paramsCopy)
     }
 
     def getQueryStringForRadiusRemove = { attr ->
         def paramsCopy = params.clone()
+
         paramsCopy.remove("lat")
         paramsCopy.remove("lon")
         paramsCopy.remove("radius")
         paramsCopy.remove("action")
         paramsCopy.remove("controller")
-        def queryString = WebUtils.toQueryString(paramsCopy)
+
+        out << getQueryString(paramsCopy)
+    }
+
+    /**
+     * XXX Joins object properties to an URL string. In case of arrays, adds
+     * multiple instances of the argument. It's a slippery slope, but ALA likes
+     * it that way.
+     */
+    def getQueryString = { attr ->
+        def paramsList = []
+
+        attr.each { property, value ->
+            if (value.getClass().isArray()) {
+                def newValue = value*.encodeAsURL().join('&' + property + '=')
+
+                paramsList << "${property}=${newValue}"
+            } else {
+                paramsList << "${property}=${value.encodeAsURL()}"
+            }
+        }
+
+        def queryString = "?${paramsList.join('&')}"
+
         out << queryString
     }
 
