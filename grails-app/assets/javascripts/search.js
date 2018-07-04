@@ -614,6 +614,7 @@ function removeFacet(el) {
     var taxa = $.url().param('taxa');
     var sort = $.url().param('sort') || BC_CONF['sortField'];
     var dir = $.url().param('dir') || BC_CONF['sortDir'];
+    var wkt = $.url().param('wkt');
     var paramList = [];
 
     if(q) {
@@ -632,6 +633,10 @@ function removeFacet(el) {
         paramList.push('lat=' + lat);
         paramList.push('lon=' + lon);
         paramList.push('radius=' + rad);
+    }
+
+    if(wkt) {
+        paramList.push('wkt=' + wkt);
     }
 
     if(taxa) {
