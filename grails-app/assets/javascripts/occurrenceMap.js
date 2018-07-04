@@ -264,9 +264,9 @@ OccurrenceMap.prototype.initialize = function() {
     self.fitMapToBounds(); // zoom map if points are contained within Australia
 
     // display vector from previous wkt search
-    if(self.wkt) {
+    if(self.props.wkt) {
         var wkt = new Wkt.Wkt();
-        wkt.read(self.wkt);
+        wkt.read(self.props.wkt);
         var wktObject = wkt.toObject({ color: '#bada55' });
         wktObject.on('click', pointLookupClickRegister);
         self.drawnItems.addLayer(wktObject);
