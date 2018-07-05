@@ -6,6 +6,8 @@
 
 <g:set var="sortField" value="${params.sort ?: 'first_loaded_date'}" />
 <g:set var="sortDir" value="${params.dir ?: 'desc'}" />
+<!-- XXX TODO Default page size should be stored in settings. It's elsewhere as well. -->
+<g:set var="pageSize" value="${params.pageSize ?: 20}" />
 
 <!DOCTYPE html>
 <html>
@@ -69,6 +71,7 @@
 
             BC_CONF["sortField"] = "${sortField}";
             BC_CONF["sortDir"] = "${sortDir}";
+            BC_CONF["pageSize"] = "${pageSize}";
 
             for(var field in BC_CONF_FIELDS) {
                 if(BC_CONF_FIELDS.hasOwnProperty(field)) {
