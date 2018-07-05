@@ -548,10 +548,11 @@ function reloadWithParam(paramName, paramValue) {
     var fqList = $.url().param('fq'); // $.query.get('fq');
     var sort = $.url().param('sort') || BC_CONF['sortField'];
     var dir = $.url().param('dir') || BC_CONF['sortDir'];
-    var pageSize = $.url().param('pageSize');
+    var pageSize = $.url().param('pageSize') || BC_CONF['pageSize'];
     var lat = $.url().param('lat');
     var lon = $.url().param('lon');
     var rad = $.url().param('radius');
+    var wkt = $.url().param('wkt');
     var taxa = $.url().param('taxa');
 
     // add query param
@@ -593,6 +594,10 @@ function reloadWithParam(paramName, paramValue) {
         paramList.push('radius=' + rad);
     }
 
+    if(wkt) {
+        paramList.push('wkt=' + wkt);
+    }
+
     if(taxa) {
         paramList.push('taxa=' + taxa);
     }
@@ -614,6 +619,7 @@ function removeFacet(el) {
     var taxa = $.url().param('taxa');
     var sort = $.url().param('sort') || BC_CONF['sortField'];
     var dir = $.url().param('dir') || BC_CONF['sortDir'];
+    var pageSize = $.url().param('pageSize') || BC_CONF['pageSize'];
     var wkt = $.url().param('wkt');
     var paramList = [];
 
@@ -628,6 +634,7 @@ function removeFacet(el) {
 
     paramList.push('sort=' + sort);
     paramList.push('dir=' + dir);
+    paramList.push('pageSize=' + pageSize);
 
     if(lat && lon && rad) {
         paramList.push('lat=' + lat);
@@ -674,6 +681,7 @@ function removeFilter(el) {
     var wkt = $.url().param('wkt');
     var sort = $.url().param('sort') || BC_CONF['sortField'];
     var dir = $.url().param('dir') || BC_CONF['sortDir'];
+    var pageSize = $.url().param('pageSize') || BC_CONF['pageSize'];
     var paramList = [];
 
     if(q) {
@@ -687,6 +695,7 @@ function removeFilter(el) {
 
     paramList.push('sort=' + sort);
     paramList.push('dir=' + dir);
+    paramList.push('pageSize=' + pageSize);
 
     if(lat && lon && rad) {
         paramList.push('lat=' + lat);
