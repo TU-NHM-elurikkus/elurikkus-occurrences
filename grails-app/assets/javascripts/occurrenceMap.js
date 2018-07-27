@@ -144,13 +144,16 @@ OccurrenceMap.prototype.initialize = function() {
     self.map.addControl(self.drawControl);
 
     self.map.on('draw:created', function(e) {
-        // setup onclick event for self object
         var layer = e.layer;
         var center = typeof layer.getLatLng === 'function' ? layer.getLatLng() : layer.getBounds().getCenter();
 
         addClickEventForVector(layer, self.query, self.map);
-        generatePopup(layer, center, self.query, self.map);
         self.drawnItems.addLayer(layer);
+
+        // "run next" - trigger the popup a bit later for maxiumum browser compatibility
+        setTimeout(function() {
+            layer.fireEvent('click');
+        }, 100);
     });
 
     L.control.coordinates({ position: 'bottomright', useLatLngOrder: true }).addTo(self.map); // coordinate plugin

@@ -131,17 +131,19 @@ function initialiseMap() {
     MAP_VAR.map.addControl(drawControls);
 
     MAP_VAR.map.on('draw:created', function(e) {
-        // setup onclick event for this object
         var layer = e.layer;
         var center = typeof layer.getLatLng === 'function' ? layer.getLatLng() : layer.getBounds().getCenter();
 
-        generatePopup(layer, center, MAP_VAR.query, MAP_VAR.map);
-
+        addClickEventForVector(layer, MAP_VAR.query, MAP_VAR.map);
         MAP_VAR.drawnItems.addLayer(layer);
+
+        // "run next" - trigger the popup a bit later for maxiumum browser compatibility
+        setTimeout(function() {
+            layer.fireEvent('click');
+        }, 100);
     });
 
     MAP_VAR.map.on('draw:edited', function(e) {
-        // setup onclick event for this object
         var layers = e.layers;
 
         layers.eachLayer(function(layer) {
