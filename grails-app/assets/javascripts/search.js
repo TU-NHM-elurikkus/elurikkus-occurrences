@@ -624,7 +624,7 @@ function removeFacet(el) {
     var paramList = [];
 
     if(q) {
-        paramList.push('q=' + q);
+        paramList.push('q=' + encodeURIComponent(q));
     }
 
     // add filter query param
@@ -647,7 +647,7 @@ function removeFacet(el) {
     }
 
     if(taxa) {
-        paramList.push('taxa=' + taxa);
+        paramList.push('taxa=' + encodeURIComponent(taxa));
     }
 
     if(fqList instanceof Array) {
@@ -664,7 +664,7 @@ function removeFacet(el) {
     }
 
     if(fqList) {
-        paramList.push('fq=' + fqList.join('&fq='));
+        paramList.push('fq=' + fqList.map(encodeURIComponent).join('&fq='));
     }
 
     window.location.href = String(window.location.pathname + '?' + paramList.join('&') + window.location.hash);
