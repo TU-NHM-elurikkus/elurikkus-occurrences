@@ -16,15 +16,6 @@ $(document).ready(function() {
 
         minChars: 3,
 
-        onSearchStart: function(queryParams) {
-            // Try to override query input.
-            var value = queryParams.q;
-
-            if(value) {
-                queryParams.q = value;
-            }
-        },
-
         transformResult: function(response) {
             return {
                 suggestions: response.searchResults.results.map(function(result) {
