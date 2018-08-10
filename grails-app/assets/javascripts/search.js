@@ -557,7 +557,7 @@ function reloadWithParam(paramName, paramValue) {
 
     // add query param
     if(q) {
-        paramList.push('q=' + q);
+        paramList.push('q=' + encodeURIComponent(q));
     }
 
     // add filter query param
@@ -568,7 +568,7 @@ function reloadWithParam(paramName, paramValue) {
     }
 
     if(fqList) {
-        paramList.push('fq=' + fqList.join('&fq='));
+        paramList.push('fq=' + fqList.map(encodeURIComponent).join('&fq='));
     }
 
     // add sort/dir/pageSize params if already set (different to default)
@@ -599,7 +599,7 @@ function reloadWithParam(paramName, paramValue) {
     }
 
     if(taxa) {
-        paramList.push('taxa=' + taxa);
+        paramList.push('taxa=' + encodeURIComponent(taxa));
     }
 
     window.location.href = window.location.pathname + '?' + paramList.join('&');
