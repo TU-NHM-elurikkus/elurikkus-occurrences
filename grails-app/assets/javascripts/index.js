@@ -4,7 +4,7 @@
 //= require leafletPlugins
 //= require purl
 //= require map.common
-//= require advancedSearch
+//= require facet-search
 
 var MAP_VAR; // Populated by index.gsp view
 

@@ -4,12 +4,12 @@
 *= require searchMap
 */
 
-#clearAll {
+#clear-search-form {
     margin-left: 10px;
     height: 30px;
 }
 
-.advanced-search-form {
+#facet-search-container {
     max-width: 800px;
     margin-left: 0;
 }
