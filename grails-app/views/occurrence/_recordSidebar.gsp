@@ -480,14 +480,37 @@
     </div>
 </g:if>
 
-<g:if test="${record.raw.lastModifiedTime && record.processed.lastModifiedTime}">
-    <%-- XXX --%>
-    <div class="sidebar sidebar-citation">
-        <g:message code="show.sidebar05.p01" />: ${record.raw.lastModifiedTime.replaceAll("T", " ").replaceAll("Z", "")}
+<div class="sidebar sidebar-citation">
+    <g:if test="${record.processed.firstLoaded}">
+        <g:message code="show.sidebar05.p01" />:&nbsp;
+        <alatag:formatDateStr>
+            ${record.processed.firstLoaded}
+        </alatag:formatDateStr>
         <br />
-        <g:message code="show.sidebar05.p02" />: ${record.processed.lastModifiedTime.replaceAll("T", " ").replaceAll("Z", "")}
-    </div>
-</g:if>
+    </g:if>
+    <g:elseif test="${record.raw.firstLoaded}">
+        <g:message code="show.sidebar05.p01" />:&nbsp;
+        <alatag:formatDateStr>
+            ${record.raw.firstLoaded}
+        </alatag:formatDateStr>
+        <br />
+    </g:elseif>
+
+    <g:if test="${record.processed.lastModifiedTime}">
+        <g:message code="show.sidebar05.p02" />:&nbsp;
+        <alatag:formatDateStr>
+            ${record.processed.lastModifiedTime}
+        </alatag:formatDateStr>
+        <br />
+    </g:if>
+    <g:elseif test="${record.raw.lastModifiedTime}">
+        <g:message code="show.sidebar05.p02" />:&nbsp;
+        <alatag:formatDateStr>
+            ${ecord.raw.lastModifiedTime}
+        </alatag:formatDateStr>
+        <br />
+    </g:elseif>
+</div>
 
 <%-- XXX This element is hidden, but not removed, for debugging purposes. --%>
 <div id="dataQuality" class="additionalData" style="display: none;">

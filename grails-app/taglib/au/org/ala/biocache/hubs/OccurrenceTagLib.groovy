@@ -15,11 +15,12 @@
 
 package au.org.ala.biocache.hubs
 
+import grails.util.Environment
 import groovy.xml.MarkupBuilder
 import org.apache.commons.lang.StringUtils
 import org.codehaus.groovy.grails.web.util.WebUtils
 import org.springframework.web.servlet.support.RequestContextUtils
-import grails.util.Environment
+
 
 class OccurrenceTagLib {
     // injected beans
@@ -40,6 +41,20 @@ class OccurrenceTagLib {
      */
     def formatDynamicFacetName = { attrs ->
         out << formatFieldName(attrs.fieldName)
+    }
+
+    /**
+     * Tries to convert a date(time) string into a date object and format to given format string
+     * Defaults to iso date(time) and cleaned iso date(time)
+     */
+    def formatDateStr = { attrs, body ->
+        String dateStr = (String) body().trim()
+        String formatted = dateStr.replaceAll("T", " ").replaceAll("Z", "")
+
+        if(dateStr.endsWith("Z")) {
+            formatted = "${formatted} (UTC)"
+        }
+        out << formatted
     }
 
     /**
