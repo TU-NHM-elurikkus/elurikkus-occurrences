@@ -506,7 +506,7 @@
     <g:elseif test="${record.raw.lastModifiedTime}">
         <g:message code="show.sidebar05.p02" />:&nbsp;
         <alatag:formatDateStr>
-            ${ecord.raw.lastModifiedTime}
+            ${record.raw.lastModifiedTime}
         </alatag:formatDateStr>
         <br />
     </g:elseif>
