@@ -37,6 +37,16 @@
             </g:else>
         </alatag:occurrenceTableRow>
 
+        <!-- GBIF UUID -->
+        <g:if test="${record.raw.miscProperties.datasetKey}">
+            <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="datasetKey" fieldName="${message(code: 'recordcore.dynamic.datasetKey')}">
+                ${fieldsMap.put("datasetKey", true)}
+                <a href="https://www.gbif.org/dataset/${record.raw.miscProperties.datasetKey}" target="_blank">
+                    ${record.raw.miscProperties.datasetKey}
+                </a>
+            </alatag:occurrenceTableRow>
+        </g:if>
+
         <!-- Institution -->
         <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="institutionCode" fieldName="${message(code: 'recordcore.dataset.Institution')}">
             ${fieldsMap.put("institutionName", true)}
@@ -1167,11 +1177,19 @@
                         <g:message code="recordcore.dynamic.${entry.key}" default="${entry.key}" />
                     </g:set>
                     <alatag:occurrenceTableRow annotate="true" section="misc" fieldCode="${entry.key}" fieldName="${label}">
-                        <g:if test="${StringUtils.startsWith(entry.value, 'http')}">
+                        <%-- Check if key is a date --%>
+                        <g:if test="${['lastCrawled', 'lastParsed', 'lastInterpreted'].contains(entry.key)}">
+                            <alatag:formatDateStr>
+                                ${entry.value}
+                            </alatag:formatDateStr>
+                        </g:if>
+                        <%-- Check if key is a link --%>
+                        <g:elseif test="${StringUtils.startsWith(entry.value, 'http')}">
                             <a href="${entry.value}" target="_blank">
                                 ${entry.value}
                             </a>
-                        </g:if>
+                        </g:elseif>
+                        <%-- No special match --%>
                         <g:else>
                             <g:message code="recordcore.dynamic.${entry.value}" default="${entry.value}" />
                         </g:else>
