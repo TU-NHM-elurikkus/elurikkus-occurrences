@@ -753,10 +753,10 @@ function loadDefaultCharts() {
             });
             chartConfig.charts = conf;
 
-            var charts = ALA.BiocacheCharts('tab-charts', chartConfig);
+            var charts = ALA.BiocacheCharts('charts-container', chartConfig);
         });
     } else {
-        var charts = ALA.BiocacheCharts('tab-charts', chartConfig);
+        var charts = ALA.BiocacheCharts('charts-container', chartConfig);
     }
 }
 
