@@ -645,10 +645,12 @@
 
                         <plugin:isAvailable name="elurikkus-charts">
                             <div id="tab-charts" role="tabpanel" class="tab-pane">
-                                <g:render template="charts"
-                                    model="[searchString: searchString]"
-                                    plugin="elurikkus-biocache-hubs"
-                                />
+                                <div id="charts-container" class="charts-container">
+                                    <g:render template="charts"
+                                        model="[searchString: searchString]"
+                                        plugin="elurikkus-biocache-hubs"
+                                    />
+                                </div>
 
                                 <!-- Taxon pie chart -->
                                 <script>
