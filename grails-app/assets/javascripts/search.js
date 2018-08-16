@@ -866,7 +866,8 @@ function createThumbnails(occurrences, templateClassName) {
             $ImgConTmpl.find('img').attr('src', el.smallImageUrl);
 
             // brief metadata
-            var briefHtml = el.raw_scientificName;
+            var taxonName = el.scientificName ? el.scientificName : el.raw_scientificName;
+            var briefHtml = taxonName;
             var br = '<br />';
             if(el.typeStatus) {
                 briefHtml += br + el.typeStatus;
@@ -875,7 +876,7 @@ function createThumbnails(occurrences, templateClassName) {
             $ImgConTmpl.find('.gallery-thumb__footer').html(briefHtml);
 
             // detail metadata
-            var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + el.raw_scientificName;
+            var leftDetail = '<div><b>' + $.i18n.prop('gallery.modal.taxon') + ':</b> ' + taxonName;
 
             if(el.typeStatus) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.type') + ':</b> ' + el.typeStatus; }
             if(el.collector) { leftDetail += br + '<b>' + $.i18n.prop('gallery.modal.by') + ':</b> ' + el.collector; }
