@@ -4,8 +4,8 @@
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}" />
 <g:set var="authService" bean="authService" />
 
-<g:set var="sortField" value="${params.sort ?: 'first_loaded_date'}" />
-<g:set var="sortDir" value="${params.dir ?: 'desc'}" />
+<g:set var="sortField" value="${sort ?: 'first_loaded_date'}" />
+<g:set var="sortDir" value="${dir ?: 'desc'}" />
 <!-- XXX TODO Default page size should be stored in settings. It's elsewhere as well. -->
 <g:set var="pageSize" value="${params.pageSize ?: 20}" />
 
@@ -525,8 +525,6 @@
                             </div>
 
                             <div class="inline-controls inline-controls--right">
-                                <g:set var="useDefault" value="${!params.sort && !params.dir}" />
-
                                 <div class="inline-controls__group">
                                     <label for="per-page">
                                         <g:message code="general.list.pageSize.label" />
@@ -547,27 +545,27 @@
                                     </label>
 
                                     <select id="sort" name="sort">
-                                        <option value="score" <g:if test="${params.sort == 'score'}">selected</g:if>>
+                                        <option value="score" <g:if test="${sort == 'score'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option01" />
                                         </option>
-                                        <option value="taxon_name" <g:if test="${params.sort == 'taxon_name'}">selected</g:if>>
+                                        <option value="taxon_name" <g:if test="${sort == 'taxon_name'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option02" />
                                         </option>
-                                        <option value="common_name" <g:if test="${params.sort == 'common_name'}">selected</g:if>>
+                                        <option value="common_name" <g:if test="${sort == 'common_name'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option03" />
                                         </option>
-                                        <option value="occurrence_date" <g:if test="${useDefault || params.sort == 'occurrence_date'}">selected</g:if>>
+                                        <option value="occurrence_date" <g:if test="${sort == 'occurrence_date'}">selected</g:if>>
                                             ${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401") : g.message(code:"list.sortwidgets.sort.option0402")}
                                         </option>
                                         <g:if test="${skin != 'avh'}">
-                                            <option value="record_type" <g:if test="${params.sort == 'record_type'}">selected</g:if>>
+                                            <option value="record_type" <g:if test="${sort == 'record_type'}">selected</g:if>>
                                                 <g:message code="list.sortwidgets.sort.option05" />
                                             </option>
                                         </g:if>
-                                        <option value="first_loaded_date" <g:if test="${params.sort == 'first_loaded_date'}">selected</g:if>>
+                                        <option value="first_loaded_date" <g:if test="${sort == 'first_loaded_date'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option06" />
                                         </option>
-                                        <option value="last_assertion_date" <g:if test="${params.sort == 'last_assertion_date'}">selected</g:if>>
+                                        <option value="last_assertion_date" <g:if test="${sort == 'last_assertion_date'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option07" />
                                         </option>
                                     </select>
@@ -579,10 +577,10 @@
                                     </label>
 
                                     <select id="dir" name="dir">
-                                        <option value="asc" <g:if test="${params.dir == 'asc'}">selected</g:if>>
+                                        <option value="asc" <g:if test="${dir == 'asc'}">selected</g:if>>
                                             <g:message code="general.list.sortOrder.asc" />
                                         </option>
-                                        <option value="desc" <g:if test="${useDefault || params.dir == 'desc'}">selected</g:if>>
+                                        <option value="desc" <g:if test="${dir == 'desc'}">selected</g:if>>
                                             <g:message code="general.list.sortOrder.desc" />
                                         </option>
                                     </select>
