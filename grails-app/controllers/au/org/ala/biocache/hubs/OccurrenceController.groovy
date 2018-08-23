@@ -66,8 +66,11 @@ class OccurrenceController {
             requestParams.pageSize = 20
         }
 
-        if (!params.sort && !params.dir) {
+        if (!params.sort) {
             requestParams.sort = "first_loaded_date"
+        }
+
+        if (!params.dir) {
             requestParams.dir = "desc"
         }
 
