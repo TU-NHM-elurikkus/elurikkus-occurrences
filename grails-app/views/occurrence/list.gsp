@@ -4,8 +4,6 @@
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}" />
 <g:set var="authService" bean="authService" />
 
-<g:set var="sortField" value="${sort ?: 'first_loaded_date'}" />
-<g:set var="sortDir" value="${dir ?: 'desc'}" />
 <!-- XXX TODO Default page size should be stored in settings. It's elsewhere as well. -->
 <g:set var="pageSize" value="${params.pageSize ?: 20}" />
 
@@ -69,8 +67,8 @@
                 getPreferredSpeciesListUrl:  "${grailsApplication.config.lists.ui.url}" // "${createLink(controller: 'imageClient', action: 'getPreferredSpeciesImageList')}"
             };
 
-            BC_CONF["sortField"] = "${sortField}";
-            BC_CONF["sortDir"] = "${sortDir}";
+            BC_CONF["sortField"] = "${sort}";
+            BC_CONF["sortDir"] = "${dir}";
             BC_CONF["pageSize"] = "${pageSize}";
 
             for(var field in BC_CONF_FIELDS) {
@@ -257,6 +255,10 @@
                         <form action="${g.createLink(controller: 'occurrences', action: 'search')}" id="solrSearchForm">
                             <div class="input-plus">
                                 <input type="text" id="taxaQuery" name="${searchQuery}" class="input-plus__field" value="${params.list(searchQuery).join(' OR ')}" />
+                                <%-- Party like it's 1990 --%>
+                                <input type="hidden" name="sort" value="${sort}" />
+                                <input type="hidden" name="dir" value="${dir}" />
+                                <input type="hidden" name="pageSize" value="${pageSize}" />
 
                                 <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
                                     <span class="fa fa-search"></span>
@@ -623,7 +625,7 @@
                                     omitLast="true"
                                     next="${message(code: 'general.paginate.next')}"
                                     prev="${message(code: 'general.paginate.prev')}&nbsp;"
-                                    params="${[taxa:params.taxa, q:params.q, fq:params.fq, sort:sortField, dir:sortDir, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}"
+                                    params="${[taxa:params.taxa, q:params.q, fq:params.fq, sort:sort, dir:dir, wkt:params.wkt, lat:params.lat, lon:params.lon, radius:params.radius]}"
                                 />
                             </div>
                         </div>  <%-- end solrResults --%>
