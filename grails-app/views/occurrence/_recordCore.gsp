@@ -345,7 +345,9 @@
                 ${fieldsMap.put("breeding", true)}
                 <g:set var="jsonSlurper" value="${new JsonSlurper()}" />
                 <g:set var="object" value="${jsonSlurper.parseText(record.raw.occurrence.dynamicProperties ?: '{}')}" />
-                <g:message code="facet.breeding.${object.breeding}" />
+                <g:if test="${object.breeding}">
+                    <g:message code="facet.breeding.${object.breeding}" />
+                </g:if>
             </alatag:occurrenceTableRow>
         </g:if>
 
