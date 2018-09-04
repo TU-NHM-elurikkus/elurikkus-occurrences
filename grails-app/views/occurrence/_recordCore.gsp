@@ -315,7 +315,7 @@
         <!-- Behavior -->
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="behavior" fieldName="${message(code: 'recordcore.dataset.behavior')}">
             ${fieldsMap.put("behavior", true)}
-            ${record.raw.occurrence.behavior}
+            <g:message code="facet.behavior.${record.raw.occurrence.behavior}" />
         </alatag:occurrenceTableRow>
 
         <!-- Individual count -->
@@ -345,7 +345,7 @@
                 ${fieldsMap.put("breeding", true)}
                 <g:set var="jsonSlurper" value="${new JsonSlurper()}" />
                 <g:set var="object" value="${jsonSlurper.parseText(record.raw.occurrence.dynamicProperties ?: '{}')}" />
-                ${object.breeding}
+                <g:message code="facet.breeding.${object.breeding}" />
             </alatag:occurrenceTableRow>
         </g:if>
 
