@@ -315,7 +315,9 @@
         <!-- Behavior -->
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="behavior" fieldName="${message(code: 'recordcore.dataset.behavior')}">
             ${fieldsMap.put("behavior", true)}
-            <g:message code="facet.behavior.${record.raw.occurrence.behavior}" />
+            <g:if test="${record.raw.occurrence.behavior}">
+                <g:message code="facet.behavior.${record.raw.occurrence.behavior}" />
+            </g:if>
         </alatag:occurrenceTableRow>
 
         <!-- Individual count -->
