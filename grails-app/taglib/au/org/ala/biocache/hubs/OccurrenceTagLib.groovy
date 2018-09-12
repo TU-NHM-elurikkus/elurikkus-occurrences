@@ -563,7 +563,7 @@ class OccurrenceTagLib {
         out << output
     }
 
-    def formatDynamicLabel(str){
+    def formatDynamicLabel(str) {
         if(str){
            str.substring(0, str.length() - 2).replaceAll("_", " ")
         } else {
