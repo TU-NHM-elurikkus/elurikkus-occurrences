@@ -404,6 +404,24 @@
             </g:if>
         </g:if>
 
+        <g:if test="${record.processed.occurrence.establishmentMeans || record.raw.occurrence.establishmentMeans}">
+            <!-- Establishment means -->
+            <alatag:occurrenceTableRow annotate="false" section="dataset" fieldCode="establishmentMeans" fieldName="${message(code: 'facet.establishment_means')}">
+                ${fieldsMap.put("establishmentMeans", true)}
+
+                <g:set var="establishmentMeansCode">
+                    <g:if test="${record.processed.occurrence.establishmentMeans}">
+                        facet.establishment_means.${record.processed.occurrence.establishmentMeans.replaceAll(' ', '_')}
+                    </g:if>
+                    <g:else>
+                        facet.establishment_means.${record.raw.occurrence.establishmentMeans.toLowerCase().replaceAll(' ', '_')}
+                    </g:else>
+                </g:set>
+
+                ${message(code: establishmentMeansCode.replaceAll("\\s", ""), default: record.raw.occurrence.establishmentMeans)}
+            </alatag:occurrenceTableRow>
+        </g:if>
+
         <!-- output any tags not covered already (excluding those in dwcExcludeFields) -->
         <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Attribution" exclude="${dwcExcludeFields}" />
         <alatag:formatExtraDwC compareRecord="${compareRecord}" fieldsMap="${fieldsMap}" group="Occurrence" exclude="${dwcExcludeFields}" />
