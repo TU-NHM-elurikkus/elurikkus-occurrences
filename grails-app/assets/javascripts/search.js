@@ -908,7 +908,7 @@ function createThumbnails(occurrences, templateClassName) {
     return {
         data: thumbs,
         count: count
-    }
+    };
 }
 
 function loadImages(start) {
