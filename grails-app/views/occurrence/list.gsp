@@ -564,6 +564,9 @@
                                         <option value="first_loaded_date" <g:if test="${sort == 'first_loaded_date'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option06" />
                                         </option>
+                                        <option value="individual_count" <g:if test="${sort == 'individual_count'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option07" />
+                                        </option>
                                     </select>
                                 </div>
 
