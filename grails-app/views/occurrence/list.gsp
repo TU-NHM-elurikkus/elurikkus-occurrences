@@ -4,9 +4,6 @@
 <g:set var="searchQuery" value="${grailsApplication.config.skin.useAlaBie ? 'taxa' : 'q'}" />
 <g:set var="authService" bean="authService" />
 
-<!-- XXX TODO Default page size should be stored in settings. It's elsewhere as well. -->
-<g:set var="pageSize" value="${params.pageSize ?: 20}" />
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,12 +24,12 @@
         <asset:stylesheet src="list.css" />
         <asset:javascript src="list.js" />
 
+        <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />
+        <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
+        <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}" />
+
         <script type="text/javascript">
             // single global var for app conf settings
-            <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />
-
-            <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
-            <g:set var="searchString" value="${raw(sr?.urlParameters).encodeAsURL()}" />
             var BC_CONF_FIELDS = {
                 contextPath: "${request.contextPath}",
                 hostName: "${grailsApplication.config.serverRoot}",
@@ -258,7 +255,7 @@
                                 <%-- Party like it's 1990 --%>
                                 <input type="hidden" name="sort" value="${sort}" />
                                 <input type="hidden" name="dir" value="${dir}" />
-                                <input type="hidden" name="pageSize" value="${pageSize}" />
+                                <input type="hidden" name="pageSize" value="${params.pageSize}" />
 
                                 <button type="submit" id="solrSubmit" class="erk-button erk-button--dark input-plus__addon">
                                     <span class="fa fa-search"></span>
@@ -533,7 +530,7 @@
                                     </label>
 
                                     <select id="per-page" name="per-page">
-                                        <g:set var="pageSizeVar" value="${params.pageSize ?: params.max ?: '20'}" />
+                                        <g:set var="pageSizeVar" value="${params.pageSize ?: params.max ?: '100'}" />
                                         <option value="10" <g:if test="${pageSizeVar == "10"}">selected</g:if>>10</option>
                                         <option value="20" <g:if test="${pageSizeVar == "20"}">selected</g:if>>20</option>
                                         <option value="50" <g:if test="${pageSizeVar == "50"}">selected</g:if>>50</option>

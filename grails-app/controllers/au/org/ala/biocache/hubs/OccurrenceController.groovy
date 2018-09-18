@@ -63,11 +63,11 @@ class OccurrenceController {
         requestParams.fq = params.list("fq") as String[] // override Grails binding which splits on internal commas in value
 
         if (!params.pageSize) {
-            requestParams.pageSize = 20
+            requestParams.pageSize = 100
         }
 
         if (!params.sort) {
-            requestParams.sort = "first_loaded_date"
+            requestParams.sort = "occurrence_date"
         }
 
         if (!params.dir) {
