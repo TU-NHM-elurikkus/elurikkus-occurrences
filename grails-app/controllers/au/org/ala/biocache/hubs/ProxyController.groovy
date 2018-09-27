@@ -15,12 +15,15 @@
 
 package au.org.ala.biocache.hubs
 
+import grails.util.Environment
+
 import org.apache.commons.fileupload.FileItem
 import org.apache.commons.fileupload.FileUploadException
 import org.apache.commons.fileupload.disk.DiskFileItemFactory
 import org.apache.commons.fileupload.servlet.ServletFileUpload
 import org.apache.commons.httpclient.Header
 import org.apache.commons.httpclient.HttpClient
+import org.apache.commons.httpclient.HttpException
 import org.apache.commons.httpclient.NameValuePair
 import org.apache.commons.httpclient.methods.GetMethod
 import org.apache.commons.httpclient.HttpMethod
@@ -35,13 +38,14 @@ import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+
 /**
  * Proxy Controller for AJAX requests to biocache-service
  *
  * Code borrowed from http://edwardstx.net/2010/06/http-proxy-servlet/ (Apache 2.0 license)
  */
 class ProxyController {
-
+    static final HTTP_USER_AGENT = "Elurikkus/generic-hub"
     /**
      * Key for redirect location header.
      */
@@ -75,14 +79,50 @@ class ProxyController {
      * @param httpServletResponse The {@link HttpServletResponse} object by which
      *                             we can send a proxied response to the client
      */
+    // def doGet(String path) {
+    //     // Create a GET request
+    //     GetMethod getMethodProxyRequest = new GetMethod(getProxyURL(request, "/${path}"))
+    //     // Forward the request headers
+    //     setProxyRequestHeaders(request, getMethodProxyRequest);
+    //     // Execute the proxy request
+    //     executeProxyRequest(getMethodProxyRequest, request, response);
+    // }
     def doGet(String path) {
-        // Create a GET request
-        GetMethod getMethodProxyRequest = new GetMethod(getProxyURL(request, "/${path}"))
-        // Forward the request headers
-        setProxyRequestHeaders(request, getMethodProxyRequest);
-        // Execute the proxy request
-        executeProxyRequest(getMethodProxyRequest, request, response);
-    }
+        String url = "${grailsApplication.config.biocacheService.internal.url}/${path}?${request.queryString}"
+        HttpClient client = new HttpClient()
+
+        HttpMethod method = new GetMethod(url)
+        setProxyRequestHeaders(request, method);
+        method.setRequestHeader("User-Agent", "${HTTP_USER_AGENT} (${Environment.current.name})")
+        method.setRequestHeader("Accept", "application/json,application/vnd.api+json")
+
+        String result = "{}"
+        String contentType = "text/json"
+
+        try {
+            // Execute the method.
+            client.executeMethod(method)
+            contentType = method.getResponseHeader("Content-Type").getValue()
+
+            // Read the response body.
+            byte[] responseBody = method.getResponseBody()
+            result = new String(responseBody)
+
+            // Deal with the response.
+            // Use caution: ensure correct character encoding and is not binary data
+            } catch (HttpException e) {
+                log.warn "Fatal protocol violation: ${e.getMessage()}"
+                e.printStackTrace()
+            } catch (IOException e) {
+                log.warn "Fatal transport error: ${e.getMessage()}"
+                e.printStackTrace();
+            } finally {
+                // Release the connection.
+                method.releaseConnection();
+            }
+
+            render(contentType: contentType, text: result)
+        }
 
     /**
      * Performs an HTTP POST request
