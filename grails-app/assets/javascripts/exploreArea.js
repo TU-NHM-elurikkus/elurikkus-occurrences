@@ -436,26 +436,8 @@ function loadExploreArea(EYA_CONF) {
      */
     function geocodeAddress(reverseGeocode) {
         var address = $('input#address').val();
-        var latLng = null;
 
-        // Check if input contains a comma and try and patch coordinates
-        if(address && address.indexOf(',') > -1 && window.magellan) {
-            var parts = address.split(',');
-            var lat = window.magellan(parts[0].trim()).latitude(); // .toDD();
-            var lng = window.magellan(parts[1].trim()).longitude(); // .toDD();
-
-            if(lat && lng) {
-                latLng = new google.maps.LatLng(lat.toDD(), lng.toDD());
-                updateMarkerAddress($.i18n.prop('eya.map.marker.coords') + ': ' + lat.toDD() + ', ' + lng.toDD());
-                updateMarkerPosition(latLng);
-                // reload map pin, etc
-                initialize();
-                loadRecordsLayer();
-            }
-
-        }
-
-        if(!latLng && geocoder && address) {
+        if(geocoder && address) {
             geocoder.geocode({ 'address': address, region: 'AU' }, function(results, status) {
                 if(status === google.maps.GeocoderStatus.OK) {
                     // geocode was successful
