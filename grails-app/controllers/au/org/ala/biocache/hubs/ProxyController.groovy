@@ -89,8 +89,10 @@ class ProxyController {
     //     executeProxyRequest(getMethodProxyRequest, request, response);
     // }
     def doGet(String path) {
-        String qString = URIUtil.encodeQuery(request.queryString)
-        String url = "${grailsApplication.config.biocacheService.internal.url}/${path}?${qString}"
+        String url = "${grailsApplication.config.biocacheService.internal.url}/${path}"
+        if(request.queryString) {
+            url = "${url}?${URIUtil.encodeQuery(request.queryString)}"
+        }
         HttpClient client = new HttpClient()
 
         HttpMethod method = new GetMethod(url)
