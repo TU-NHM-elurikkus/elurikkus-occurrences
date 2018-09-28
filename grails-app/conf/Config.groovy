@@ -41,7 +41,6 @@ println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 \******************************************************************************/
 skin.layout = "eElurikkus"
 skin.orgNameLong = "Occurrence browser"
-skin.orgNameShort = "Occurrences"
 // whether crumb trail should include a home link that is external to this webabpp - serverRoot is used if true
 skin.includeBaseUrl = true
 skin.headerUrl = "classpath:resources/generic-header.jsp" // can be external URL
