@@ -1,2 +1,2 @@
 //= require common
-//= require jquery_migration
+//= require jquery-migrate-1.2.1.min

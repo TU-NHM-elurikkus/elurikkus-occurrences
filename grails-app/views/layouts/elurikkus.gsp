@@ -19,9 +19,7 @@
             var BC_CONF = {
                 biocacheServiceUrl: "${alatag.getBiocacheAjaxUrl()}",
                 bieWebappUrl: "${grailsApplication.config.bie.ui.url}",
-                bieWebServiceUrl: "${grailsApplication.config.bieService.ui.url}",
                 collectoryUrl: "${grailsApplication.config.collectory.ui.url}",
-                autocompleteHints: "${grailsApplication.config.bie?.autocompleteHints?.encodeAsJson()?:'{}'}",
                 contextPath: "${request.contextPath}",
                 locale: "${RequestContextUtils.getLocale(request)}",
                 queryContext: "${grailsApplication.config.biocache.queryContext}",

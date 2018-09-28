@@ -3,7 +3,7 @@
 //= require leafletPlugins
 //= require amplify
 //= require purl
-//= require nanoscroller
+//= require jquery.nanoscroller.min
 //= require ekko-lightbox-5.2.0
 //= require ala-charts
 //= require bootstrap-slider
