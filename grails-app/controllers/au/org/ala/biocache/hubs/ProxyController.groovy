@@ -33,6 +33,7 @@ import org.apache.commons.httpclient.methods.multipart.FilePart
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity
 import org.apache.commons.httpclient.methods.multipart.Part
 import org.apache.commons.httpclient.methods.multipart.StringPart
+import org.apache.commons.httpclient.util.URIUtil
 
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -88,7 +89,8 @@ class ProxyController {
     //     executeProxyRequest(getMethodProxyRequest, request, response);
     // }
     def doGet(String path) {
-        String url = "${grailsApplication.config.biocacheService.internal.url}/${path}?${request.queryString}"
+        String qString = URIUtil.encodeQuery(request.queryString)
+        String url = "${grailsApplication.config.biocacheService.internal.url}/${path}?${qString}"
         HttpClient client = new HttpClient()
 
         HttpMethod method = new GetMethod(url)
