@@ -162,13 +162,13 @@ function facetDateParam() {
     }
 
     if(start) {
-        value = '[' + start + 'T00:00:00Z TO ';
+        value = '[' + start + 'T00:00:00.000Z TO ';
     } else {
         value = '[* TO ';
     }
 
     if(end) {
-        value += end + 'T00:00:00Z]';
+        value += end + 'T23:59:59.999Z]';
     } else {
         value += '*]';
     }
