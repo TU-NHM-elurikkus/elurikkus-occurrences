@@ -2,7 +2,7 @@
     <g:if test="${sr.query}">
         <g:set var="queryStr" value="${params.q ? params.q : searchRequestParams.q}" />
         <g:set var="paramList" value="" />
-        <g:set var="queryParam" value="${sr.urlParameters.stripIndent(1)}&sort=${sort}&dir=${dir}&pageSize=${pageSize}" />
+        <g:set var="queryParam" value="${sr.urlParameters.stripIndent(1)}&sort=${sort}&dir=${dir}&pageSize=${sr.pageSize}" />
     </g:if>
 
     <g:set var="facetMax" value="${10}" />
