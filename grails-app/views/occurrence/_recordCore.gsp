@@ -431,7 +431,7 @@
 
 <div>
     <h3>
-        <g:message code="recordcore.occurenceevent.title" />
+        <g:message code="recordcore.occurrencevent.title" />
     </h3>
 
     <table class="occurrenceTable table table-sm table-bordered" id="eventTable">
