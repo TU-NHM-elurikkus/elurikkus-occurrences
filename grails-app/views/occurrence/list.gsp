@@ -552,13 +552,11 @@
                                             <g:message code="list.sortwidgets.sort.option03" />
                                         </option>
                                         <option value="occurrence_date" <g:if test="${sort == 'occurrence_date'}">selected</g:if>>
-                                            ${skin == 'avh' ? g.message(code:"list.sortwidgets.sort.option0401") : g.message(code:"list.sortwidgets.sort.option0402")}
+                                            <g:message code="list.sortwidgets.sort.option0401" />
                                         </option>
-                                        <g:if test="${skin != 'avh'}">
-                                            <option value="record_type" <g:if test="${sort == 'record_type'}">selected</g:if>>
-                                                <g:message code="list.sortwidgets.sort.option05" />
-                                            </option>
-                                        </g:if>
+                                        <option value="record_type" <g:if test="${sort == 'record_type'}">selected</g:if>>
+                                            <g:message code="list.sortwidgets.sort.option05" />
+                                        </option>
                                         <option value="first_loaded_date" <g:if test="${sort == 'first_loaded_date'}">selected</g:if>>
                                             <g:message code="list.sortwidgets.sort.option06" />
                                         </option>
