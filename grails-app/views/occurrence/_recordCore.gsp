@@ -145,25 +145,7 @@
         <!-- Basis of Record -->
         <alatag:occurrenceTableRow annotate="true" section="dataset" fieldCode="basisOfRecord" fieldName="${message(code: 'recordcore.dataset.basisOfRecord')}">
             ${fieldsMap.put("basisOfRecord", true)}
-            <g:if test="${record.processed.occurrence.basisOfRecord && record.raw.occurrence.basisOfRecord && record.processed.occurrence.basisOfRecord == record.raw.occurrence.basisOfRecord}">
-                <g:message code="${record.processed.occurrence.basisOfRecord}" />
-            </g:if>
-            <g:elseif test="${record.processed.occurrence.basisOfRecord && record.raw.occurrence.basisOfRecord}">
-                <g:message code="${record.processed.occurrence.basisOfRecord}" />
-                <br />
-                <span class="originalValue">
-                    <g:message code="recordcore.label.suppliedas" /> "${record.raw.occurrence.basisOfRecord}"
-                </span>
-            </g:elseif>
-            <g:elseif test="${record.processed.occurrence.basisOfRecord}">
-                <g:message code="${record.processed.occurrence.basisOfRecord}" />
-            </g:elseif>
-            <g:elseif test="${!record.raw.occurrence.basisOfRecord}">
-                <g:message code="recordcore.label.recordbasisempty" />
-            </g:elseif>
-            <g:else>
-                <g:message code="${record.raw.occurrence.basisOfRecord}" />
-            </g:else>
+            <g:message code="basis_of_record.${record.raw.occurrence.basisOfRecord}" />
         </alatag:occurrenceTableRow>
 
         <!-- Occurrence type -->

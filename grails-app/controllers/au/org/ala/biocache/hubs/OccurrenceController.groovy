@@ -36,6 +36,7 @@ class OccurrenceController {
     def borPlutofMap = [
         GenomicDNA: "sequence",
         HumanObservation: "observation",
+        MachineObservation: "observation",
         LivingSpecimen: "livingspecimen",
         PreservedSpecimen: "specimen",
         Literature: "referencebased",
