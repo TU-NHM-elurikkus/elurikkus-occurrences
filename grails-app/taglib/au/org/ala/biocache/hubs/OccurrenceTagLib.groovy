@@ -699,6 +699,9 @@ class OccurrenceTagLib {
             }
             def formatted = listNames[0..-1].join(', ')
             builder.td(class: style, title: formatted, *:properties, formatted)
+        } else if(key == "basisOfRecord") {
+            def formatted = g.message(code: "basis_of_record.${value}")
+            builder.td(class: style, title: formatted, *:properties, formatted)
         } else {
             builder.td(class: style, title: value, *:properties, value)
         }
