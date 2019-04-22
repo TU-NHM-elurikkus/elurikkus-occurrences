@@ -404,11 +404,11 @@ class WebServicesService implements ApplicationContextAware {
             return JSON.parse(json)
         } catch(FileNotFoundException e) {
             // most likely a server restart, so just log it and return empty results
-            log.info "Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}"
+            log.warn("Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}")
             return JSON.parse("{}")
         } catch(Exception e) {
-            log.error "Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}"
-            throw new RestClientException(e)
+            log.warn("Failed to get json from web service (${url}). ${e.getClass()} ${e.getMessage()}, ${e}")
+            return JSON.parse("{}")
         }
     }
 
