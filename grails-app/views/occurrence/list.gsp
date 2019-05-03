@@ -15,14 +15,14 @@
             <g:message code="search.heading.list" />
         </title>
 
+        <asset:stylesheet src="list.css" />
+        <asset:javascript src="list.js" />
+
         <g:if test="${grailsApplication.config.google.apikey}">
             <script src="https://maps.googleapis.com/maps/api/js?v=3.5&key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
         </g:if>
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-        <asset:stylesheet src="list.css" />
-        <asset:javascript src="list.js" />
 
         <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />
         <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
@@ -77,8 +77,10 @@
             <g:if test="${!grailsApplication.config.google.apikey}">
                 google.load('maps','3.5',{ other_params: "sensor=false" });
             </g:if>
+        </script>
 
-            google.load("visualization", "1", {packages:["corechart"]});
+        <script type="text/javascript">
+            google.load("visualization", "1", { packages: ["corechart"] });
         </script>
     </head>
 
@@ -649,12 +651,14 @@
                                 <script>
                                     var searchString = '${searchString}';
 
-                                    taxonomyChart.load({
-                                        biocacheServicesUrl: BC_CONF.biocacheServiceUrl,
-                                        displayRecordsUrl: BC_CONF.serverName,
-                                        instanceUid: '',
-                                        rank: 'kingdom',
-                                        query: searchString.replace('?q=', '')
+                                    $(document).ready(function() {
+                                        taxonomyChart.load({
+                                            biocacheServicesUrl: BC_CONF.biocacheServiceUrl,
+                                            displayRecordsUrl: BC_CONF.serverName,
+                                            instanceUid: '',
+                                            rank: 'kingdom',
+                                            query: searchString.replace('?q=', '')
+                                        });
                                     });
                                 </script>
                             </div>
