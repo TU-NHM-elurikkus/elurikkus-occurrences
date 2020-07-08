@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
 
@@ -15,14 +14,14 @@
             <g:message code="search.heading.list" />
         </title>
 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <script type="text/javascript">
+            google.charts.load("current", {"packages": ["corechart"]});
+        </script>
+
         <asset:stylesheet src="list.css" />
         <asset:javascript src="list.js" />
-
-        <g:if test="${grailsApplication.config.google.apikey}">
-            <script src="https://maps.googleapis.com/maps/api/js?v=3.5&key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
-        </g:if>
-
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
         <g:set var="fqParamsSingleQ" value="${(params.fq) ? ' AND ' + params.list('fq')?.join(' AND ') : ''}" />
         <g:set var="fqParams" value="${(params.fq) ? "&fq=" + params.list('fq')?.join('&fq=') : ''}" />
@@ -71,16 +70,6 @@
                     BC_CONF[field] = BC_CONF_FIELDS[field];
                 }
             }
-        </script>
-
-        <script type="text/javascript">
-            <g:if test="${!grailsApplication.config.google.apikey}">
-                google.load('maps','3.5',{ other_params: "sensor=false" });
-            </g:if>
-        </script>
-
-        <script type="text/javascript">
-            google.load("visualization", "1", { packages: ["corechart"] });
         </script>
     </head>
 

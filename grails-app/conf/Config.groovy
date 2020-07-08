@@ -110,6 +110,7 @@ grails {
     }
 }
 
+grails.gsp.enable.reload = true
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = "Instance"

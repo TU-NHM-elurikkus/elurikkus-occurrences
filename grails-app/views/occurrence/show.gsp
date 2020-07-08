@@ -16,19 +16,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
         <title>
             <g:message code="show.occurrenceRecord" />: ${recordId}
         </title>
-
-        <g:if test="${grailsApplication.config.google.apikey}">
-            <script src="https://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
-        </g:if>
-        <g:else>
-            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        </g:else>
 
         <asset:stylesheet src="show.css" />
         <asset:javascript src="show.js" />

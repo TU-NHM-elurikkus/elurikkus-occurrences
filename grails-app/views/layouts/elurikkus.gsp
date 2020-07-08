@@ -27,6 +27,8 @@
             };
         </g:javascript>
 
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.41&key=${grailsApplication.config.google.apikey}" type="text/javascript"></script>
+
         <asset:stylesheet src="occurrences.css" />
         <asset:javascript src="occurrences.js" />
 

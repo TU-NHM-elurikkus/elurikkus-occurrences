@@ -10,7 +10,6 @@
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta name="section" content="search" />
-        <meta name="svn.revision" content="${meta(name: 'svn.revision')}" />
 
         <title>
             <g:message code="home.index.title" />
@@ -19,7 +18,6 @@
         <asset:stylesheet src="index.css" />
         <asset:javascript src="index.js" />
 
-        <script src="https://maps.google.com/maps/api/js?v=3.5&sensor=false&key=${grailsApplication.config.google.apikey}"></script>
     </head>
 
     <body>
@@ -34,7 +32,6 @@
                 ${raw(flash.message)}
             </div>
         </g:if>
-
 
         <div class="page-header">
             <h1 class="page-header__title">
