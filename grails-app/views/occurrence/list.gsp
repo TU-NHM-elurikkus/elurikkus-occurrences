@@ -640,15 +640,17 @@
                                 <script>
                                     var searchString = '${searchString}';
 
-                                    $(document).ready(function() {
-                                        taxonomyChart.load({
-                                            biocacheServicesUrl: BC_CONF.biocacheServiceUrl,
-                                            displayRecordsUrl: BC_CONF.serverName,
-                                            instanceUid: '',
-                                            rank: 'kingdom',
-                                            query: searchString.replace('?q=', '')
-                                        });
-                                    });
+                                    google.charts.setOnLoadCallback(
+                                        function() {
+                                            taxonomyChart.load({
+                                                biocacheServicesUrl: BC_CONF.biocacheServiceUrl,
+                                                displayRecordsUrl: BC_CONF.serverName,
+                                                instanceUid: '',
+                                                rank: 'kingdom',
+                                                query: searchString.replace('?q=', '')
+                                            });
+                                        }
+                                    );
                                 </script>
                             </div>
                         </plugin:isAvailable>
