@@ -17,7 +17,7 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <script type="text/javascript">
-            google.charts.load("current", {"packages": ["corechart"]});
+            google.charts.load("48", {"packages": ["corechart", "table"]});
         </script>
 
         <asset:stylesheet src="list.css" />
