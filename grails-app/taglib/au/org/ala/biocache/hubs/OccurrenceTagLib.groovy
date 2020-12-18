@@ -592,6 +592,11 @@ class OccurrenceTagLib {
             }
         }
 
+        // We need to at least include empty column because UI needs to generate a link to record's detail-view
+        if(!parsedColumns.contains("scientificName") || !parsedColumns.contains("raw_scientificName")) {
+            parsedColumns.push("scientificName")
+        }
+
         return parsedColumns
     }
 
