@@ -1141,4 +1141,74 @@ function initTableModalLinks() {
 
 function initFiltersContainer() {
     filtersContainer.init();
+    setupRedListFilters();
+}
+
+function setupRedListFilters() {
+    var fq = $.url().param('fq');
+
+    if(!fq) {
+        fq = [];
+    } else if(typeof(fq) === 'string') {
+        fq = [fq];
+    }
+
+    // If we're already filtering by some list, screw that. Handling url changes
+    // without URLQueryParams is just too painful for me to care
+    if(fq.some(function(pair) {
+        return pair.split(':')[0] === 'species_list_uid';
+    })) {
+        return;
+    }
+
+    var group = document.getElementById('group_Taxon');
+
+    if(!group) {
+        return;
+    }
+
+    var label = document.createElement('div');
+    label.className = 'FieldName';
+    label.innerHTML = $.i18n.prop('search.redlist.label');
+
+    group.appendChild(label);
+
+    var container = document.createElement('div');
+    container.className = 'subnavlist';
+    container.style.clear = 'left';
+
+    var ul = document.createElement('ul');
+    ul.className = 'facets nano-content erk-ulist';
+
+    var categories = [
+        'drt397748', 'drt397749', 'drt397750', 'drt397751', 'drt397752',
+        'drt397753', 'drt397754', 'drt397755', 'drt397756', 'drt397757',
+    ];
+
+    categories.forEach(function(listUID) {
+        var li = document.createElement('li');
+        li.className = 'erk-ulist__item';
+
+        var query = window.location.search ?
+            window.location.search + '&fq=species_list_uid:' + listUID :
+            '?fq=species_list_uid:' + listUID;
+
+        var anchor = document.createElement('a');
+        anchor.href = window.location.origin + window.location.pathname + query;
+
+        var icon = document.createElement('span');
+        icon.className = 'fa fa-square-o';
+
+        var item = document.createElement('span');
+        item.innerHTML = ' ' + $.i18n.prop('search.redlist.categories.' + listUID);
+
+        anchor.appendChild(icon);
+        anchor.appendChild(item);
+
+        li.appendChild(anchor);
+        ul.appendChild(li);
+    });
+
+    container.appendChild(ul);
+    group.appendChild(container);
 }
