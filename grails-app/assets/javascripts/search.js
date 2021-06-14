@@ -528,7 +528,10 @@ $(document).ready(function() {
         window.open(downloadUrl);
     });
 
-    initTableModalLinks();
+    if(BC_CONF.hasMultimedia) {
+        initTableModalLinks();
+    }
+
     initFiltersContainer();
 }); // end JQuery document ready
 
@@ -913,7 +916,8 @@ function createThumbnails(occurrences, templateClassName) {
 
 function loadImages(start) {
     start = (start) ? start : 0;
-    var imagesJsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search.json' +
+
+    var imagesJsonUri = BC_CONF.biocacheServiceUrl + '/occurrences/search' +
         BC_CONF.searchString +
         '&fq=multimedia:Image' +
         '&facet=false' +
@@ -923,7 +927,9 @@ function loadImages(start) {
         '&dir=' + BC_CONF.sortDir +
         '&callback=?';
 
-    $.getJSON(imagesJsonUri, function(data) {
+    fetch(imagesJsonUri).then(function(r) {
+        return r.json();
+    }).then(function(data) {
         if(data.occurrences) {
             if(start === 0) {
                 $('#imagesGrid').html('');
@@ -944,7 +950,9 @@ function loadImages(start) {
                 $('#loadMoreImages').hide();
             }
         }
-    }).always(function() {
+
+        $('#loadMoreImages img').hide();
+    }, function() {
         $('#loadMoreImages img').hide();
     });
 }
