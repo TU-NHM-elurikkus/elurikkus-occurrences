@@ -585,7 +585,9 @@ class OccurrenceTagLib {
         columns.each { column ->
             def rawKey = "raw_" + column
 
-            if(allColumns.contains(column)) {
+            if(column == "scientificName") {
+                parsedColumns.push(rawKey)
+            } else if(allColumns.contains(column)) {
                 parsedColumns.push(column)
             } else if(allColumns.contains(rawKey)) {
                 parsedColumns.push(rawKey)
